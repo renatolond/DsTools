@@ -23,7 +23,7 @@ ARM7_SELECTED := ARM7_MP3
 # icon for your project too!
 #---------------------------------------------------------------------------------
 
-TEXT1 := PAlib Project
+TEXT1 := Projeto Final
 TEXT2 := Change this text
 TEXT3 := for your project!
 

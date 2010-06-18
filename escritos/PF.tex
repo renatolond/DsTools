@@ -1,0 +1,151 @@
+\documentclass[brazil]{abnt}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+%opening
+
+\makeatletter
+\usepackage{babel}
+\makeatother
+\begin{document}
+
+\autor{Renato dos Santos Cerqueira}
+\titulo{Title Placeholder}
+\orientador{Adriano Joaquim de Oliveira Cruz}
+\comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade 
+Federal do Rio de Janeiro.}
+\instituicao{Departamento de Ciência da Computação \par Instituto de Matemática \par Universidade Federal do Rio de Janeiro}
+\local{Rio de Janeiro - RJ, Brasil}
+\data{21/12/2012}
+
+\capa
+\folhaderosto
+
+\begin{folhadeaprovacao}
+Monografia de Projeto Final de Graduação sob o título \textit{``\ABNTtitulodata''},
+defendida por \ABNTautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
+Estado do Rio de Janeiro, pela banca examinadora constituída pelos
+professores: \setlength{\ABNTsignthickness}{0.4pt}
+
+\assinatura{Prof. Ph.D. Adriano Joaquim de Oliveira Cruz\\ Orientador} \assinatura{???\\ Universidade ???} \assinatura{???\\ Universidade ???}
+\end{folhadeaprovacao}
+
+\begin{resumo}
+O objetivo deste trabalho é fazer uma \textit{engine} para o \textit{videogame Nintendo DS\texttrademark} e também um editor de fases 
+e configurações, como seria feito numa equipe de desenvolvimento de um jogo grande, dando a possibilidade aos \textit{designers} 
+de fazerem seus \textit{sprites} e criarem as fases com eles, sem que fosse necessário mexer com códigos.
+\end{resumo}
+
+\begin{abstract}
+The objective of this paper is to make an engine to the Nintendo DS\texttrademark system and a level and configurations editor, as it
+would be done in a development team in a big game, giving designers the possibility to make their sprites and create their levels 
+without touching actual source code.
+\end{abstract}
+
+\chapter*{Dedicatória}
+
+\chapter*{Agradecimentos}
+
+\tableofcontents{}
+\listoffigures
+\listoftables
+
+\chapter{Introdução\label{cap:introducao}}
+
+\vfill{}
+\begin{flushright}{}``\emph{Não há fé inabalável senão aquela que}\\
+\emph{pode encarar a razão face a face, em}\\
+\emph{todas as épocas da Humanidade.}''\\
+{\small Allan Kardec}\end{flushright}{\small \par}
+\vfill{}
+
+Neste capítulo são apresentados o objetivo desta monografia e a estrutura
+da mesma.
+\newpage
+
+
+\section{Objetivo deste trabalho}
+
+É comum ver retrospectivas lembrando da evolução dos jogos ao longo dos últimos anos. Jogos eletrônicos, como é sabido, são coisas relativamente recentes, sendo o primeiro o primeiro exemplo conhecido de 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos.
+
+No entanto, muita coisa mudou nas poucas décadas da existências dos jogos eletrônicos. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação.
+
+Hoje em dia, porém, a indústria de jogos sendo a grande indústria que é, conta com superproduções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
+
+Neste trabalho o que tentamos fazer é nos inserir um pouco no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa tão grande cadeia de trabalho: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, tentamos criar um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. E tentamos fazer com que a engine que roda o jogo seja a mais fácil de reutilizar através de ferramentas de criação de fases e de configuração do personagem, itens, dentre outras coisas que compõe o mundo do jogo.
+
+Nosso objetivo, porém, é fazer o papel do desenvolvedor. E somente criar as ferramentas, imaginando como os outros times as usariam.
+
+\section{Estrutura da monografia}
+
+No capítulo~\ref{cap:engine} é apresentado o estado da arte
+na área de segurança de redes ...
+
+
+\chapter{A criação do jogo\label{cap:engine}}
+
+\vfill{}
+\begin{flushright}{}``\emph{Navegar é preciso, viver não.}''\\
+{\small Luís de Camões}\end{flushright}{\small \par}
+\vfill{}
+
+Neste capítulo é apresentado o desenvolvimento da parte para o portátil Nintendo DS.
+\newpage
+
+
+\section{Introdução}
+
+O que é exatamente um jogo de plataforma em duas dimensões? Podemos pensar em exemplos clássicos, como Super Mario World para o Super Nintendo, ou Sonic The Hedgehog para o Sega Mega Drive.
+
+Nem todos os jogos plataforma são em duas dimensões. Mas vamos aqui nos focar num jogo plataforma em duas dimensões para facilitar o entendimento e o desenvolvimento de soluções. Nessa modalidade, uma característica comum presente em muitos jogos é o uso de \textit{sprites}, figuras de tamanho pré-definido, que compõem todo o mundo, como um grande quebra-cabeças. Nesse tipo de jogo, todos os objetos costumam ser feitos da combinações de sprites e muitas vezes um sprite é usado mais de uma vez em diferentes posições.
+
+Podemos definir um jogo de plataforma por suas características comuns: o jogador controla um personagem que se movimenta para os lados, pode ou não saltar, ter ou não algum tipo de arma e em geral o objetivo é percorrer uma série de fases derrotando pequenos inimigos, para ao final derrotar algum grande inimigo e recuperar alguma coisa. Claro que essa é uma definição bem aberta, e é nela que vamos tentar nos inspirar ao escrever a parte que será executada no Nintendo DS.
+
+Nosso objetivo é criar uma engine que leia algum tipo de arquivo de configuração, onde estarão detalhadas informações sobre quais são as imagens que compõem o personagem principal (ou personagens, no caso de haver uma escolha); informações sobre os inimigos como por exemplo a qual tipo de movimento ele obedece; descrição dos itens, como por exemplo qual efeito ele causa no personagem principal ou nos inimigos e informações sobre as fases, posicionamento de itens, inimigos e as imagens que as compõem.
+
+\chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
+
+\vfill{}
+\begin{flushright}{}``\emph{Nada se cria, nada se perde, tudo se
+transforma.}''\\
+{\small Lavousier}\end{flushright}{\small \par}
+\vfill{}
+
+Neste capítulo é apresentado as conclusões e alguns trabalhos futuros
+...
+\newpage
+
+
+\section{Conclusões}
+
+{\bf Alguns itens interessantes para a conclusão de um projeto de graduação}
+
+Qual foi o resultado do seu trabalho? melhora na área, testes positivos ou negativos?
+Você acha que o mecanismo gerado produziu resultados interessantes?
+Quais os problemas que você encontrou na elaboração do projeto?
+E na implementação do protótipo?
+Que conclusão você tirou das ferramentas utilizadas? (heurísticas, prolog, ALE, banco de dados).
+Em que outras áreas você julga que este trabalho seria interessante de ser aplicado?
+Que tipo de continuidade você daria a este trabalho?
+Que tipo de conhecimento foi necessário para este projeto de graduação?
+Para que serviu este trabalho na sua formação?
+
+
+\bibliographystyle{abnt-alf}
+\bibliography{PF}
+
+
+\anexo
+
+
+\chapter{Ferramentas utilizadas}
+
+Foi feita uma análise de algumas ferramentas que são muito usadas
+por atacantes (hackers) para a confecção de ataques. Estas ferramentas
+são muito úteis em vários aspectos, tais como: (1) o levantamento
+de informações sobre o alvo, (2) que tipo de serviços estão disponíveis
+no alvo, (3) quais as possíveis vulnerabilidades do alvo, entre outras
+informações. As ferramentas analisadas foram o \emph{nmap}~\cite{dns2002},
+o \emph{nessus}~\cite{William86}, o \emph{saint}~\cite{rhoden}, além
+de alguns comandos de sistemas operacionais (UNIX-Like e Windows-Like)
+usados para rede, tais como o \emph{ping, nslookup e whois}. 
+\end{document}

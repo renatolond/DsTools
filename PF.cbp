@@ -37,12 +37,8 @@
 			<Add directory="/home/lond/DsDev/devkitARM/include" />
 			<Add directory="/home/lond/DsDev/libnds/include/nds" />
 		</Compiler>
-		<Unit filename="source/MyApp.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="source/MyApp.h">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="source/ScrollEngine.cpp" />
+		<Unit filename="source/ScrollEngine.h" />
 		<Unit filename="source/main.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

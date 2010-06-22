@@ -24,6 +24,7 @@ class ScrollEngine: public Application{
 	// in the ScrollEngine.cpp file!
 	static int nframe;
 	static Sprite rocket;
+	static Sprite bg_1[3][10];
 
 	// Main methods (needed by run())
 	void init();

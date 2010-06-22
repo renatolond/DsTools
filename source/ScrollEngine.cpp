@@ -10,12 +10,14 @@
 // Declare variables
 int ScrollEngine::nframe = 0;
 Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
+Sprite ScrollEngine::bg_1[3][10];
+int SpriteCount;
 
 // Initialization function
 void ScrollEngine::init(){
 	// Initialize the text system
 	PA_InitText(1, 0);
-  PA_LoadBackground(0, 3, &bg_1);
+	SpriteCount = 1;
 	// Load our graphics
 	loadgraphics();
 
@@ -24,6 +26,7 @@ void ScrollEngine::init(){
 
 	// Set the rocket's background priority
 	rocket.priority(1); // on top of BG1 = below BG0 = below text background
+	bg_1[0][0].priority(1);
 
 	Fixed a(4.5f);
 	Fixed b(79);
@@ -49,7 +52,18 @@ void ScrollEngine::init(){
 void ScrollEngine::loadgraphics(){
 	// Load our rocket graphic
 	PA_LoadSpritePal(1, 0, (void*) rocket_Pal);
+	PA_LoadSpritePal(0, 1, (void*) bg_1_Pal);
 	rocket.create((void*)rocket_Sprite, OBJ_SIZE_32X32, 0);
+
+	for ( int i = 0 ; i < 3 ; i++ )
+	{
+	    for ( int j = 0 ; j < 10 ; j++ )
+	    {
+	        bg_1[i][j] = Sprite(0, SpriteCount++);
+	        bg_1[i][j].move(j*16, i*16);
+	        bg_1[i][j].create((void*)bg_1_Sprite, OBJ_SIZE_16X16, 1);
+	    }
+	}
 
 	// Rotate it
 	rocket.bindrotset(0);
@@ -66,6 +80,7 @@ void ScrollEngine::render(){
 
 	// Render the rocket
 	rocket.render();
+	bg_1[0][0].render();
 }
 
 // Update function (if false, program exits)

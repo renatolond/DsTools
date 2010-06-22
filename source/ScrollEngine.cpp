@@ -15,7 +15,7 @@ Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
 void ScrollEngine::init(){
 	// Initialize the text system
 	PA_InitText(1, 0);
-
+  PA_LoadBackground(0, 3, &bg_1);
 	// Load our graphics
 	loadgraphics();
 

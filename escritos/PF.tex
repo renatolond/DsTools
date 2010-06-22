@@ -102,6 +102,14 @@ Podemos definir um jogo de plataforma por suas características comuns: o jogado
 
 Nosso objetivo é criar uma engine que leia algum tipo de arquivo de configuração, onde estarão detalhadas informações sobre quais são as imagens que compõem o personagem principal (ou personagens, no caso de haver uma escolha); informações sobre os inimigos como por exemplo a qual tipo de movimento ele obedece; descrição dos itens, como por exemplo qual efeito ele causa no personagem principal ou nos inimigos e informações sobre as fases, posicionamento de itens, inimigos e as imagens que as compõem.
 
+\section{O processo criativo}
+
+Na última seção, definimos o nosso objetivo. Assim, sabemos as características que queremos alcançar ao fazer nosso jogo. Devemos então começar a buscar ferramentas para alcançar o nosso objetivo. Começamos então nos focando nos elementos mais básicos: vamos pensar em como desenharemos o mundo, ignorando a existência dos inimigos e do jogador. Vamos pensar em como desenharemos o plano de fundo e os elementos imóveis do mundo.
+
+Tentaremos seguir a idéia apresentada em \cite{mameri06culling}, cuja aplicação é direta para nós.
+
+Enquanto não criamos o editor de fases, faremos uma pequena demonstração carregando uma matriz manualmente em nosso código, bem simples, delimitada por caracteres que representam determinados \textit{sprites}.
+
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
 \vfill{}
@@ -144,8 +152,8 @@ por atacantes (hackers) para a confecção de ataques. Estas ferramentas
 são muito úteis em vários aspectos, tais como: (1) o levantamento
 de informações sobre o alvo, (2) que tipo de serviços estão disponíveis
 no alvo, (3) quais as possíveis vulnerabilidades do alvo, entre outras
-informações. As ferramentas analisadas foram o \emph{nmap}~\cite{dns2002},
-o \emph{nessus}~\cite{William86}, o \emph{saint}~\cite{rhoden}, além
+informações. As ferramentas analisadas foram o \emph{nmap}~,
+o \emph{nessus}~, o \emph{saint}~, além
 de alguns comandos de sistemas operacionais (UNIX-Like e Windows-Like)
 usados para rede, tais como o \emph{ping, nslookup e whois}. 
 \end{document}

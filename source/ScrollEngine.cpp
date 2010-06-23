@@ -10,8 +10,8 @@
 // Declare variables
 int ScrollEngine::nframe = 0;
 Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
-Sprite ScrollEngine::bg_1[3][10];
 int SpriteCount;
+u16 my_Map[4096];
 
 // Initialization function
 void ScrollEngine::init(){
@@ -26,7 +26,6 @@ void ScrollEngine::init(){
 
 	// Set the rocket's background priority
 	rocket.priority(1); // on top of BG1 = below BG0 = below text background
-	bg_1[0][0].priority(1);
 
 	Fixed a(4.5f);
 	Fixed b(79);
@@ -52,18 +51,22 @@ void ScrollEngine::init(){
 void ScrollEngine::loadgraphics(){
 	// Load our rocket graphic
 	PA_LoadSpritePal(1, 0, (void*) rocket_Pal);
-	PA_LoadSpritePal(0, 1, (void*) bg_1_Pal);
+	//PA_LoadBg(0, 0, (void*)bg_1_Sprite, Blank, BG_256X256, 0,1);
+	PA_BgStruct mybg = bg_1;
+	for ( int i = 0; i <4096;i++) my_Map[i] = 19;
+	for ( int i = 32 ; i < 64 ; i++ ) my_Map[i] = i-32;
+	for ( int i = 32*21 ; i < 32*22 ; i++ ) my_Map[i] = (i%2)?4:3;
+	for ( int i = 32*22 ; i < 32*23 ; i++ ) my_Map[i] = (i%2)?10:9;
+	for ( int i = 32*23 ; i < 32*24 ; i++ ) my_Map[i] = (i%2)?4:3;
+	my_Map[32*20] = 8;
+	my_Map[32*20 + 1] = (4<<8)+8;
+	mybg.BgMap=(void*)my_Map;
+	PA_LoadBackground(0, 3, &mybg);
+	//PA_LoadBackground(0, 3, &teste);
+    //	PA_LoadBgPal(0,0,bg_1_Pal);
+	//PA_LoadSpritePal(0, 1, (void*) bg_1_Pal);
 	rocket.create((void*)rocket_Sprite, OBJ_SIZE_32X32, 0);
 
-	for ( int i = 0 ; i < 3 ; i++ )
-	{
-	    for ( int j = 0 ; j < 10 ; j++ )
-	    {
-	        bg_1[i][j] = Sprite(0, SpriteCount++);
-	        bg_1[i][j].move(j*16, i*16);
-	        bg_1[i][j].create((void*)bg_1_Sprite, OBJ_SIZE_16X16, 1);
-	    }
-	}
 
 	// Rotate it
 	rocket.bindrotset(0);
@@ -80,7 +83,6 @@ void ScrollEngine::render(){
 
 	// Render the rocket
 	rocket.render();
-	bg_1[0][0].render();
 }
 
 // Update function (if false, program exits)

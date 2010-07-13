@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////
 
 // Include the application header
-#include "MyApp.h"
+#include "ScrollEngine.h"
 
 // Entry point
 int main(){
@@ -13,8 +13,8 @@ int main(){
 	PA_Init();
 
 	// Run the application
-	MyApp app;
-	app.run();
+	ScrollEngine engine;
+	engine.run();
 
 	return 0;
 }

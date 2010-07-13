@@ -1,7 +1,53 @@
 \documentclass[brazil]{abnt}
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
+\usepackage{listings}
 %opening
+
+\usepackage{courier}
+ \lstset{
+         basicstyle=\footnotesize\ttfamily, % Standardschrift
+         %numbers=left,               % Ort der Zeilennummern
+         numberstyle=\tiny,          % Stil der Zeilennummern
+         %stepnumber=2,               % Abstand zwischen den Zeilennummern
+         numbersep=5pt,              % Abstand der Nummern zum Text
+         tabsize=2,                  % Groesse von Tabs
+         extendedchars=true,         %
+         breaklines=true,            % Zeilen werden Umgebrochen
+         keywordstyle=\color{red},
+                frame=b,         
+ %        keywordstyle=[1]\textbf,    % Stil der Keywords
+ %        keywordstyle=[2]\textbf,    %
+ %        keywordstyle=[3]\textbf,    %
+ %        keywordstyle=[4]\textbf,   \sqrt{\sqrt{}} %
+         stringstyle=\color{white}\ttfamily, % Farbe der String
+         showspaces=false,           % Leerzeichen anzeigen ?
+         showtabs=false,             % Tabs anzeigen ?
+         xleftmargin=17pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         %backgroundcolor=\color{lightgray},
+         showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+ }
+ \lstloadlanguages{% Check Dokumentation for further languages ...
+         %[Visual]Basic
+         %Pascal
+         %C
+         C++
+         %XML
+         %HTML
+         %Java
+ }
+    %\DeclareCaptionFont{blue}{\color{blue}} 
+
+%\captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
 \makeatletter
 \usepackage{babel}
@@ -102,6 +148,39 @@ Podemos definir um jogo de plataforma por suas características comuns: o jogado
 
 Nosso objetivo é criar uma engine que leia algum tipo de arquivo de configuração, onde estarão detalhadas informações sobre quais são as imagens que compõem o personagem principal (ou personagens, no caso de haver uma escolha); informações sobre os inimigos como por exemplo a qual tipo de movimento ele obedece; descrição dos itens, como por exemplo qual efeito ele causa no personagem principal ou nos inimigos e informações sobre as fases, posicionamento de itens, inimigos e as imagens que as compõem.
 
+\section{O processo criativo}
+
+Na última seção, definimos o nosso objetivo. Assim, sabemos as características que queremos alcançar ao fazer nosso jogo. Devemos então começar a buscar ferramentas para alcançar o nosso objetivo. Começamos então nos focando nos elementos mais básicos: vamos pensar em como desenharemos o mundo, ignorando a existência dos inimigos e do jogador. Vamos pensar em como desenharemos o plano de fundo e os elementos imóveis do mundo.
+
+Tentaremos seguir a idéia apresentada em \cite{mameri06culling}, cuja aplicação é direta para nós.
+
+Enquanto não criamos o editor de fases, faremos uma pequena demonstração carregando uma matriz manualmente em nosso código, bem simples, delimitada por caracteres que representam determinados \textit{sprites}.
+
+Estamos usando o kit de desenvolvimento \textit{homebrew}\footnotemark para o Nintendo DS, e com ele, a PALib, uma biblioteca que facilita o uso dos recursos de hardware do DS, que são um pouco limitados e curiosos, devido aos seus dois processadores e telas.
+
+\footnotetext{O termo Homebrew se refere ao desenvolvimento com o uso de um kit de desenvolvimento extra-oficial, produzido por uma comunidade. Muitas vezes o kit de desenvolvimento oficial tem custo proibitivo e é voltado somente para grandes empresas de desenvolvimento. Desenvolvedores que queiram desenvolver em casa se valem desses kits não-oficiais, muitas vezes de código aberto, que são desenvolvidos em geral fazendo algum tipo de engenharia reversa no hardware original.}
+
+Ao investigarmos a fundo, descobrimos que o DS suporta mapas com \textit{tiles}, ou seja, podemos criar um mapa e depois desconstruí-lo em pequenas imagens que serão repetidas várias vezes. 
+
+\subsection{O formato de background}
+
+Investigamos a fundo o formato que é aceito pela PALib, assim, descobrimos que quando uma figura é colocada como plano de fundo, precisamos de quatro partes:
+
+\begin{itemize}
+ \item Arquivo Pal\\
+ Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. O padrão é de 256 cores.
+ \item Arquivo Tiles\\
+ Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal.
+ \item Arquivo Map\\
+ Neste arquivo, fica o mapa do background, ele referencia os tiles, nos bytes altos ficam informações se o tile é rotacionado ou não, enquanto nos bytes baixos ficam os tiles propriamente ditos.
+ \item Arquivo .c\\
+ Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
+\end{itemize}
+
+\lstinputlisting[caption=Exemplo de arquivo .c:]{codigos/exemplo_bg.c}
+
+Portanto, precisaremos que a nossa ferramenta dê a saída nesse formato. Por enquanto, para os testes, usaremos a ferramenta que vem junto com o kit de desenvolvimento, porém, ela só converte uma imagem já pronta (ou seja, um mapa que já tenha sido desenhado) para este formato. Mas assim poderemos fazer testes com relação a movimentação do background e tudo mais.
+
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
 \vfill{}
@@ -144,8 +223,8 @@ por atacantes (hackers) para a confecção de ataques. Estas ferramentas
 são muito úteis em vários aspectos, tais como: (1) o levantamento
 de informações sobre o alvo, (2) que tipo de serviços estão disponíveis
 no alvo, (3) quais as possíveis vulnerabilidades do alvo, entre outras
-informações. As ferramentas analisadas foram o \emph{nmap}~\cite{dns2002},
-o \emph{nessus}~\cite{William86}, o \emph{saint}~\cite{rhoden}, além
+informações. As ferramentas analisadas foram o \emph{nmap}~,
+o \emph{nessus}~, o \emph{saint}~, além
 de alguns comandos de sistemas operacionais (UNIX-Like e Windows-Like)
 usados para rede, tais como o \emph{ping, nslookup e whois}. 
 \end{document}

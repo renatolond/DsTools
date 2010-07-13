@@ -1,2 +1,2 @@
 #!/bin/bash
-wine ~/DsDev/iDeaS/NO\$GBA.EXE
+wine $DEVKITPRO/PAlib/emulators/no\$gba/NO\$GBA.exe

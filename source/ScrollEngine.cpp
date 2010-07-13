@@ -12,6 +12,8 @@ int ScrollEngine::nframe = 0;
 Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
 int SpriteCount;
 u16 my_Map[4096];
+u16 my_Map2[4096];
+s32 scroll;
 
 // Initialization function
 void ScrollEngine::init(){
@@ -53,15 +55,29 @@ void ScrollEngine::loadgraphics(){
 	PA_LoadSpritePal(1, 0, (void*) rocket_Pal);
 	//PA_LoadBg(0, 0, (void*)bg_1_Sprite, Blank, BG_256X256, 0,1);
 	PA_BgStruct mybg = bg_1;
-	for ( int i = 0; i <4096;i++) my_Map[i] = 19;
+	for ( int i = 0; i <4096;i++) my_Map[i] = 18;
 	for ( int i = 32 ; i < 64 ; i++ ) my_Map[i] = i-32;
 	for ( int i = 32*21 ; i < 32*22 ; i++ ) my_Map[i] = (i%2)?4:3;
-	for ( int i = 32*22 ; i < 32*23 ; i++ ) my_Map[i] = (i%2)?10:9;
+	for ( int i = 32*22 ; i < 32*23 ; i++ ) my_Map[i] = (i%2)?9:8;
 	for ( int i = 32*23 ; i < 32*24 ; i++ ) my_Map[i] = (i%2)?4:3;
-	my_Map[32*20] = 8;
-	my_Map[32*20 + 1] = (4<<8)+8;
+	my_Map[32*19 + 1] = 7;
+	my_Map[32*19 + 2] = (4<<8)+7;
+
+	my_Map[32*20 + 0] = 11;
+	my_Map[32*20 + 1] = 1;
+	my_Map[32*20 + 2] = 0;
+	my_Map[32*20 + 3] = (4<<8)+11;
 	mybg.BgMap=(void*)my_Map;
-	PA_LoadBackground(0, 3, &mybg);
+	PA_BgStruct mybg2 = bg_1;
+	for ( int i = 0 ; i < 4096 ; i++ ) my_Map2[i] = 18;
+	mybg2.BgMap=(void*)my_Map2;
+	PA_LoadBackground(0, 3, &mybg2);
+	PA_LoadBackground(0, 2, &mybg);
+	PA_InitParallaxX(0, //screen
+                128, //Parallax speed for Background 0. 0 is no parallax (will scroll independently with PA_EasyBgScrollXY)
+				192, // Normal speed for Bg1
+				256, //   3/4 speed
+				0);
 	//PA_LoadBackground(0, 3, &teste);
     //	PA_LoadBgPal(0,0,bg_1_Pal);
 	//PA_LoadSpritePal(0, 1, (void*) bg_1_Pal);
@@ -89,10 +105,11 @@ void ScrollEngine::render(){
 bool ScrollEngine::update(){
 	// Increment the counter
 	nframe ++;
-
+    scroll ++;
 	// Move the rocket
 	rocket.pos.x ++; if(rocket.pos.x == 256) rocket.pos.x = -64;
 	rocket.pos.y --; if(rocket.pos.y == -64) rocket.pos.y = 192;
+	PA_ParallaxScrollX(0, scroll);
 
 	// Keep going
 	return true;

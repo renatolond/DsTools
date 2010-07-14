@@ -15,6 +15,7 @@ u16 my_Map[4096];
 u16 my_Map2[4096];
 s32 scroll;
 int tiles_bg1;
+int greatest_bg;
 
 // Initialization function
 void ScrollEngine::init(){
@@ -57,6 +58,7 @@ void ScrollEngine::loadgraphics(){
 	//PA_LoadBg(0, 0, (void*)bg_1_Sprite, Blank, BG_256X256, 0,1);
 	PA_BgStruct mybg = bg_1;
 	tiles_bg1 = bg_1.width / 8;
+	greatest_bg = bg_1.width;
 	for ( int i = 0; i <4096;i++) my_Map[i] = 18;
 	for ( int i = tiles_bg1 ; i < tiles_bg1+32 ; i++ ) my_Map[i] = i-tiles_bg1;
 	for ( int i = tiles_bg1*21 ; i < tiles_bg1*22 ; i++ ) my_Map[i] = (i%2)?4:3;
@@ -99,6 +101,8 @@ void ScrollEngine::render(){
 	PA_OutputText(1, 1, 2, "X: %d  ", int(rocket.pos.x));
 	PA_OutputText(1, 1, 3, "Y: %d"  , int(rocket.pos.y));
 
+	PA_OutputText(1, 1, 4, "Scroll: %d", scroll);
+
 	// Render the rocket
 	rocket.render();
 }
@@ -111,6 +115,8 @@ bool ScrollEngine::update(){
         scroll ++;
 	if ( Pad.Held.Left )
         scroll --;
+    if ( scroll < 0 ) scroll = 0;
+    if ( scroll > greatest_bg - 256 ) scroll = greatest_bg - 256;
 	// Move the rocket
 	rocket.pos.x ++; if(rocket.pos.x == 256) rocket.pos.x = -64;
 	rocket.pos.y --; if(rocket.pos.y == -64) rocket.pos.y = 192;

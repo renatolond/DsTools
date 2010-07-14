@@ -14,6 +14,7 @@ int SpriteCount;
 u16 my_Map[4096];
 u16 my_Map2[4096];
 s32 scroll;
+int tiles_bg1;
 
 // Initialization function
 void ScrollEngine::init(){
@@ -55,18 +56,19 @@ void ScrollEngine::loadgraphics(){
 	PA_LoadSpritePal(1, 0, (void*) rocket_Pal);
 	//PA_LoadBg(0, 0, (void*)bg_1_Sprite, Blank, BG_256X256, 0,1);
 	PA_BgStruct mybg = bg_1;
+	tiles_bg1 = bg_1.width / 8;
 	for ( int i = 0; i <4096;i++) my_Map[i] = 18;
-	for ( int i = 32 ; i < 64 ; i++ ) my_Map[i] = i-32;
-	for ( int i = 32*21 ; i < 32*22 ; i++ ) my_Map[i] = (i%2)?4:3;
-	for ( int i = 32*22 ; i < 32*23 ; i++ ) my_Map[i] = (i%2)?9:8;
-	for ( int i = 32*23 ; i < 32*24 ; i++ ) my_Map[i] = (i%2)?4:3;
-	my_Map[32*19 + 1] = 7;
-	my_Map[32*19 + 2] = (4<<8)+7;
+	for ( int i = tiles_bg1 ; i < tiles_bg1+32 ; i++ ) my_Map[i] = i-tiles_bg1;
+	for ( int i = tiles_bg1*21 ; i < tiles_bg1*22 ; i++ ) my_Map[i] = (i%2)?4:3;
+	for ( int i = tiles_bg1*22 ; i < tiles_bg1*23 ; i++ ) my_Map[i] = (i%2)?9:8;
+	for ( int i = tiles_bg1*23 ; i < tiles_bg1*24 ; i++ ) my_Map[i] = (i%2)?4:3;
+	my_Map[tiles_bg1*19 + 1] = 7;
+	my_Map[tiles_bg1*19 + 2] = (4<<8)+7;
 
-	my_Map[32*20 + 0] = 11;
-	my_Map[32*20 + 1] = 1;
-	my_Map[32*20 + 2] = 0;
-	my_Map[32*20 + 3] = (4<<8)+11;
+	my_Map[tiles_bg1*20 + 0] = 11;
+	my_Map[tiles_bg1*20 + 1] = 1;
+	my_Map[tiles_bg1*20 + 2] = 0;
+	my_Map[tiles_bg1*20 + 3] = (4<<8)+11;
 	mybg.BgMap=(void*)my_Map;
 	PA_BgStruct mybg2 = bg_1;
 	for ( int i = 0 ; i < 4096 ; i++ ) my_Map2[i] = 18;
@@ -105,7 +107,10 @@ void ScrollEngine::render(){
 bool ScrollEngine::update(){
 	// Increment the counter
 	nframe ++;
-    scroll ++;
+	if ( Pad.Held.Right )
+        scroll ++;
+	if ( Pad.Held.Left )
+        scroll --;
 	// Move the rocket
 	rocket.pos.x ++; if(rocket.pos.x == 256) rocket.pos.x = -64;
 	rocket.pos.y --; if(rocket.pos.y == -64) rocket.pos.y = 192;

@@ -101,7 +101,7 @@ void ScrollEngine::render(){
 	PA_OutputText(1, 1, 2, "X: %d  ", int(rocket.pos.x));
 	PA_OutputText(1, 1, 3, "Y: %d"  , int(rocket.pos.y));
 
-	PA_OutputText(1, 1, 4, "Scroll: %d", scroll);
+        PA_OutputText(1, 1, 4, "Scroll: %03d", scroll);
 
 	// Render the rocket
 	rocket.render();

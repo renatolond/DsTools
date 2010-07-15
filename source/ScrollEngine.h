@@ -8,6 +8,7 @@
 
 // Include the PAlib header
 #include <PA9.h>
+#include <nds/ndstypes.h>
 
 // Include our graphics
 #include "all_gfx.h"

@@ -1,0 +1,6 @@
+build
+gfx
+source
+/home/lond/DsDev/PAlib/include/nds
+/home/lond/DsDev/devkitARM/include
+/home/lond/DsDev/libnds/include

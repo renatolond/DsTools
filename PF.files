@@ -1,0 +1,6 @@
+gfx/all_gfx.h
+gfx/bin/bg_1.c
+gfx/bin/teste.c
+source/main.cpp
+source/ScrollEngine.cpp
+source/ScrollEngine.h

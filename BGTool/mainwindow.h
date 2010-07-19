@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "images.h"
 #include <iostream>
+#include <vector>
 
 namespace Ui {
     class MainWindow;
@@ -23,6 +24,7 @@ private:
     imagesData *imgData;
 
 private slots:
+    void on_spritesView_customContextMenuRequested(QPoint pos);
     void on_pushButton_clicked();
 };
 

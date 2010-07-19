@@ -29,14 +29,17 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::on_pushButton_clicked()
 {
     QGraphicsView *w = ui->visualizationView;
+    QGraphicsView *s = ui->spritesView;
     QGraphicsScene *scn = new QGraphicsScene(w);
+    QGraphicsScene *sScn = new QGraphicsScene(s);
 
     w->setScene(scn);
+    s->setScene(sScn);
     QPixmap pix("/home/lond/sources/PF/gfx/teste.png");
 
     QImage img(pix.toImage());
-    int newHeight = pix.height()/8 + pix.height();
-    int newWidth = pix.width()/8 + pix.width();
+    int newHeight = pix.height()/8-1 + pix.height();
+    int newWidth = pix.width()/8-1 + pix.width();
     QImage imgGrid;
     imgGrid = QImage(newWidth, newHeight, img.format());
     imgData->visualizationGrid = imgGrid;
@@ -44,36 +47,88 @@ void MainWindow::on_pushButton_clicked()
     std::cout << "Height " << newHeight << std::endl << "Width " << newWidth << std::endl;
 
     imgGrid.fill(QColor(0,0,0).rgb());
-
+    QImage spriteGrid;
     {
-        int i, i2, j, j2;
-        int it, jt;
-        it = jt = 8;
+        std::vector<QImage> sprites;
 
-        for ( i = 0, i2 = 0 ; i < imgGrid.height() ;  )
+        int i; int j;
+        int startI; int startJ;
+        startI = startJ = 0;
+
+        int spritesI = pix.height() / 8;
+        int spritesJ = pix.width() / 8;
+
+        for ( i = 0 ; i < spritesI ; i++ )
         {
-            jt = 8;
-            for ( j = 0, j2 = 0 ; j < imgGrid.width() ; )
+            for ( j = 0 ; j < spritesJ ; j++ )
             {
-                imgGrid.setPixel(j,i,img.pixel(j2,i2));
+                QImage sprite = QImage(8,8,img.format());
+                for ( int k = 0 ; k < 8 ; k++ )
+                {
+                    for ( int l = 0 ; l < 8 ; l++ )
+                    {
+                        sprite.setPixel(l,k,img.pixel(j*8 + l,i*8+k));
+                        imgGrid.setPixel(j*9+l,i*9+k, img.pixel(j*8 + l,i*8+k));
+                    }
+                }
 
-                j++;
-                j2++;
-                jt--;
-                if (jt == 0) { jt = 8; j++; }
+                QImage sprite2, sprite3, sprite4;
+                sprite2 = sprite.transformed(QTransform().rotate(90));
+                sprite3 = sprite.transformed(QTransform().rotate(180));
+                sprite4 = sprite.transformed(QTransform().rotate(270));
+                int exists = 0;
+
+                for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
+                {
+                    if ( (*it == sprite) || (*it == sprite2) || (*it == sprite3) || (*it == sprite4) )
+                    {
+                        exists = 1;
+                        break;
+                    }
+                }
+
+                if ( !exists )
+                {
+                    std::cout << "New sprite at " << j*8 << "," << i*8 << std::endl;
+                    sprites.push_back(sprite);
+                }
+            }
+        }
+
+        spriteGrid = QImage(8*4+4, 2*sprites.size()+(2*sprites.size()/8-1), img.format());
+        spriteGrid.fill(QColor(255,0,255).rgb());
+        int m = 0;
+        int n = 0;
+        for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
+        {
+            for ( int k = 0 ; k < 8 ; k++ )
+            {
+                for ( int l = 0 ; l < 8 ; l++ )
+                {
+                    spriteGrid.setPixel(l+m*9,k+n*9,(*it).pixel(l,k));
+                }
             }
 
-            i++;
-            i2++;
-            it--;
-            if (it == 0) { it = 8; i++; }
+            if ( m != 3 ) m++;
+            else { m = 0; n++; }
         }
     }
 
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);
+    QPixmap pixSprGrid;
+    pixSprGrid = QPixmap::fromImage(spriteGrid);
 
     scn->setSceneRect(pixGrid.rect());
     scn->addPixmap(pixGrid);
+
+    sScn->setSceneRect(pixSprGrid.rect());
+    sScn->addPixmap(pixSprGrid);
     w->show();
+    s->show();
+}
+
+void MainWindow::on_spritesView_customContextMenuRequested(QPoint pos)
+{
+    std::cout << "Click at: " << pos.x() << "," << pos.y() << std::endl;
 }

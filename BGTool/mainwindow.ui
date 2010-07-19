@@ -10,6 +10,9 @@
     <height>372</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -63,7 +66,7 @@
      <string>Convert</string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="spritesView">
+   <widget class="MouseGraphicsView" name="spritesView">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -71,6 +74,9 @@
       <width>71</width>
       <height>241</height>
      </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -98,14 +104,6 @@
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open_Project">
    <property name="text">
@@ -119,6 +117,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MouseGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>mousegraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

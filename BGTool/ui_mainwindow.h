@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jul 19 15:04:02 2010
+** Created: Mon Jul 19 17:06:51 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,8 +22,8 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
-#include <QtGui/QToolBar>
 #include <QtGui/QWidget>
+#include "mousegraphicsview.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -37,11 +37,10 @@ public:
     QFrame *line;
     QFrame *line_2;
     QPushButton *pushButton;
-    QGraphicsView *spritesView;
+    MouseGraphicsView *spritesView;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Edit;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -49,6 +48,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(353, 372);
+        MainWindow->setMouseTracking(true);
         action_Open_Project = new QAction(MainWindow);
         action_Open_Project->setObjectName(QString::fromUtf8("action_Open_Project"));
         action_Save_Project = new QAction(MainWindow);
@@ -71,9 +71,10 @@ public:
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(0, 260, 71, 21));
-        spritesView = new QGraphicsView(centralWidget);
+        spritesView = new MouseGraphicsView(centralWidget);
         spritesView->setObjectName(QString::fromUtf8("spritesView"));
         spritesView->setGeometry(QRect(280, 0, 71, 241));
+        spritesView->setMouseTracking(true);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -83,9 +84,6 @@ public:
         menu_Edit = new QMenu(menuBar);
         menu_Edit->setObjectName(QString::fromUtf8("menu_Edit"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);

@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPixmap>
+#include "images.h"
 #include <iostream>
 
 namespace Ui {
@@ -20,6 +20,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    imagesData *imgData;
 
 private slots:
     void on_pushButton_clicked();

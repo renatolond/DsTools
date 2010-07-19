@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    imgData = new imagesData(QImage(),QImage());
 }
 
 MainWindow::~MainWindow()
@@ -27,15 +28,18 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::on_pushButton_clicked()
 {
-    QGraphicsView *w = ui->graphicsView;
+    QGraphicsView *w = ui->visualizationView;
     QGraphicsScene *scn = new QGraphicsScene(w);
+
     w->setScene(scn);
     QPixmap pix("/home/lond/sources/PF/gfx/teste.png");
 
     QImage img(pix.toImage());
     int newHeight = pix.height()/8 + pix.height();
-    int newWidth = pix.height()/8 + pix.width();
-    QImage imgGrid(newWidth, newHeight, img.format());
+    int newWidth = pix.width()/8 + pix.width();
+    QImage imgGrid;
+    imgGrid = QImage(newWidth, newHeight, img.format());
+    imgData->visualizationGrid = imgGrid;
 
     std::cout << "Height " << newHeight << std::endl << "Width " << newWidth << std::endl;
 
@@ -43,24 +47,28 @@ void MainWindow::on_pushButton_clicked()
 
     {
         int i, i2, j, j2;
+        int it, jt;
+        it = jt = 8;
+
         for ( i = 0, i2 = 0 ; i < imgGrid.height() ;  )
         {
+            jt = 8;
             for ( j = 0, j2 = 0 ; j < imgGrid.width() ; )
             {
                 imgGrid.setPixel(j,i,img.pixel(j2,i2));
 
                 j++;
                 j2++;
-                if (j % 7 == 0) j++;
+                jt--;
+                if (jt == 0) { jt = 8; j++; }
             }
 
             i++;
             i2++;
-            if (i % 7 == 0) i++;
+            it--;
+            if (it == 0) { it = 8; i++; }
         }
     }
-
-
 
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);

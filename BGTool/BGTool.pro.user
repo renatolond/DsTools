@@ -58,6 +58,7 @@
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <value key="QtVersionId" type="int">0</value>
    <value key="ToolChain" type="int">0</value>
+   <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">2</value>
   </valuemap>
  </data>
@@ -66,6 +67,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <value key="QtVersionId" type="int">0</value>
+   <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">0</value>
   </valuemap>
  </data>
@@ -82,10 +84,6 @@
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">DVDCSS_CACHE=/home/lond/.dvdcss/</value>
-    <value type="QString">DVDCSS_METHOD=key</value>
-    <value type="QString">DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString">DVDCSS_VERBOSE=0</value>
     <value type="QString">EDITOR=/bin/nano</value>
     <value type="QString">GDK_USE_XFT=1</value>
     <value type="QString">GDM_LANG=en_US.UTF-8</value>
@@ -115,8 +113,6 @@
     <value type="QString">PAGER=/usr/bin/less</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.2:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
     <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
-    <value type="QString">PULSE_PROP_media.role=none</value>
-    <value type="QString">PULSE_PROP_phonon.streamid={047d605a-07b3-43a7-93fd-2616ce981e7e}</value>
     <value type="QString">PWD=/home/lond</value>
     <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
@@ -165,10 +161,6 @@
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">DVDCSS_CACHE=/home/lond/.dvdcss/</value>
-    <value type="QString">DVDCSS_METHOD=key</value>
-    <value type="QString">DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString">DVDCSS_VERBOSE=0</value>
     <value type="QString">EDITOR=/bin/nano</value>
     <value type="QString">GDK_USE_XFT=1</value>
     <value type="QString">GDM_LANG=en_US.UTF-8</value>
@@ -198,8 +190,6 @@
     <value type="QString">PAGER=/usr/bin/less</value>
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.2:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
     <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
-    <value type="QString">PULSE_PROP_media.role=none</value>
-    <value type="QString">PULSE_PROP_phonon.streamid={047d605a-07b3-43a7-93fd-2616ce981e7e}</value>
     <value type="QString">PWD=/home/lond</value>
     <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Jul 16 10:59:02 2010
+** Created: Mon Jul 19 15:04:02 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -33,10 +33,11 @@ public:
     QAction *action_Open_Project;
     QAction *action_Save_Project;
     QWidget *centralWidget;
-    QGraphicsView *graphicsView;
+    QGraphicsView *visualizationView;
     QFrame *line;
     QFrame *line_2;
     QPushButton *pushButton;
+    QGraphicsView *spritesView;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Edit;
@@ -54,9 +55,9 @@ public:
         action_Save_Project->setObjectName(QString::fromUtf8("action_Save_Project"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        graphicsView = new QGraphicsView(centralWidget);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(0, 0, 261, 245));
+        visualizationView = new QGraphicsView(centralWidget);
+        visualizationView->setObjectName(QString::fromUtf8("visualizationView"));
+        visualizationView->setGeometry(QRect(0, 0, 261, 245));
         line = new QFrame(centralWidget);
         line->setObjectName(QString::fromUtf8("line"));
         line->setGeometry(QRect(0, 250, 271, 16));
@@ -69,7 +70,10 @@ public:
         line_2->setFrameShadow(QFrame::Sunken);
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(270, 60, 75, 23));
+        pushButton->setGeometry(QRect(0, 260, 71, 21));
+        spritesView = new QGraphicsView(centralWidget);
+        spritesView->setObjectName(QString::fromUtf8("spritesView"));
+        spritesView->setGeometry(QRect(280, 0, 71, 241));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -101,7 +105,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
         action_Open_Project->setText(QApplication::translate("MainWindow", "&Open Project", 0, QApplication::UnicodeUTF8));
         action_Save_Project->setText(QApplication::translate("MainWindow", "&Save Project", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "Convert", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="visualizationView">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -53,14 +53,24 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>60</y>
-      <width>75</width>
-      <height>23</height>
+      <x>0</x>
+      <y>260</y>
+      <width>71</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Convert</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="spritesView">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>0</y>
+      <width>71</width>
+      <height>241</height>
+     </rect>
     </property>
    </widget>
   </widget>

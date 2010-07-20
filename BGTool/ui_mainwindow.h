@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jul 19 17:06:51 2010
+** Created: Tue Jul 20 16:36:27 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -48,7 +48,6 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(353, 372);
-        MainWindow->setMouseTracking(true);
         action_Open_Project = new QAction(MainWindow);
         action_Open_Project->setObjectName(QString::fromUtf8("action_Open_Project"));
         action_Save_Project = new QAction(MainWindow);
@@ -74,7 +73,8 @@ public:
         spritesView = new MouseGraphicsView(centralWidget);
         spritesView->setObjectName(QString::fromUtf8("spritesView"));
         spritesView->setGeometry(QRect(280, 0, 71, 241));
-        spritesView->setMouseTracking(true);
+        spritesView->setMouseTracking(false);
+        spritesView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

@@ -31,7 +31,7 @@ void MainWindow::on_pushButton_clicked()
     QGraphicsView *w = ui->visualizationView;
     QGraphicsView *s = ui->spritesView;
     QGraphicsScene *scn = new QGraphicsScene(w);
-    QGraphicsScene *sScn = new QGraphicsScene(s);
+    QGraphicsScene *sScn = ui->spritesView->scene = new QGraphicsScene(s);
 
     w->setScene(scn);
     s->setScene(sScn);

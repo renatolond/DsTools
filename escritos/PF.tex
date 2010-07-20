@@ -45,6 +45,8 @@
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{caption}
+\usepackage{graphicx}
+\usepackage{wrapfig}
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
@@ -162,7 +164,7 @@ Estamos usando o kit de desenvolvimento \textit{homebrew}\footnotemark para o Ni
 
 Ao investigarmos a fundo, descobrimos que o DS suporta mapas com \textit{tiles}, ou seja, podemos criar um mapa e depois desconstruí-lo em pequenas imagens que serão repetidas várias vezes. 
 
-\subsection{O formato de background}
+\subsection{Engine: O formato de background}
 
 Investigamos a fundo o formato que é aceito pela PALib, assim, descobrimos que quando uma figura é colocada como plano de fundo, precisamos de quatro partes:
 
@@ -180,6 +182,18 @@ Investigamos a fundo o formato que é aceito pela PALib, assim, descobrimos que 
 \lstinputlisting[caption=Exemplo de arquivo .c:]{codigos/exemplo_bg.c}
 
 Portanto, precisaremos que a nossa ferramenta dê a saída nesse formato. Por enquanto, para os testes, usaremos a ferramenta que vem junto com o kit de desenvolvimento, porém, ela só converte uma imagem já pronta (ou seja, um mapa que já tenha sido desenhado) para este formato. Mas assim poderemos fazer testes com relação a movimentação do background e tudo mais.
+Descobrimos, também, que o DS já tem funções para rolamento de background, de modo que talvez nosso culling seja mais simples do que pensávamos originalmente.
+No entanto, é muito difícil editar os arquivos de background manualmente, de modo que teremos de dar início a ferramenta de edição antes do esperado. Vamos começar fazendo ela como uma simples ferramenta de edição de background.
+
+\section{GFXTool: A ferramenta de edição gráfica}
+Começamos então a criar a ferramenta. A idéia é que tenhamos uma área principal, onde será mostrado o que temos atualmente no mapa, uma área na lateral onde estarão os tiles que o usuário poderá usar para compor o background e algum botão que faça possível que o usuário edite, no próprio programa, os tiles. Ou crie novos.
+
+Comecemos então por uma idéia básica, a de deixar o usuário importar uma imagem já pronta, e que o programa identifique os tiles contidos na imagem. Desta maneira, poderemos usar uma fase já pronta para fazer nossos testes, e o usuário poderia migrar um trabalho anterior para a nova engine. Numa grande empresa, poderia ser o caso de estar havendo uma adaptação de um jogo de uma plataforma antiga para o Nintendo DS.
+
+\begin{wrapfigure}{r}{\linewidth}
+\includegraphics[width=\linewidth]{imgs/mockup.png}
+\caption{Uma idéia da nossa interface} 
+\end{wrapfigure}
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mousegraphicsview.h'
 **
-** Created: Tue Jul 20 16:36:49 2010
+** Created: Wed Jul 21 16:09:02 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -58,6 +58,8 @@ void MainWindow::on_pushButton_clicked()
         int spritesI = pix.height() / 8;
         int spritesJ = pix.width() / 8;
 
+        imgData->createBgMatrix(spritesI,spritesJ);
+
         for ( i = 0 ; i < spritesI ; i++ )
         {
             for ( j = 0 ; j < spritesJ ; j++ )
@@ -77,6 +79,7 @@ void MainWindow::on_pushButton_clicked()
                 sprite3 = sprite.transformed(QTransform().rotate(180));
                 sprite4 = sprite.transformed(QTransform().rotate(270));
                 int exists = 0;
+                int id = 0;
 
                 for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
                 {
@@ -85,7 +88,9 @@ void MainWindow::on_pushButton_clicked()
                         exists = 1;
                         break;
                     }
+                    id++;
                 }
+                imgData->bgmatrix[i][j] = id;
 
                 if ( !exists )
                 {
@@ -94,6 +99,8 @@ void MainWindow::on_pushButton_clicked()
                 }
             }
         }
+
+        imgData->dumpBgMatrix();
 
         std::cout << "Hey, man!" << sprites.size() << std::endl;
         spriteGrid = QImage(8*4+4, 8*((sprites.size()+3)/4)+((sprites.size()+3)/4), img.format());

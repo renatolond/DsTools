@@ -5,7 +5,8 @@ TARGET = BGTool
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    mousegraphicsview.cpp
+    mousegraphicsview.cpp \
+    imagesData.cpp
 HEADERS += mainwindow.h \
     images.h \
     mousegraphicsview.h

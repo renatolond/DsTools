@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Jul 20 16:36:27 2010
+** Created: Wed Jul 21 16:37:10 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
+#include <QtGui/QToolButton>
 #include <QtGui/QWidget>
 #include "mousegraphicsview.h"
 
@@ -38,6 +39,7 @@ public:
     QFrame *line_2;
     QPushButton *pushButton;
     MouseGraphicsView *spritesView;
+    QToolButton *teste;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Edit;
@@ -75,6 +77,10 @@ public:
         spritesView->setGeometry(QRect(280, 0, 71, 241));
         spritesView->setMouseTracking(false);
         spritesView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        teste = new QToolButton(centralWidget);
+        teste->setObjectName(QString::fromUtf8("teste"));
+        teste->setGeometry(QRect(80, 260, 61, 22));
+        teste->setCheckable(true);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -104,6 +110,7 @@ public:
         action_Open_Project->setText(QApplication::translate("MainWindow", "&Open Project", 0, QApplication::UnicodeUTF8));
         action_Save_Project->setText(QApplication::translate("MainWindow", "&Save Project", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Convert", 0, QApplication::UnicodeUTF8));
+        teste->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Edit->setTitle(QApplication::translate("MainWindow", "&Edit", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

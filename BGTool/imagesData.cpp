@@ -17,7 +17,11 @@ void imagesData::dumpBgMatrix()
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
         for ( int j = 0 ; j < bgmatrix_width ; j++ )
-            std::cout << " " << bgmatrix[i][j] << " ";
+        {
+            std::cout << " ";
+            if ( bgmatrix[i][j] < 10 ) std::cout << "0";
+            std::cout << bgmatrix[i][j] << " ";
+        }
         std::cout << std::endl;
     }
 

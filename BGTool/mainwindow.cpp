@@ -44,7 +44,7 @@ void MainWindow::on_pushButton_clicked()
     imgGrid = QImage(newWidth, newHeight, img.format());
     imgData->visualizationGrid = imgGrid;
 
-    std::cout << "Height " << newHeight << std::endl << "Width " << newWidth << std::endl;
+    std::cout << "Height " << newHeight << "; Width " << newWidth << std::endl;
 
     imgGrid.fill(QColor(0,0,0).rgb());
     QImage spriteGrid;
@@ -102,7 +102,7 @@ void MainWindow::on_pushButton_clicked()
 
         imgData->dumpBgMatrix();
 
-        std::cout << "Hey, man!" << sprites.size() << std::endl;
+        std::cout << "Total sprites: " << sprites.size() << std::endl;
         spriteGrid = QImage(8*4+4, 8*((sprites.size()+3)/4)+((sprites.size()+3)/4), img.format());
         spriteGrid.fill(QColor(255,0,255).rgb());
         int m = 0;

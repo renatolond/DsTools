@@ -16,11 +16,14 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
 
     QGraphicsItem *i = scene->itemAt(e->pos());
     QGraphicsPixmapItem *p;
-    std::cout << i->type() << std::endl;
-    if ( p = dynamic_cast<QGraphicsPixmapItem*>(i) )
+
+    if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
     {
-        std::cout << "OK!" << std::endl;
+        scene->removeItem(r);
     }
+
+    if ( !(p = dynamic_cast<QGraphicsPixmapItem*>(i)) )
+        return;
 
     QImage t = p->pixmap().toImage();
     int j, k;

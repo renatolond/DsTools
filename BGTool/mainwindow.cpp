@@ -95,7 +95,8 @@ void MainWindow::on_pushButton_clicked()
             }
         }
 
-        spriteGrid = QImage(8*4+4, 2*sprites.size()+(2*sprites.size()/8-1), img.format());
+        std::cout << "Hey, man!" << sprites.size() << std::endl;
+        spriteGrid = QImage(8*4+4, 8*((sprites.size()+3)/4)+((sprites.size()+3)/4), img.format());
         spriteGrid.fill(QColor(255,0,255).rgb());
         int m = 0;
         int n = 0;

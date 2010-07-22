@@ -19,6 +19,7 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    void setSelectedSprite(QImage);
 
 private:
     Ui::MainWindow *ui;

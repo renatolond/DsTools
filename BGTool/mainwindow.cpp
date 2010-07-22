@@ -41,6 +41,7 @@ void MainWindow::on_btConvert_clicked()
 
     w->setScene(scn);
     s->setScene(sScn);
+
     QPixmap pix("/home/lond/sources/PF/gfx/teste.png");
 
     QImage img(pix.toImage());
@@ -128,6 +129,11 @@ void MainWindow::on_btConvert_clicked()
         }
     }
 
+    QImage emptySprite = QImage(8,8,img.format());
+    emptySprite.fill(Qt::magenta);
+
+    setSelectedSprite(emptySprite);
+
     imgData->spriteGrid = spriteGrid;
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);
@@ -152,4 +158,44 @@ void MainWindow::on_btPaint_toggled(bool checked)
 void MainWindow::on_btDump_clicked()
 {
     imgData->dumpBgMatrix();
+}
+
+void MainWindow::setSelectedSprite(QImage s)
+{
+    int spriteI, spriteJ;
+    spriteI = spriteJ = 0;
+
+    int boxI, boxJ;
+    boxI = boxJ = 0;
+
+    int repeatI, repeatJ;
+    repeatI = ui->selectedView->height()/8;
+    repeatJ = ui->selectedView->width()/8;
+
+    QGraphicsView *sel = ui->selectedView;
+    QGraphicsScene *selScn = new QGraphicsScene(sel);
+    sel->setScene(selScn);
+    QPixmap selPix(ui->selectedView->width(), ui->selectedView->height());
+    QImage selImg = QImage(selPix.width(), selPix.height(), s.format());
+    selImg.fill(Qt::black);
+    for ( boxI = 0 ; boxI < ui->selectedView->height() ; boxI++ )
+    {
+        //if ( boxI/repeatI != (boxI+1)/repeatI )
+          //  continue;
+        if ( boxI/repeatI >= s.height() )
+            break;
+        for ( boxJ = 0 ; boxJ < ui->selectedView->width() ; boxJ++ )
+        {
+            //if ( boxJ/repeatJ != (boxJ+1)/repeatJ )
+                //continue;
+            if ( boxJ/repeatJ >= s.width() )
+                break;
+            selImg.setPixel(boxJ, boxI, Qt::magenta); // s.pixel(boxJ/repeatJ, boxI/repeatI));
+
+        }
+    }
+    selPix = selPix.fromImage(selImg);
+    selScn->setSceneRect(selPix.rect());
+    selScn->addPixmap(selPix);
+    sel->show();
 }

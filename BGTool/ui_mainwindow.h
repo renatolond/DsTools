@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jul 22 16:01:08 2010
+** Created: Thu Jul 22 16:43:07 2010
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +15,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QFrame>
+#include <QtGui/QGraphicsView>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
@@ -41,6 +42,8 @@ public:
     MouseGraphicsView *spritesView;
     QToolButton *btPaint;
     QToolButton *btDump;
+    QFrame *line;
+    QGraphicsView *selectedView;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Edit;
@@ -50,7 +53,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(353, 372);
+        MainWindow->resize(325, 372);
         action_Open_Project = new QAction(MainWindow);
         action_Open_Project->setObjectName(QString::fromUtf8("action_Open_Project"));
         action_Save_Project = new QAction(MainWindow);
@@ -63,33 +66,41 @@ public:
         visualizationView->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
         lnHz1 = new QFrame(centralWidget);
         lnHz1->setObjectName(QString::fromUtf8("lnHz1"));
-        lnHz1->setGeometry(QRect(0, 250, 271, 16));
+        lnHz1->setGeometry(QRect(0, 240, 321, 16));
         lnHz1->setFrameShape(QFrame::HLine);
         lnHz1->setFrameShadow(QFrame::Sunken);
         lnVr1 = new QFrame(centralWidget);
         lnVr1->setObjectName(QString::fromUtf8("lnVr1"));
-        lnVr1->setGeometry(QRect(260, 0, 20, 331));
+        lnVr1->setGeometry(QRect(260, 0, 20, 248));
         lnVr1->setFrameShape(QFrame::VLine);
         lnVr1->setFrameShadow(QFrame::Sunken);
         btConvert = new QPushButton(centralWidget);
         btConvert->setObjectName(QString::fromUtf8("btConvert"));
-        btConvert->setGeometry(QRect(0, 260, 71, 21));
+        btConvert->setGeometry(QRect(0, 250, 71, 21));
         spritesView = new MouseGraphicsView(centralWidget);
         spritesView->setObjectName(QString::fromUtf8("spritesView"));
-        spritesView->setGeometry(QRect(280, 0, 71, 241));
+        spritesView->setGeometry(QRect(280, 0, 40, 241));
         spritesView->setMouseTracking(false);
         spritesView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         btPaint = new QToolButton(centralWidget);
         btPaint->setObjectName(QString::fromUtf8("btPaint"));
-        btPaint->setGeometry(QRect(80, 260, 71, 21));
+        btPaint->setGeometry(QRect(80, 250, 71, 21));
         btPaint->setCheckable(true);
         btDump = new QToolButton(centralWidget);
         btDump->setObjectName(QString::fromUtf8("btDump"));
-        btDump->setGeometry(QRect(160, 260, 71, 22));
+        btDump->setGeometry(QRect(160, 250, 71, 22));
+        line = new QFrame(centralWidget);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setGeometry(QRect(230, 248, 20, 91));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+        selectedView = new QGraphicsView(centralWidget);
+        selectedView->setObjectName(QString::fromUtf8("selectedView"));
+        selectedView->setGeometry(QRect(250, 260, 71, 71));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 353, 23));
+        menuBar->setGeometry(QRect(0, 0, 325, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Edit = new QMenu(menuBar);

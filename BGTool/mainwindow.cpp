@@ -130,7 +130,7 @@ void MainWindow::on_btConvert_clicked()
     }
 
     QImage emptySprite = QImage(8,8,img.format());
-    emptySprite.fill(Qt::magenta);
+    emptySprite.fill(QColor(255,0,255).rgb());
 
     setSelectedSprite(emptySprite);
 
@@ -177,25 +177,25 @@ void MainWindow::setSelectedSprite(QImage s)
     sel->setScene(selScn);
     QPixmap selPix(ui->selectedView->width(), ui->selectedView->height());
     QImage selImg = QImage(selPix.width(), selPix.height(), s.format());
-    selImg.fill(Qt::black);
+    selImg.fill(QColor(0,0,0).rgb());
     for ( boxI = 0 ; boxI < ui->selectedView->height() ; boxI++ )
     {
-        //if ( boxI/repeatI != (boxI+1)/repeatI )
-          //  continue;
+        if ( boxI/repeatI != (boxI+1)/repeatI )
+            continue;
         if ( boxI/repeatI >= s.height() )
             break;
         for ( boxJ = 0 ; boxJ < ui->selectedView->width() ; boxJ++ )
         {
-            //if ( boxJ/repeatJ != (boxJ+1)/repeatJ )
-                //continue;
+            if ( boxJ/repeatJ != (boxJ+1)/repeatJ )
+                continue;
             if ( boxJ/repeatJ >= s.width() )
                 break;
-            selImg.setPixel(boxJ, boxI, Qt::magenta); // s.pixel(boxJ/repeatJ, boxI/repeatI));
+            selImg.setPixel(boxJ, boxI, s.pixel(boxJ/repeatJ, boxI/repeatI));
 
         }
     }
     selPix = selPix.fromImage(selImg);
-    selScn->setSceneRect(selPix.rect());
+    selScn->setSceneRect(0,0,repeatJ*s.width(), repeatI*s.height());
     selScn->addPixmap(selPix);
     sel->show();
 }

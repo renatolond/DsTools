@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     imgData = new imagesData(QImage(),QImage());
+    ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
 }
 
 MainWindow::~MainWindow()
@@ -26,11 +27,16 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_spritesView_customContextMenuRequested(QPoint pos)
+{
+    std::cout << "Click at: " << pos.x() << "," << pos.y() << std::endl;
+}
+
+void MainWindow::on_btConvert_clicked()
 {
     QGraphicsView *w = ui->visualizationView;
     QGraphicsView *s = ui->spritesView;
-    QGraphicsScene *scn = new QGraphicsScene(w);
+    QGraphicsScene *scn = ui->visualizationView->scene = new QGraphicsScene(w);
     QGraphicsScene *sScn = ui->spritesView->scene = new QGraphicsScene(s);
 
     w->setScene(scn);
@@ -122,6 +128,7 @@ void MainWindow::on_pushButton_clicked()
         }
     }
 
+    imgData->spriteGrid = spriteGrid;
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);
     QPixmap pixSprGrid;
@@ -134,9 +141,15 @@ void MainWindow::on_pushButton_clicked()
     sScn->addPixmap(pixSprGrid);
     w->show();
     s->show();
+
 }
 
-void MainWindow::on_spritesView_customContextMenuRequested(QPoint pos)
+void MainWindow::on_btPaint_toggled(bool checked)
 {
-    std::cout << "Click at: " << pos.x() << "," << pos.y() << std::endl;
+    ui->visualizationView->btPaintPressed = checked;
+}
+
+void MainWindow::on_btDump_clicked()
+{
+    imgData->dumpBgMatrix();
 }

@@ -15,17 +15,19 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    imagesData *imgData;
 
 protected:
     void changeEvent(QEvent *e);
 
 private:
     Ui::MainWindow *ui;
-    imagesData *imgData;
 
 private slots:
+    void on_btDump_clicked();
+    void on_btPaint_toggled(bool checked);
+    void on_btConvert_clicked();
     void on_spritesView_customContextMenuRequested(QPoint pos);
-    void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

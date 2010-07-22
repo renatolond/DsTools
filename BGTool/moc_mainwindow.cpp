@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Jul 21 16:23:13 2010
+** Created: Thu Jul 22 16:01:12 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,16 +31,19 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      16,   12,   11,   11, 0x08,
-      66,   11,   11,   11, 0x08,
+      12,   11,   11,   11, 0x08,
+      40,   32,   11,   11, 0x08,
+      65,   11,   11,   11, 0x08,
+      92,   88,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0pos\0"
+    "MainWindow\0\0on_btDump_clicked()\0checked\0"
+    "on_btPaint_toggled(bool)\0"
+    "on_btConvert_clicked()\0pos\0"
     "on_spritesView_customContextMenuRequested(QPoint)\0"
-    "on_pushButton_clicked()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -72,11 +75,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_spritesView_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
-        case 1: on_pushButton_clicked(); break;
+        case 0: on_btDump_clicked(); break;
+        case 1: on_btPaint_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 2: on_btConvert_clicked(); break;
+        case 3: on_spritesView_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }

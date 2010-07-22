@@ -10,6 +10,8 @@ public:
     imagesData(QImage visualization, QImage sprite) : visualizationGrid(visualization), spriteGrid(sprite)
     {
         bgmatrix_width = bgmatrix_height = 0;
+        selectedSprite.setX(-1);
+        selectedSprite.setY(-1);
     }
 
     ~imagesData()
@@ -27,11 +29,13 @@ public:
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();
 
-    QImage &visualizationGrid;
-    QImage &spriteGrid;
+    QImage visualizationGrid;
+    QImage spriteGrid;
     int **bgmatrix;
     int bgmatrix_width;
     int bgmatrix_height;
+    QPoint selectedSprite;
+    int selectedSpriteId;
 };
 
 #endif // IMAGES_H

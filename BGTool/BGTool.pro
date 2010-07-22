@@ -6,8 +6,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     mousegraphicsview.cpp \
-    imagesData.cpp
+    imagesData.cpp \
+    visualizationgraphicsview.cpp
 HEADERS += mainwindow.h \
     images.h \
-    mousegraphicsview.h
+    mousegraphicsview.h \
+    visualizationgraphicsview.h
 FORMS += mainwindow.ui

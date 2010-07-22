@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGraphicsView" name="visualizationView">
+   <widget class="VisualizationGraphicsView" name="visualizationView">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -23,8 +23,11 @@
       <height>245</height>
      </rect>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignHCenter|Qt::AlignTop</set>
+    </property>
    </widget>
-   <widget class="Line" name="line">
+   <widget class="Line" name="lnHz1">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -37,7 +40,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="Line" name="line_2">
+   <widget class="Line" name="lnVr1">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -50,7 +53,7 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btConvert">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -77,6 +80,35 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="btPaint">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>260</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Paint</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="btDump">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>260</y>
+      <width>71</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Dump</string>
     </property>
    </widget>
   </widget>
@@ -122,6 +154,11 @@
    <class>MouseGraphicsView</class>
    <extends>QGraphicsView</extends>
    <header>mousegraphicsview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>VisualizationGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>visualizationgraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

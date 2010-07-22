@@ -3,6 +3,7 @@
 
 #include <QPixmap>
 #include <iostream>
+#include <QGraphicsView>
 
 class imagesData
 {
@@ -28,6 +29,7 @@ public:
 
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();
+    void setSelectedSprite(QImage s);
 
     QImage visualizationGrid;
     QImage spriteGrid;
@@ -36,6 +38,7 @@ public:
     int bgmatrix_height;
     QPoint selectedSprite;
     int selectedSpriteId;
+    QGraphicsView *selectedView;
 };
 
 #endif // IMAGES_H

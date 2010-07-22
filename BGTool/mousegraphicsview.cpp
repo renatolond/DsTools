@@ -24,6 +24,7 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
     if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
     {
         scene->removeItem(r);
+        return;
     }
 
     if ( !(p = dynamic_cast<QGraphicsPixmapItem*>(i)) )
@@ -47,6 +48,21 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
             scene->removeItem(r);
         }
     }
+
+    QImage selSprite = QImage(8,8,t.format());
+    {
+        int spriteI, spriteJ;
+        spriteI = e->pos().y() / 9;
+        spriteJ = e->pos().x() / 9;
+        for ( int i = 0 ; i < 8 ; i++ )
+        {
+            for ( int j = 0 ; j < 8 ; j++ )
+            {
+                selSprite.setPixel(j, i, t.pixel(j+spriteJ*9,i+spriteI*9));
+            }
+        }
+    }
+    imgData->setSelectedSprite(selSprite);
 
     imgData->selectedSprite.setX(j*9);
     imgData->selectedSprite.setY(k*9);

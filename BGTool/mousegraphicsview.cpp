@@ -34,9 +34,6 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
     int j, k;
     j = e->pos().x() / 9;
     k = e->pos().y() / 9;
-    QPen l;
-    l.setColor(Qt::yellow);
-    l.setWidth(2);
 
     if ( imgData->selectedSprite.x() >= 0 )
     {
@@ -68,18 +65,8 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
     imgData->selectedSprite.setY(k*9);
     imgData->selectedSpriteId = (imgData->selectedSprite.y()*4 + imgData->selectedSprite.x())/9;
     std::cout << "Selected id: " << imgData->selectedSpriteId << std::endl;
+    QPen l;
+    l.setColor(Qt::yellow);
+    l.setWidth(2);
     scene->addRect(j*9-1, k*9-1, 9, 9, l);
 }
-
-/*void MouseGraphicsView::changeEvent(QEvent *e)
-{
-    QGraphicsView::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-//        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
-}
-*/

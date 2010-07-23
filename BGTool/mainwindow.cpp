@@ -34,8 +34,8 @@ void MainWindow::on_spritesView_customContextMenuRequested(QPoint pos)
 
 void MainWindow::on_btConvert_clicked()
 {
-    QGraphicsView *w = ui->visualizationView;
-    QGraphicsView *s = ui->spritesView;
+    QGraphicsView *w = imgData->visualizationView = ui->visualizationView;
+    QGraphicsView *s = imgData->spritesView = ui->spritesView;
     QGraphicsScene *scn = ui->visualizationView->scene = new QGraphicsScene(w);
     QGraphicsScene *sScn = ui->spritesView->scene = new QGraphicsScene(s);
 
@@ -127,6 +127,8 @@ void MainWindow::on_btConvert_clicked()
             if ( m != 3 ) m++;
             else { m = 0; n++; }
         }
+
+        statusBar()->showMessage("File loaded.",10*1000);
     }
 
     QImage emptySprite = QImage(8,8,img.format());
@@ -159,4 +161,9 @@ void MainWindow::on_btPaint_toggled(bool checked)
 void MainWindow::on_btDump_clicked()
 {
     imgData->dumpBgMatrix();
+}
+
+void MainWindow::on_btHighlight_clicked()
+{
+    imgData->highlightSelectedSprite();
 }

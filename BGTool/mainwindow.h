@@ -25,6 +25,7 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
+    void on_btHighlight_clicked();
     void on_btDump_clicked();
     void on_btPaint_toggled(bool checked);
     void on_btConvert_clicked();

@@ -10,6 +10,37 @@ void imagesData::createBgMatrix(int height, int width)
         bgmatrix[i] = new int[bgmatrix_width];
     }
 }
+
+void imagesData::highlightSelectedSprite()
+{
+    if ( selectedSpriteId < 0 ) return;
+
+    QList<QGraphicsItem *> items = visualizationView->scene()->items();
+    QList<QGraphicsItem *>::iterator it;
+    for ( it = items.begin() ; it != items.end() ; it++ )
+    {
+        if ( dynamic_cast<QGraphicsPixmapItem*>(*it) == 0 )
+        {
+            visualizationView->scene()->removeItem(*it);
+        }
+    }
+
+    for ( int i = 0 ; i < bgmatrix_height ; i++ )
+    {
+        for ( int j = 0 ; j < bgmatrix_width ; j++ )
+        {
+            if ( bgmatrix[i][j] == selectedSpriteId )
+            {
+                QPen l;
+                l.setColor(Qt::yellow);
+                l.setWidth(2);
+
+                visualizationView->scene()->addRect(j*9-1, i*9-1, 9, 9, l);
+            }
+        }
+    }
+}
+
 void imagesData::setSelectedSprite(QImage s)
 {
     int spriteI, spriteJ;

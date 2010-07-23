@@ -2,7 +2,7 @@
 #include "mainwindow.h"
 
 VisualizationGraphicsView::VisualizationGraphicsView(QWidget *parent) :
-    QGraphicsView(parent)
+        QGraphicsView(parent)
 {
     btPaintPressed = 0;
     scene = 0;
@@ -24,10 +24,15 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
         std::cout << p.x() << "," << p.y() << std::endl;
         std::cout << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
 
-        QGraphicsItem *i = scene->itemAt(e->pos());
+        QList<QGraphicsItem *> items = scene->items();
+        QList<QGraphicsItem *>::iterator it;
         QGraphicsPixmapItem *pi;
-        if ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(i)) )
-            return;
+
+        it = items.begin();
+        while ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(*it)) && it != items.end() )
+        {
+            it++;
+        }
 
         p.setX(p.x()+horizontalScrollBar()->value());
         p.setX(p.x()/9);

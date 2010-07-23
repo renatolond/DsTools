@@ -6,6 +6,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
+#include <vector>
 
 class imagesData
 {
@@ -34,6 +35,7 @@ public:
     void dumpBgMatrix();
     void setSelectedSprite(QImage s);
     void highlightSelectedSprite();
+    void exportPng();
 
     QImage visualizationGrid;
     QImage spriteGrid;
@@ -45,6 +47,7 @@ public:
     QGraphicsView *selectedView;
     QGraphicsView *visualizationView;
     QGraphicsView *spritesView;
+    std::vector<QImage> sprites;
 };
 
 #endif // IMAGES_H

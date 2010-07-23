@@ -11,6 +11,28 @@ void imagesData::createBgMatrix(int height, int width)
     }
 }
 
+void imagesData::exportPng()
+{
+    QImage exportImg = QImage(bgmatrix_width*8,bgmatrix_height*8,sprites[0].format());
+
+    for ( int i = 0 ; i < bgmatrix_height ; i++ )
+    {
+        for ( int j = 0 ; j < bgmatrix_width ; j++ )
+        {
+            for ( int k = 0 ; k < 8 ; k++ )
+            {
+                for ( int l = 0 ; l < 8 ; l++ )
+                {
+                    exportImg.setPixel(j*8+l, i*8+k, sprites[bgmatrix[i][j]].pixel(l,k));
+                }
+            }
+        }
+    }
+
+    QPixmap pm= QPixmap::fromImage(exportImg);
+    pm.save("export.png");
+}
+
 void imagesData::highlightSelectedSprite()
 {
     if ( selectedSpriteId < 0 ) return;

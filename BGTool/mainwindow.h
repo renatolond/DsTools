@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 #include "images.h"
-#include <iostream>
-#include <vector>
 
 namespace Ui {
     class MainWindow;
@@ -25,6 +23,7 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
+    void on_btExportPng_clicked();
     void on_btHighlight_clicked();
     void on_btDump_clicked();
     void on_btPaint_toggled(bool checked);

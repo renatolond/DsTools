@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'visualizationgraphicsview.h'
 **
-** Created: Thu Jul 22 23:51:48 2010
+** Created: Fri Jul 23 00:34:00 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

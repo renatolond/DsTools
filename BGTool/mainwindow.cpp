@@ -82,9 +82,9 @@ void MainWindow::on_btConvert_clicked()
                 }
 
                 QImage sprite2, sprite3, sprite4;
-                sprite2 = sprite.transformed(QTransform().rotate(90));
-                sprite3 = sprite.transformed(QTransform().rotate(180));
-                sprite4 = sprite.transformed(QTransform().rotate(270));
+//                sprite2 = sprite.transformed(QTransform().rotate(90));
+//                sprite3 = sprite.transformed(QTransform().rotate(180));
+//                sprite4 = sprite.transformed(QTransform().rotate(270));
                 int exists = 0;
                 int id = 0;
 
@@ -128,6 +128,7 @@ void MainWindow::on_btConvert_clicked()
             else { m = 0; n++; }
         }
 
+        imgData->sprites = sprites;
         statusBar()->showMessage("File loaded.",10*1000);
     }
 
@@ -166,4 +167,9 @@ void MainWindow::on_btDump_clicked()
 void MainWindow::on_btHighlight_clicked()
 {
     imgData->highlightSelectedSprite();
+}
+
+void MainWindow::on_btExportPng_clicked()
+{
+    imgData->exportPng();
 }

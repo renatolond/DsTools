@@ -5,7 +5,6 @@ VisualizationGraphicsView::VisualizationGraphicsView(QWidget *parent) :
         QGraphicsView(parent)
 {
     btPaintPressed = 0;
-    scene = 0;
     imgData = 0;
 }
 
@@ -15,7 +14,7 @@ VisualizationGraphicsView::~VisualizationGraphicsView()
 
 void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
 {
-    if ( !scene )
+    if ( !scene() )
         return;
 
     if ( btPaintPressed )
@@ -24,7 +23,7 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
         std::cout << p.x() << "," << p.y() << std::endl;
         std::cout << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
 
-        QList<QGraphicsItem *> items = scene->items();
+        QList<QGraphicsItem *> items = scene()->items();
         QList<QGraphicsItem *>::iterator it;
         QGraphicsPixmapItem *pi;
 

@@ -31,6 +31,7 @@ public:
         delete[] bgmatrix;
     }
 
+    void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *);
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();
     void setSelectedSprite(QImage s);

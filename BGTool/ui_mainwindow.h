@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Jul 23 00:33:36 2010
+** Created: Sat Jul 24 18:38:26 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -29,7 +29,7 @@
 #include <QtGui/QToolButton>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
-#include "mousegraphicsview.h"
+#include "spritesgraphicsview.h"
 #include "visualizationgraphicsview.h"
 
 QT_BEGIN_NAMESPACE
@@ -45,7 +45,7 @@ public:
     QHBoxLayout *horizontalLayout_2;
     VisualizationGraphicsView *visualizationView;
     QFrame *lnVr1;
-    MouseGraphicsView *spritesView;
+    SpritesGraphicsView *spritesView;
     QFrame *lnHz1;
     QHBoxLayout *horizontalLayout;
     QGridLayout *gridLayout_2;
@@ -110,7 +110,7 @@ public:
 
         horizontalLayout_2->addWidget(lnVr1);
 
-        spritesView = new MouseGraphicsView(layoutWidget);
+        spritesView = new SpritesGraphicsView(layoutWidget);
         spritesView->setObjectName(QString::fromUtf8("spritesView"));
         spritesView->setMinimumSize(QSize(45, 241));
         spritesView->setMaximumSize(QSize(45, 241));
@@ -214,10 +214,9 @@ public:
         verticalLayout->addLayout(horizontalLayout);
 
         MainWindow->setCentralWidget(centralWidget);
-        layoutWidget->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 23));
+        menuBar->setGeometry(QRect(0, 0, 400, 19));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Edit = new QMenu(menuBar);

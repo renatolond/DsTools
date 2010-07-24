@@ -5,11 +5,11 @@ TARGET = BGTool
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    mousegraphicsview.cpp \
+    spritesgraphicsview.cpp \
     imagesData.cpp \
     visualizationgraphicsview.cpp
 HEADERS += mainwindow.h \
-    images.h \
-    mousegraphicsview.h \
+    imagesData.h \
+    spritesgraphicsview.h \
     visualizationgraphicsview.h
 FORMS += mainwindow.ui

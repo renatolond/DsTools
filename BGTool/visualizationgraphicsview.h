@@ -6,7 +6,7 @@
 #include <QFlags>
 #include <QGraphicsItem>
 #include <QScrollBar>
-#include <images.h>
+#include <imagesData.h>
 
 class VisualizationGraphicsView : public QGraphicsView
 {
@@ -14,7 +14,7 @@ class VisualizationGraphicsView : public QGraphicsView
 public:
     VisualizationGraphicsView(QWidget *parent = 0);
     ~VisualizationGraphicsView();
-    QGraphicsScene *scene;
+  //  QGraphicsScene *scene;
     int btPaintPressed;
     imagesData *imgData;
 

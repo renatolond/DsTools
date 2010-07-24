@@ -1,29 +1,30 @@
-#include "mousegraphicsview.h"
+#include "spritesgraphicsview.h"
 
-MouseGraphicsView::MouseGraphicsView(QWidget *parent) :
+SpritesGraphicsView::SpritesGraphicsView(QWidget *parent) :
     QGraphicsView(parent)
 {
-    scene = 0;
+//    scene = 0;
     imgData = 0;
 }
 
-MouseGraphicsView::~MouseGraphicsView()
+SpritesGraphicsView::~SpritesGraphicsView()
 {
 }
 
-void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
+void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
 {
-    if ( !scene )
+    if ( !scene() )
         return;
+
     std::cout << e->pos().x() << "," << e->pos().y() << std::endl;
     std::cout << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
 
-    QGraphicsItem *i = scene->itemAt(e->pos());
+    QGraphicsItem *i = scene()->itemAt(e->pos());
     QGraphicsPixmapItem *p;
 
     if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
     {
-        scene->removeItem(r);
+        scene()->removeItem(r);
         return;
     }
 
@@ -37,12 +38,11 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
 
     if ( imgData->selectedSprite.x() >= 0 )
     {
-        QGraphicsItem *i = scene->itemAt(imgData->selectedSprite);
-        QGraphicsPixmapItem *p;
+        QGraphicsItem *i = scene()->itemAt(imgData->selectedSprite);
 
         if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
         {
-            scene->removeItem(r);
+            scene()->removeItem(r);
         }
     }
 
@@ -68,5 +68,5 @@ void MouseGraphicsView::mousePressEvent(QMouseEvent *e)
     QPen l;
     l.setColor(Qt::yellow);
     l.setWidth(2);
-    scene->addRect(j*9-1, k*9-1, 9, 9, l);
+    scene()->addRect(j*9-1, k*9-1, 9, 9, l);
 }

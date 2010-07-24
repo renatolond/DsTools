@@ -62,7 +62,7 @@
         </widget>
        </item>
        <item>
-        <widget class="MouseGraphicsView" name="spritesView">
+        <widget class="SpritesGraphicsView" name="spritesView">
          <property name="minimumSize">
           <size>
            <width>45</width>
@@ -271,8 +271,6 @@
      </item>
     </layout>
    </widget>
-   <zorder>layoutWidget</zorder>
-   <zorder></zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -280,7 +278,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>23</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -313,9 +311,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>MouseGraphicsView</class>
+   <class>SpritesGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>mousegraphicsview.h</header>
+   <header>spritesgraphicsview.h</header>
   </customwidget>
   <customwidget>
    <class>VisualizationGraphicsView</class>

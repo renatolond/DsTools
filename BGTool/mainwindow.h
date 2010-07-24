@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "images.h"
+#include "imagesData.h"
 
 namespace Ui {
     class MainWindow;
@@ -28,7 +28,6 @@ private slots:
     void on_btDump_clicked();
     void on_btPaint_toggled(bool checked);
     void on_btConvert_clicked();
-    void on_spritesView_customContextMenuRequested(QPoint pos);
 };
 
 #endif // MAINWINDOW_H

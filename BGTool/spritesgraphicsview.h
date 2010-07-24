@@ -6,15 +6,15 @@
 #include <QMouseEvent>
 #include <QFlags>
 #include <QGraphicsItem>
-#include "images.h"
+#include "imagesData.h"
 
-class MouseGraphicsView : public QGraphicsView
+class SpritesGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    MouseGraphicsView(QWidget *parent = 0);
-    ~MouseGraphicsView();
-    QGraphicsScene *scene;
+    SpritesGraphicsView(QWidget *parent = 0);
+    ~SpritesGraphicsView();
+   // QGraphicsScene *scene;
     imagesData *imgData;
 
 protected:

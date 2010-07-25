@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'spritesgraphicsview.h'
 **
-** Created: Sat Jul 24 18:38:34 2010
+** Created: Sun Jul 25 16:57:12 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

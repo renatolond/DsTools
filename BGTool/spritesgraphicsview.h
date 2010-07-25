@@ -11,6 +11,7 @@
 class SpritesGraphicsView : public QGraphicsView
 {
     Q_OBJECT
+    logger log;
 public:
     SpritesGraphicsView(QWidget *parent = 0);
     ~SpritesGraphicsView();

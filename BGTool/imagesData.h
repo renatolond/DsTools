@@ -7,16 +7,26 @@
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <vector>
+#include "logger.h"
+
+const int sprite_height = 8;
+const int sprite_width  = 8;
+const int sprites_per_line = 4;
 
 class imagesData
 {
+    void findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid);
+    logger log;
 public:
     imagesData(QImage visualization, QImage sprite) : visualizationGrid(visualization), spriteGrid(sprite)
     {
+        log = logger(__FILE__);
         bgmatrix_width = bgmatrix_height = 0;
         selectedSprite.setX(-1);
         selectedSprite.setY(-1);
         selectedSpriteId = -1;
+        visualization_grid_height = visualization_grid_width = 1;
+        sprite_grid_height = sprite_grid_width = 1;
     }
 
     ~imagesData()
@@ -49,6 +59,8 @@ public:
     QGraphicsView *visualizationView;
     QGraphicsView *spritesView;
     std::vector<QImage> sprites;
+    int visualization_grid_height,visualization_grid_width;
+    int sprite_grid_height, sprite_grid_width;
 };
 
 #endif // IMAGES_H

@@ -77,11 +77,11 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-pDWyNiLSOA,guid=eb80e84a4be7dcf95af081964c4b407a</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-dqvAjkoJqK,guid=b303b31a896b4d621168bd804c4c6cb7</value>
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-Y4NmLg/S.gpg-agent:1269:1</value>
+    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-FnVppb/S.gpg-agent:1239:1</value>
     <value type="QString">GS_LIB=/home/nat/.fonts</value>
     <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/nat/.gtkrc-2.0:/home/nat/.gtkrc-2.0-kde4:/home/nat/.kde/share/config/gtkrc-2.0</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
@@ -99,16 +99,16 @@
     <value type="QString">PWD=/home/nat/Documentos</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/nat/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/nat-desktop:@/tmp/.ICE-unix/1401,unix/nat-desktop:/tmp/.ICE-unix/1401</value>
+    <value type="QString">SESSION_MANAGER=local/nat-desktop:@/tmp/.ICE-unix/1372,unix/nat-desktop:/tmp/.ICE-unix/1372</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=0</value>
-    <value type="QString">SSH_AGENT_PID=1268</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-ZvWIvi1221/agent.1221</value>
+    <value type="QString">SSH_AGENT_PID=1238</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-KJSURU1191/agent.1191</value>
     <value type="QString">USER=nat</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=oxy-white</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=fca4742b232a9fc78fb8b2284aec7635-1280000122.479786-85290034</value>
+    <value type="QString">XDG_SESSION_COOKIE=fca4742b232a9fc78fb8b2284aec7635-1280076983.401600-47776621</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -128,11 +128,11 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-pDWyNiLSOA,guid=eb80e84a4be7dcf95af081964c4b407a</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-dqvAjkoJqK,guid=b303b31a896b4d621168bd804c4c6cb7</value>
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-Y4NmLg/S.gpg-agent:1269:1</value>
+    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-FnVppb/S.gpg-agent:1239:1</value>
     <value type="QString">GS_LIB=/home/nat/.fonts</value>
     <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/nat/.gtkrc-2.0:/home/nat/.gtkrc-2.0-kde4:/home/nat/.kde/share/config/gtkrc-2.0</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
@@ -150,16 +150,16 @@
     <value type="QString">PWD=/home/nat/Documentos</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/nat/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/nat-desktop:@/tmp/.ICE-unix/1401,unix/nat-desktop:/tmp/.ICE-unix/1401</value>
+    <value type="QString">SESSION_MANAGER=local/nat-desktop:@/tmp/.ICE-unix/1372,unix/nat-desktop:/tmp/.ICE-unix/1372</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=0</value>
-    <value type="QString">SSH_AGENT_PID=1268</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-ZvWIvi1221/agent.1221</value>
+    <value type="QString">SSH_AGENT_PID=1238</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-KJSURU1191/agent.1191</value>
     <value type="QString">USER=nat</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=oxy-white</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=fca4742b232a9fc78fb8b2284aec7635-1280000122.479786-85290034</value>
+    <value type="QString">XDG_SESSION_COOKIE=fca4742b232a9fc78fb8b2284aec7635-1280076983.401600-47776621</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
@@ -176,11 +176,11 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-pDWyNiLSOA,guid=eb80e84a4be7dcf95af081964c4b407a</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-dqvAjkoJqK,guid=b303b31a896b4d621168bd804c4c6cb7</value>
     <value type="QString">DESKTOP_SESSION=kde</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-Y4NmLg/S.gpg-agent:1269:1</value>
+    <value type="QString">GPG_AGENT_INFO=/tmp/gpg-FnVppb/S.gpg-agent:1239:1</value>
     <value type="QString">GS_LIB=/home/nat/.fonts</value>
     <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/nat/.gtkrc-2.0:/home/nat/.gtkrc-2.0-kde4:/home/nat/.kde/share/config/gtkrc-2.0</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
@@ -198,16 +198,16 @@
     <value type="QString">PWD=/home/nat/Documentos</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/nat/.kde/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/nat-desktop:@/tmp/.ICE-unix/1401,unix/nat-desktop:/tmp/.ICE-unix/1401</value>
+    <value type="QString">SESSION_MANAGER=local/nat-desktop:@/tmp/.ICE-unix/1372,unix/nat-desktop:/tmp/.ICE-unix/1372</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=0</value>
-    <value type="QString">SSH_AGENT_PID=1268</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-ZvWIvi1221/agent.1221</value>
+    <value type="QString">SSH_AGENT_PID=1238</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-KJSURU1191/agent.1191</value>
     <value type="QString">USER=nat</value>
     <value type="QString">WINDOWPATH=7</value>
     <value type="QString">XCURSOR_THEME=oxy-white</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
-    <value type="QString">XDG_SESSION_COOKIE=fca4742b232a9fc78fb8b2284aec7635-1280000122.479786-85290034</value>
+    <value type="QString">XDG_SESSION_COOKIE=fca4742b232a9fc78fb8b2284aec7635-1280076983.401600-47776621</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">true</value>

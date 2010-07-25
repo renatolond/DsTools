@@ -11,6 +11,7 @@
 class VisualizationGraphicsView : public QGraphicsView
 {
     Q_OBJECT
+    logger log;
 public:
     VisualizationGraphicsView(QWidget *parent = 0);
     ~VisualizationGraphicsView();

@@ -7,9 +7,11 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     spritesgraphicsview.cpp \
     imagesData.cpp \
-    visualizationgraphicsview.cpp
+    visualizationgraphicsview.cpp \
+    logger.cpp
 HEADERS += mainwindow.h \
     imagesData.h \
     spritesgraphicsview.h \
-    visualizationgraphicsview.h
+    visualizationgraphicsview.h \
+    logger.h
 FORMS += mainwindow.ui

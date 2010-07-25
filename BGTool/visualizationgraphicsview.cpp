@@ -6,6 +6,7 @@ VisualizationGraphicsView::VisualizationGraphicsView(QWidget *parent) :
 {
     btPaintPressed = 0;
     imgData = 0;
+    log = logger(__FILE__);
 }
 
 VisualizationGraphicsView::~VisualizationGraphicsView()
@@ -20,8 +21,10 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
     if ( btPaintPressed )
     {
         QPoint p = e->pos();
-        std::cout << p.x() << "," << p.y() << std::endl;
-        std::cout << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
+        std::ostringstream outs;
+        outs << p.x() << "," << p.y() << std::endl;
+        outs << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
+        log.log(__LINE__, outs);
 
         QList<QGraphicsItem *> items = scene()->items();
         QList<QGraphicsItem *>::iterator it;
@@ -34,10 +37,11 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
         }
 
         p.setX(p.x()+horizontalScrollBar()->value());
-        p.setX(p.x()/9);
-        p.setY(p.y()/9);
+        p.setX(p.x()/(sprite_width+imgData->visualization_grid_width));
+        p.setY(p.y()/(sprite_height+imgData->visualization_grid_height));
 
-        std::cout << "Sprite: " << p.x() << "," << p.y() << std::endl;
+        outs << "Sprite: " << p.x() << "," << p.y() << std::endl;
+        log.log(__LINE__,outs);
 
         if ( imgData->selectedSprite.x() >= 0 )
         {
@@ -47,11 +51,13 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
             QImage spriteImg = imgData->spriteGrid;
             QPoint spritePt = imgData->selectedSprite;
 
-            for ( int i = 0 ; i < 8 ; i++ )
+            for ( int i = 0 ; i < sprite_height ; i++ )
             {
-                for ( int j = 0 ; j < 8 ; j++ )
+                for ( int j = 0 ; j < sprite_width ; j++ )
                 {
-                    gridImg.setPixel(j+p.x()*9,i+p.y()*9,spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
+                    gridImg.setPixel(j+p.x()*(sprite_width+imgData->visualization_grid_width),
+                                     i+p.y()*(sprite_height+imgData->visualization_grid_height),
+                                     spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
                 }
             }
             gridPix = gridPix.fromImage(gridImg);

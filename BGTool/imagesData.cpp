@@ -11,117 +11,140 @@ void imagesData::createBgMatrix(int height, int width)
     }
 }
 
+void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid)
+{
+
+    int i; int j;
+    int startI; int startJ;
+    startI = startJ = 0;
+
+    int spritesI = pix_height / sprite_height;
+    int spritesJ = pix_width / sprite_width;
+
+    createBgMatrix(spritesI,spritesJ);
+
+    for ( i = 0 ; i < spritesI ; i++ )
+    {
+        for ( j = 0 ; j < spritesJ ; j++ )
+        {
+            QImage sprite = QImage(sprite_width,
+                                   sprite_height,
+                                   img.format());
+            for ( int k = 0 ; k < sprite_height ; k++ )
+            {
+                for ( int l = 0 ; l < sprite_width ; l++ )
+                {
+                    sprite.setPixel(l,k,
+                                    img.pixel(j*sprite_width  + l,
+                                              i*sprite_height + k));
+                    imgGrid.setPixel(j*(sprite_width +visualization_grid_width) +l,
+                                     i*(sprite_height+visualization_grid_height)+k,
+                                     img.pixel(j*sprite_width  + l,
+                                               i*sprite_height + k));
+                }
+            }
+
+            QImage sprite2, sprite3, sprite4;
+            //sprite2 = sprite.transformed(QTransform().scale(-1, 1));
+            //sprite3 = sprite.transformed(QTransform().scale( 1,-1));
+            //sprite4 = sprite.transformed(QTransform().scale(-1,-1));
+            int exists = 0;
+            int id = 0;
+
+            for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
+            {
+                if ( (*it == sprite) || (*it == sprite2) || (*it == sprite3) || (*it == sprite4) )
+                {
+                    exists = 1;
+                    break;
+                }
+                id++;
+            }
+            bgmatrix[i][j] = id;
+
+            if ( !exists )
+            {
+                std::ostringstream outs;
+                outs << "New sprite at " << j*sprite_width << "," << i*sprite_height << std::endl;
+                log.log(__LINE__, outs);
+                sprites.push_back(sprite);
+            }
+        }
+    }
+
+    //dumpBgMatrix();
+
+    std::ostringstream outs;
+    outs << "Total sprites: " << sprites.size() << std::endl;
+    log.log(__LINE__, outs);
+    int sprites_per_column = (sprites.size()/sprites_per_line) + ((sprites.size()%sprites_per_line)?1:0);
+
+    spriteGrid = QImage(sprite_width*sprites_per_line + (sprites_per_line-1)*sprite_grid_width,
+                        sprite_height*sprites_per_column + (sprites_per_column-1)*sprite_grid_height,
+                        img.format());
+    spriteGrid.fill(QColor(255,0,255).rgb());
+    int m = 0;
+    int n = 0;
+    for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
+    {
+        for ( int k = 0 ; k < sprite_height ; k++ )
+        {
+            for ( int l = 0 ; l < sprite_width ; l++ )
+            {
+                spriteGrid.setPixel(m*(sprite_width+sprite_grid_width)   + l,
+                                    n*(sprite_height+sprite_grid_height) + k,
+                                    (*it).pixel(l,k));
+            }
+        }
+
+        if ( m != sprites_per_line-1 ) m++;
+        else { m = 0; n++; }
+    }
+}
+
 void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphicsView *selView)
 {
     visualizationView = vView;
     spritesView = spView;
     selectedView = selView;
 
-    QGraphicsView *w = visualizationView;
-    QGraphicsView *s = spritesView;
-    QGraphicsScene *scn = new QGraphicsScene(w);
-    QGraphicsScene *sScn = new QGraphicsScene(s);
-
-    w->setScene(scn);
-    s->setScene(sScn);
-
     QPixmap pix("../gfx/teste.png");
 
     QImage img(pix.toImage());
-    int newHeight = pix.height()/8-1 + pix.height();
-    int newWidth = pix.width()/8-1 + pix.width();
+    int newHeight = pix.height() + ((pix.height()/sprite_height)-1)*visualization_grid_height;
+    int newWidth = pix.width() + ((pix.width()/sprite_width)-1)*visualization_grid_width;
     QImage imgGrid;
-    imgGrid = QImage(newWidth, newHeight, img.format());
+    imgGrid = QImage(newWidth,
+                     newHeight,
+                     img.format());
     visualizationGrid = imgGrid;
 
-    std::cout << "Height " << newHeight << "; Width " << newWidth << std::endl;
+
+    std::ostringstream outs;
+    outs << "Height " << newHeight <<"; Width " << newWidth << std::endl;
+    log.log(__LINE__, outs);
 
     imgGrid.fill(QColor(0,0,0).rgb());
-    {
-        int i; int j;
-        int startI; int startJ;
-        startI = startJ = 0;
+    findSprites(pix.height(), pix.width(), img, imgGrid); // also fill visualizationView and spriteView
 
-        int spritesI = pix.height() / 8;
-        int spritesJ = pix.width() / 8;
-
-        createBgMatrix(spritesI,spritesJ);
-
-        for ( i = 0 ; i < spritesI ; i++ )
-        {
-            for ( j = 0 ; j < spritesJ ; j++ )
-            {
-                QImage sprite = QImage(8,8,img.format());
-                for ( int k = 0 ; k < 8 ; k++ )
-                {
-                    for ( int l = 0 ; l < 8 ; l++ )
-                    {
-                        sprite.setPixel(l,k,img.pixel(j*8 + l,i*8+k));
-                        imgGrid.setPixel(j*9+l,i*9+k, img.pixel(j*8 + l,i*8+k));
-                    }
-                }
-
-                QImage sprite2, sprite3, sprite4;
-//                sprite2 = sprite.transformed(QTransform().rotate(90));
-//                sprite3 = sprite.transformed(QTransform().rotate(180));
-//                sprite4 = sprite.transformed(QTransform().rotate(270));
-                int exists = 0;
-                int id = 0;
-
-                for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
-                {
-                    if ( (*it == sprite) || (*it == sprite2) || (*it == sprite3) || (*it == sprite4) )
-                    {
-                        exists = 1;
-                        break;
-                    }
-                    id++;
-                }
-                bgmatrix[i][j] = id;
-
-                if ( !exists )
-                {
-                    std::cout << "New sprite at " << j*8 << "," << i*8 << std::endl;
-                    sprites.push_back(sprite);
-                }
-            }
-        }
-
-        dumpBgMatrix();
-
-        std::cout << "Total sprites: " << sprites.size() << std::endl;
-        spriteGrid = QImage(8*4+4, 8*((sprites.size()+3)/4)+((sprites.size()+3)/4), img.format());
-        spriteGrid.fill(QColor(255,0,255).rgb());
-        int m = 0;
-        int n = 0;
-        for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
-        {
-            for ( int k = 0 ; k < 8 ; k++ )
-            {
-                for ( int l = 0 ; l < 8 ; l++ )
-                {
-                    spriteGrid.setPixel(l+m*9,k+n*9,(*it).pixel(l,k));
-                }
-            }
-
-            if ( m != 3 ) m++;
-            else { m = 0; n++; }
-        }
-    }
-
-    QImage emptySprite = QImage(8,8,img.format());
+    QImage emptySprite = QImage(sprite_width,sprite_height,img.format());
     emptySprite.fill(QColor(255,0,255).rgb());
 
     setSelectedSprite(emptySprite);
 
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);
-    QPixmap pixSprGrid;
-    pixSprGrid = QPixmap::fromImage(spriteGrid);
-
+    QGraphicsView *w = visualizationView;
+    QGraphicsScene *scn = new QGraphicsScene(w);
+    w->setScene(scn);
     scn->setSceneRect(pixGrid.rect());
     scn->addPixmap(pixGrid);
 
+    QPixmap pixSprGrid;
+    pixSprGrid = QPixmap::fromImage(spriteGrid);
+    QGraphicsView *s = spritesView;
+    QGraphicsScene *sScn = new QGraphicsScene(s);
+    s->setScene(sScn);
     sScn->setSceneRect(pixSprGrid.rect());
     sScn->addPixmap(pixSprGrid);
     w->show();
@@ -130,23 +153,27 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
 
 void imagesData::exportPng()
 {
-    QImage exportImg = QImage(bgmatrix_width*8,bgmatrix_height*8,sprites[0].format());
+    QImage exportImg = QImage(bgmatrix_width*sprite_width,
+                              bgmatrix_height*sprite_height,
+                              sprites[0].format());
 
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
         for ( int j = 0 ; j < bgmatrix_width ; j++ )
         {
-            for ( int k = 0 ; k < 8 ; k++ )
+            for ( int k = 0 ; k < sprite_height ; k++ )
             {
-                for ( int l = 0 ; l < 8 ; l++ )
+                for ( int l = 0 ; l < sprite_width ; l++ )
                 {
-                    exportImg.setPixel(j*8+l, i*8+k, sprites[bgmatrix[i][j]].pixel(l,k));
+                    exportImg.setPixel(j*sprite_width  + l,
+                                       i*sprite_height + k,
+                                       sprites[bgmatrix[i][j]].pixel(l,k));
                 }
             }
         }
     }
 
-    QPixmap pm= QPixmap::fromImage(exportImg);
+    QPixmap pm = QPixmap::fromImage(exportImg);
     pm.save("export.png");
 }
 
@@ -174,7 +201,10 @@ void imagesData::highlightSelectedSprite()
                 l.setColor(Qt::yellow);
                 l.setWidth(2);
 
-                visualizationView->scene()->addRect(j*9-1, i*9-1, 9, 9, l);
+                visualizationView->scene()->addRect(j*(sprite_width+visualization_grid_width)-1,
+                                                    i*(sprite_height+visualization_grid_height)-1,
+                                                    (sprite_width+visualization_grid_width),
+                                                    (sprite_height+visualization_grid_height), l);
             }
         }
     }
@@ -189,8 +219,8 @@ void imagesData::setSelectedSprite(QImage s)
     boxI = boxJ = 0;
 
     int repeatI, repeatJ;
-    repeatI = selectedView->height()/8;
-    repeatJ = selectedView->width()/8;
+    repeatI = selectedView->height()/sprite_height;
+    repeatJ = selectedView->width()/sprite_width;
 
     QGraphicsView *sel = selectedView;
     QGraphicsScene *selScn = new QGraphicsScene(sel);
@@ -222,17 +252,19 @@ void imagesData::setSelectedSprite(QImage s)
 
 void imagesData::dumpBgMatrix()
 {
-    std::cout << "Starting dump.. " << bgmatrix_height << "x" << bgmatrix_width << std::endl;
+    std::ostringstream outs;
+    outs << "Starting dump.. " << bgmatrix_height << "x" << bgmatrix_width << std::endl;
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
         for ( int j = 0 ; j < bgmatrix_width ; j++ )
         {
-            std::cout << " ";
+            outs << " ";
             if ( bgmatrix[i][j] < 10 ) std::cout << "0";
-            std::cout << bgmatrix[i][j] << " ";
+            outs << bgmatrix[i][j] << " ";
         }
-        std::cout << std::endl;
+        outs << std::endl;
     }
 
+    log.log(__LINE__, outs);
 }
 

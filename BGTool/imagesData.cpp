@@ -139,6 +139,7 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     w->setScene(scn);
     scn->setSceneRect(pixGrid.rect());
     scn->addPixmap(pixGrid);
+    w->show();
 
     QPixmap pixSprGrid;
     pixSprGrid = QPixmap::fromImage(spriteGrid);
@@ -147,7 +148,6 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     s->setScene(sScn);
     sScn->setSceneRect(pixSprGrid.rect());
     sScn->addPixmap(pixSprGrid);
-    w->show();
     s->show();
 }
 
@@ -230,18 +230,18 @@ void imagesData::setSelectedSprite(QImage s)
     selImg.fill(QColor(0,0,0).rgb());
     for ( boxI = 0 ; boxI < sel->height() ; boxI++ )
     {
-        if ( boxI/repeatI != (boxI+1)/repeatI )
-            continue;
-        if ( boxI/repeatI >= s.height() )
-            break;
         for ( boxJ = 0 ; boxJ < sel->width() ; boxJ++ )
         {
+            if ( boxI/repeatI >= s.height() || boxJ/repeatJ >= s.width() )
+            {
+                selImg.setPixel(boxJ, boxI, QColor(255,255,255).rgb());
+                continue;
+            }
+            if ( boxI/repeatI != (boxI+1)/repeatI )
+                continue;
             if ( boxJ/repeatJ != (boxJ+1)/repeatJ )
                 continue;
-            if ( boxJ/repeatJ >= s.width() )
-                break;
             selImg.setPixel(boxJ, boxI, s.pixel(boxJ/repeatJ, boxI/repeatI));
-
         }
     }
     selPix = selPix.fromImage(selImg);

@@ -1,4 +1,7 @@
-- REFACTORING!!!
+﻿- REFACTORING!!!
 - Fazer GFXTool descobrir a Palette
 - Fazer a GFXTool pegar uma cor não usada para ser o transparente (preferência para 0xFF00FF?)
 - Fazer ele dar output para o formato da PALib(Formato do DS?)
+- Fazer os 5 bgs (opção para visualizar individualmente e em conjunto)
+- Botão e form para editar sprite usando a paleta.
+- Botão e form para editar a paleta

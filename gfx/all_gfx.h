@@ -12,7 +12,7 @@ extern "C"{
 extern const unsigned char rocket_Sprite[1024] _GFX_ALIGN; // Palette: rocket_Pal
 
 // Backgrounds:
-extern const PA_BgStruct bg_1;
+extern const PA_BgStruct bgtool;
 
 // Palettes:
 extern const unsigned short rocket_Pal[256] _GFX_ALIGN;

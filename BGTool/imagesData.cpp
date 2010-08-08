@@ -34,13 +34,38 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
             {
                 for ( int l = 0 ; l < sprite_width ; l++ )
                 {
+                    QColor c;
+                    int colorExists;
+
+                    colorExists = 0;
+
+                    c.setRgb(img.pixel(j*sprite_width  + l,
+                                        i*sprite_height + k));
+
+                   // std::cout << std::hex << c.rgb() << std::endl;
+                    c.setRed(((c.red() >> 3) << 3));
+                    c.setGreen(((c.green() >> 3) << 3));
+                    c.setBlue(((c.blue() >> 3) << 3));
+                  //  std::cout << std::hex << c.rgb() << std::endl;
+
                     sprite.setPixel(l,k,
-                                    img.pixel(j*sprite_width  + l,
-                                              i*sprite_height + k));
+                                    c.rgb());
+                    for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
+                    {
+                        if ( *it == c )
+                        {
+                            colorExists = 1;
+                            break;
+                        }
+                    }
+
+                    if ( !colorExists )
+                    {
+                        palette.push_back(c);
+                    }
                     imgGrid.setPixel(j*(sprite_width +visualization_grid_width) +l,
                                      i*(sprite_height+visualization_grid_height)+k,
-                                     img.pixel(j*sprite_width  + l,
-                                               i*sprite_height + k));
+                                     c.rgb());
                 }
             }
 
@@ -102,11 +127,47 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     }
 }
 
-void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphicsView *selView)
+void imagesData::fillPaletteView()
+{
+    QGraphicsView *pal = paletteView;
+    QGraphicsScene *palScn = new QGraphicsScene(pal);
+    pal->setScene(palScn);
+    int width = pal->width()-5; // This way, we get rid of the scroll barz
+    int height = pal->height()-5;
+    width = (width/9)*9 -1; // This way, we get a right number of squares for the paletteView
+    height = (height/9)*9 -1;
+    QPixmap palPix(width, height);
+    QImage palImg = QImage(palPix.width(), palPix.height(), spriteGrid.format());
+    palImg.fill(QColor(255, 0, 255, 0).rgba());
+
+    for ( int i = 0 ; i < palette.size() ; i++ )
+    {
+        int k = i*9, j = 0;
+        while ( k > palPix.width() )
+        {
+            k -= palPix.width()+1; j+=9;
+        }
+
+        for ( int l = j ; l < j+8 ; l++ )
+        {
+            for ( int m = k ; m < k+8 ; m++ )
+            {
+                palImg.setPixel(m, l, palette.at(i).rgb());
+            }
+        }
+    }
+    palPix = palPix.fromImage(palImg);
+    palScn->setSceneRect(0,0,palPix.width(), palPix.height());
+    palScn->addPixmap(palPix);
+    pal->show();
+}
+
+void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphicsView *selView, QGraphicsView *palView)
 {
     visualizationView = vView;
     spritesView = spView;
     selectedView = selView;
+    paletteView = palView;
 
     QPixmap pix("../gfx/teste.png");
 
@@ -119,6 +180,7 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
                      img.format());
     visualizationGrid = imgGrid;
 
+    palette.push_back(QColor(0xF8, 0, 0xF8, 0)); // Transparent Color!
 
     std::ostringstream outs;
     outs << "Height " << newHeight <<"; Width " << newWidth << std::endl;
@@ -126,6 +188,10 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
 
     imgGrid.fill(QColor(0,0,0).rgb());
     findSprites(pix.height(), pix.width(), img, imgGrid); // also fill visualizationView and spriteView
+
+    std::cout << "We have " << palette.size() << "colors in our palette!" << std::endl;
+
+    fillPaletteView();
 
     QImage emptySprite = QImage(sprite_width,sprite_height,img.format());
     emptySprite.fill(QColor(255,0,255).rgb());
@@ -151,6 +217,22 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     s->show();
 }
 
+template < typename T >
+ inline T highbit(T& t)
+ {
+    return t = (((T)(-1)) >> 1) + 1;
+ }
+
+ template < typename T >
+ std::ostream& bin(T& value, std::ostream &o)
+ {
+    for ( T bit = highbit(bit); bit; bit >>= 1 )
+    {
+          o << ( ( value & bit ) ? '1' : '0' );
+    }
+    return o;
+ }
+
 void imagesData::exportPng()
 {
     QImage exportImg = QImage(bgmatrix_width*sprite_width,
@@ -175,7 +257,83 @@ void imagesData::exportPng()
 
     QPixmap pm = QPixmap::fromImage(exportImg);
     pm.save("export.png");
+
+    // exporting palette
+    FILE *sout = fopen("pal.bin", "wb");
+
+    for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
+    {
+        unsigned char high, low;
+        high = 1;
+        high = high << 5;
+        high += ( it->blue() >> 3 );
+        high = high << 2;
+        high += ( it->green() >> 6 );
+
+        unsigned char green = it->green() - ((it->green() >> 6)<<6);
+        low = (green >> 3);
+        low = low << 5;
+        low += ( it->red() >> 3);
+
+        unsigned char red, blue;
+        red = it->red(); green = it->green(); blue = it->blue();
+
+        fwrite(&low, 1, sizeof(low), sout);
+        fwrite(&high, 1, sizeof(high), sout);
+//        std::cout << std::hex << (unsigned short int) low << std::endl;
+//        std::cout << std::hex << (unsigned short int) high << std::endl;
+    }
+    for ( int i = palette.size() ; i < 256 ; i++ )
+    {
+        unsigned char zero;
+        zero = 0;
+        fwrite(&zero, 1, sizeof(zero), sout);
+        fwrite(&zero, 1, sizeof(zero), sout);
+    }
+    fclose(sout);
+
+    //exporting tiles
+    sout = fopen("tiles.bin", "wb");
+    for ( std::vector<QImage>::iterator it = sprites.begin() ; it != sprites.end() ; it++ )
+    {
+        for ( int i = 0 ; i < 8 ; i++ )
+        {
+            for ( int j = 0 ; j < 8 ; j++ )
+            {
+                for ( unsigned char k = 0 ; k < palette.size() ; k++ )
+                {
+                    if ( it->pixel(j,i) == palette.at(k).rgb() )
+                    {
+                        fwrite(&k,1,sizeof(k),sout);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    for ( int i = 0 ; i < 64 ; i++ )
+    {
+        unsigned char k = 0;
+        fwrite(&k,1,sizeof(k),sout);
+    }
+    fclose(sout);
+
+    //exporting map
+    sout = fopen("map.bin", "wb");
+    for ( int i = 0 ; i < bgmatrix_height ; i++ )
+    {
+        for ( int j = 0 ; j < bgmatrix_width ; j++ )
+        {
+            unsigned char k = bgmatrix[i][j];
+            unsigned char zero = 0;
+            fwrite(&k,1,sizeof(k),sout);
+            fwrite(&zero, 1, sizeof(zero), sout);
+        }
+    }
+    fclose(sout);
 }
+
 
 void imagesData::highlightSelectedSprite()
 {

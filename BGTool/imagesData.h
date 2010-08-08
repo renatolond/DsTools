@@ -8,6 +8,7 @@
 #include <QGraphicsPixmapItem>
 #include <vector>
 #include "logger.h"
+#include <cstdio>
 
 const int sprite_height = 8;
 const int sprite_width  = 8;
@@ -41,12 +42,13 @@ public:
         delete[] bgmatrix;
     }
 
-    void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *);
+    void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *, QGraphicsView *);
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();
     void setSelectedSprite(QImage s);
     void highlightSelectedSprite();
     void exportPng();
+    void fillPaletteView();
 
     QImage visualizationGrid;
     QImage spriteGrid;
@@ -58,9 +60,11 @@ public:
     QGraphicsView *selectedView;
     QGraphicsView *visualizationView;
     QGraphicsView *spritesView;
+    QGraphicsView *paletteView;
     std::vector<QImage> sprites;
     int visualization_grid_height,visualization_grid_width;
     int sprite_grid_height, sprite_grid_width;
+    QList<QColor> palette;
 };
 
 #endif // IMAGES_H

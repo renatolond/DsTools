@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tab_bgall.ui'
 **
-** Created: Thu Jul 29 15:51:24 2010
-**      by: Qt User Interface Compiler version 4.6.3
+** Created: Sun Aug 8 16:35:15 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

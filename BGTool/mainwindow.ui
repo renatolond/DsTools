@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>430</width>
-    <height>448</height>
+    <height>488</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,12 +28,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>421</width>
-      <height>401</height>
+      <width>426</width>
+      <height>452</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab0">
      <attribute name="title">
@@ -44,8 +44,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>411</width>
-        <height>371</height>
+        <width>416</width>
+        <height>422</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -62,8 +62,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>411</width>
-        <height>371</height>
+        <width>416</width>
+        <height>422</height>
        </rect>
       </property>
      </widget>
@@ -77,8 +77,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>411</width>
-        <height>371</height>
+        <width>416</width>
+        <height>422</height>
        </rect>
       </property>
      </widget>
@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>23</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

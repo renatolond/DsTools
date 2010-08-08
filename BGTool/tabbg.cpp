@@ -29,7 +29,7 @@ void TabBG::changeEvent(QEvent *e)
 
 void TabBG::on_btConvert_clicked()
 {
-    imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView);
+    imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView);
 //    statusBar()->showMessage("File loaded.",10*1000);
 }
 

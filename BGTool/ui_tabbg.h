@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tabbg.ui'
 **
-** Created: Sun Aug 8 19:12:16 2010
+** Created: Tue Aug 10 00:04:41 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -52,6 +52,7 @@ public:
     QSpacerItem *horizontalSpacer_4;
     QSpacerItem *verticalSpacer;
     QSpacerItem *verticalSpacer_2;
+    QPushButton *btExport;
     QFrame *line;
     QGridLayout *gridLayout;
     QGraphicsView *selectedView;
@@ -173,6 +174,16 @@ public:
 
         gridLayout_2->addItem(verticalSpacer_2, 1, 2, 1, 1);
 
+        btExport = new QPushButton(layoutWidget);
+        btExport->setObjectName(QString::fromUtf8("btExport"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(btExport->sizePolicy().hasHeightForWidth());
+        btExport->setSizePolicy(sizePolicy1);
+
+        gridLayout_2->addWidget(btExport, 2, 4, 1, 1);
+
 
         horizontalLayout->addLayout(gridLayout_2);
 
@@ -209,11 +220,11 @@ public:
 
         line_2 = new QFrame(layoutWidget);
         line_2->setObjectName(QString::fromUtf8("line_2"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(line_2->sizePolicy().hasHeightForWidth());
-        line_2->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(line_2->sizePolicy().hasHeightForWidth());
+        line_2->setSizePolicy(sizePolicy2);
         line_2->setFrameShape(QFrame::HLine);
         line_2->setFrameShadow(QFrame::Sunken);
 
@@ -239,6 +250,7 @@ public:
         btHighlight->setText(QApplication::translate("TabBG", "Highlight", 0, QApplication::UnicodeUTF8));
         btPaint->setText(QApplication::translate("TabBG", "Paint", 0, QApplication::UnicodeUTF8));
         btExportPng->setText(QApplication::translate("TabBG", "Export PNG", 0, QApplication::UnicodeUTF8));
+        btExport->setText(QApplication::translate("TabBG", "Export", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

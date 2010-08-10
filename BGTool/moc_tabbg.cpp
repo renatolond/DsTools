@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'tabbg.h'
 **
-** Created: Sun Aug 8 19:12:36 2010
+** Created: Tue Aug 10 00:05:49 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -138,7 +138,7 @@ void imagesData::fillPaletteView()
     height = (height/9)*9 -1;
     QPixmap palPix(width, height);
     QImage palImg = QImage(palPix.width(), palPix.height(), spriteGrid.format());
-    palImg.fill(QColor(255, 0, 255, 0).rgba());
+    palImg.fill(QColor(0, 0, 0, 0).rgba());
 
     for ( int i = 0 ; i < palette.size() ; i++ )
     {
@@ -259,7 +259,7 @@ void imagesData::exportPng()
     pm.save("export.png");
 
     // exporting palette
-    FILE *sout = fopen("pal.bin", "wb");
+    FILE *sout = fopen("../gfx/bin/bgtool_Pal.bin", "wb");
 
     for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
     {
@@ -293,7 +293,7 @@ void imagesData::exportPng()
     fclose(sout);
 
     //exporting tiles
-    sout = fopen("tiles.bin", "wb");
+    sout = fopen("../gfx/bin/bgtool_Tiles.bin", "wb");
     for ( std::vector<QImage>::iterator it = sprites.begin() ; it != sprites.end() ; it++ )
     {
         for ( int i = 0 ; i < 8 ; i++ )
@@ -320,7 +320,7 @@ void imagesData::exportPng()
     fclose(sout);
 
     //exporting map
-    sout = fopen("map.bin", "wb");
+    sout = fopen("../gfx/bin/bgtool_Map.bin", "wb");
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
         for ( int j = 0 ; j < bgmatrix_width ; j++ )
@@ -332,6 +332,31 @@ void imagesData::exportPng()
         }
     }
     fclose(sout);
+
+    std::filebuf fb;
+    fb.open("../gfx/bin/bgtool.c", std::cout.out);
+    std::ostream os(&fb);
+
+    os << "#include <PA_BgStruct.h>" << std::endl;
+    os << std::endl;
+    os << "extern const char bgtool_Tiles[];" << std::endl;
+    os << "extern const char bgtool_Map[];" << std::endl;
+    os << "extern const char bgtool_Pal[];" << std::endl;
+    os << std::endl;
+    os << "const PA_BgStruct bgtool = {" << std::endl;
+    os << "  PA_BgLarge," << std::endl;
+    os << "  " << bgmatrix_width*8 << ", " << bgmatrix_height*8 << "," << std::endl;
+    os << std::endl;
+    os << "bgtool_Tiles," << std::endl;
+    os << "bgtool_Map," << std::endl;
+    os << "{bgtool_Pal}," << std::endl;
+    os << std::endl;
+    os << sprites.size()*8*8 << "," << std::endl;
+    os << "{" << bgmatrix_height*bgmatrix_width*2 << "}" << std::endl;
+    os << "};" << std::endl;
+
+    fb.close();
+
 }
 
 

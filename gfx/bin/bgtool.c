@@ -5,13 +5,13 @@ extern const char bgtool_Map[];
 extern const char bgtool_Pal[];
 
 const PA_BgStruct bgtool = {
-	PA_BgLarge,
-	3392, 256,
+  PA_BgLarge,
+  3392, 192,
 
-	bgtool_Tiles,
-	bgtool_Map,
-	{bgtool_Pal},
+bgtool_Tiles,
+bgtool_Map,
+{bgtool_Pal},
 
-	5312,
-	{27136}
+4096,
+{20352}
 };

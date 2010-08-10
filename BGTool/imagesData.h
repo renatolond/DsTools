@@ -3,6 +3,7 @@
 
 #include <QPixmap>
 #include <iostream>
+#include <fstream>
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>

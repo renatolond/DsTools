@@ -13,6 +13,7 @@ extern const unsigned char rocket_Sprite[1024] _GFX_ALIGN; // Palette: rocket_Pa
 
 // Backgrounds:
 extern const PA_BgStruct bgtool;
+extern const PA_BgStruct bg_1;
 
 // Palettes:
 extern const unsigned short rocket_Pal[256] _GFX_ALIGN;

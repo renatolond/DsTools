@@ -44,6 +44,7 @@ public:
     }
 
     void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *, QGraphicsView *);
+    void exportBG();
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();
     void setSelectedSprite(QImage s);
@@ -66,6 +67,7 @@ public:
     int visualization_grid_height,visualization_grid_width;
     int sprite_grid_height, sprite_grid_width;
     QList<QColor> palette;
+    int index;
 };
 
 #endif // IMAGES_H

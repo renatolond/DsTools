@@ -39,7 +39,7 @@
      <attribute name="title">
       <string>Bg_All</string>
      </attribute>
-     <widget class="Tab_BgAll" name="widget" native="true">
+     <widget class="Tab_BgAll" name="widget_all" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -57,7 +57,7 @@
      <attribute name="title">
       <string>Bg_0</string>
      </attribute>
-     <widget class="TabBG" name="widget_2" native="true">
+     <widget class="TabBG" name="widget0" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -72,7 +72,7 @@
      <attribute name="title">
       <string>Bg_1</string>
      </attribute>
-     <widget class="TabBG" name="widget_3" native="true">
+     <widget class="TabBG" name="widget1" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

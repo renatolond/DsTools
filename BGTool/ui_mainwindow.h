@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Aug 10 00:04:41 2010
+** Created: Wed Aug 18 18:38:17 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,11 +35,11 @@ public:
     QWidget *centralWidget;
     QTabWidget *tabWidget;
     QWidget *tab0;
-    Tab_BgAll *widget;
+    Tab_BgAll *widget_all;
     QWidget *tab1;
-    TabBG *widget_2;
+    TabBG *widget0;
     QWidget *tab2;
-    TabBG *widget_3;
+    TabBG *widget1;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Edit;
@@ -67,27 +67,27 @@ public:
         tabWidget->setGeometry(QRect(0, 0, 426, 452));
         tab0 = new QWidget();
         tab0->setObjectName(QString::fromUtf8("tab0"));
-        widget = new Tab_BgAll(tab0);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(0, 0, 416, 422));
-        widget->setAutoFillBackground(false);
+        widget_all = new Tab_BgAll(tab0);
+        widget_all->setObjectName(QString::fromUtf8("widget_all"));
+        widget_all->setGeometry(QRect(0, 0, 416, 422));
+        widget_all->setAutoFillBackground(false);
         tabWidget->addTab(tab0, QString());
         tab1 = new QWidget();
         tab1->setObjectName(QString::fromUtf8("tab1"));
-        widget_2 = new TabBG(tab1);
-        widget_2->setObjectName(QString::fromUtf8("widget_2"));
-        widget_2->setGeometry(QRect(0, 0, 416, 422));
+        widget0 = new TabBG(tab1);
+        widget0->setObjectName(QString::fromUtf8("widget0"));
+        widget0->setGeometry(QRect(0, 0, 416, 422));
         tabWidget->addTab(tab1, QString());
         tab2 = new QWidget();
         tab2->setObjectName(QString::fromUtf8("tab2"));
-        widget_3 = new TabBG(tab2);
-        widget_3->setObjectName(QString::fromUtf8("widget_3"));
-        widget_3->setGeometry(QRect(0, 0, 416, 422));
+        widget1 = new TabBG(tab2);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(0, 0, 416, 422));
         tabWidget->addTab(tab2, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 430, 23));
+        menuBar->setGeometry(QRect(0, 0, 430, 21));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Edit = new QMenu(menuBar);

@@ -14,14 +14,17 @@ public:
     TabBG(QWidget *parent = 0);
     ~TabBG();
     imagesData *imgData;
+    void setIndex(int i);
 
 protected:
     void changeEvent(QEvent *e);
 
 private:
     Ui::TabBG *ui;
+    int index;
 
 private slots:
+    void on_btExport_clicked();
     void on_btExportPng_clicked();
     void on_btHighlight_clicked();
     void on_btDump_clicked();

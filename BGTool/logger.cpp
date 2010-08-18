@@ -4,6 +4,7 @@ void logger::log(int line, std::ostringstream &outstring)
 {
     if ( logging == 0 ) return;
     *out << file << ":" << line << " - " << outstring.str();
+    outstring.str(std::string());
     outstring.clear();
 }
 

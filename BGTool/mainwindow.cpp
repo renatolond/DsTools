@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->widget0->setIndex(0);
+    ui->widget1->setIndex(1);
 }
 
 MainWindow::~MainWindow()

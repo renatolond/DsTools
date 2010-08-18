@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'tabbg.h'
 **
-** Created: Tue Aug 10 00:05:49 2010
+** Created: Wed Aug 18 18:38:21 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_TabBG[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,16 +32,18 @@ static const uint qt_meta_data_TabBG[] = {
 
  // slots: signature, parameters, type, tag, flags
        7,    6,    6,    6, 0x08,
-      32,    6,    6,    6, 0x08,
-      57,    6,    6,    6, 0x08,
-      85,   77,    6,    6, 0x08,
-     110,    6,    6,    6, 0x08,
+      29,    6,    6,    6, 0x08,
+      54,    6,    6,    6, 0x08,
+      79,    6,    6,    6, 0x08,
+     107,   99,    6,    6, 0x08,
+     132,    6,    6,    6, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_TabBG[] = {
-    "TabBG\0\0on_btExportPng_clicked()\0"
+    "TabBG\0\0on_btExport_clicked()\0"
+    "on_btExportPng_clicked()\0"
     "on_btHighlight_clicked()\0on_btDump_clicked()\0"
     "checked\0on_btPaint_toggled(bool)\0"
     "on_btConvert_clicked()\0"
@@ -76,14 +78,15 @@ int TabBG::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_btExportPng_clicked(); break;
-        case 1: on_btHighlight_clicked(); break;
-        case 2: on_btDump_clicked(); break;
-        case 3: on_btPaint_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 4: on_btConvert_clicked(); break;
+        case 0: on_btExport_clicked(); break;
+        case 1: on_btExportPng_clicked(); break;
+        case 2: on_btHighlight_clicked(); break;
+        case 3: on_btDump_clicked(); break;
+        case 4: on_btPaint_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 5: on_btConvert_clicked(); break;
         default: ;
         }
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

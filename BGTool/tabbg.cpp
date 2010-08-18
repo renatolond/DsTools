@@ -8,6 +8,12 @@ TabBG::TabBG(QWidget *parent) :
     ui->setupUi(this);
     imgData = new imagesData(QImage(),QImage());
     ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
+    index = -1;
+}
+void TabBG::setIndex(int i)
+{
+    index = i;
+    imgData->index = i;
 }
 
 TabBG::~TabBG()
@@ -51,4 +57,9 @@ void TabBG::on_btHighlight_clicked()
 void TabBG::on_btExportPng_clicked()
 {
     imgData->exportPng();
+}
+
+void TabBG::on_btExport_clicked()
+{
+    imgData->exportBG();
 }

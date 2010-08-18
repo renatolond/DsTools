@@ -40,13 +40,13 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
                     colorExists = 0;
 
                     c.setRgb(img.pixel(j*sprite_width  + l,
-                                        i*sprite_height + k));
+                                       i*sprite_height + k));
 
-                   // std::cout << std::hex << c.rgb() << std::endl;
+                    // std::cout << std::hex << c.rgb() << std::endl;
                     c.setRed(((c.red() >> 3) << 3));
                     c.setGreen(((c.green() >> 3) << 3));
                     c.setBlue(((c.blue() >> 3) << 3));
-                  //  std::cout << std::hex << c.rgb() << std::endl;
+                    //  std::cout << std::hex << c.rgb() << std::endl;
 
                     sprite.setPixel(l,k,
                                     c.rgb());
@@ -218,48 +218,44 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
 }
 
 template < typename T >
- inline T highbit(T& t)
- {
+        inline T highbit(T& t)
+{
     return t = (((T)(-1)) >> 1) + 1;
- }
+}
 
- template < typename T >
- std::ostream& bin(T& value, std::ostream &o)
- {
+template < typename T >
+        std::ostream& bin(T& value, std::ostream &o)
+{
     for ( T bit = highbit(bit); bit; bit >>= 1 )
     {
-          o << ( ( value & bit ) ? '1' : '0' );
+        o << ( ( value & bit ) ? '1' : '0' );
     }
     return o;
- }
+}
 
-void imagesData::exportPng()
+void imagesData::exportBG()
 {
-    QImage exportImg = QImage(bgmatrix_width*sprite_width,
-                              bgmatrix_height*sprite_height,
-                              sprites[0].format());
-
-    for ( int i = 0 ; i < bgmatrix_height ; i++ )
-    {
-        for ( int j = 0 ; j < bgmatrix_width ; j++ )
-        {
-            for ( int k = 0 ; k < sprite_height ; k++ )
-            {
-                for ( int l = 0 ; l < sprite_width ; l++ )
-                {
-                    exportImg.setPixel(j*sprite_width  + l,
-                                       i*sprite_height + k,
-                                       sprites[bgmatrix[i][j]].pixel(l,k));
-                }
-            }
-        }
-    }
-
-    QPixmap pm = QPixmap::fromImage(exportImg);
-    pm.save("export.png");
+    std::string pal, tiles, map, cfile;
+    std::ostringstream outs;
+    outs << "../gfx/bin/bgtool" << index << "_Pal.bin";
+    pal = outs.str();
+    outs.str(std::string());
+    outs.clear();
+    outs << "../gfx/bin/bgtool" << index << "_Tiles.bin";
+    tiles = outs.str();
+    outs.str(std::string());
+    outs.clear();
+    outs << "../gfx/bin/bgtool" << index << "_Map.bin";
+    map = outs.str();
+    outs.str(std::string());
+    outs.clear();
+    outs << "../gfx/bin/bgtool" << index << ".c";
+    cfile = outs.str();
+    outs.str(std::string());
+    outs.clear();
 
     // exporting palette
-    FILE *sout = fopen("../gfx/bin/bgtool_Pal.bin", "wb");
+    FILE *sout = fopen(pal.c_str(), "wb");
 
     for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
     {
@@ -280,8 +276,8 @@ void imagesData::exportPng()
 
         fwrite(&low, 1, sizeof(low), sout);
         fwrite(&high, 1, sizeof(high), sout);
-//        std::cout << std::hex << (unsigned short int) low << std::endl;
-//        std::cout << std::hex << (unsigned short int) high << std::endl;
+        //        std::cout << std::hex << (unsigned short int) low << std::endl;
+        //        std::cout << std::hex << (unsigned short int) high << std::endl;
     }
     for ( int i = palette.size() ; i < 256 ; i++ )
     {
@@ -293,7 +289,7 @@ void imagesData::exportPng()
     fclose(sout);
 
     //exporting tiles
-    sout = fopen("../gfx/bin/bgtool_Tiles.bin", "wb");
+    sout = fopen(tiles.c_str(), "wb");
     for ( std::vector<QImage>::iterator it = sprites.begin() ; it != sprites.end() ; it++ )
     {
         for ( int i = 0 ; i < 8 ; i++ )
@@ -320,7 +316,7 @@ void imagesData::exportPng()
     fclose(sout);
 
     //exporting map
-    sout = fopen("../gfx/bin/bgtool_Map.bin", "wb");
+    sout = fopen(map.c_str(), "wb");
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
         for ( int j = 0 ; j < bgmatrix_width ; j++ )
@@ -334,29 +330,54 @@ void imagesData::exportPng()
     fclose(sout);
 
     std::filebuf fb;
-    fb.open("../gfx/bin/bgtool.c", std::cout.out);
+    fb.open(cfile.c_str(), std::cout.out);
     std::ostream os(&fb);
 
     os << "#include <PA_BgStruct.h>" << std::endl;
     os << std::endl;
-    os << "extern const char bgtool_Tiles[];" << std::endl;
-    os << "extern const char bgtool_Map[];" << std::endl;
-    os << "extern const char bgtool_Pal[];" << std::endl;
+    os << "extern const char bgtool" << index << "_Tiles[];" << std::endl;
+    os << "extern const char bgtool" << index << "_Map[];" << std::endl;
+    os << "extern const char bgtool" << index << "_Pal[];" << std::endl;
     os << std::endl;
-    os << "const PA_BgStruct bgtool = {" << std::endl;
+    os << "const PA_BgStruct bgtool" << index << " = {" << std::endl;
     os << "  PA_BgLarge," << std::endl;
     os << "  " << bgmatrix_width*8 << ", " << bgmatrix_height*8 << "," << std::endl;
     os << std::endl;
-    os << "bgtool_Tiles," << std::endl;
-    os << "bgtool_Map," << std::endl;
-    os << "{bgtool_Pal}," << std::endl;
+    os << "bgtool" << index << "_Tiles," << std::endl;
+    os << "bgtool" << index << "_Map," << std::endl;
+    os << "{bgtool" << index << "_Pal}," << std::endl;
     os << std::endl;
     os << sprites.size()*8*8 << "," << std::endl;
     os << "{" << bgmatrix_height*bgmatrix_width*2 << "}" << std::endl;
     os << "};" << std::endl;
 
     fb.close();
+}
 
+void imagesData::exportPng()
+{
+    QImage exportImg = QImage(bgmatrix_width*sprite_width,
+                              bgmatrix_height*sprite_height,
+                              sprites[0].format());
+
+    for ( int i = 0 ; i < bgmatrix_height ; i++ )
+    {
+        for ( int j = 0 ; j < bgmatrix_width ; j++ )
+        {
+            for ( int k = 0 ; k < sprite_height ; k++ )
+            {
+                for ( int l = 0 ; l < sprite_width ; l++ )
+                {
+                    exportImg.setPixel(j*sprite_width  + l,
+                                       i*sprite_height + k,
+                                       sprites[bgmatrix[i][j]].pixel(l,k));
+                }
+            }
+        }
+    }
+
+    QPixmap pm = QPixmap::fromImage(exportImg);
+    pm.save("export.png");
 }
 
 

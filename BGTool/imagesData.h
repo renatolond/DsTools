@@ -7,6 +7,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
+#include <QFileDialog>
 #include <vector>
 #include "logger.h"
 #include <cstdio>
@@ -43,7 +44,7 @@ public:
         delete[] bgmatrix;
     }
 
-    void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *, QGraphicsView *);
+    void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *, QGraphicsView *, QString);
     void exportBG();
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();

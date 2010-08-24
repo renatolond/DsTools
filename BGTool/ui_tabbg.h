@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tabbg.ui'
 **
-** Created: Tue Aug 24 09:44:26 2010
-**      by: Qt User Interface Compiler version 4.6.2
+** Created: Tue Aug 24 18:30:33 2010
+**      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -65,12 +65,12 @@ public:
     {
         if (TabBG->objectName().isEmpty())
             TabBG->setObjectName(QString::fromUtf8("TabBG"));
-        TabBG->resize(416, 422);
-        TabBG->setMinimumSize(QSize(416, 422));
-        TabBG->setMaximumSize(QSize(416, 422));
+        TabBG->resize(416, 452);
+        TabBG->setMinimumSize(QSize(416, 452));
+        TabBG->setMaximumSize(QSize(416, 452));
         layoutWidget = new QWidget(TabBG);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 0, 412, 413));
+        layoutWidget->setGeometry(QRect(0, 0, 412, 450));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setSizeConstraint(QLayout::SetNoConstraint);

@@ -35,7 +35,12 @@ void TabBG::changeEvent(QEvent *e)
 
 void TabBG::on_btConvert_clicked()
 {
-    imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView);
+    imgData = new imagesData(QImage(),QImage());
+    imgData->index = this->index;
+    ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
+    QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
+    if ( filename != "" )
+	imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
 //    statusBar()->showMessage("File loaded.",10*1000);
 }
 

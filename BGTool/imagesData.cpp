@@ -108,7 +108,10 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
             if ( !exists )
             {
                 if ( sprite == emptySprite )
+		{
                     exists = 1;
+		    bgmatrix[i][j] = -1;
+		}
             }
 
             if ( !exists )
@@ -123,7 +126,13 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
 
     sprites.push_back(emptySprite);
 
-    //dumpBgMatrix();
+    {
+	int last = sprites.size() -1;
+	for ( int i = 0 ; i < spritesI ; i++ )
+	    for ( int j = 0 ; j < spritesJ ; j++ )
+		if ( bgmatrix[i][j] == -1 )
+		    bgmatrix[i][j] = last;
+    }
 
     std::ostringstream outs;
     outs << "Total sprites: " << sprites.size() << std::endl;
@@ -133,7 +142,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     spriteGrid = QImage(sprite_width*sprites_per_line + (sprites_per_line-1)*sprite_grid_width,
                         sprite_height*sprites_per_column + (sprites_per_column-1)*sprite_grid_height,
                         img.format());
-    spriteGrid.fill(QColor(255,0,255).rgb());
+    spriteGrid.fill(QColor(255,255,255).rgb());
     int m = 0;
     int n = 0;
     for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
@@ -158,7 +167,7 @@ void imagesData::fillPaletteView()
     QGraphicsView *pal = paletteView;
     QGraphicsScene *palScn = new QGraphicsScene(pal);
     pal->setScene(palScn);
-    int width = pal->width()-5; // This way, we get rid of the scroll barz
+    int width = pal->width()-5; // This way, we get rid of the scroll bar
     int height = pal->height()-5;
     width = (width/9)*9 -1; // This way, we get a right number of squares for the paletteView
     height = (height/9)*9 -1;
@@ -188,14 +197,14 @@ void imagesData::fillPaletteView()
     pal->show();
 }
 
-void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphicsView *selView, QGraphicsView *palView)
+void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphicsView *selView, QGraphicsView *palView, QString filename)
 {
     visualizationView = vView;
     spritesView = spView;
     selectedView = selView;
     paletteView = palView;
 
-    QPixmap pix("../gfx/teste.png");
+    QPixmap pix(filename);
 
     QImage img(pix.toImage());
     int newHeight = pix.height() + ((pix.height()/sprite_height)-1)*visualization_grid_height;

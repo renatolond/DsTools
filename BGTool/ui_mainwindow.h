@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Aug 24 09:44:26 2010
-**      by: Qt User Interface Compiler version 4.6.2
+** Created: Tue Aug 24 18:30:33 2010
+**      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -49,7 +49,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(430, 496);
+        MainWindow->resize(431, 523);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -64,7 +64,7 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(0, 0, 426, 452));
+        tabWidget->setGeometry(QRect(0, 0, 421, 481));
         tab0 = new QWidget();
         tab0->setObjectName(QString::fromUtf8("tab0"));
         widget_all = new Tab_BgAll(tab0);
@@ -76,18 +76,18 @@ public:
         tab1->setObjectName(QString::fromUtf8("tab1"));
         widget0 = new TabBG(tab1);
         widget0->setObjectName(QString::fromUtf8("widget0"));
-        widget0->setGeometry(QRect(0, 0, 416, 422));
+        widget0->setGeometry(QRect(0, 0, 416, 452));
         tabWidget->addTab(tab1, QString());
         tab2 = new QWidget();
         tab2->setObjectName(QString::fromUtf8("tab2"));
         widget1 = new TabBG(tab2);
         widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(0, 0, 416, 422));
+        widget1->setGeometry(QRect(0, 0, 416, 452));
         tabWidget->addTab(tab2, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 430, 21));
+        menuBar->setGeometry(QRect(0, 0, 431, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Edit = new QMenu(menuBar);
@@ -104,7 +104,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

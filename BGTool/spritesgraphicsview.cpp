@@ -36,6 +36,11 @@ void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
 
     QImage t = p->pixmap().toImage();
 
+/*    if ( e->pos().y() > ( imgData->sprites.size() / sprites_per_line )
+        || ( e->pos().y() == ( imgData->sprites.size() / sprites_per_line ) && ( e->pos().x() > ) )
+    {
+    }*/
+
     if ( imgData->selectedSprite.x() >= 0 )
     {
         QGraphicsItem *i = scene()->itemAt(imgData->selectedSprite);

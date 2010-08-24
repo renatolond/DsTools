@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tab_bgall.ui'
 **
-** Created: Wed Aug 18 18:37:25 2010
+** Created: Tue Aug 24 09:44:26 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,16 +41,17 @@ public:
     QSpacerItem *horizontalSpacer_12;
     QGridLayout *gridLayout_3;
     QSpacerItem *horizontalSpacer_5;
-    QSpacerItem *horizontalSpacer_6;
     QSpacerItem *verticalSpacer_3;
-    QSpacerItem *horizontalSpacer_7;
     QSpacerItem *horizontalSpacer_8;
     QSpacerItem *verticalSpacer_4;
     QCheckBox *checkBox;
     QCheckBox *checkBox_2;
     QCheckBox *checkBox_3;
-    QCheckBox *checkBox_4;
     QCheckBox *checkBox_5;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *horizontalSpacer_3;
+    QSpacerItem *horizontalSpacer_4;
 
     void setupUi(QWidget *tab_bgall)
     {
@@ -105,52 +106,55 @@ public:
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         horizontalSpacer_5 = new QSpacerItem(10, 26, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(horizontalSpacer_5, 0, 1, 1, 1);
-
-        horizontalSpacer_6 = new QSpacerItem(10, 26, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-        gridLayout_3->addItem(horizontalSpacer_6, 0, 3, 1, 1);
+        gridLayout_3->addItem(horizontalSpacer_5, 0, 2, 1, 1);
 
         verticalSpacer_3 = new QSpacerItem(20, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(verticalSpacer_3, 1, 2, 1, 1);
-
-        horizontalSpacer_7 = new QSpacerItem(10, 26, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-        gridLayout_3->addItem(horizontalSpacer_7, 2, 3, 1, 1);
+        gridLayout_3->addItem(verticalSpacer_3, 1, 3, 1, 1);
 
         horizontalSpacer_8 = new QSpacerItem(10, 26, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(horizontalSpacer_8, 2, 1, 1, 1);
+        gridLayout_3->addItem(horizontalSpacer_8, 2, 2, 1, 1);
 
         verticalSpacer_4 = new QSpacerItem(10, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        gridLayout_3->addItem(verticalSpacer_4, 3, 2, 1, 1);
+        gridLayout_3->addItem(verticalSpacer_4, 3, 3, 1, 1);
 
         checkBox = new QCheckBox(verticalLayoutWidget);
         checkBox->setObjectName(QString::fromUtf8("checkBox"));
 
-        gridLayout_3->addWidget(checkBox, 0, 0, 1, 1);
+        gridLayout_3->addWidget(checkBox, 0, 1, 1, 1);
 
         checkBox_2 = new QCheckBox(verticalLayoutWidget);
         checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
 
-        gridLayout_3->addWidget(checkBox_2, 2, 0, 1, 1);
+        gridLayout_3->addWidget(checkBox_2, 2, 1, 1, 1);
 
         checkBox_3 = new QCheckBox(verticalLayoutWidget);
         checkBox_3->setObjectName(QString::fromUtf8("checkBox_3"));
 
-        gridLayout_3->addWidget(checkBox_3, 0, 2, 1, 1);
-
-        checkBox_4 = new QCheckBox(verticalLayoutWidget);
-        checkBox_4->setObjectName(QString::fromUtf8("checkBox_4"));
-
-        gridLayout_3->addWidget(checkBox_4, 2, 2, 1, 1);
+        gridLayout_3->addWidget(checkBox_3, 0, 3, 1, 1);
 
         checkBox_5 = new QCheckBox(verticalLayoutWidget);
         checkBox_5->setObjectName(QString::fromUtf8("checkBox_5"));
 
-        gridLayout_3->addWidget(checkBox_5, 0, 4, 1, 1);
+        gridLayout_3->addWidget(checkBox_5, 2, 3, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer, 2, 0, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer_2, 2, 4, 1, 1);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer_3, 0, 0, 1, 1);
+
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer_4, 0, 4, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout_3);
@@ -165,10 +169,9 @@ public:
     {
         tab_bgall->setWindowTitle(QApplication::translate("tab_bgall", "Form", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("tab_bgall", "Visible Background Layers", 0, QApplication::UnicodeUTF8));
-        checkBox->setText(QApplication::translate("tab_bgall", " bg0", 0, QApplication::UnicodeUTF8));
+        checkBox->setText(QApplication::translate("tab_bgall", "bg0", 0, QApplication::UnicodeUTF8));
         checkBox_2->setText(QApplication::translate("tab_bgall", "bg3", 0, QApplication::UnicodeUTF8));
         checkBox_3->setText(QApplication::translate("tab_bgall", "bg1", 0, QApplication::UnicodeUTF8));
-        checkBox_4->setText(QApplication::translate("tab_bgall", "bg4", 0, QApplication::UnicodeUTF8));
         checkBox_5->setText(QApplication::translate("tab_bgall", "bg2", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

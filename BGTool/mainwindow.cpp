@@ -27,3 +27,8 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    // Implementar atualização na tab dos bgs
+}

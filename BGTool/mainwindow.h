@@ -21,6 +21,9 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
+
+private slots:
+    void on_tabWidget_currentChanged(int index);
 };
 
 #endif // MAINWINDOW_H

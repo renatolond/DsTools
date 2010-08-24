@@ -11,7 +11,7 @@ void imagesData::createBgMatrix(int height, int width)
     }
 }
 
-void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid)
+void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, const QImage &emptySprite)
 {
 
     int i; int j;
@@ -22,6 +22,16 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     int spritesJ = pix_width / sprite_width;
 
     createBgMatrix(spritesI,spritesJ);
+
+    {
+        QColor c;
+        c.setAlpha(0);
+        c.setRed(255);
+        c.setGreen(0);
+        c.setBlue(255);
+
+        palette.push_back(c);
+    }
 
     for ( i = 0 ; i < spritesI ; i++ )
     {
@@ -39,14 +49,22 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
 
                     colorExists = 0;
 
-                    c.setRgb(img.pixel(j*sprite_width  + l,
+                    c.setRgba(img.pixel(j*sprite_width  + l,
                                        i*sprite_height + k));
 
-                    // std::cout << std::hex << c.rgb() << std::endl;
+                    //std::cout << std::hex << c.alpha() << std::endl;
                     c.setRed(((c.red() >> 3) << 3));
                     c.setGreen(((c.green() >> 3) << 3));
                     c.setBlue(((c.blue() >> 3) << 3));
                     //  std::cout << std::hex << c.rgb() << std::endl;
+
+                    if ( c.alpha() != 255 )
+                    {
+                        c.setAlpha(0);
+                        c.setRed(255);
+                        c.setGreen(0);
+                        c.setBlue(255);
+                    }
 
                     sprite.setPixel(l,k,
                                     c.rgb());
@@ -89,6 +107,12 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
 
             if ( !exists )
             {
+                if ( sprite == emptySprite )
+                    exists = 1;
+            }
+
+            if ( !exists )
+            {
                 std::ostringstream outs;
                 outs << "New sprite at " << j*sprite_width << "," << i*sprite_height << std::endl;
                 log.log(__LINE__, outs);
@@ -96,6 +120,8 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
             }
         }
     }
+
+    sprites.push_back(emptySprite);
 
     //dumpBgMatrix();
 
@@ -180,21 +206,21 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
                      img.format());
     visualizationGrid = imgGrid;
 
-    palette.push_back(QColor(0xF8, 0, 0xF8, 0)); // Transparent Color!
+//    palette.push_back(QColor(0xF8, 0, 0xF8, 0)); // Transparent Color!
 
     std::ostringstream outs;
     outs << "Height " << newHeight <<"; Width " << newWidth << std::endl;
     log.log(__LINE__, outs);
 
+    QImage emptySprite = QImage(sprite_width,sprite_height,img.format());
+    emptySprite.fill(QColor(255,0,255).rgb());
+
     imgGrid.fill(QColor(0,0,0).rgb());
-    findSprites(pix.height(), pix.width(), img, imgGrid); // also fill visualizationView and spriteView
+    findSprites(pix.height(), pix.width(), img, imgGrid, emptySprite); // also fill visualizationView and spriteView
 
     std::cout << "We have " << palette.size() << "colors in our palette!" << std::endl;
 
     fillPaletteView();
-
-    QImage emptySprite = QImage(sprite_width,sprite_height,img.format());
-    emptySprite.fill(QColor(255,0,255).rgb());
 
     setSelectedSprite(emptySprite);
 

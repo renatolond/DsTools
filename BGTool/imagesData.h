@@ -17,7 +17,7 @@ const int sprites_per_line = 4;
 
 class imagesData
 {
-    void findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid);
+    void findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, const QImage &emptySprite);
     logger log;
 public:
     imagesData(QImage visualization, QImage sprite) : visualizationGrid(visualization), spriteGrid(sprite)

@@ -81,7 +81,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/spool/torque /var/lib/hsqldb /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/sandbox.d /etc/env.d/java/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-ljA0Uiy3nt,guid=1b311b95decfae073c67ce880000003f</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Ovf91wemx7,guid=857b18f83009c1061707147000000077</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DRQUEUE_LOGS=/var/log/drqueue</value>
@@ -109,7 +109,6 @@
     <value type="QString">KDE_SESSION_UID=2205</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=C</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LC_CTYPE=pt_BR.UTF-8</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
@@ -128,22 +127,22 @@
     <value type="QString">RUBYOPT=-rauto_gem</value>
     <value type="QString">SBCL_HOME=/usr/lib/sbcl</value>
     <value type="QString">SBCL_SOURCE_ROOT=/usr/lib/sbcl/src</value>
-    <value type="QString">SESSION_MANAGER=local/leme21.dcc.ufrj.br:@/tmp/.ICE-unix/13571,unix/leme21.dcc.ufrj.br:/tmp/.ICE-unix/13571</value>
+    <value type="QString">SESSION_MANAGER=local/leme14.dcc.ufrj.br:@/tmp/.ICE-unix/5317,unix/leme14.dcc.ufrj.br:/tmp/.ICE-unix/5317</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=13473</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-iSpXD13443/agent.13443</value>
+    <value type="QString">SSH_AGENT_PID=5220</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-SqcWGt5190/agent.5190</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
     <value type="QString">USER=lond</value>
     <value type="QString">USERNAME=lond</value>
     <value type="QString">VBOX_APP_HOME=/opt/VirtualBox</value>
     <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdmO8GSHV</value>
+    <value type="QString">XAUTHORITY=/tmp/.gdmVE5UHV</value>
     <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share:/usr/share/gdm</value>
     <value type="QString">XDG_MENU_PREFIX=kde-4.4-</value>
-    <value type="QString">XDG_SESSION_COOKIE=52945847fe0384b70c3e2f364a437f8c-1282165730.235930-290855296</value>
+    <value type="QString">XDG_SESSION_COOKIE=52945847fe0384b70c3e2f364a437f8c-1282653544.138316-717257593</value>
     <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -167,7 +166,7 @@
     <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /var/spool/torque /var/lib/hsqldb /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/sandbox.d /etc/env.d/java/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-ljA0Uiy3nt,guid=1b311b95decfae073c67ce880000003f</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-Ovf91wemx7,guid=857b18f83009c1061707147000000077</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0.0</value>
     <value type="QString">DRQUEUE_LOGS=/var/log/drqueue</value>
@@ -195,7 +194,6 @@
     <value type="QString">KDE_SESSION_UID=2205</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=C</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LC_CTYPE=pt_BR.UTF-8</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
@@ -214,22 +212,22 @@
     <value type="QString">RUBYOPT=-rauto_gem</value>
     <value type="QString">SBCL_HOME=/usr/lib/sbcl</value>
     <value type="QString">SBCL_SOURCE_ROOT=/usr/lib/sbcl/src</value>
-    <value type="QString">SESSION_MANAGER=local/leme21.dcc.ufrj.br:@/tmp/.ICE-unix/13571,unix/leme21.dcc.ufrj.br:/tmp/.ICE-unix/13571</value>
+    <value type="QString">SESSION_MANAGER=local/leme14.dcc.ufrj.br:@/tmp/.ICE-unix/5317,unix/leme14.dcc.ufrj.br:/tmp/.ICE-unix/5317</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
-    <value type="QString">SSH_AGENT_PID=13473</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-iSpXD13443/agent.13443</value>
+    <value type="QString">SSH_AGENT_PID=5220</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/ssh-SqcWGt5190/agent.5190</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
     <value type="QString">USER=lond</value>
     <value type="QString">USERNAME=lond</value>
     <value type="QString">VBOX_APP_HOME=/opt/VirtualBox</value>
     <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XAUTHORITY=/tmp/.gdmO8GSHV</value>
+    <value type="QString">XAUTHORITY=/tmp/.gdmVE5UHV</value>
     <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share:/usr/share/gdm</value>
     <value type="QString">XDG_MENU_PREFIX=kde-4.4-</value>
-    <value type="QString">XDG_SESSION_COOKIE=52945847fe0384b70c3e2f364a437f8c-1282165730.235930-290855296</value>
+    <value type="QString">XDG_SESSION_COOKIE=52945847fe0384b70c3e2f364a437f8c-1282653544.138316-717257593</value>
     <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>

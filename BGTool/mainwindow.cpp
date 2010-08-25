@@ -30,5 +30,6 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
-    // Implementar atualização na tab dos bgs
+    if ( index == 0 )
+        ui->widget_all->completeImgData(ui->widget0->imgData, ui->widget1->imgData);
 }

@@ -56,9 +56,10 @@ void ScrollEngine::loadgraphics(){
 	// Load our rocket graphic
 	PA_LoadSpritePal(1, 0, (void*) rocket_Pal);
 
-	greatest_bg = bgtool.width;
+	greatest_bg = bgtool0.width;
 
-  PA_LoadBackground(0, 2, &bgtool);
+  PA_LoadBackground(0, 0, &bgtool0);
+  PA_LoadBackground(0, 1, &bgtool1);
 	PA_InitParallaxX(0, //screen
                 128, //Parallax speed for Background 0. 0 is no parallax (will scroll independently with PA_EasyBgScrollXY)
 				192, // Normal speed for Bg1

@@ -235,6 +235,8 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
 
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);
+    pixGrid.setMask(QBitmap::fromImage(imgGrid.createMaskFromColor(QColor(255,0,255).rgb(), Qt::MaskInColor)));
+
     QGraphicsView *w = visualizationView;
     QGraphicsScene *scn = new QGraphicsScene(w);
     w->setScene(scn);

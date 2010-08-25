@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tabbg.ui'
 **
-** Created: Tue Aug 24 18:30:33 2010
-**      by: Qt User Interface Compiler version 4.6.3
+** Created: Tue Aug 24 22:37:38 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

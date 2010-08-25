@@ -1,8 +1,8 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'visualizationgraphicsview.h'
 **
-** Created: Tue Aug 24 18:25:26 2010
-**      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
+** Created: Tue Aug 24 22:38:03 2010
+**      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -11,7 +11,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'visualizationgraphicsview.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 62
-#error "This file was generated using the moc from 4.6.3. It"
+#error "This file was generated using the moc from 4.6.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif

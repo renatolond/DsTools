@@ -36,6 +36,16 @@ void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
 
     QImage t = p->pixmap().toImage();
 
+    int selSpriteX, selSpriteY;
+    selSpriteX = e->pos().x() / (sprite_width+imgData->sprite_grid_width);
+    selSpriteY = e->pos().y() / (sprite_height+imgData->sprite_grid_height);
+
+    int sel = (selSpriteY*sprites_per_line + selSpriteX);
+
+    if ( imgData->sprites.size() <= sel )
+    {
+        return;
+    }
 /*    if ( e->pos().y() > ( imgData->sprites.size() / sprites_per_line )
         || ( e->pos().y() == ( imgData->sprites.size() / sprites_per_line ) && ( e->pos().x() > ) )
     {
@@ -67,20 +77,17 @@ void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
     }
     imgData->setSelectedSprite(selSprite);
 
-    int j, k;
-    j = e->pos().x() / (sprite_width+imgData->sprite_grid_width);
-    k = e->pos().y() / (sprite_height+imgData->sprite_grid_height);
 
-    imgData->selectedSprite.setX(j*(sprite_width+imgData->sprite_grid_width));
-    imgData->selectedSprite.setY(k*(sprite_height+imgData->sprite_grid_height));
+    imgData->selectedSprite.setX(selSpriteX*(sprite_width+imgData->sprite_grid_width));
+    imgData->selectedSprite.setY(selSpriteY*(sprite_height+imgData->sprite_grid_height));
     imgData->selectedSpriteId = (imgData->selectedSprite.y()*sprites_per_line + imgData->selectedSprite.x())/(sprite_width+imgData->sprite_grid_width);
     outs << "Selected id: " << imgData->selectedSpriteId << std::endl;
     log.log(__LINE__, outs);
     QPen l;
     l.setColor(Qt::yellow);
     l.setWidth(2);
-    scene()->addRect(j*(sprite_width+imgData->sprite_grid_width)-1,
-                     k*(sprite_height+imgData->sprite_grid_height)-1,
+    scene()->addRect(selSpriteX*(sprite_width+imgData->sprite_grid_width)-1,
+                     selSpriteY*(sprite_height+imgData->sprite_grid_height)-1,
                      (sprite_width+imgData->sprite_grid_width),
                      (sprite_height+imgData->sprite_grid_height), l);
 }

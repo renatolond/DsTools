@@ -8,6 +8,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QFileDialog>
+#include <QBitmap>
 #include <vector>
 #include "logger.h"
 #include <cstdio>

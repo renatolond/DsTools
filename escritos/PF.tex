@@ -27,7 +27,7 @@
          framexleftmargin=17pt,
          framexrightmargin=5pt,
          framexbottommargin=4pt,
-         %backgroundcolor=\color{lightgray},
+         backgroundcolor=\color{lightgray},
          showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
  }
  \lstloadlanguages{% Check Dokumentation for further languages ...
@@ -190,15 +190,36 @@ Começamos então a criar a ferramenta. A idéia é que tenhamos uma área princ
 
 Comecemos então por uma idéia básica, a de deixar o usuário importar uma imagem já pronta, e que o programa identifique os tiles contidos na imagem. Desta maneira, poderemos usar uma fase já pronta para fazer nossos testes, e o usuário poderia migrar um trabalho anterior para a nova engine. Numa grande empresa, poderia ser o caso de estar havendo uma adaptação de um jogo de uma plataforma antiga para o Nintendo DS.
 
-\begin{wrapfigure}{r}{\linewidth}
+\begin{figure}[h]
 \includegraphics[width=\linewidth]{imgs/mockup.png}
 \caption{Uma idéia da nossa interface} 
-\end{wrapfigure}
+\end{figure}
 
-Avançamos primeiro sobre o problema da leitura de um arquivo já pronto e conversão desse arquivo para um formato do tipo ``mapa de tiles'', onde nós identificamos os tiles, e iremos compor o background a partir desses tiles. Fazemos isso com o seguinte código:
+Precisamos então decidir como faremos a interface. Como a parte do código da engine para o DS deverá ser feito em C++, pensamos que o ideal seria que o resto do projeto também fosse feito em C++, assim mantemos um certo padrão de linguagem. Com isso, buscamos as alternativas para a interface.
+
+Como queremos que o projeto seja utilizável tanto em Windows, quanto em Linux, que será nossa principal plataforma de desenvolvimento, precisamos escolher uma biblioteca gráfica que suporte os dois sistemas operacionais e cujo custo de trocar de um pra outro seja muito baixo, ou seja, que não seja necessário reeescrever código para isso.
+
+A solução que encontramos é utilizar a biblioteca Qt. A IDE para criação de interfaces, o QtCreator, deixa que as interfaces sejam criadas somente arrastando componentes e em seguida associando cliques a funções. E usando as funções do Qt para fazer as tarefas, o custo de troca entre Windows e Linux é basicamente zero.
+
+Assim, fazemos a primeira janela do nosso programa, e o resultado é bem parecido com o que nós pensamos.
+
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/mainwindow_1.png}
+\caption{A nossa primeira interface} 
+\end{figure}
+
+Com a nossa interface definida, agora temos que nos preocupar em carregar o arquivo. Vamos considerar primeiro o problema de ler um arquivo já pronto e conversão desse arquivo para um formato do tipo ``mapa de tiles'', onde nós identificamos os tiles, e iremos compor o background a partir desses tiles. Fazemos isso com o seguinte código:
 
 \lstinputlisting[caption=Lendo os tiles e os identificando:]{codigos/tiles.cpp}
 
+Vamos entender o que fazemos nesse código. A leitura da imagem fica por conta do Qt. Preenchemos o fundo do grid que vai conter nosso background com preto, em seguida, iteramos por toda a imagem, dividindo-a em quadrados de 8x8, ou seja, nossos tiles. Em cada um desses quadrados, identificamos se esse tile já foi incluído no nosso vetor de tiles. Se já, pegamos o índice desse vetor caso contrário, incluímos no vetor de tiles. Depois dizemos que nessa posição do background está o tile com esse índice. 
+
+Inicialmente, não deixamos que o usuário amplie o mapa, ou seja, a imagem que ele carregar inicialmente tem que ser composta por tiles e já do tamanho final do mapa. Nossa intenção para depois, no entanto, é que o usuário possa criar um mapa vazio e carregar somente o conjunto de tiles. Do contrário, nosso software se resumiria a ter a mesma função da ferramenta já existente, a PAGfx, somente com uma interface mais rebuscada.
+
+Como já comentamos, o hardware do DS suporta que pedaços de mapa sejam espelhados, tanto na vertical quanto na horizontal. No nosso código, não tratamos nenhum desses casos. Esse problema será visto mais adiante. No momento estamos mais preocupados em ter algo que permita que exportemos os backgrounds para que possamos começar a trabalhar na engine.
+
+Agora que já lemos o background, temos que implementar as seguintes funções: seleção de tiles, usar o tile selecionado para pintar no mapa, exportar o mapa para o formato do DS. 
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 

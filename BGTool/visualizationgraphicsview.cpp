@@ -46,6 +46,7 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
         if ( imgData->selectedSprite.x() >= 0 )
         {
             QPixmap gridPix = pi->pixmap();
+
             QImage gridImg = gridPix.toImage();
 
             QImage spriteImg = imgData->spriteGrid;
@@ -55,12 +56,15 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
             {
                 for ( int j = 0 ; j < sprite_width ; j++ )
                 {
+                    QColor srcColor;
+                    srcColor.fromRgba(spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
                     gridImg.setPixel(j+p.x()*(sprite_width+imgData->visualization_grid_width),
                                      i+p.y()*(sprite_height+imgData->visualization_grid_height),
-                                     spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
+                                     srcColor.rgba());
                 }
             }
             gridPix = gridPix.fromImage(gridImg);
+            gridPix.setMask(QBitmap::fromImage(q));
             pi->setPixmap(gridPix);
 
             imgData->bgmatrix[p.y()][p.x()] = imgData->selectedSpriteId;

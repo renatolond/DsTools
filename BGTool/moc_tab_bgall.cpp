@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'tab_bgall.h'
 **
-** Created: Tue Aug 24 22:42:40 2010
+** Created: Wed Aug 25 19:17:37 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

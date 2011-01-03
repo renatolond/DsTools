@@ -67,7 +67,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
                     }
 
                     sprite.setPixel(l,k,
-                                    c.rgb());
+				    c.rgba());
                     for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
                     {
                         if ( *it == c )
@@ -83,7 +83,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
                     }
                     imgGrid.setPixel(j*(sprite_width +visualization_grid_width) +l,
                                      i*(sprite_height+visualization_grid_height)+k,
-                                     c.rgb());
+				     c.rgba());
                 }
             }
 
@@ -142,7 +142,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     spriteGrid = QImage(sprite_width*sprites_per_line + (sprites_per_line-1)*sprite_grid_width,
                         sprite_height*sprites_per_column + (sprites_per_column-1)*sprite_grid_height,
                         img.format());
-    spriteGrid.fill(QColor(255,255,255).rgb());
+    spriteGrid.fill(QColor(255,255,255,255).rgba());
     int m = 0;
     int n = 0;
     for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
@@ -153,7 +153,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
             {
                 spriteGrid.setPixel(m*(sprite_width+sprite_grid_width)   + l,
                                     n*(sprite_height+sprite_grid_height) + k,
-                                    (*it).pixel(l,k));
+				    (*it).pixel(l,k));
             }
         }
 
@@ -173,7 +173,7 @@ void imagesData::fillPaletteView()
     height = (height/9)*9 -1;
     QPixmap palPix(width, height);
     QImage palImg = QImage(palPix.width(), palPix.height(), spriteGrid.format());
-    palImg.fill(QColor(0, 0, 0, 0).rgba());
+    palImg.fill(QColor(0, 0, 0, 255).rgba());
 
     for ( int i = 0 ; i < palette.size() ; i++ )
     {
@@ -187,7 +187,7 @@ void imagesData::fillPaletteView()
         {
             for ( int m = k ; m < k+8 ; m++ )
             {
-                palImg.setPixel(m, l, palette.at(i).rgb());
+		palImg.setPixel(m, l, palette.at(i).rgba());
             }
         }
     }
@@ -222,9 +222,9 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     log.log(__LINE__, outs);
 
     QImage emptySprite = QImage(sprite_width,sprite_height,img.format());
-    emptySprite.fill(QColor(255,0,255).rgb());
+    emptySprite.fill(QColor(255,0,255,0).rgba());
 
-    imgGrid.fill(QColor(0,0,0).rgb());
+    imgGrid.fill(QColor(0,0,0,255).rgba());
     findSprites(pix.height(), pix.width(), img, imgGrid, emptySprite); // also fill visualizationView and spriteView
 
     std::cout << "We have " << palette.size() << "colors in our palette!" << std::endl;
@@ -235,7 +235,7 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
 
     QPixmap pixGrid;
     pixGrid = QPixmap::fromImage(imgGrid);
-    pixGrid.setMask(QBitmap::fromImage(imgGrid.createMaskFromColor(QColor(255,0,255).rgb(), Qt::MaskInColor)));
+    pixGrid.setMask(QBitmap::fromImage(imgGrid.createMaskFromColor(QColor(255,0,255,0).rgba(), Qt::MaskInColor)));
 
     QGraphicsView *w = visualizationView;
     QGraphicsScene *scn = new QGraphicsScene(w);
@@ -335,7 +335,7 @@ void imagesData::exportBG()
             {
                 for ( unsigned char k = 0 ; k < palette.size() ; k++ )
                 {
-                    if ( it->pixel(j,i) == palette.at(k).rgb() )
+		    if ( it->pixel(j,i) == palette.at(k).rgba() )
                     {
                         fwrite(&k,1,sizeof(k),sout);
                         break;
@@ -468,14 +468,14 @@ void imagesData::setSelectedSprite(QImage s)
     sel->setScene(selScn);
     QPixmap selPix(sel->width(), sel->height());
     QImage selImg = QImage(selPix.width(), selPix.height(), s.format());
-    selImg.fill(QColor(0,0,0).rgb());
+    selImg.fill(QColor(0,0,0,255).rgba());
     for ( boxI = 0 ; boxI < sel->height() ; boxI++ )
     {
         for ( boxJ = 0 ; boxJ < sel->width() ; boxJ++ )
         {
             if ( boxI/repeatI >= s.height() || boxJ/repeatJ >= s.width() )
             {
-                selImg.setPixel(boxJ, boxI, QColor(255,255,255).rgb());
+		selImg.setPixel(boxJ, boxI, QColor(255,255,255,255).rgba());
                 continue;
             }
             if ( boxI/repeatI != (boxI+1)/repeatI )

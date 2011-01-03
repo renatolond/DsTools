@@ -78,13 +78,13 @@ professores: \setlength{\ABNTsignthickness}{0.4pt}
 \end{folhadeaprovacao}
 
 \begin{resumo}
-O objetivo deste trabalho é fazer uma \textit{engine} para o \textit{videogame Nintendo DS\texttrademark} e também um editor de fases 
+O objetivo deste trabalho é fazer um \textit{engine} de jogo para o \textit{videogame Nintendo DS\texttrademark} e também um editor de fases 
 e configurações, como seria feito numa equipe de desenvolvimento de um jogo grande, dando a possibilidade aos \textit{designers} 
 de fazerem seus \textit{sprites} e criarem as fases com eles, sem que fosse necessário mexer com códigos.
 \end{resumo}
 
 \begin{abstract}
-The objective of this paper is to make an engine to the Nintendo DS\texttrademark system and a level and configurations editor, as it
+The objective of this paper is to make a game engine to the Nintendo DS\texttrademark system and a level and configurations editor, as it
 would be done in a development team in a big game, giving designers the possibility to make their sprites and create their levels 
 without touching actual source code.
 \end{abstract}
@@ -119,7 +119,7 @@ No entanto, muita coisa mudou nas poucas décadas da existências dos jogos elet
 
 Hoje em dia, porém, a indústria de jogos sendo a grande indústria que é, conta com superproduções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
 
-Neste trabalho o que tentamos fazer é nos inserir um pouco no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa tão grande cadeia de trabalho: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, tentamos criar um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. E tentamos fazer com que a engine que roda o jogo seja a mais fácil de reutilizar através de ferramentas de criação de fases e de configuração do personagem, itens, dentre outras coisas que compõe o mundo do jogo.
+Neste trabalho o que tentamos fazer é nos inserir um pouco no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa tão grande cadeia de trabalho: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, tentamos criar um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. E tentamos fazer com que a engine que roda o jogo seja mais fácil de reutilizar através de ferramentas de criação de fases e de configuração do personagem, itens, dentre outras coisas que compõe o mundo do jogo.
 
 Nosso objetivo, porém, é fazer o papel do desenvolvedor. E somente criar as ferramentas, imaginando como os outros times as usariam.
 
@@ -174,7 +174,7 @@ Investigamos o formato que é aceito pelo DS, em \cite{DSSpec}. Quando uma figur
  \item Arquivo Tiles\\
  Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal. Neste arquivo, os tiles são escritos em blocos (vetores) de 64 bits. 
  \item Arquivo Map\\
- Neste arquivo, fica o mapa do background, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na horizontal.
+ Neste arquivo, fica o mapa do background, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na vertical.
  \item Arquivo .c\\
  Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
 \end{itemize}

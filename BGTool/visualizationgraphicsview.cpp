@@ -73,8 +73,7 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
             {
                 for ( int j = 0 ; j < sprite_width ; j++ )
                 {
-                    QColor srcColor;
-		    srcColor.fromRgba(spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
+                    QColor srcColor(spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
 		    if ( srcColor.alpha() != 255 )
 		    {
 //			painter.setPen(Qt::color0);

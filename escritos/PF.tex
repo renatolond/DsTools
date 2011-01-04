@@ -2,35 +2,28 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
 \usepackage{listings}
-%opening
 
 \usepackage{courier}
  \lstset{
-         basicstyle=\footnotesize\ttfamily, % Standardschrift
-         %numbers=left,               % Ort der Zeilennummern
-         numberstyle=\tiny,          % Stil der Zeilennummern
-         %stepnumber=2,               % Abstand zwischen den Zeilennummern
-         numbersep=5pt,              % Abstand der Nummern zum Text
-         tabsize=2,                  % Groesse von Tabs
-         extendedchars=true,         %
-         breaklines=true,            % Zeilen werden Umgebrochen
+         basicstyle=\footnotesize\ttfamily, 
+         numberstyle=\tiny,          
+         numbersep=5pt,              
+         tabsize=2,                  
+         extendedchars=true,         
+         breaklines=true,            
          keywordstyle=\color{red},
                 frame=b,         
- %        keywordstyle=[1]\textbf,    % Stil der Keywords
- %        keywordstyle=[2]\textbf,    %
- %        keywordstyle=[3]\textbf,    %
- %        keywordstyle=[4]\textbf,   \sqrt{\sqrt{}} %
-         stringstyle=\color{white}\ttfamily, % Farbe der String
-         showspaces=false,           % Leerzeichen anzeigen ?
-         showtabs=false,             % Tabs anzeigen ?
+         stringstyle=\color{white}\ttfamily, 
+         showspaces=false,           
+         showtabs=false,             
          xleftmargin=17pt,
          framexleftmargin=17pt,
          framexrightmargin=5pt,
          framexbottommargin=4pt,
          backgroundcolor=\color{lightgray},
-         showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+         showstringspaces=false      
  }
- \lstloadlanguages{% Check Dokumentation for further languages ...
+ \lstloadlanguages{
          %[Visual]Basic
          %Pascal
          %C
@@ -39,9 +32,7 @@
          %HTML
          %Java
  }
-    %\DeclareCaptionFont{blue}{\color{blue}} 
 
-%\captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{caption}
@@ -179,7 +170,7 @@ Investigamos o formato que é aceito pelo DS, em \cite{DSSpec}. Quando uma figur
  Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
 \end{itemize}
 
-\lstinputlisting[caption=Exemplo de arquivo .c:]{codigos/exemplo_bg.c}
+Veja a listagem de código \ref{list:exemplobg}
 
 Temos alguns detalhes a discutir nesse ponto. Como visto em \cite{DSSpec}, o DS tem mais de um formato de background, o que está descrito acima é o mais simples - e menos poderoso - dentre eles. Escolhemos ele como ponto de partida, para, se necessário, implementar os outros. Por exemplo, existem modos de usar mais de um arquivo de paleta, ou ainda usar mais tiles, mas sem o espelhamento. Ignoraremos esses outros formatos e modos, e nos focaremos no que está descrito acima.
 
@@ -209,9 +200,7 @@ Assim, fazemos a primeira janela do nosso programa, e o resultado é bem parecid
 \caption{A nossa primeira interface} 
 \end{figure}
 
-Com a nossa interface definida, agora temos que nos preocupar em carregar o arquivo. Vamos considerar primeiro o problema de ler um arquivo já pronto e conversão desse arquivo para um formato do tipo ``mapa de tiles'', onde nós identificamos os tiles, e iremos compor o background a partir desses tiles. Fazemos isso com o seguinte código:
-
-\lstinputlisting[caption=Lendo os tiles e os identificando:]{codigos/tiles.cpp}
+Com a nossa interface definida, agora temos que nos preocupar em carregar o arquivo. Vamos considerar primeiro o problema de ler um arquivo já pronto e conversão desse arquivo para um formato do tipo ``mapa de tiles'', onde nós identificamos os tiles, e iremos compor o background a partir desses tiles. Fazemos isso com o código \ref{list:tilesv1}.
 
 Vamos entender o que fazemos nesse código. A leitura da imagem fica por conta do Qt. Preenchemos o fundo do grid que vai conter nosso background com preto, em seguida, iteramos por toda a imagem, dividindo-a em quadrados de 8x8, ou seja, nossos tiles. Em cada um desses quadrados, identificamos se esse tile já foi incluído no nosso vetor de tiles. Se já, pegamos o índice desse vetor caso contrário, incluímos no vetor de tiles. Depois dizemos que nessa posição do background está o tile com esse índice. 
 
@@ -219,7 +208,11 @@ Inicialmente, não deixamos que o usuário amplie o mapa, ou seja, a imagem que 
 
 Como já comentamos, o hardware do DS suporta que pedaços de mapa sejam espelhados, tanto na vertical quanto na horizontal. No nosso código, não tratamos nenhum desses casos. Esse problema será visto mais adiante. No momento estamos mais preocupados em ter algo que permita que exportemos os backgrounds para que possamos começar a trabalhar na engine.
 
-Agora que já lemos o background, temos que implementar as seguintes funções: seleção de tiles, usar o tile selecionado para pintar no mapa, exportar o mapa para o formato do DS. 
+Agora que já lemos o background, temos que implementar as seguintes funções: seleção de tiles, usar o tile selecionado para pintar no mapa e exportar o mapa para o formato do DS. Como já exibimos na pequena janela o tile, basta que associemos os eventos de clique à janela, para que possamos implementar a funcionalidade de seleção de tiles.
+
+Nós em primeiro lugar fizemos um código bem rudimentar, que simplesmente achava a posição do tile a partir da posição que o usuário havia clicado, e desenhava um quadrado ao redor dessa posição. No entanto, ele desenhava múltiplos quadrados, no caso do usuário sair clicando, e não funcionava no caso em que o usuário clicava duas vezes no mesmo quadrado.
+
+Mexemos no código até que o usuário pudesse selecionar um tile com um clique, e desfazer a seleção clicando novamente. E também passamos a guardar a informação sobre o índice do tile selecionado. Afinal, isso seria necessário para quando quiséssemos pintar usando o tile selecionado. Uma funcionalidade interessante seria selecionar grupos de tiles, mas nós decidimos não a implementar num primeiro momento.
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
@@ -255,6 +248,11 @@ Para que serviu este trabalho na sua formação?
 
 \anexo
 
+\chapter{Listagens de código}
+
+\lstinputlisting[caption=Exemplo de arquivo de mapa de background .c:,label=list:exemplobg]{codigos/exemplo_bg.c}
+
+\lstinputlisting[caption=Lendo os tiles e os identificando (v1),label=list:tilesv1]{codigos/tiles.cpp}
 
 \chapter{Ferramentas utilizadas}
 

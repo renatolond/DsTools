@@ -1,1 +1,3 @@
 *.o
+ui*.h
+moc*.cpp

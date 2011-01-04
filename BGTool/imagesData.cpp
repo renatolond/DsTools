@@ -11,6 +11,21 @@ void imagesData::createBgMatrix(int height, int width)
     }
 }
 
+void dumpImage(const QImage &q)
+{
+    for ( int i = 0 ; i < q.height() ; i++ )
+    {
+	for ( int j = 0 ; j < q.width() ; j++ )
+	{
+	    std::cout << " ";
+	    //if ( bgmatrix[i][j] < 10 ) std::cout << "0";
+	    std::cout << std::hex << q.pixel(i,j) << std::dec << " ";
+	}
+	std::cout << std::endl;
+    }
+}
+
+
 void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, const QImage &emptySprite)
 {
 
@@ -125,6 +140,10 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     }
 
     sprites.push_back(emptySprite);
+//    std::cout << "Our empty sprite alpha is: " << QColor::fromRgba((*(sprites.rbegin())).pixel(0,0)).alpha() << " and it is the " << sprites.size() << std::endl;
+
+//    dumpImage(*sprites.rbegin());
+//    dumpImage(*(sprites.rbegin()+1));
 
     {
 	int last = sprites.size() -1;
@@ -142,7 +161,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     spriteGrid = QImage(sprite_width*sprites_per_line + (sprites_per_line-1)*sprite_grid_width,
                         sprite_height*sprites_per_column + (sprites_per_column-1)*sprite_grid_height,
                         img.format());
-    spriteGrid.fill(QColor(255,255,255,255).rgba());
+    spriteGrid.fill(QColor(255,255,255).rgb());
     int m = 0;
     int n = 0;
     for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
@@ -151,9 +170,10 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
         {
             for ( int l = 0 ; l < sprite_width ; l++ )
             {
+		QColor srcColor((*it).pixel(l,k));
                 spriteGrid.setPixel(m*(sprite_width+sprite_grid_width)   + l,
                                     n*(sprite_height+sprite_grid_height) + k,
-				    (*it).pixel(l,k));
+				    srcColor.rgb());
             }
         }
 

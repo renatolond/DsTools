@@ -58,34 +58,48 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
 	    std::cout << "Sprite X: "<< spritePt.x() <<
 		    ":: Sprite Y: " << spritePt.y() << std::endl;
 
-	    for ( int i = 0 ; i < imgData->sprite_grid_height ; i++ )
+/*	    for ( int i = 0 ; i < imgData->sprite_grid_height ; i++ )
 	    {
 		for ( int j = 0 ; j < imgData->sprite_grid_width ; j++ )
 		{
-		    std::cout << "My alpha value: " << spriteImg.pixel(j,i) << std::endl;
+		    std::cout << "My alpha value: " << spriteImg.pixel(j,i).alpha() << std::endl;
 //			    ":: my blue " << spriteImg.pixel(j,i).blue() <<
 //			    ":: my red " << spriteImg.pixel(j,i).red() <<
 //			    ":: my green " << spriteImg.pixel(j,i).green() << std::endl;
 		}
-	    }
-//	    painter.begin(&bitMask);
+	    }*/
+	    painter.begin(&bitMask);
+
+	    int mySpriteIndex;
+	    mySpriteIndex = (spritePt.y() / (sprite_height+imgData->sprite_grid_height));
+	    //std::cout << "My selected sprite y is... " << mySpriteIndex << std::endl;
+	    mySpriteIndex *= (imgData->spriteGrid.width()+1) / (sprite_width+imgData->sprite_grid_width);
+	    //std::cout << "My almost correct selected sprite is... " << mySpriteIndex << std::endl;
+	    mySpriteIndex += (spritePt.x() / (sprite_width+imgData->sprite_grid_width));
+
+	    std::cout << "My selected sprite is... " << mySpriteIndex << std::endl;
+
             for ( int i = 0 ; i < sprite_height ; i++ )
             {
                 for ( int j = 0 ; j < sprite_width ; j++ )
                 {
-                    QColor srcColor;
-		    srcColor.fromRgba(spriteImg.pixel(j+spritePt.x(),i+spritePt.y()));
+		    std::cout << std::hex << imgData->sprites[mySpriteIndex].pixel(j,i) << std::dec << std::endl;
+		    QColor srcColor = QColor::fromRgba(imgData->sprites[mySpriteIndex].pixel(j,i));
+		    std::cout << "My alpha value: " << srcColor.alpha() << std::endl;
+//			    ":: my blue " << srcColor.pixel(j,i).blue() <<
+//			    ":: my red " << srcColor.pixel(j,i).red() <<
+//			    ":: my green " << srcColor.pixel(j,i).green() << std::endl;
 		    if ( srcColor.alpha() != 255 )
 		    {
-//			painter.setPen(Qt::color0);
-//			painter.drawPoint(j+p.x()*(sprite_width+imgData->visualization_grid_width),
-//					  i+p.y()*(sprite_height+imgData->visualization_grid_height));
+			painter.setPen(Qt::color0);
+			painter.drawPoint(j+p.x()*(sprite_width+imgData->visualization_grid_width),
+					  i+p.y()*(sprite_height+imgData->visualization_grid_height));
 		    }
 		    else
 		    {
-//			painter.setPen(Qt::color1);
-//			painter.drawPoint(j+p.x()*(sprite_width+imgData->visualization_grid_width),
-//					  i+p.y()*(sprite_height+imgData->visualization_grid_height));
+			painter.setPen(Qt::color1);
+			painter.drawPoint(j+p.x()*(sprite_width+imgData->visualization_grid_width),
+					  i+p.y()*(sprite_height+imgData->visualization_grid_height));
 		    }
                     gridImg.setPixel(j+p.x()*(sprite_width+imgData->visualization_grid_width),
                                      i+p.y()*(sprite_height+imgData->visualization_grid_height),
@@ -93,8 +107,8 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
                 }
             }
             gridPix = gridPix.fromImage(gridImg);
-//	    painter.end();
-	    //gridPix.setMask(bitMask);
+	    painter.end();
+	    gridPix.setMask(bitMask);
             pi->setPixmap(gridPix);
 
             imgData->bgmatrix[p.y()][p.x()] = imgData->selectedSpriteId;

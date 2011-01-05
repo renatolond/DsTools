@@ -214,6 +214,17 @@ Nós em primeiro lugar fizemos um código bem rudimentar, que simplesmente achav
 
 Mexemos no código até que o usuário pudesse selecionar um tile com um clique, e desfazer a seleção clicando novamente. E também passamos a guardar a informação sobre o índice do tile selecionado. Afinal, isso seria necessário para quando quiséssemos pintar usando o tile selecionado. Uma funcionalidade interessante seria selecionar grupos de tiles, mas nós decidimos não a implementar num primeiro momento.
 
+Com isso, implementar o uso do tile para pintar no mapa era o próximo passo lógico. Tratamos disso fazendo a janela um pouco mais complexa, adicionamos um botão ``pintar'' e quando este botão está selecionado, o sprite selecionado é usado para pintar na janela principal. Agora, já pensando em como faremos para exportar o mapa, precisamos tomar algumas medidas e refatorar algumas partes do código. Em primeiro lugar, como vimos anteriormente, vamos precisar de três partes: uma paleta de cores, os sprites presentes, e um mapa desses sprites. No momento nosso código não guarda nenhuma dessas informações. Então o que vamos refatorar é o código de leitura da imagem inicial.
+
+Precisamos fazer com que ao ler a imagem, e processar os sprites, sejam guardadas as cores que formos encontrando. Guardamos então essas cores num vetor, para que depois, quando formos processar a saída, possamos fazer os sprites se relacionarem com essas cores. Os sprites já estão guardados eles mesmos num vetor e o basta então que o fundo também seja armazenado numa matriz, relacionando-se com os sprites.
+
+Ao menos a princípio, escolhemos, como é comum em aplicações gráficas, o magenta para ser o transparente, ou seja, a primeira cor da paleta. Do mesmo modo, enquanto processamos as cores, já faremos a passagem para A1R5G5B5, que tem somente 5 bits de cor, ao contrário dos 8 que temos. Guardaremos então os 5 bits mais significativos. Veja a imagem ref{img:comparacao} para ter uma idéia da diferença que tirar os três bits menos significativos faz.
+
+Ou seja, o procedimento passa a ser:
+
+\lstinputlisting[caption=Pseudo-código de carregamento de arquivo,label=list:ploadfile]{codigos/pseudocodigo.c}
+
+
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
 \vfill{}

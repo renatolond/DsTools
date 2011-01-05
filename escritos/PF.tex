@@ -16,10 +16,10 @@
          stringstyle=\color{white}\ttfamily, 
          showspaces=false,           
          showtabs=false,             
-         xleftmargin=17pt,
-         framexleftmargin=17pt,
-         framexrightmargin=5pt,
-         framexbottommargin=4pt,
+         %xleftmargin=17pt,
+         %framexleftmargin=17pt,
+         %framexrightmargin=5pt,
+         %framexbottommargin=4pt,
          backgroundcolor=\color{lightgray},
          showstringspaces=false      
  }
@@ -39,7 +39,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.98\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
 \makeatletter
@@ -104,11 +104,11 @@ da mesma.
 
 \section{Objetivo deste trabalho}
 
-É comum ver retrospectivas lembrando da evolução dos jogos ao longo dos últimos anos. Jogos eletrônicos, como é sabido, são coisas relativamente recentes, sendo o primeiro exemplo conhecido de 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos.
+É comum ver retrospectivas lembrando da evolução dos jogos ao longo dos últimos anos. Jogos eletrônicos, como é sabido, são coisas relativamente recentes, sendo o primeiro exemplo conhecido de 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \\\cite{2455992}.
 
-No entanto, muita coisa mudou nas poucas décadas da existências dos jogos eletrônicos. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação.
+No entanto, muita coisa mudou nas poucas décadas da existências dos jogos eletrônicos. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação \cite{PrimeiroDevName}.
 
-Hoje em dia, porém, a indústria de jogos sendo a grande indústria que é, conta com superproduções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
+Hoje em dia, porém, a indústria de jogos sendo a grande indústria que é, conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
 
 Neste trabalho o que tentamos fazer é nos inserir um pouco no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa tão grande cadeia de trabalho: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, tentamos criar um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. E tentamos fazer com que a engine que roda o jogo seja mais fácil de reutilizar através de ferramentas de criação de fases e de configuração do personagem, itens, dentre outras coisas que compõe o mundo do jogo.
 
@@ -218,12 +218,13 @@ Com isso, implementar o uso do tile para pintar no mapa era o próximo passo ló
 
 Precisamos fazer com que ao ler a imagem, e processar os sprites, sejam guardadas as cores que formos encontrando. Guardamos então essas cores num vetor, para que depois, quando formos processar a saída, possamos fazer os sprites se relacionarem com essas cores. Os sprites já estão guardados eles mesmos num vetor e o basta então que o fundo também seja armazenado numa matriz, relacionando-se com os sprites.
 
-Ao menos a princípio, escolhemos, como é comum em aplicações gráficas, o magenta para ser o transparente, ou seja, a primeira cor da paleta. Do mesmo modo, enquanto processamos as cores, já faremos a passagem para A1R5G5B5, que tem somente 5 bits de cor, ao contrário dos 8 que temos. Guardaremos então os 5 bits mais significativos. Veja a imagem ref{img:comparacao} para ter uma idéia da diferença que tirar os três bits menos significativos faz.
+Ao menos a princípio, escolhemos, como é comum em aplicações gráficas, o magenta para ser o transparente, ou seja, a primeira cor da paleta. Do mesmo modo, enquanto processamos as cores, já faremos a passagem para A1R5G5B5, que tem somente 5 bits de cor, ao contrário dos 8 que temos. Guardaremos então os 5 bits mais significativos. Veja a figura \ref{img:comparacao} para ter uma idéia da diferença que tirar os três bits menos significativos faz.
 
 Ou seja, o procedimento passa a ser:
 
 \lstinputlisting[caption=Pseudo-código de carregamento de arquivo,label=list:ploadfile]{codigos/pseudocodigo.c}
 
+Com isso, chegamos basicamente onde queríamos chegar. Podemos agora usar o nosso programa para fazer o background para ser testado no DS. 
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
@@ -258,6 +259,15 @@ Para que serviu este trabalho na sua formação?
 
 
 \anexo
+
+\chapter{Figuras}
+
+\begin{figure}[h]
+\centering
+\includegraphics{imgs/diferenca_cor.png}
+\caption[Comparação de cores]{Comparação de cores: Em cima, a escala sem os três bits menos significativos. Embaixo, com eles. Note a gradação mais suave na parte com mais bits.}
+\label{img:comparacao} 
+\end{figure}
 
 \chapter{Listagens de código}
 

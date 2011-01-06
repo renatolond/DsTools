@@ -20,7 +20,7 @@
          %framexleftmargin=17pt,
          %framexrightmargin=5pt,
          %framexbottommargin=4pt,
-         backgroundcolor=\color{lightgray},
+         %backgroundcolor=\color{lightgray},
          showstringspaces=false      
  }
  \lstloadlanguages{
@@ -224,7 +224,14 @@ Ou seja, o procedimento passa a ser:
 
 \lstinputlisting[caption=Pseudo-código de carregamento de arquivo,label=list:ploadfile]{codigos/pseudocodigo.c}
 
-Com isso, chegamos basicamente onde queríamos chegar. Podemos agora usar o nosso programa para fazer o background para ser testado no DS. 
+Com isso, chegamos basicamente onde queríamos chegar. Podemos agora usar o nosso programa para fazer o background para ser testado no DS. Porém, falta ainda dar a saída para o formato da PALib. Mas agora isso é só uma questão de dar a saída do jeito certo, já que estamos com todos os dados preparados.
+
+Fazemos isso com o seguinte código:
+
+\lstinputlisting[caption=Pseudo-código de escrita de arquivo,label=list:pwritefile]
+{codigos/pseudoescritacodigo.c}
+
+Assim, agora podemos usar qualquer programa de edição de imagem para fazer os tiles, e em seguida, podemos usá-los para construir algum tipo de background para a nossa engine. O DS suporta até cinco backgrounds simultâneos, para que eles façam parallax ou simplesmente para dar ilusão de profundidade. Ainda não implementamos essa funcionalidade no nosso software, mas podemos circular essa limitação simplesmente editando os cinco backgrounds em momentos diferentes.
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 

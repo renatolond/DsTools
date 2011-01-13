@@ -185,7 +185,7 @@
    <valuelist key="abstractProcess.arguments" type="QVariantList">
     <value type="QString">clean</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">make</value>
+   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
    <value key="abstractProcess.workingDirectory" type="QString">/home/lond/sources/PF</value>
    <value key="workingDirectory" type="QString">$BUILDDIR</value>

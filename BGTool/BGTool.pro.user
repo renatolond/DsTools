@@ -81,17 +81,13 @@
     <value type="QString">CONFIG_PROTECT=/etc/entropy /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild /etc/splash</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-3pGLxMbTHy,guid=241cfeb3bc9f023a1431cd7a00000042</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-lwdCqXAw5n,guid=c704408797ce39a4eb5fc8d30000004f</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">DVDCSS_CACHE=/home/lond/.dvdcss/</value>
-    <value type="QString">DVDCSS_METHOD=key</value>
-    <value type="QString">DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString">DVDCSS_VERBOSE=0</value>
     <value type="QString">EDITOR=/bin/nano</value>
-    <value type="QString">GCC_SPECS=</value>
     <value type="QString">GDK_USE_XFT=1</value>
+    <value type="QString">GDM_LANG=en_US.UTF-8</value>
     <value type="QString">GENERATION=2</value>
     <value type="QString">GSETTINGS_BACKEND=gconf</value>
     <value type="QString">GS_LIB=/home/lond/.fonts</value>
@@ -100,16 +96,17 @@
     <value type="QString">HOME=/home/lond</value>
     <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/info:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/info</value>
     <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
     <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
     <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
     <value type="QString">KDE_FULL_SESSION=true</value>
     <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1000</value>
+    <value type="QString">KDE_SESSION_UID=1001</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">LANG=pt_BR.utf8</value>
-    <value type="QString">LANGUAGE=</value>
-    <value type="QString">LC_ALL=pt_BR.utf8</value>
+    <value type="QString">LADSPA_PATH=/usr/lib/ladspa</value>
+    <value type="QString">LANG=en_US.UTF-8</value>
+    <value type="QString">LANGUAGE=en_US.UTF-8</value>
+    <value type="QString">LC_ALL=en_US.UTF-8</value>
+    <value type="QString">LC_MESSAGES=en_US.UTF-8</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
     <value type="QString">LOGNAME=lond</value>
@@ -119,22 +116,25 @@
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.4:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
     <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
     <value type="QString">PWD=/home/lond</value>
+    <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6791,unix/workstation-do-estagiario:/tmp/.ICE-unix/6791</value>
+    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6777,unix/workstation-do-estagiario:/tmp/.ICE-unix/6777</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
+    <value type="QString">SYSFONT=latarcyrheb-sun16</value>
+    <value type="QString">USB_DEVFS_PATH=/dev/bus/usb</value>
     <value type="QString">USER=lond</value>
-    <value type="QString">VBOX_APP_HOME=/opt/VirtualBox</value>
-    <value type="QString">VMHANDLE=sun-jdk-1.4</value>
+    <value type="QString">VMHANDLE=blackdown-jdk-1.4.2</value>
     <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSOR_THEME=Oxygen_Blue</value>
+    <value type="QString">XCURSORS_THEME=Blue</value>
+    <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
     <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
-    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1294148340.693073-270086612</value>
+    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1294920178.535927-1216866603</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
     <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
    </valuelist>
@@ -159,17 +159,13 @@
     <value type="QString">CONFIG_PROTECT=/etc/entropy /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild /etc/splash</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-3pGLxMbTHy,guid=241cfeb3bc9f023a1431cd7a00000042</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-lwdCqXAw5n,guid=c704408797ce39a4eb5fc8d30000004f</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">DVDCSS_CACHE=/home/lond/.dvdcss/</value>
-    <value type="QString">DVDCSS_METHOD=key</value>
-    <value type="QString">DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString">DVDCSS_VERBOSE=0</value>
     <value type="QString">EDITOR=/bin/nano</value>
-    <value type="QString">GCC_SPECS=</value>
     <value type="QString">GDK_USE_XFT=1</value>
+    <value type="QString">GDM_LANG=en_US.UTF-8</value>
     <value type="QString">GENERATION=2</value>
     <value type="QString">GSETTINGS_BACKEND=gconf</value>
     <value type="QString">GS_LIB=/home/lond/.fonts</value>
@@ -178,16 +174,17 @@
     <value type="QString">HOME=/home/lond</value>
     <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/info:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/info</value>
     <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
     <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
     <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
     <value type="QString">KDE_FULL_SESSION=true</value>
     <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1000</value>
+    <value type="QString">KDE_SESSION_UID=1001</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">LANG=pt_BR.utf8</value>
-    <value type="QString">LANGUAGE=</value>
-    <value type="QString">LC_ALL=pt_BR.utf8</value>
+    <value type="QString">LADSPA_PATH=/usr/lib/ladspa</value>
+    <value type="QString">LANG=en_US.UTF-8</value>
+    <value type="QString">LANGUAGE=en_US.UTF-8</value>
+    <value type="QString">LC_ALL=en_US.UTF-8</value>
+    <value type="QString">LC_MESSAGES=en_US.UTF-8</value>
     <value type="QString">LESS=-R -M --shift 5</value>
     <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
     <value type="QString">LOGNAME=lond</value>
@@ -197,22 +194,25 @@
     <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.4:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
     <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
     <value type="QString">PWD=/home/lond</value>
+    <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6791,unix/workstation-do-estagiario:/tmp/.ICE-unix/6791</value>
+    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6777,unix/workstation-do-estagiario:/tmp/.ICE-unix/6777</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
+    <value type="QString">SYSFONT=latarcyrheb-sun16</value>
+    <value type="QString">USB_DEVFS_PATH=/dev/bus/usb</value>
     <value type="QString">USER=lond</value>
-    <value type="QString">VBOX_APP_HOME=/opt/VirtualBox</value>
-    <value type="QString">VMHANDLE=sun-jdk-1.4</value>
+    <value type="QString">VMHANDLE=blackdown-jdk-1.4.2</value>
     <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSOR_THEME=Oxygen_Blue</value>
+    <value type="QString">XCURSORS_THEME=Blue</value>
+    <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/share:/usr/local/share</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
     <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
-    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1294148340.693073-270086612</value>
+    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1294920178.535927-1216866603</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
     <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
    </valuelist>

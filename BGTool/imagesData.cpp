@@ -194,8 +194,8 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
             }
         }
 
-        if ( m != sprites_per_line-1 ) m++;
-        else { m = 0; n++; }
+	if ( m != sprites_per_line-1 ) m++;
+	else { m = 0; n++; } // Pula uma linha quando chega ao máximo de sprites por linha.
     }
 }
 

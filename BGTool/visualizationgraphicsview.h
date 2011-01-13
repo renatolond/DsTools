@@ -15,13 +15,11 @@ class VisualizationGraphicsView : public QGraphicsView
 public:
     VisualizationGraphicsView(QWidget *parent = 0);
     ~VisualizationGraphicsView();
-  //  QGraphicsScene *scene;
     int btPaintPressed;
     imagesData *imgData;
 
 protected:
     void mousePressEvent(QMouseEvent *);
-//    void changeEvent(QEvent *e);
 
 private:
 };

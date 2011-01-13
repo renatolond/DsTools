@@ -41,7 +41,6 @@ void TabBG::on_btConvert_clicked()
     QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
     if ( filename != "" )
 	imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
-//    statusBar()->showMessage("File loaded.",10*1000);
 }
 
 void TabBG::on_btPaint_toggled(bool checked)

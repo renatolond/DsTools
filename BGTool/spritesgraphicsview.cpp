@@ -3,7 +3,6 @@
 SpritesGraphicsView::SpritesGraphicsView(QWidget *parent) :
     QGraphicsView(parent)
 {
-//    scene = 0;
     imgData = 0;
     log = logger(__FILE__);
 }
@@ -46,10 +45,6 @@ void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
     {
         return;
     }
-/*    if ( e->pos().y() > ( imgData->sprites.size() / sprites_per_line )
-        || ( e->pos().y() == ( imgData->sprites.size() / sprites_per_line ) && ( e->pos().x() > ) )
-    {
-    }*/
 
     if ( imgData->selectedSprite.x() >= 0 )
     {

@@ -18,7 +18,6 @@ void dumpImage(const QImage &q)
 	for ( int j = 0 ; j < q.width() ; j++ )
 	{
 	    std::cout << " ";
-	    //if ( bgmatrix[i][j] < 10 ) std::cout << "0";
 	    std::cout << std::hex << q.pixel(i,j) << std::dec << " ";
 	}
 	std::cout << std::endl;
@@ -26,7 +25,7 @@ void dumpImage(const QImage &q)
 }
 
 
-void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, const QImage &emptySprite)
+void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, QImage &emptySprite)
 {
 
     int i; int j;
@@ -45,7 +44,17 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
         c.setGreen(0);
         c.setBlue(255);
 
-        palette.push_back(c);
+	imgGrid.setColor(0, c.rgba());
+	nPalette.push_back(c.rgba());
+
+	c.setAlpha(255);
+	c.setRed(0);
+	c.setGreen(0);
+	c.setBlue(0);
+
+	imgGrid.setColor(1,c.rgba());
+	nPalette.push_back(c.rgba());
+	imgGrid.fill(1);
     }
 
     for ( i = 0 ; i < spritesI ; i++ )
@@ -54,7 +63,8 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
         {
             QImage sprite = QImage(sprite_width,
                                    sprite_height,
-                                   img.format());
+				   QImage::Format_Indexed8);
+	    sprite.setColorTable(nPalette);
             for ( int k = 0 ; k < sprite_height ; k++ )
             {
                 for ( int l = 0 ; l < sprite_width ; l++ )
@@ -67,11 +77,9 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
                     c.setRgba(img.pixel(j*sprite_width  + l,
                                        i*sprite_height + k));
 
-                    //std::cout << std::hex << c.alpha() << std::endl;
                     c.setRed(((c.red() >> 3) << 3));
                     c.setGreen(((c.green() >> 3) << 3));
                     c.setBlue(((c.blue() >> 3) << 3));
-                    //  std::cout << std::hex << c.rgb() << std::endl;
 
                     if ( c.alpha() != 255 )
                     {
@@ -81,31 +89,41 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
                         c.setBlue(255);
                     }
 
-                    sprite.setPixel(l,k,
-				    c.rgba());
-                    for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
-                    {
-                        if ( *it == c )
-                        {
-                            colorExists = 1;
-                            break;
-                        }
-                    }
+		    int cIndex = -1;
 
-                    if ( !colorExists )
-                    {
-                        palette.push_back(c);
-                    }
+		    for ( int m = 0 ; m < nPalette.size() ; m++ )
+		    {
+			if ( nPalette[m] == c.rgba() )
+			{
+			    cIndex = m;
+			    break;
+			}
+		    }
+
+		    if ( cIndex == -1 )
+		    {
+			cIndex = nPalette.size();
+			nPalette.push_back(c.rgba());
+			imgGrid.setColorTable(nPalette);
+			for ( int i = 0 ; i < sprites.size() ; i++ )
+			{
+			    sprites[i].setColorTable(nPalette);
+			}
+			sprite.setColorTable(nPalette);
+		    }
+
+		    sprite.setPixel(l,k,cIndex);
                     imgGrid.setPixel(j*(sprite_width +visualization_grid_width) +l,
                                      i*(sprite_height+visualization_grid_height)+k,
-				     c.rgba());
+				     cIndex);
                 }
             }
 
             QImage sprite2, sprite3, sprite4;
-            //sprite2 = sprite.transformed(QTransform().scale(-1, 1));
-            //sprite3 = sprite.transformed(QTransform().scale( 1,-1));
-            //sprite4 = sprite.transformed(QTransform().scale(-1,-1));
+	    sprite2 = sprite3 = sprite4 = sprite;
+	    //sprite2 = sprite.transformed(QTransform().scale(-1, 1));
+	    //sprite3 = sprite.transformed(QTransform().scale( 1,-1));
+	    //sprite4 = sprite.transformed(QTransform().scale(-1,-1));
             int exists = 0;
             int id = 0;
 
@@ -139,11 +157,8 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
         }
     }
 
+    emptySprite.setColorTable(nPalette);
     sprites.push_back(emptySprite);
-//    std::cout << "Our empty sprite alpha is: " << QColor::fromRgba((*(sprites.rbegin())).pixel(0,0)).alpha() << " and it is the " << sprites.size() << std::endl;
-
-//    dumpImage(*sprites.rbegin());
-//    dumpImage(*(sprites.rbegin()+1));
 
     {
 	int last = sprites.size() -1;
@@ -160,8 +175,11 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
 
     spriteGrid = QImage(sprite_width*sprites_per_line + (sprites_per_line-1)*sprite_grid_width,
                         sprite_height*sprites_per_column + (sprites_per_column-1)*sprite_grid_height,
-                        img.format());
-    spriteGrid.fill(QColor(255,255,255).rgb());
+			QImage::Format_Indexed8);
+    spriteGrid.setColorTable(nPalette);
+    spriteGrid.setColor(0,QColor::fromRgba(spriteGrid.color(0)).rgb());
+    spriteGrid.setColor(spriteGrid.colorCount(), Qt::transparent);
+    spriteGrid.fill(spriteGrid.colorCount()-1); // transparente
     int m = 0;
     int n = 0;
     for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
@@ -170,10 +188,9 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
         {
             for ( int l = 0 ; l < sprite_width ; l++ )
             {
-		QColor srcColor((*it).pixel(l,k));
                 spriteGrid.setPixel(m*(sprite_width+sprite_grid_width)   + l,
                                     n*(sprite_height+sprite_grid_height) + k,
-				    srcColor.rgb());
+				    (*it).pixelIndex(l,k));
             }
         }
 
@@ -192,10 +209,10 @@ void imagesData::fillPaletteView()
     width = (width/9)*9 -1; // This way, we get a right number of squares for the paletteView
     height = (height/9)*9 -1;
     QPixmap palPix(width, height);
-    QImage palImg = QImage(palPix.width(), palPix.height(), spriteGrid.format());
+    QImage palImg = QImage(palPix.width(), palPix.height(), QImage::Format_ARGB32);
     palImg.fill(QColor(0, 0, 0, 255).rgba());
 
-    for ( int i = 0 ; i < palette.size() ; i++ )
+    for ( int i = 0 ; i < nPalette.size() ; i++ )
     {
         int k = i*9, j = 0;
         while ( k > palPix.width() )
@@ -207,7 +224,7 @@ void imagesData::fillPaletteView()
         {
             for ( int m = k ; m < k+8 ; m++ )
             {
-		palImg.setPixel(m, l, palette.at(i).rgba());
+		palImg.setPixel(m, l, QColor::fromRgba(nPalette[i]).rgb());
             }
         }
     }
@@ -232,22 +249,20 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     QImage imgGrid;
     imgGrid = QImage(newWidth,
                      newHeight,
-                     img.format());
-    visualizationGrid = imgGrid;
-
-//    palette.push_back(QColor(0xF8, 0, 0xF8, 0)); // Transparent Color!
+		     QImage::Format_Indexed8);
 
     std::ostringstream outs;
     outs << "Height " << newHeight <<"; Width " << newWidth << std::endl;
     log.log(__LINE__, outs);
 
-    QImage emptySprite = QImage(sprite_width,sprite_height,img.format());
-    emptySprite.fill(QColor(255,0,255,0).rgba());
+    QImage emptySprite = QImage(sprite_width,sprite_height,QImage::Format_Indexed8);
+    emptySprite.setColor(0, QColor(255,0,255,0).rgba());
+    emptySprite.fill(0);
 
-    imgGrid.fill(QColor(0,0,0,255).rgba());
     findSprites(pix.height(), pix.width(), img, imgGrid, emptySprite); // also fill visualizationView and spriteView
+    visualizationGrid = imgGrid;
 
-    std::cout << "We have " << palette.size() << "colors in our palette!" << std::endl;
+    std::cout << "We have " << nPalette.size() << "colors in our palette!" << std::endl;
 
     fillPaletteView();
 
@@ -314,29 +329,29 @@ void imagesData::exportBG()
     // exporting palette
     FILE *sout = fopen(pal.c_str(), "wb");
 
-    for ( QList<QColor>::iterator it = palette.begin() ; it != palette.end() ; it++ )
+    for ( int i = 0 ; i < nPalette.size() ; i++ )
     {
+	QColor c;
+	c = QColor::fromRgba(nPalette[i]);
         unsigned char high, low;
         high = 1;
         high = high << 5;
-        high += ( it->blue() >> 3 );
+	high += ( c.blue() >> 3 );
         high = high << 2;
-        high += ( it->green() >> 6 );
+	high += ( c.green() >> 6 );
 
-        unsigned char green = it->green() - ((it->green() >> 6)<<6);
+	unsigned char green = c.green() - ((c.green() >> 6)<<6);
         low = (green >> 3);
         low = low << 5;
-        low += ( it->red() >> 3);
+	low += ( c.red() >> 3);
 
         unsigned char red, blue;
-        red = it->red(); green = it->green(); blue = it->blue();
+	red = c.red(); green = c.green(); blue = c.blue();
 
         fwrite(&low, 1, sizeof(low), sout);
         fwrite(&high, 1, sizeof(high), sout);
-        //        std::cout << std::hex << (unsigned short int) low << std::endl;
-        //        std::cout << std::hex << (unsigned short int) high << std::endl;
     }
-    for ( int i = palette.size() ; i < 256 ; i++ )
+    for ( int i = nPalette.size() ; i < 256 ; i++ )
     {
         unsigned char zero;
         zero = 0;
@@ -353,14 +368,8 @@ void imagesData::exportBG()
         {
             for ( int j = 0 ; j < 8 ; j++ )
             {
-                for ( unsigned char k = 0 ; k < palette.size() ; k++ )
-                {
-		    if ( it->pixel(j,i) == palette.at(k).rgba() )
-                    {
-                        fwrite(&k,1,sizeof(k),sout);
-                        break;
-                    }
-                }
+		unsigned char k = it->pixel(j,i);
+		fwrite(&k, 1, sizeof(k), sout);
             }
         }
     }
@@ -487,7 +496,7 @@ void imagesData::setSelectedSprite(QImage s)
     QGraphicsScene *selScn = new QGraphicsScene(sel);
     sel->setScene(selScn);
     QPixmap selPix(sel->width(), sel->height());
-    QImage selImg = QImage(selPix.width(), selPix.height(), s.format());
+    QImage selImg = QImage(selPix.width(), selPix.height(), QImage::Format_ARGB32);
     selImg.fill(QColor(0,0,0,255).rgba());
     for ( boxI = 0 ; boxI < sel->height() ; boxI++ )
     {

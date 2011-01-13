@@ -19,7 +19,7 @@ const int sprites_per_line = 4;
 
 class imagesData
 {
-    void findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, const QImage &emptySprite);
+    void findSprites(int pix_height, int pix_width, QImage &img, QImage &imgGrid, QImage &emptySprite);
     logger log;
 public:
     imagesData(QImage visualization, QImage sprite) : visualizationGrid(visualization), spriteGrid(sprite)
@@ -68,7 +68,7 @@ public:
     std::vector<QImage> sprites;
     int visualization_grid_height,visualization_grid_width;
     int sprite_grid_height, sprite_grid_width;
-    QList<QColor> palette;
+    QVector<QRgb> nPalette;
     int index;
 };
 

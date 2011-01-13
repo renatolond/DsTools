@@ -1,5 +1,21 @@
 ﻿- REFACTORING!!!
-- Fazer a GFXTool pegar uma cor não usada para ser o transparente (preferência para 0xFF00FF?)
+- Como será a configuração do parallax? Será a partir do bgtool mesmo?
+- Investigar mais sobre sprites e pensar como fazer com o personagem e os
+ inimigos. Itens e coisas que interagem com o personagem (e.g. caixas de
+ itens) também são sprites?
+- Como será feito o menu? Idéia inicial:
+	* Sempre existem algumas opções, como start game, configs, etc
+	* Existem coisas opcionais, por exemplo, determinado jogo pode não
+	permitir salvamento, caso em que não há load game/continue.
+	* O fundo pode ser uma animação, ou um background estático. Melhor começar
+	com um bg estático e partir daí.
+- Investigar possibilidade de usar o interpretador de Lua pra DS. Para
+ implementar coisas como movimento de sprites, itens, etc.
+- Mapas entre fases. (estilo SMB3) Vale a pena implementar? Se implementado,
+ necessário possibilidade de desabilitar, para jogos como sonic.
+- Pensar em animações entre fases e mudanças de tela.
+- Seria bom pensar numa forma de integrar as ferramentas, como um projeto.
 - Fazer os 5 bgs (opção para visualizar individualmente e em conjunto)
 - Botão e form para editar sprite usando a paleta.
 - Botão e form para editar a paleta
+- Poder mudar a cor da transparência. Vale a pena?

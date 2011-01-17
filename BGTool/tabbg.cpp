@@ -61,7 +61,6 @@ void TabBG::on_btDump_clicked()
 
 void TabBG::on_btHighlight_clicked()
 {
-    imgData->highlightSelectedSprite();
 }
 
 void TabBG::on_btExportPng_clicked()
@@ -72,4 +71,9 @@ void TabBG::on_btExportPng_clicked()
 void TabBG::on_btExport_clicked()
 {
     imgData->exportBG();
+}
+
+void TabBG::on_btHighlight_toggled(bool checked)
+{
+    imgData->highlightSelectedSprite(checked);
 }

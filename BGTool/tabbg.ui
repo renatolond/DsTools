@@ -159,13 +159,6 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="btHighlight">
-          <property name="text">
-           <string>Highlight</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QToolButton" name="btPaint">
           <property name="sizePolicy">
@@ -257,6 +250,22 @@
           </property>
           <property name="text">
            <string>Export</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QToolButton" name="btHighlight">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Highlight</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

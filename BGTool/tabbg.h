@@ -24,6 +24,7 @@ private:
     int index;
 
 private slots:
+    void on_btHighlight_toggled(bool checked);
     void on_btExport_clicked();
     void on_btExportPng_clicked();
     void on_btHighlight_clicked();

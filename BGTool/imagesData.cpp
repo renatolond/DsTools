@@ -425,7 +425,7 @@ void imagesData::exportPng()
 {
     QImage exportImg = QImage(bgmatrix_width*sprite_width,
                               bgmatrix_height*sprite_height,
-                              sprites[0].format());
+			      QImage::Format_ARGB32);
 
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
@@ -448,10 +448,8 @@ void imagesData::exportPng()
 }
 
 
-void imagesData::highlightSelectedSprite()
+void imagesData::highlightSelectedSprite(bool checked)
 {
-    if ( selectedSpriteId < 0 ) return;
-
     QList<QGraphicsItem *> items = visualizationView->scene()->items();
     QList<QGraphicsItem *>::iterator it;
     for ( it = items.begin() ; it != items.end() ; it++ )
@@ -461,6 +459,9 @@ void imagesData::highlightSelectedSprite()
             visualizationView->scene()->removeItem(*it);
         }
     }
+
+    if ( checked == false ) return;
+    if ( selectedSpriteId < 0 ) return;
 
     for ( int i = 0 ; i < bgmatrix_height ; i++ )
     {
@@ -492,6 +493,7 @@ void imagesData::setSelectedSprite(QImage s)
     int repeatI, repeatJ;
     repeatI = selectedView->height()/sprite_height;
     repeatJ = selectedView->width()/sprite_width;
+    // Qual o tamanho de cada "pixel" na janela do sprite selecionado.
 
     QGraphicsView *sel = selectedView;
     QGraphicsScene *selScn = new QGraphicsScene(sel);
@@ -508,10 +510,13 @@ void imagesData::setSelectedSprite(QImage s)
 		selImg.setPixel(boxJ, boxI, QColor(255,255,255,255).rgba());
                 continue;
             }
-            if ( boxI/repeatI != (boxI+1)/repeatI )
+
+	    // Na borda do pixel. Não pinta para fazer o grid.
+	    if ( boxI/repeatI != (boxI+1)/repeatI )
                 continue;
             if ( boxJ/repeatJ != (boxJ+1)/repeatJ )
                 continue;
+
             selImg.setPixel(boxJ, boxI, s.pixel(boxJ/repeatJ, boxI/repeatI));
         }
     }

@@ -1,4 +1,7 @@
 ﻿- REFACTORING!!!
+- Pensar melhor em métodos de edição. Editar mapas grandes é horrível.
+ Substituição, pintura em batch (i.e. em retângulos), pensar em outros
+ modos.
 - Como será a configuração do parallax? Será a partir do bgtool mesmo?
 - Investigar mais sobre sprites e pensar como fazer com o personagem e os
  inimigos. Itens e coisas que interagem com o personagem (e.g. caixas de

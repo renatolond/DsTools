@@ -59,7 +59,7 @@ public:
     void createBgMatrix(int height, int width);
     void dumpBgMatrix();
     void setSelectedSprite(QImage s);
-    void highlightSelectedSprite();
+    void highlightSelectedSprite(bool checked);
     void exportPng();
     void fillPaletteView();
 

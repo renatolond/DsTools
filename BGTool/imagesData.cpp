@@ -17,10 +17,10 @@ void dumpImage(const QImage &q)
     {
 	for ( int j = 0 ; j < q.width() ; j++ )
 	{
-	    std::cout << " ";
-	    std::cout << std::hex << q.pixel(i,j) << std::dec << " ";
+	    outs << " ";
+	    outs << std::hex << q.pixel(i,j) << std::dec << " ";
 	}
-	std::cout << std::endl;
+	outs << std::endl;
     }
 }
 
@@ -263,7 +263,7 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     findSprites(pix.height(), pix.width(), img, imgGrid, emptySprite); // also fill visualizationView and spriteView
     visualizationGrid = imgGrid;
 
-    std::cout << "We have " << nPalette.size() << "colors in our palette!" << std::endl;
+    outs << "We have " << nPalette.size() << "colors in our palette!" << std::endl;
 
     fillPaletteView();
 
@@ -535,7 +535,7 @@ void imagesData::dumpBgMatrix()
         for ( int j = 0 ; j < bgmatrix_width ; j++ )
         {
             outs << " ";
-            if ( bgmatrix[i][j] < 10 ) std::cout << "0";
+	    if ( bgmatrix[i][j] < 10 ) outs << "0";
             outs << bgmatrix[i][j] << " ";
         }
         outs << std::endl;

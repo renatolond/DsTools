@@ -13,6 +13,8 @@ void imagesData::createBgMatrix(int height, int width)
 
 void dumpImage(const QImage &q)
 {
+    logger log = logger(__FILE__);
+    std::ostringstream outs;
     for ( int i = 0 ; i < q.height() ; i++ )
     {
 	for ( int j = 0 ; j < q.width() ; j++ )
@@ -22,6 +24,7 @@ void dumpImage(const QImage &q)
 	}
 	outs << std::endl;
     }
+    log.log(__LINE__, outs);
 }
 
 
@@ -263,7 +266,10 @@ void imagesData::importPng(QGraphicsView *vView, QGraphicsView *spView, QGraphic
     findSprites(pix.height(), pix.width(), img, imgGrid, emptySprite); // also fill visualizationView and spriteView
     visualizationGrid = imgGrid;
 
+    outs.str(std::string());
+    outs.clear();
     outs << "We have " << nPalette.size() << "colors in our palette!" << std::endl;
+    log.log(__LINE__, outs);
 
     fillPaletteView();
 

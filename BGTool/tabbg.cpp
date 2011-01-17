@@ -35,6 +35,9 @@ void TabBG::changeEvent(QEvent *e)
 
 void TabBG::on_btConvert_clicked()
 {
+    QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
+    if ( filename == "" ) return;
+
     if ( imgData != 0 )
     {
 	delete imgData;
@@ -44,9 +47,7 @@ void TabBG::on_btConvert_clicked()
     imgData = new imagesData(QImage(),QImage());
     imgData->index = this->index;
     ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
-    QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
-    if ( filename != "" )
-	imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
+    imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
 }
 
 void TabBG::on_btPaint_toggled(bool checked)

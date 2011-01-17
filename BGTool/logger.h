@@ -15,7 +15,7 @@ class logger
     public:
     logger(std::string f);
     logger();
-    //~logger();
+    ~logger();
     void log(int line, std::ostringstream &outstring);
 //    std::ostringstream &outs();
 };

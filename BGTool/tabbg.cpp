@@ -35,6 +35,12 @@ void TabBG::changeEvent(QEvent *e)
 
 void TabBG::on_btConvert_clicked()
 {
+    if ( imgData != 0 )
+    {
+	delete imgData;
+	imgData = 0;
+    }
+
     imgData = new imagesData(QImage(),QImage());
     imgData->index = this->index;
     ui->spritesView->imgData = ui->visualizationView->imgData = imgData;

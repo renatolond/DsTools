@@ -25,12 +25,18 @@ public:
     imagesData(QImage visualization, QImage sprite) : visualizationGrid(visualization), spriteGrid(sprite)
     {
         log = logger(__FILE__);
+	// Isso está vazando! ^ (segundo valgrind)
         bgmatrix_width = bgmatrix_height = 0;
-        selectedSprite.setX(-1);
+	bgmatrix = 0;
+	selectedSprite.setX(-1);
         selectedSprite.setY(-1);
         selectedSpriteId = -1;
         visualization_grid_height = visualization_grid_width = 1;
         sprite_grid_height = sprite_grid_width = 1;
+	visualizationView = 0;
+	selectedView = 0;
+	spritesView = 0;
+	paletteView = 0;
     }
 
     ~imagesData()
@@ -42,7 +48,10 @@ public:
                 delete[] bgmatrix[i];
             }
         }
-        delete[] bgmatrix;
+	if ( bgmatrix != 0 )
+	    delete[] bgmatrix;
+	sprites.clear();
+	nPalette.clear();
     }
 
     void importPng(QGraphicsView *, QGraphicsView *, QGraphicsView *, QGraphicsView *, QString);
@@ -65,7 +74,7 @@ public:
     QGraphicsView *visualizationView;
     QGraphicsView *spritesView;
     QGraphicsView *paletteView;
-    std::vector<QImage> sprites;
+    QVector<QImage> sprites;
     int visualization_grid_height,visualization_grid_width;
     int sprite_grid_height, sprite_grid_width;
     QVector<QRgb> nPalette;

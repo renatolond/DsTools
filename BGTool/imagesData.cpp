@@ -127,7 +127,7 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
             int exists = 0;
             int id = 0;
 
-            for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
+	    for ( QVector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
             {
                 if ( (*it == sprite) || (*it == sprite2) || (*it == sprite3) || (*it == sprite4) )
                 {
@@ -176,13 +176,14 @@ void imagesData::findSprites(int pix_height, int pix_width, QImage &img, QImage 
     spriteGrid = QImage(sprite_width*sprites_per_line + (sprites_per_line-1)*sprite_grid_width,
                         sprite_height*sprites_per_column + (sprites_per_column-1)*sprite_grid_height,
 			QImage::Format_Indexed8);
+    // Isso está vazando! ^ (segundo valgrind)
     spriteGrid.setColorTable(nPalette);
     spriteGrid.setColor(0,QColor::fromRgba(spriteGrid.color(0)).rgb());
     spriteGrid.setColor(spriteGrid.colorCount(), Qt::transparent);
     spriteGrid.fill(spriteGrid.colorCount()-1); // transparente
     int m = 0;
     int n = 0;
-    for ( std::vector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
+    for ( QVector<QImage>::iterator it = sprites.begin(); it != sprites.end() ; it++ )
     {
         for ( int k = 0 ; k < sprite_height ; k++ )
         {
@@ -362,7 +363,7 @@ void imagesData::exportBG()
 
     //exporting tiles
     sout = fopen(tiles.c_str(), "wb");
-    for ( std::vector<QImage>::iterator it = sprites.begin() ; it != sprites.end() ; it++ )
+    for ( QVector<QImage>::iterator it = sprites.begin() ; it != sprites.end() ; it++ )
     {
         for ( int i = 0 ; i < 8 ; i++ )
         {

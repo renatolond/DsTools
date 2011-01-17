@@ -15,6 +15,11 @@ logger::logger()
     out = &std::cout;
 }
 
+logger::~logger()
+{
+    file = "";
+}
+
 //std::ostringstream &outs()
 //{
 //    return outstring;

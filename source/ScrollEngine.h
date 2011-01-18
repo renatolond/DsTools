@@ -25,6 +25,7 @@ class ScrollEngine: public Application{
 	// in the ScrollEngine.cpp file!
 	static int nframe;
 	static Sprite rocket;
+	static Sprite smallMario;
 
 	// Main methods (needed by run())
 	void init();

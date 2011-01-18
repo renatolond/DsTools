@@ -1,14 +1,21 @@
-PAGfx Converter v0.9 -- by Mollusk -- resurrected by fincs -- forum.palib.info
-If you have suggestions, problems or anything please mail me at mollusk@palib.info
+PAGfx Converter v0.10 -- by Mollusk -- resurrected by fincs -- forum.palib.info
+Mono version
+If you have suggestions, problems or anything please come to the PAlib forums
 
 Converting PAGfx.ini
-Transparent Color: Black
+Transparent Color: Magenta
 
-1 sprites:
-  rocket : 256colors, 32x32, Pal : rocket_Pal, -> rocket_Sprite
+2 sprites:
+  rocket: 256colors, 32x32, Pal: rocket_Pal, -> rocket_Sprite
+  small_mario: 256colors, 16x208, Pal: small_mario_Pal, -> small_mario_Sprite
 
-1 palettes:
-  rocket_Pal, 12 colors
+1 backgrounds:
+  bg_1 : EasyBg, 256x192, Pal: bg_1_Pal, 45 tiles -> bg_1_Tiles and bg_1_Map
+
+3 palettes:
+  rocket_Pal, 13 colors
+  small_mario_Pal, 4 colors
+  bg_1_Pal, 11 colors
 
 Converted in 0 minutes and 0 seconds
 

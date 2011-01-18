@@ -81,7 +81,7 @@
     <value type="QString">CONFIG_PROTECT=/etc/entropy /usr/share/config</value>
     <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild /etc/splash</value>
     <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-58fLQAExRY,guid=c4fb6d579a60d32135ab26fe00000041</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-upQMaUquld,guid=b5305a95e69b20d5e4d1734c00000044</value>
     <value type="QString">DESKTOP_SESSION=KDE-4</value>
     <value type="QString">DISPLAY=:0</value>
     <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
@@ -120,7 +120,7 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
     <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6743,unix/workstation-do-estagiario:/tmp/.ICE-unix/6743</value>
+    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6750,unix/workstation-do-estagiario:/tmp/.ICE-unix/6750</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SHLVL=1</value>
     <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
@@ -134,7 +134,7 @@
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
     <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
-    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1295257660.208101-1909803495</value>
+    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1295372619.909638-1470107093</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
     <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
    </valuelist>
@@ -152,6 +152,81 @@
  </data>
  <data>
   <variable>buildconfiguration-Debug-buildstep1</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ANT_HOME=/usr/share/ant</value>
+    <value type="QString">CONFIG_PROTECT=/etc/entropy /usr/share/config</value>
+    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild /etc/splash</value>
+    <value type="QString">CVS_RSH=ssh</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-upQMaUquld,guid=b5305a95e69b20d5e4d1734c00000044</value>
+    <value type="QString">DESKTOP_SESSION=KDE-4</value>
+    <value type="QString">DISPLAY=:0</value>
+    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
+    <value type="QString">EDITOR=/bin/nano</value>
+    <value type="QString">GDK_USE_XFT=1</value>
+    <value type="QString">GDM_LANG=en_US.UTF-8</value>
+    <value type="QString">GENERATION=2</value>
+    <value type="QString">GSETTINGS_BACKEND=gconf</value>
+    <value type="QString">GS_LIB=/home/lond/.fonts</value>
+    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/lond/.gtkrc-2.0:/home/lond/.gtkrc-2.0-kde4:/home/lond/.kde4/share/config/gtkrc-2.0</value>
+    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/lond/.gtkrc::/home/lond/.kde4/share/config/gtkrc</value>
+    <value type="QString">HOME=/home/lond</value>
+    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/info:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/info</value>
+    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
+    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
+    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
+    <value type="QString">KDE_FULL_SESSION=true</value>
+    <value type="QString">KDE_MULTIHEAD=false</value>
+    <value type="QString">KDE_SESSION_UID=1001</value>
+    <value type="QString">KDE_SESSION_VERSION=4</value>
+    <value type="QString">LADSPA_PATH=/usr/lib/ladspa</value>
+    <value type="QString">LANG=en_US.UTF-8</value>
+    <value type="QString">LANGUAGE=en_US.UTF-8</value>
+    <value type="QString">LC_ALL=en_US.UTF-8</value>
+    <value type="QString">LC_MESSAGES=en_US.UTF-8</value>
+    <value type="QString">LESS=-R -M --shift 5</value>
+    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
+    <value type="QString">LOGNAME=lond</value>
+    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/man:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/man:/opt/blackdown-jdk-1.4.2.03/man:/etc/java-config/system-vm/man/:/usr/lib/php5.3/man/:/usr/share/postgresql-8.4/man:/usr/share/postgresql-9.0/man</value>
+    <value type="QString">OPENGL_PROFILE=nvidia</value>
+    <value type="QString">PAGER=/usr/bin/less</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.4:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
+    <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
+    <value type="QString">PWD=/home/lond</value>
+    <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
+    <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
+    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6750,unix/workstation-do-estagiario:/tmp/.ICE-unix/6750</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SHLVL=1</value>
+    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
+    <value type="QString">SYSFONT=latarcyrheb-sun16</value>
+    <value type="QString">USB_DEVFS_PATH=/dev/bus/usb</value>
+    <value type="QString">USER=lond</value>
+    <value type="QString">VMHANDLE=blackdown-jdk-1.4.2</value>
+    <value type="QString">WINDOWPATH=7</value>
+    <value type="QString">XCURSORS_THEME=Blue</value>
+    <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
+    <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
+    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1295372619.909638-1470107093</value>
+    <value type="QString">XDM_MANAGED=method=classic</value>
+    <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/lond/sources/PF/BGTool</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>buildconfiguration-Debug-cleanstep0</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
@@ -213,81 +288,6 @@
     <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
     <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
     <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1295257660.208101-1909803495</value>
-    <value type="QString">XDM_MANAGED=method=classic</value>
-    <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
-   </valuelist>
-   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">-w</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/home/lond/sources/PF/BGTool</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-Debug-cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ANT_HOME=/usr/share/ant</value>
-    <value type="QString">CONFIG_PROTECT=/usr/share/X11/xkb /usr/share/config /usr/share/openvpn/easy-rsa</value>
-    <value type="QString">CONFIG_PROTECT_MASK=/etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild</value>
-    <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-2P5r3SI7BX,guid=e5bd971bc0cf53b59b6496e900000064</value>
-    <value type="QString">DESKTOP_SESSION=KDE-4</value>
-    <value type="QString">DEVKITARM=/home/lond/DsDev/devkitARM</value>
-    <value type="QString">DEVKITPRO=/home/lond/DsDev</value>
-    <value type="QString">DISPLAY=:0.0</value>
-    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">DVDCSS_CACHE=/home/lond/.dvdcss/</value>
-    <value type="QString">DVDCSS_METHOD=key</value>
-    <value type="QString">DVDCSS_RAW_DEVICE=/dev/rdvd</value>
-    <value type="QString">DVDCSS_VERBOSE=0</value>
-    <value type="QString">EDITOR=/bin/nano</value>
-    <value type="QString">GCC_SPECS=</value>
-    <value type="QString">GDK_USE_XFT=1</value>
-    <value type="QString">GENERATION=2</value>
-    <value type="QString">GS_LIB=/home/lond/.fonts</value>
-    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/lond/.gtkrc-2.0:/home/lond/.gtkrc-2.0-kde4:/home/lond/.kde4/share/config/gtkrc-2.0</value>
-    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/lond/.gtkrc::/home/lond/.kde4/share/config/gtkrc</value>
-    <value type="QString">HOME=/home/lond</value>
-    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/info</value>
-    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVACC_HOME=/usr/share/javacc/</value>
-    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">KDE_FULL_SESSION=true</value>
-    <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1000</value>
-    <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">LANG=pt_BR.utf8</value>
-    <value type="QString">LANGUAGE=</value>
-    <value type="QString">LC_ALL=pt_BR.utf8</value>
-    <value type="QString">LESS=-R -M --shift 5</value>
-    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
-    <value type="QString">LOGNAME=lond</value>
-    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/man:/opt/sun-jdk-1.4.2.19/man:/etc/java-config/system-vm/man/:/usr/lib/php5.3/man/:/opt/cuda/man</value>
-    <value type="QString">OPENGL_PROFILE=nvidia</value>
-    <value type="QString">PAGER=/usr/bin/less</value>
-    <value type="QString">PATH=/usr/bin:/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i686-pc-linux-gnu/gcc-bin/4.4.4:/opt/sun-jdk-1.4.2.19/bin:/opt/sun-jdk-1.4.2.19/jre/bin:/opt/sun-jdk-1.4.2.19/jre/javaws:/usr/games/bin:/opt/cuda/bin</value>
-    <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
-    <value type="QString">PWD=/home/lond</value>
-    <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SESSION_MANAGER=local/lond-gentoo:@/tmp/.ICE-unix/4762,unix/lond-gentoo:/tmp/.ICE-unix/4762</value>
-    <value type="QString">SHELL=/bin/zsh</value>
-    <value type="QString">SHLVL=1</value>
-    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
-    <value type="QString">USER=lond</value>
-    <value type="QString">VBOX_APP_HOME=/opt/VirtualBox</value>
-    <value type="QString">VMHANDLE=sun-jdk-1.4</value>
-    <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSOR_THEME=Oxygen_Blue</value>
-    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
-    <value type="QString">XDG_MENU_PREFIX=kde-4.4-</value>
-    <value type="QString">XDG_SESSION_COOKIE=4f028b6554c05b417da03df647f7c487-1294089017.741282-1352472967</value>
     <value type="QString">XDM_MANAGED=method=classic</value>
     <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
    </valuelist>

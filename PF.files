@@ -4,3 +4,5 @@ gfx/bin/teste.c
 source/main.cpp
 source/ScrollEngine.cpp
 source/ScrollEngine.h
+source/spritecontroller.h
+source/spritecontroller.cpp

@@ -12,6 +12,6 @@ const PA_BgStruct teste = {
 	teste_Map,
 	{teste_Pal},
 
-	5312,
+	3840,
 	{27136}
 };

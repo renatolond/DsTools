@@ -233,6 +233,16 @@ Fazemos isso com o seguinte código:
 
 Assim, agora podemos usar qualquer programa de edição de imagem para fazer os tiles, e em seguida, podemos usá-los para construir algum tipo de background para a nossa engine. O DS suporta até cinco backgrounds simultâneos, para que eles façam parallax ou simplesmente para dar ilusão de profundidade. Ainda não implementamos essa funcionalidade no nosso software, mas podemos circular essa limitação simplesmente editando os cinco backgrounds em momentos diferentes.
 
+\section{Engine: Movimento e colisões}
+
+Agora, já tendo os meios para fazer o plano de fundo, é hora de voltar para a engine, começar a pensar no movimento básico do personagem principal, e nas colisões dele (e de outros personagens, como inimigos) com o ambiente. Nesse ponto, estamos observando as idéias mostradas em \cite[N Tutorial A]{NCollisionA} e \\\cite[N Tutorial B]{NCollisionB}.
+
+Assim, a nossa idéia para a colisão foi de implementarmos, no mapa de tiles, quais tiles são sólidos e quais não são. Do mesmo modo, podemos fazer tiles que só são sólidos a partir de determinadas direções. Assim, podemos implementar plataformas onde o personagem consegue subir, mas uma vez em cima, não cai. Ao mesmo tempo, escolhemos como padrão para o personagem uma caixa envolvente em formato de pílula, assim como é feito pela Unity 3D.\footnotemark
+
+Desse modo, nossa primeira preocupação é fazer a colisão entre o personagem e o mundo. Tentaremos fazer as rotinas o mais genéricas possíveis, para que possam ser aproveitadas para todos os nossos objetos dinâmicos. (Personagens, itens que andam e inimigos.)
+
+\footnote{http://unity3d.com/ - Engine para jogos em 3D.}
+
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
 \vfill{}

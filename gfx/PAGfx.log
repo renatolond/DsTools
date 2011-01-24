@@ -9,14 +9,16 @@ Transparent Color: Magenta
   rocket: 256colors, 32x32, Pal: rocket_Pal, -> rocket_Sprite
   small_mario: 256colors, 16x208, Pal: small_mario_Pal, -> small_mario_Sprite
 
-1 backgrounds:
+2 backgrounds:
   bg_1 : EasyBg, 256x192, Pal: bg_1_Pal, 45 tiles -> bg_1_Tiles and bg_1_Map
+  teste : EasyBg, 3392x256, Pal: teste_Pal, 60 tiles -> teste_Tiles and teste_Map
 
-3 palettes:
+4 palettes:
   rocket_Pal, 13 colors
   small_mario_Pal, 4 colors
   bg_1_Pal, 11 colors
+  teste_Pal, 10 colors
 
-Converted in 0 minutes and 0 seconds
+Converted in 0 minutes and 3 seconds
 
 Finished!

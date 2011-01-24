@@ -375,7 +375,7 @@ void imagesData::exportBG()
         {
             for ( int j = 0 ; j < 8 ; j++ )
             {
-		unsigned char k = it->pixel(j,i);
+                unsigned char k = it->pixelIndex(j,i);
 		fwrite(&k, 1, sizeof(k), sout);
             }
         }

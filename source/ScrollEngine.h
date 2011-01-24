@@ -11,6 +11,7 @@
 #include <nds/ndstypes.h>
 
 #include "spritecontroller.h"
+#include "collisioncontroller.h"
 
 // Include our graphics
 #include "all_gfx.h"
@@ -21,6 +22,7 @@
 using PA::Fixed;
 
 #define SMALL_MARIO_ANIM_SPEED 10
+#define HALFSCREEN ((256-16)/2)
 
 // Main application class
 class ScrollEngine: public PA::Application{
@@ -30,6 +32,7 @@ class ScrollEngine: public PA::Application{
 	static int nframe;
 //	static PA::Sprite rocket;
 	static SpriteController smallMario;
+        static CollisionController collisionController;
 
 	// Main methods (needed by run())
 	void init();

@@ -12,6 +12,6 @@ bgtool1_Tiles,
 bgtool1_Map,
 {bgtool1_Pal},
 
-4160,
+2880,
 {20352}
 };

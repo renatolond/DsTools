@@ -11,6 +11,7 @@
 int ScrollEngine::nframe = 0;
 //PA::Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
 SpriteController ScrollEngine::smallMario(0, 1);
+//CollisionController ScrollEngine::collisionController();
 int SpriteCount;
 /*u16 my_Map[4096];
 u16 my_Map2[4096];*/
@@ -74,7 +75,7 @@ void ScrollEngine::loadgraphics(){
     greatest_bg = bgtool0.width;
 
     PA_LoadBackground(0, 0, &bgtool0);
-    PA_LoadBackground(0, 1, &bgtool1);
+    //PA_LoadBackground(0, 1, &bgtool1);
     PA_InitParallaxX(0, //screen
 		     128, //Parallax speed for Background 0. 0 is no parallax (will scroll independently with PA_EasyBgScrollXY)
 		     192, // Normal speed for Bg1
@@ -86,7 +87,7 @@ void ScrollEngine::loadgraphics(){
     smallMario.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
     smallMario.move(0, 192-8*5);
     smallMario.priority(0);
-    smallMario.addAnimation(1,2,SMALL_MARIO_ANIM_SPEED); // Walking
+    smallMario.addAnimation(1,3,SMALL_MARIO_ANIM_SPEED); // Walking
     smallMario.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
     //smallMario.startanim(0, 3, 5);
     //PA::Sprite::
@@ -126,13 +127,32 @@ bool ScrollEngine::update(){
     {
 	smallMario.hflip(0);
         smallMario.beginAnimation(0);
-        scroll += 1 + fTime;
+        if ( smallMario.pos.x < HALFSCREEN )
+        {
+            PA::Fixed p = float(1+fTime);
+            smallMario.pos.x = smallMario.pos.x + p;
+        }
+        else
+        {
+            scroll += 1 + fTime;
+        }
     }
     else if ( Pad.Held.Left )
     {
 	smallMario.hflip(1);
-        smallMario.beginAnimation(1);
-        scroll -= 1 + fTime;
+        smallMario.beginAnimation(0);
+        if ( scroll <= 0 )
+        {
+            PA::Fixed p = float(1+fTime);
+            if ( smallMario.pos.x > p )
+            {
+                smallMario.pos.x -= p;
+            }
+        }
+        else
+        {
+            scroll -= 1 + fTime;
+        }
     }
     else
     {

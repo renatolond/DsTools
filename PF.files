@@ -10,3 +10,5 @@ source/collisioncontroller.h
 source/collisioncontroller.cpp
 gfx/bin/bgtool1.c
 gfx/bin/bgtool0.c
+source/playercontroller.h
+source/playercontroller.cpp

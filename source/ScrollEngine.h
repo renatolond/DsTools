@@ -10,7 +10,7 @@
 #include <PA9.h>
 #include <nds/ndstypes.h>
 
-#include "spritecontroller.h"
+#include "playercontroller.h"
 #include "collisioncontroller.h"
 
 // Include our graphics
@@ -31,7 +31,7 @@ class ScrollEngine: public PA::Application{
 	// in the ScrollEngine.cpp file!
 	static int nframe;
 //	static PA::Sprite rocket;
-	static SpriteController smallMario;
+        static PlayerController smallMario;
         static CollisionController collisionController;
 
 	// Main methods (needed by run())

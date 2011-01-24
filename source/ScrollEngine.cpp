@@ -10,7 +10,7 @@
 // Declare variables
 int ScrollEngine::nframe = 0;
 //PA::Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
-SpriteController ScrollEngine::smallMario(0, 1);
+PlayerController ScrollEngine::smallMario(0, 1);
 //CollisionController ScrollEngine::collisionController();
 int SpriteCount;
 /*u16 my_Map[4096];
@@ -105,7 +105,6 @@ void ScrollEngine::render(){
     PA_OutputText(1, 1, 1, "Frame counter: %d", nframe);
     PA_OutputText(1, 1, 2, "Miliseconds: %d  ", timer);
     PA_OutputText(1, 1, 3, "fTime: %d",(timer-oldTimer));
-    PA_OutputText(1, 1, 4, "fTime: %d",(timer-oldTimer));
     //	PA_OutputText(1, 1, 3, "Y: %d"  , int(rocket.pos.y));
     //
     //        PA_OutputText(1, 1, 4, "Scroll: %03d", scroll);
@@ -125,39 +124,30 @@ bool ScrollEngine::update(){
     nframe ++;
     if ( Pad.Held.Right )
     {
-	smallMario.hflip(0);
-        smallMario.beginAnimation(0);
-        if ( smallMario.pos.x < HALFSCREEN )
-        {
-            PA::Fixed p = float(1+fTime);
-            smallMario.pos.x = smallMario.pos.x + p;
-        }
-        else
-        {
-            scroll += 1 + fTime;
-        }
+        smallMario.accelerateRight();
     }
     else if ( Pad.Held.Left )
     {
-	smallMario.hflip(1);
-        smallMario.beginAnimation(0);
-        if ( scroll <= 0 )
-        {
-            PA::Fixed p = float(1+fTime);
-            if ( smallMario.pos.x > p )
-            {
-                smallMario.pos.x -= p;
-            }
-        }
-        else
-        {
-            scroll -= 1 + fTime;
-        }
+        smallMario.accelerateLeft();
     }
-    else
+
+    if ( Pad.Held.Up )
     {
-	smallMario.stopAnimation();
+        smallMario.accelerateUp(timer);
     }
+
+
+    smallMario.applyGravity();
+    int horzSpeed;
+    horzSpeed = smallMario.getHorizontalSpeed();
+    PA_OutputText(1, 1, 4, "horzSpeed: %d",horzSpeed);
+    scroll += horzSpeed;
+    int vertSpeed = smallMario.getVerticalSpeed();
+    PA_OutputText(1, 1, 5, "vertSpeed: %d",vertSpeed);
+//    PA_OutputText(1, 1, 6, "pos.y: %f", float(smallMario.pos.y));
+
+    smallMario.pos.y = smallMario.pos.y + vertSpeed;
+
     if ( scroll < 0 ) scroll = 0;
     if ( scroll > greatest_bg - 256 ) scroll = greatest_bg - 256;
     // Move the rocket

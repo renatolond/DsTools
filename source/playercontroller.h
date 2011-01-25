@@ -22,6 +22,9 @@ public:
     PlayerController();
     PlayerController(int scr, int sprn);
     void isRunning(bool playerState);
+    bool isCenteredOnScreen();
+    int centerOnScreen(int speed);
+    int uncenterOnScreen(int speed, int scroll);
     void accelerateLeft();
     void accelerateRight();
     void accelerateUp(int timer);

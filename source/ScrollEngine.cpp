@@ -161,8 +161,13 @@ bool ScrollEngine::update(){
 
         int horzSpeed;
         horzSpeed = smallMario.getHorizontalSpeed();
-        PA_OutputText(1, 1, 4, "horzSpeed: %d",horzSpeed);
+        if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
+            horzSpeed = smallMario.centerOnScreen(horzSpeed);
+        else if ( horzSpeed < 0 )
+            horzSpeed = smallMario.uncenterOnScreen(horzSpeed, scroll);
+
         scroll += horzSpeed;
+        //PA_OutputText(1, 1, 4, "horzSpeed: %d",horzSpeed);
         int vertSpeed = smallMario.getVerticalSpeed();
         PA_OutputText(1, 1, 5, "vertSpeed: %d",vertSpeed);
 

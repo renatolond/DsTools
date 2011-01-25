@@ -150,9 +150,9 @@ int PlayerController::getVerticalSpeed()
 {
     verticalSpeed += verticalAcceleration - (verticalSpeed) / verticalBreaking;
 
-    if ( pos.y > 192+sizeY ) pos.y = -sizeY;
+    if ( pos.y > screenSizeY+sizeY ) pos.y = -sizeY;
 
-    if ( pos.y > 168-sizeY && verticalSpeed > 0)
+    if ( pos.y >= (screenSizeY-(3*tileSizeY)-sizeY) && verticalSpeed > 0)
     {
         verticalSpeed = 0;
         verticalAcceleration = 0;
@@ -160,4 +160,50 @@ int PlayerController::getVerticalSpeed()
     }
 
     return int(verticalSpeed);
+}
+
+bool PlayerController::isCenteredOnScreen()
+{
+    int x = pos.x;
+
+    if ( x == (screenSizeX/2 - sizeX) )
+        return true;
+    return false;
+}
+
+int PlayerController::centerOnScreen(int speed)
+{
+    int x = pos.x;
+
+    int dist = (screenSizeX/2 - sizeX) - x;
+    if ( speed >= dist )
+    {
+        speed = speed - dist;
+        x = (screenSizeX/2 - sizeX);
+        pos.x = x;
+    }
+    else
+    {
+        x = speed+x;
+        speed = 0;
+        pos.x = x;
+    }
+
+    return speed;
+}
+
+int PlayerController::uncenterOnScreen(int speed, int scroll)
+{
+    int x = pos.x;
+
+    if ( scroll > 0 )
+        return speed;
+
+    x = speed+x;
+    if ( x <= 0 )
+        x = 0;
+
+    pos.x = x;
+
+    return 0;
 }

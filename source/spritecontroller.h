@@ -4,6 +4,8 @@
 #include <PA9.h>
 #include <vector>
 
+#include "constants.h"
+
 struct anim
 {
     int start;

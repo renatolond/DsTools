@@ -19,6 +19,8 @@ s32 scroll;
 int greatest_bg;
 int timer;
 int oldTimer;
+int moveTimer;
+int gameTimer;
 
 void timerFunction()
 {
@@ -88,6 +90,7 @@ void ScrollEngine::loadgraphics(){
     smallMario.move(0, 192-8*5);
     smallMario.priority(0);
     smallMario.addAnimation(1,3,SMALL_MARIO_ANIM_SPEED); // Walking
+    smallMario.addAnimation(4,4,0); // Drag
     smallMario.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
     //smallMario.startanim(0, 3, 5);
     //PA::Sprite::
@@ -122,31 +125,49 @@ bool ScrollEngine::update(){
 
     // Increment the counter
     nframe ++;
-    if ( Pad.Held.Right )
+
+    if ( timer - moveTimer > 50 )
     {
-        smallMario.accelerateRight();
+        moveTimer = timer;
+
+        if ( Pad.Held.A )
+            smallMario.isRunning(true);
+        else
+            smallMario.isRunning(false);
+
+        if ( Pad.Held.Right )
+        {
+            smallMario.accelerateRight();
+        }
+        else if ( Pad.Held.Left )
+        {
+            smallMario.accelerateLeft();
+        }
+        else
+        {
+            smallMario.applyFriction();
+        }
+
+        if ( Pad.Held.Up )
+        {
+            smallMario.accelerateUp(timer);
+        }
+
+        smallMario.applyGravity();
     }
-    else if ( Pad.Held.Left )
+    if ( timer - gameTimer > 33 )
     {
-        smallMario.accelerateLeft();
+        gameTimer = timer;
+
+        int horzSpeed;
+        horzSpeed = smallMario.getHorizontalSpeed();
+        PA_OutputText(1, 1, 4, "horzSpeed: %d",horzSpeed);
+        scroll += horzSpeed;
+        int vertSpeed = smallMario.getVerticalSpeed();
+        PA_OutputText(1, 1, 5, "vertSpeed: %d",vertSpeed);
+
+        smallMario.pos.y = smallMario.pos.y + vertSpeed;
     }
-
-    if ( Pad.Held.Up )
-    {
-        smallMario.accelerateUp(timer);
-    }
-
-
-    smallMario.applyGravity();
-    int horzSpeed;
-    horzSpeed = smallMario.getHorizontalSpeed();
-    PA_OutputText(1, 1, 4, "horzSpeed: %d",horzSpeed);
-    scroll += horzSpeed;
-    int vertSpeed = smallMario.getVerticalSpeed();
-    PA_OutputText(1, 1, 5, "vertSpeed: %d",vertSpeed);
-//    PA_OutputText(1, 1, 6, "pos.y: %f", float(smallMario.pos.y));
-
-    smallMario.pos.y = smallMario.pos.y + vertSpeed;
 
     if ( scroll < 0 ) scroll = 0;
     if ( scroll > greatest_bg - 256 ) scroll = greatest_bg - 256;

@@ -12,3 +12,5 @@ gfx/bin/bgtool1.c
 gfx/bin/bgtool0.c
 source/playercontroller.h
 source/playercontroller.cpp
+source/constants.h
+source/constants.cpp

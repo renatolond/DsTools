@@ -27,73 +27,52 @@ void PlayerController::isRunning(bool playerState)
     running = playerState;
 }
 
+inline void modifySpeed(double &speed, int &delta, double maxSpeed, double speedStep, int signal)
+{
+    if ( signal*speed < maxSpeed )
+    {
+        speed += signal*speedStep;
+        delta = 1*signal;
+    }
+    else
+        delta = 0;
+}
+
 void PlayerController::accelerateLeft()
 {
     //    acceleration = -0.1f;
     //    breaking = 50;
     if ( running )
-    {
-        if ( horizontalSpeed > -maxHorizontalRunningSpeed )
-        {
-            horizontalSpeed -= horizontalRunningSpeedStep;
-            horizontalDelta = -1;
-        }
-        else
-            horizontalDelta = 0;
-    }
+        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, -1);
     else
-    {
-        if ( horizontalSpeed > -maxHorizontalSpeed )
-        {
-            horizontalSpeed -= horizontalSpeedStep;
-            horizontalDelta = -1;
-        }
-        else
-            horizontalDelta = 0;
-    }
+        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, -1);
 }
 
 void PlayerController::accelerateRight()
 {
     if ( running )
-    {
-        if ( horizontalSpeed < maxHorizontalRunningSpeed )
-        {
-            horizontalSpeed += horizontalRunningSpeedStep;
-            horizontalDelta = 1;
-        }
-        else
-            horizontalDelta = 0;
-    }
+        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, 1);
     else
-    {
-        if ( horizontalSpeed < maxHorizontalSpeed )
-        {
-            horizontalSpeed += horizontalSpeedStep;
-            horizontalDelta = 1;
-        }
-        else
-            horizontalDelta = 0;
-    }
+        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, 1);
 }
 
 void PlayerController::accelerateUp(int timer)
 {
-    if ( abs(verticalSpeed) < eps && abs(verticalAcceleration) < eps )
-    {
-        verticalSpeed = -5;
-        jumpTime = timer;
-    }
-    else if ( timer - jumpTime < 250 )
-    {
-        verticalSpeed = -5;
-    }
+//    if ( abs(verticalSpeed) < eps && abs(verticalAcceleration) < eps )
+//    {
+//        verticalSpeed = -5;
+//        jumpTime = timer;
+//    }
+//    else if ( timer - jumpTime < 250 )
+//    {
+//        verticalSpeed = -5;
+//    }
 }
 
 void PlayerController::applyGravity()
 {
-    verticalAcceleration = 1;
-    verticalBreaking = 5;
+//    verticalAcceleration = 1;
+//    verticalBreaking = 5;
 }
 
 void PlayerController::applyFriction()
@@ -148,16 +127,17 @@ int PlayerController::getHorizontalSpeed()
 
 int PlayerController::getVerticalSpeed()
 {
-    verticalSpeed += verticalAcceleration - (verticalSpeed) / verticalBreaking;
+//    verticalSpeed += verticalAcceleration - (verticalSpeed) / verticalBreaking;
+//
+//    if ( pos.y > screenSizeY+sizeY ) pos.y = -sizeY;
 
-    if ( pos.y > screenSizeY+sizeY ) pos.y = -sizeY;
-
-    if ( pos.y >= (screenSizeY-(3*tileSizeY)-sizeY) && verticalSpeed > 0)
-    {
-        verticalSpeed = 0;
-        verticalAcceleration = 0;
-        verticalBreaking = 10.0f;
-    }
+//    if ( pos.y >= (screenSizeY-(3*tileSizeY)-sizeY) && verticalSpeed > 0)
+//    {
+//        verticalSpeed = 0;
+//        verticalAcceleration = 0;
+//        verticalBreaking = 10.0f;
+//        pos.y = (screenSizeY-(3*tileSizeY)-sizeY);
+//    }
 
     return int(verticalSpeed);
 }

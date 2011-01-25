@@ -87,7 +87,7 @@ void ScrollEngine::loadgraphics(){
     //	rocket.create((void*)rocket_Sprite, OBJ_SIZE_32X32, 0);
 
     smallMario.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
-    smallMario.move(0, 192-8*5);
+    smallMario.move(0, screenSizeY-tileSizeY*5);
     smallMario.priority(0);
     smallMario.addAnimation(1,3,SMALL_MARIO_ANIM_SPEED); // Walking
     smallMario.addAnimation(4,4,0); // Drag
@@ -126,7 +126,7 @@ bool ScrollEngine::update(){
     // Increment the counter
     nframe ++;
 
-    if ( timer - moveTimer > 50 )
+    if ( timer - moveTimer > milisecondsBetweenInputCycles )
     {
         moveTimer = timer;
 
@@ -155,7 +155,7 @@ bool ScrollEngine::update(){
 
         smallMario.applyGravity();
     }
-    if ( timer - gameTimer > 33 )
+    if ( timer - gameTimer > milisecondsBetweenGameCycles )
     {
         gameTimer = timer;
 
@@ -167,7 +167,7 @@ bool ScrollEngine::update(){
             horzSpeed = smallMario.uncenterOnScreen(horzSpeed, scroll);
 
         scroll += horzSpeed;
-        //PA_OutputText(1, 1, 4, "horzSpeed: %d",horzSpeed);
+
         int vertSpeed = smallMario.getVerticalSpeed();
         PA_OutputText(1, 1, 5, "vertSpeed: %d",vertSpeed);
 
@@ -175,10 +175,8 @@ bool ScrollEngine::update(){
     }
 
     if ( scroll < 0 ) scroll = 0;
-    if ( scroll > greatest_bg - 256 ) scroll = greatest_bg - 256;
-    // Move the rocket
-    //    rocket.pos.x ++; if(rocket.pos.x == 256) rocket.pos.x = -64;
-    //    rocket.pos.y --; if(rocket.pos.y == -64) rocket.pos.y = 192;
+    if ( scroll > greatest_bg - screenSizeX ) scroll = greatest_bg - screenSizeX;
+
     PA_ParallaxScrollX(0, scroll);
 
     // Keep going

@@ -6,5 +6,7 @@ extern const int screenSizeX = 256;
 extern const int screenSizeY = 192;
 extern const int tileSizeX = 8;
 extern const int tileSizeY = 8;
+extern const int milisecondsBetweenGameCycles = 33;
+extern const int milisecondsBetweenInputCycles = 50;
 
 

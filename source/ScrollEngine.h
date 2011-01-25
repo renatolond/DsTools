@@ -10,6 +10,7 @@
 #include <PA9.h>
 #include <nds/ndstypes.h>
 
+#include "constants.h"
 #include "playercontroller.h"
 #include "collisioncontroller.h"
 

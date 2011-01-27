@@ -8,5 +8,9 @@ extern const int tileSizeX = 8;
 extern const int tileSizeY = 8;
 extern const int milisecondsBetweenGameCycles = 33;
 extern const int milisecondsBetweenInputCycles = 50;
+extern const double maxVerticalSpeed = 12;
+extern const double verticalSpeedStep = 1.2;
+extern const int jumpDelay = 100;
+
 
 

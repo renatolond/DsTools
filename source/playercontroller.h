@@ -18,6 +18,7 @@ class PlayerController : public SpriteController
     int horizontalDelta;
     bool running;
     int jumpTime;
+    bool jumping;
 public:
     PlayerController();
     PlayerController(int scr, int sprn);
@@ -31,7 +32,8 @@ public:
     void applyGravity();
     void applyFriction();
     int getHorizontalSpeed();
-    int getVerticalSpeed();
+    int getVerticalSpeed(int timer);
+    void horizontalAnimation(int horizontalSpeed);
 };
 
 #endif // PLAYERCONTROLLER_H

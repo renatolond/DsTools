@@ -8,7 +8,7 @@ PlayerController::PlayerController() :
     verticalAcceleration = 0;
     //    breaking = 50;
     verticalBreaking = 50;
-    jumpTime = -100;
+    jumpTime = 0;
 }
 
 PlayerController::PlayerController(int scr, int sprn) :
@@ -58,21 +58,30 @@ void PlayerController::accelerateRight()
 
 void PlayerController::accelerateUp(int timer)
 {
-//    if ( abs(verticalSpeed) < eps && abs(verticalAcceleration) < eps )
-//    {
-//        verticalSpeed = -5;
-//        jumpTime = timer;
-//    }
-//    else if ( timer - jumpTime < 250 )
-//    {
-//        verticalSpeed = -5;
-//    }
+    if ( fabs(verticalSpeed) > eps )
+        return;
+
+    PA_OutputText(1, 1, 6, "Lets see.. %d - %d < %d",timer,jumpTime,jumpDelay);
+    if ( timer - jumpTime < jumpDelay )
+        return;
+
+    jumping = true;
+
+    beginAnimation(2);
+
+    int jumpHeight = 7*tileSizeY;
+    verticalSpeed = -15;
+    verticalSpeed += (screenSizeY-jumpHeight)/100*3.75;
+    if ( horizontalSpeed >= maxHorizontalSpeed ) verticalSpeed += (horizontalSpeed - maxHorizontalSpeed)/20;
 }
 
 void PlayerController::applyGravity()
 {
-//    verticalAcceleration = 1;
-//    verticalBreaking = 5;
+    //    verticalAcceleration = 1;
+    //    verticalBreaking = 5;
+    if( verticalSpeed < maxVerticalSpeed ) {
+        verticalSpeed += verticalSpeedStep;
+    }
 }
 
 void PlayerController::applyFriction()
@@ -91,33 +100,41 @@ void PlayerController::applyFriction()
 
 }
 
-int PlayerController::getHorizontalSpeed()
+void PlayerController::horizontalAnimation(int horizontalSpeed)
 {
-    //    horizontalSpeed += acceleration - (horizontalSpeed) / breaking;
-
-    if ( abs(horizontalSpeed) > eps )
+    if ( !jumping )
     {
-        if ( horizontalDelta * horizontalSpeed < 0 )
+        if ( abs(horizontalSpeed) > eps )
         {
-            beginAnimation(1);
-            if ( horizontalSpeed > 0 )
-                hflip(1);
+            if ( horizontalDelta * horizontalSpeed < 0 )
+            {
+                beginAnimation(1);
+                if ( horizontalSpeed > 0 )
+                    hflip(1);
+                else
+                    hflip(0);
+            }
             else
-                hflip(0);
+            {
+                beginAnimation(0);
+                if ( horizontalSpeed > 0 )
+                    hflip(0);
+                else
+                    hflip(1);
+            }
         }
         else
         {
-            beginAnimation(0);
-            if ( horizontalSpeed > 0 )
-                hflip(0);
-            else
-                hflip(1);
+            stopAnimation();
         }
     }
-    else
-    {
-        stopAnimation();
-    }
+
+}
+
+int PlayerController::getHorizontalSpeed()
+{
+    horizontalAnimation(horizontalSpeed);
+    //    horizontalSpeed += acceleration - (horizontalSpeed) / breaking;
 
     //    acceleration = 0;
     //    breaking = 10;
@@ -125,19 +142,26 @@ int PlayerController::getHorizontalSpeed()
     return int(horizontalSpeed);
 }
 
-int PlayerController::getVerticalSpeed()
+int PlayerController::getVerticalSpeed(int timer)
 {
-//    verticalSpeed += verticalAcceleration - (verticalSpeed) / verticalBreaking;
-//
-//    if ( pos.y > screenSizeY+sizeY ) pos.y = -sizeY;
+    //    verticalSpeed += verticalAcceleration - (verticalSpeed) / verticalBreaking;
+    //
+    //    if ( pos.y > screenSizeY+sizeY ) pos.y = -sizeY;
 
-//    if ( pos.y >= (screenSizeY-(3*tileSizeY)-sizeY) && verticalSpeed > 0)
-//    {
-//        verticalSpeed = 0;
-//        verticalAcceleration = 0;
-//        verticalBreaking = 10.0f;
-//        pos.y = (screenSizeY-(3*tileSizeY)-sizeY);
-//    }
+    if ( pos.y+(int)verticalSpeed > (screenSizeY-(3*tileSizeY)-sizeY) )
+    {
+        PA_OutputText(1, 1, 7, "Pos: %d %d Jump time! %d",(int)pos.y,(screenSizeY-(3*tileSizeY)-sizeY), jumpTime);
+        horizontalAnimation(horizontalSpeed);
+        if ( verticalSpeed > verticalSpeedStep*2 )
+        {
+            jumping = false;
+            jumpTime = timer;
+        }
+        verticalSpeed = 0;
+        verticalAcceleration = 0;
+        verticalBreaking = 10.0f;
+        pos.y = (screenSizeY-(3*tileSizeY)-sizeY);
+    }
 
     return int(verticalSpeed);
 }

@@ -11,5 +11,8 @@ extern const int tileSizeX;
 extern const int tileSizeY;
 extern const int milisecondsBetweenGameCycles;
 extern const int milisecondsBetweenInputCycles;
+extern const double maxVerticalSpeed;
+extern const double verticalSpeedStep;
+extern const int jumpDelay;
 
 #endif // CONSTANTS_H

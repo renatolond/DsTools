@@ -11,7 +11,7 @@
 int ScrollEngine::nframe = 0;
 //PA::Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
 PlayerController ScrollEngine::smallMario(0, 1);
-//CollisionController ScrollEngine::collisionController();
+CollisionController ScrollEngine::collisionController;
 int SpriteCount;
 /*u16 my_Map[4096];
 u16 my_Map2[4096];*/
@@ -54,8 +54,8 @@ void ScrollEngine::loadgraphics(){
     PA_LoadBackground(0, 0, &bgtool0);
     //PA_LoadBackground(0, 1, &bgtool1);
     PA_InitParallaxX(0, //screen
-		     128, //Parallax speed for Background 0. 0 is no parallax (will scroll independently with PA_EasyBgScrollXY)
-		     192, // Normal speed for Bg1
+                     screenSizeX, //Parallax speed for Background 0. 0 is no parallax (will scroll independently with PA_EasyBgScrollXY)
+                     screenSizeX, // Normal speed for Bg1
 		     256, //   3/4 speed
 		     0);
 
@@ -68,6 +68,8 @@ void ScrollEngine::loadgraphics(){
     smallMario.addAnimation(4,4,0); // Drag
     smallMario.addAnimation(5,5,0); // Jumping
     smallMario.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
+
+    collisionController.addCollideablePlayer(&smallMario);
     //smallMario.startanim(0, 3, 5);
     //PA::Sprite::
 
@@ -149,6 +151,8 @@ bool ScrollEngine::update(){
 
         smallMario.pos.y = smallMario.pos.y + vertSpeed;
     }
+
+    collisionController.checkForCollisions(scroll);
 
     if ( scroll < 0 ) scroll = 0;
     if ( scroll > greatest_bg - screenSizeX ) scroll = greatest_bg - screenSizeX;

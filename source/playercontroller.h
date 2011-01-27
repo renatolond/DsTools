@@ -34,6 +34,7 @@ public:
     int getHorizontalSpeed();
     int getVerticalSpeed(int timer);
     void horizontalAnimation(int horizontalSpeed);
+    void ceaseMovement() { verticalSpeed = horizontalSpeed = 0; }
 };
 
 #endif // PLAYERCONTROLLER_H

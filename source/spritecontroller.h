@@ -19,10 +19,9 @@ struct anim
 
 class SpriteController : public PA::Sprite
 {
-protected:
+public:
     int sizeX;
     int sizeY;
-public:
     SpriteController();
     SpriteController(int scr, int sprn);
     void addAnimation(int start, int end, int baseVelocity);

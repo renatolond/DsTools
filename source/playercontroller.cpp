@@ -61,7 +61,6 @@ void PlayerController::accelerateUp(int timer)
     if ( fabs(verticalSpeed) > eps )
         return;
 
-    PA_OutputText(1, 1, 6, "Lets see.. %d - %d < %d",timer,jumpTime,jumpDelay);
     if ( timer - jumpTime < jumpDelay )
         return;
 
@@ -150,7 +149,6 @@ int PlayerController::getVerticalSpeed(int timer)
 
     if ( pos.y+(int)verticalSpeed > (screenSizeY-(3*tileSizeY)-sizeY) )
     {
-        PA_OutputText(1, 1, 7, "Pos: %d %d Jump time! %d",(int)pos.y,(screenSizeY-(3*tileSizeY)-sizeY), jumpTime);
         horizontalAnimation(horizontalSpeed);
         if ( verticalSpeed > verticalSpeedStep*2 )
         {

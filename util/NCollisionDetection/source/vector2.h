@@ -149,7 +149,7 @@ Vector2<T>& Vector2<T>::operator *=(const double b)
 template <class T>
 Vector2<T> Vector2<T>::operator *(const double &b) const
 {
-    Vector2<T> temp(this->x*b, this->x*b);
+    Vector2<T> temp(this->x*b, this->y*b);
     return temp;
 }
 

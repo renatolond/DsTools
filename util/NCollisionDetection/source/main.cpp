@@ -9,6 +9,8 @@
 // Include PAlib so that you can use it
 #include <PA9.h>
 #include "vectorrenderer.h"
+#include "tilemapcell.h"
+#include "aabb.h"
 
 class myApp : public PA::Application
 {
@@ -61,14 +63,20 @@ void myApp::render()
 //    k = Vector2<int>(2,3);
     l = Vector2<int>(100, 45);
     m = Vector2<int>(100, 75);
-//    n = Vector2<int>(130, 75);
+    n = Vector2<int>(130, 75);
 //
 //    std::vector< Vector2<int> > vList;
 
    // vr.Clear();
 
     //vList.push_back(k); vList.push_back(l); vList.push_back(m);
+    vr.DrawArc(l, n, m);
     vr.DrawConcaveCCWArc(m, l);
+    vr.DrawLine(m.x, m.y, l.x, l.y);
+    vr.DrawLine(m.x-(m.y-l.y), m.y, m.x, m.y);
+    TileMapCell<int> t(1,2,3,4);
+    AABB<int> aabb();
+
     PA_16bitSwapBuffer(0);
 }
 

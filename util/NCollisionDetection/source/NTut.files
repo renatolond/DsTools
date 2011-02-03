@@ -1,7 +1,8 @@
 main.cpp
-ninjagraphicssystem.h
-ninjagraphicssystem.cpp
 vector2.h
 vectorrenderer.h
 constants.h
 constants.cpp
+tilemapcell.h
+aabb.h
+collidable.h

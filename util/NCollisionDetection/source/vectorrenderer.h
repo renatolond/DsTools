@@ -39,12 +39,14 @@ public:
     void DrawAABB(const Vector2<T> &v, T wx, T wy);
     void DrawAABB(T minX, T maxX, T minY, T maxY);
     void DrawConcaveCCWArc(T cx, T cy, T px, T py);
+    void DrawConcaveCCWArc(const Vector2<T> &c, const Vector2<T> &p);
 };
 
 template <class T>
         VectorRenderer<T>::VectorRenderer()
 {
-    PA_Init16bitBg(0, 3);
+    PA_Init16bitDblBuffer(0, 3);
+    //PA_Init16bitBg(0, 5);
     colorFG = 0xFFFF;
     thickness = 1;
 }
@@ -230,42 +232,153 @@ template <class T>
 }
 
 template <class T>
+        void lerp (Vector2<T> &dest, const T &x0, const T &y0, const T &x1, const T &y1, float t)
+{
+    dest.x = x0 + (x1-x0)*t;
+    dest.y = y0 + (y1-y0)*t;
+}
+// from http://www.cubic.org/docs/bezier.htm
+template <class T>
         void VectorRenderer<T>::DrawArc(T x0, T y0, T x1, T y1, T rx, T ry)
 {
-    int x = 0;
-    int y = 30;
-    int p = 3 - 2 * 30;
-
-    while (x <= y){
-        //DrawLine(x0 + x, y0 + y, x0 + x, y0 + y);
-        DrawLine(x0 - x, y0 + y, x0 - x, y0 + y);
-        DrawLine(x0 + x, y0 - y, x0 + x, y0 - y);
-        DrawLine(x0 - x, y0 - y, x0 - x, y0 - y);
-        //DrawLine(x0 + y, y0 + x, x0 + y, y0 + x);
-        DrawLine(x0 - y, y0 + x, x0 - y, y0 + x);
-        DrawLine(x0 + y, y0 - x, x0 + y, y0 - x);
-        DrawLine(x0 - y, y0 - x, x0 - y, y0 - x);
-        if (p < 0) p += 4 * x++ + 6;
-        else p += 4 * (x++ - y--) + 10;
+    Vector2<T> p0, p;
+    p0.x = x0;
+    p0.y = y0;
+    for ( int i=0; i<1000; i++ )
+    {
+        double t = (double)i/999.0;
+        Vector2<T> ab,bc,cd;
+        lerp (ab, x0, y0, rx, ry ,t);
+        lerp (bc, rx, ry, x1, y1, t);
+        lerp (p, ab.x, ab.y, bc.x, bc.y, t);
+        DrawLine(p0, p);
+        p0 = p;
     }
 }
 
 template <class T>
         void VectorRenderer<T>::DrawAABB(const Vector2<T> &v, T wx, T wy)
 {
-
+    DrawAABB(v.x-wx, v.x+wx, v.y-wy, v.y+wy);
 }
 
 template <class T>
         void VectorRenderer<T>::DrawAABB(T minX, T maxX, T minY, T maxY)
 {
+    DrawQuad(maxX, maxY, minX, maxY, minX, minY, maxX, minY);
+}
 
+template <class T>
+        void VectorRenderer<T>::DrawConcaveCCWArc(const Vector2<T> &c, const Vector2<T> &p)
+{
+    DrawConcaveCCWArc(c.x, c.y, p.x, p.y);
 }
 
 template <class T>
         void VectorRenderer<T>::DrawConcaveCCWArc(T cx, T cy, T px, T py)
 {
+    double p0x = px;
+    double p0y = py;
+    double vx = p0x - cx;
+    double vy = p0y - cy;
+    double r = sqrt(vx * vx + vy * vy);
+    double nx = vy;
+    double ny = -vx;
+    double p1x = p0x + nx - cx;
+    double p1y = p0y + ny - cy;
+    double len = sqrt(p1x * p1x + p1y * p1y);
+    p1x /= len;
+    p1y /= len;
+    p1x *= r;
+    p1y *= r;
+    p1x += cx;
+    p1y += cy;
+    double c0x = (p0x + p1x) * 0.5 - cx;
+    double c0y = (p0y + p1y) * 0.5 - cy;
+    double clen = sqrt(c0x * c0x + c0y * c0y);
+    double dlen = r - clen;
+    c0x /= clen;
+    c0y /= clen;
+    c0x *= r + dlen;
+    c0y *= r + dlen;
+    c0x += cx;
+    c0y += cy;
+    DrawArc(p0x, p0y, p1x, p1y, c0x, c0y);
 
+    p0x = p1x;
+    p0y = p1y;
+    vx = p0x - cx;
+    vy = p0y - cy;
+    r = sqrt(vx * vx + vy * vy);
+    nx = vy;
+    ny = -vx;
+    p1x = p0x + nx - cx;
+    p1y = p0y + ny - cy;
+    len = sqrt(p1x * p1x + p1y * p1y);
+    p1x /= len;
+    p1y /= len;
+    p1x *= r;
+    p1y *= r;
+    p1x += cx;
+    p1y += cy;
+    c0x = (p0x + p1x) * 0.5 - cx;
+    c0y = (p0y + p1y) * 0.5 - cy;
+    clen = sqrt(c0x * c0x + c0y * c0y);
+    dlen = r - clen;
+    c0x /= clen;
+    c0y /= clen;
+    c0x *= r + dlen;
+    c0y *= r + dlen;
+    c0x += cx;
+    c0y += cy;
+    DrawArc(p0x, p0y, p1x, p1y, c0x, c0y);
+
+    /*T vx, vy, r, nx, ny;
+    Vector2<T> p1, c0, c, p0;
+    c.x = cx; c.y = cy;
+    vx = px - cx;
+    vy = py - cy;
+    r = sqrt(vx*vx + vy*vy);
+    nx = vy;
+    ny = -vx;
+
+
+    p1.x = px + nx - cx;
+    p1.y = py + ny - cy;
+
+    p1.normalize();
+    p1 *= r;
+    p1 += c;
+
+    c0.x = (px + p1.x)*0.5 - cx;
+    c0.y = (py + p1.y)*0.5 - cy;
+
+    c0.normalize();
+    c0 *= (r + (r-c0.len()));
+    c0 += c;
+
+    DrawArc(px, py, p1.x, p1.y, c0.x, c0.y);
+    p0 = Vector2<T>(p1);
+
+    vx = p0.x - cx;
+    vy = p0.y - cy;
+
+    r = sqrt(vx * vx + vy * vy);
+    p1.x = p0.x + nx - cx;
+    p1.y = p0.y + ny - cy;
+
+    p1.normalize();
+    p1 *= r;
+    p1 += c;
+
+    c0.x = (p0.x + p1.x)*0.5 - cx;
+    c0.y = (p0.y + p1.y)*0.5 - cy;
+
+    c0.normalize();
+    c0 *= (r + (r-c0.len()));
+    c0 += c;
+
+    DrawArc(p0.x, p0.y, p1.x, p1.y, c0.x, c0.y);*/
 }
 
 #endif // VECTORRENDERER_H

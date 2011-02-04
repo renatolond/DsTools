@@ -76,10 +76,6 @@ namespace CTypeEnum
 template <class T>
         class TileMapCell
 {
-    Vector2<T> pos;
-    T xw;
-    T yw;
-
     int signx;
     int signy;
     double sx;
@@ -88,6 +84,9 @@ template <class T>
     TileEnum::TileID id;
     CTypeEnum::CType ctype;
 public:
+    Vector2<T> pos;
+    T xw;
+    T yw;
 
     TileMapCell(T x, T y, T xW, T yW);
     void SetState(TileEnum::TileID ID);

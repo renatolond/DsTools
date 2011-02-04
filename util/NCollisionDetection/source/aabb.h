@@ -2,6 +2,7 @@
 #define AABB_H
 
 #include "tilemapcell.h"
+#include "vectorrenderer.h"
 #include "collidable.h"
 #include "constants.h"
 
@@ -12,21 +13,54 @@ template <class T>
     Vector2<T> oldPos;
     T xw;
     T yw;
+
 public:
+    VectorRenderer<T> *vr;
     AABB();
+    AABB(Vector2<T> _pos, T _xw, T _yw);
 
     Vector2<T> getPos();
     Vector2<T> getOldPos();
     void setPos(Vector2<T> p);
     void setOldPos(Vector2<T> op);
+    void IntegrateVerlet();
     void CollideVsTile(TileMapCell<T> tile);
     void CollideVsWorldBounds();
     void ReportCollisionVsWorld(T px, T py, T dx, T dy);
+    void Draw();
+    void getExt(T &_xw, T &_yw);
 };
 
 template<class T>
 AABB<T>::AABB()
 {
+}
+
+template<class T>
+AABB<T>::AABB(Vector2<T> _pos, T _xw, T _yw)
+{
+    oldPos = pos = _pos;
+    xw = _xw;
+    yw = _yw;
+}
+
+template<class T>
+void AABB<T>::Draw()
+{
+    vr->DrawAABB(pos.x-xw, pos.x+xw, pos.y-yw, pos.y+yw);
+}
+
+template<class T>
+void AABB<T>::IntegrateVerlet()
+{
+    IntegrateVerletGeneric(*this);
+}
+
+template<class T>
+void AABB<T>::getExt(T &_xw, T &_yw)
+{
+    _xw = xw;
+    _yw = yw;
 }
 
 template<class T>
@@ -56,7 +90,7 @@ void AABB<T>::setOldPos(Vector2<T> op)
 template<class T>
 void AABB<T>::ReportCollisionVsWorld(T px, T py, T dx, T dy)
 {
-    ReportCollisionVsWorldGeneric(px, py, dx, dy);
+    ReportCollisionVsWorldGeneric(*this, px, py, dx, dy);
 }
 
 template<class T>
@@ -73,7 +107,7 @@ void AABB<T>::CollideVsWorldBounds()
     }
     else
     {
-        x = pos.x + xw - screenSizeX;
+        x = pos.x + xw - screenMaxX;
 
         // collision against right side
         if ( x > 0 )
@@ -90,7 +124,7 @@ void AABB<T>::CollideVsWorldBounds()
     }
     else
     {
-        y = pos.y + yw - screenSizeY;
+        y = pos.y + yw - screenMaxY;
         if ( y > 0 )
         {
             ReportCollisionVsWorld(0, -y, 0, -1);

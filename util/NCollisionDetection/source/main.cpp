@@ -15,6 +15,7 @@
 class myApp : public PA::Application
 {
        VectorRenderer<int> vr;
+       AABB<int> aabb;
        void init();
     void render();
     bool update();
@@ -24,33 +25,38 @@ void myApp::init()
 {
     PA_Init();
     PA_InitText(1, 0);
+    PA_InitText(0, 0);
 
     vr = VectorRenderer<int>();
-    vr.SetStyle(1, 0xFF00FF, 0x1);
+    aabb = AABB<int>(Vector2<int>((screenMinX+screenSizeX)/2, 10), 10, 10);
+    aabb.vr = &vr;
+    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
     vr.Clear();
 }
 
 bool myApp::update()
 {
-    Vector2<double> a(1, 1), b(10, 10), c, d, e(3, 4), f, g, h;
-
-    c = b - a;
-    d = b * 10;
-    f = e.normR();
-    g = e.proj(b);
-    h = e;
-    h.normalize();
-    PA_OutputText(1, 1, 1, "%s", a.ToString().c_str());
-    PA_OutputText(1, 1, 2, "%s", b.ToString().c_str());
-    PA_OutputText(1, 1, 3, "%s", c.ToString().c_str());
-    PA_OutputText(1, 1, 4, "%s", d.ToString().c_str());
-    PA_OutputText(1, 1, 5, "%s", e.ToString().c_str());
-    PA_OutputText(1, 1, 6, "%s", f.ToString().c_str());
-    PA_OutputText(1, 1, 7, "%s", g.ToString().c_str());
-    PA_OutputText(1, 1, 8, "%s", h.ToString().c_str());
-    PA_OutputText(1, 1, 9, "%f1", g.len());
-    PA_OutputText(1, 1, 10, "%f1", e.projLen(b));
     vr.Clear();
+
+    PA_OutputText(0, 0, 20, "Teste");
+
+    if ( Pad.Newpress.A || Pad.Held.Down )
+    aabb.IntegrateVerlet();
+
+    aabb.CollideVsWorldBounds();
+
+    if ( Stylus.Newpress )
+    {
+        Vector2<int> oldPos, pos;
+        oldPos = aabb.getPos();
+        pos = Vector2<int>(Stylus.X, Stylus.Y);
+        oldPos = pos - oldPos;
+//        oldPos.normalize();
+//        oldPos = pos - oldPos;
+
+        aabb.setOldPos(oldPos);
+        aabb.setPos(pos);
+    }
 
     return true;
 }
@@ -67,17 +73,21 @@ void myApp::render()
 //
 //    std::vector< Vector2<int> > vList;
 
-   // vr.Clear();
+    vr.Clear();
+    //PA_Draw16bitRect(0, 0, 0, 100, 100, 0x801F);
 
     //vList.push_back(k); vList.push_back(l); vList.push_back(m);
-    vr.DrawArc(l, n, m);
-    vr.DrawConcaveCCWArc(m, l);
-    vr.DrawLine(m.x, m.y, l.x, l.y);
-    vr.DrawLine(m.x-(m.y-l.y), m.y, m.x, m.y);
-    TileMapCell<int> t(1,2,3,4);
-    AABB<int> aabb();
+    //vr.DrawArc(l, n, m);
+    //vr.DrawConcaveCCWArc(m, l);
+    //vr.DrawLine(m.x, m.y, l.x, l.y);
+    //vr.DrawLine(m.x-(m.y-l.y), m.y, m.x, m.y);
+    //TileMapCell<int> t(1,2,3,4);
+    //AABB<int> aabb();
+
+    aabb.Draw();
 
     PA_16bitSwapBuffer(0);
+//    PA_Draw16bitRect(0, 0, 0, 100, 100, 0x801F);
 }
 
 int main(){

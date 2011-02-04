@@ -9,12 +9,13 @@
 template <class T>
         class VectorRenderer
 {
-    int colorFG;
+    u16 colorFG;
+    u16 colorBG;
     int thickness;
 public:
     VectorRenderer();
     void Clear();
-    void SetStyle(int thickness, int rgb, int alpha);
+    void SetStyle(int thickness, int rgb, int bg, int alpha);
     void StartFill(T x, T y, int rgb, int alpha);
     void StopFill();
     void DrawLine(const Vector2<T> &v0, const Vector2<T> &v1);
@@ -47,18 +48,26 @@ template <class T>
 {
     PA_Init16bitDblBuffer(0, 3);
     //PA_Init16bitBg(0, 5);
-    colorFG = 0xFFFF;
+    colorFG = 0x0000;
+    colorBG = 0xFFFF;
     thickness = 1;
 }
 
 template <class T>
         void VectorRenderer<T>::Clear()
 {
-    PA_Clear16bitBg(0);
+//    {u32 PA_temp;
+//    for (PA_temp = 0; PA_temp < 256*192; PA_temp++)
+//    PA_DrawBg[0][PA_temp] = 0x1F | (1 << 15);}
+//    PA_Draw16bitRect(0, 0, 0, 100, 100, 0x801F);
+  PA_Clear16bitBg(0);
+//    dmaFillWords((0x801F), (void*)PA_DrawBg[0], 256*192*2);
+    //PA_OutputText(1, 0, 0, "PA_DrawBg[0][0]=%d",PA_DrawBg[0][0]);
+    //PA_OutputText(1, 0, 1, "PA_DrawBg[0][1]=%d",PA_DrawBg[0][1]);
 }
 
 template <class T>
-        void VectorRenderer<T>::SetStyle(int thick, int rgb, int alpha)
+        void VectorRenderer<T>::SetStyle(int thick, int rgb, int bg, int alpha)
 {
     thickness = thick;
     int r, g, b;
@@ -73,6 +82,18 @@ template <class T>
     colorFG += g >> 3;
     colorFG <<= 5;
     colorFG += r >> 3;
+
+    r = g = b = bg;
+    r = r >> (2*8);
+    g = (g >> (8)) - (r << 8);
+    b = b - (g << 8) - (r << (2*8));
+    colorBG = alpha;
+    colorBG <<= 5;
+    colorBG += b >> 3;
+    colorBG <<= 5;
+    colorBG += g >> 3;
+    colorBG <<= 5;
+    colorBG += r >> 3;
 }
 
 template <class T>

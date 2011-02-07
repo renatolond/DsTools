@@ -1,9 +1,14 @@
 #ifndef COLLIDABLE_H
 #define COLLIDABLE_H
 
-#include "tilemapcell.h"
+//#include "tilemapcell.h"
+//#include "aabb.h"
+#include "vector2.h"
 
 #include <PA9.h>
+
+template <class T>
+        class TileMapCell;
 
 template <class T>
 class Collidable
@@ -91,10 +96,10 @@ void IntegrateVerletGeneric(Collidable<int> &c)
     c.setOldPos(iOldPos);
 }
 
-template <class T>
-void ResolveBoxTile(T x, T y, Collidable<T>& c, TileMapCell<T> tile)
-{
-}
+//template <class T>
+//void ResolveBoxTile(T x, T y, Collidable<T>& c, TileMapCell<T> tile)
+//{
+//}
 
 
 #endif // COLLIDABLE_H

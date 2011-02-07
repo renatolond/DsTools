@@ -8,14 +8,16 @@
 
 // Include PAlib so that you can use it
 #include <PA9.h>
+#include "all_gfx.h"
 #include "vectorrenderer.h"
 #include "tilemapcell.h"
 #include "aabb.h"
 
 class myApp : public PA::Application
 {
-       VectorRenderer<int> vr;
+//       VectorRenderer<int> vr;
        AABB<int> aabb;
+       TileMapCell<int> demoTile;
        void init();
     void render();
     bool update();
@@ -25,38 +27,66 @@ void myApp::init()
 {
     PA_Init();
     PA_InitText(1, 0);
-    PA_InitText(0, 0);
 
-    vr = VectorRenderer<int>();
-    aabb = AABB<int>(Vector2<int>((screenMinX+screenSizeX)/2, 10), 10, 10);
-    aabb.vr = &vr;
-    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
-    vr.Clear();
+    PA_LoadBackground(0, 1, &bg_blank);
+
+//    vr = VectorRenderer<int>();
+    aabb = AABB<int>(Vector2<int>((screenMinX+screenSizeX)/2, 2), 8, 8);
+    demoTile = TileMapCell<int>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
+    demoTile.SetState(TileEnum::full);
+//    aabb.vr = &vr;
+//    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
+//    vr.Clear();
 }
 
 bool myApp::update()
 {
-    vr.Clear();
+//    vr.Clear();
 
-    PA_OutputText(0, 0, 20, "Teste");
+    PA_OutputText(1, 0, 20, "X %d Y %d", aabb.getPos().x, aabb.getPos().y);
 
-    if ( Pad.Newpress.A || Pad.Held.Down )
+    if ( Pad.Newpress.A || Pad.Held.L )
     aabb.IntegrateVerlet();
 
-    aabb.CollideVsWorldBounds();
-
-    if ( Stylus.Newpress )
+    if ( Stylus.Held )
     {
-        Vector2<int> oldPos, pos;
-        oldPos = aabb.getPos();
+        Vector2<int> pos;//oldPos,
         pos = Vector2<int>(Stylus.X, Stylus.Y);
-        oldPos = pos - oldPos;
-//        oldPos.normalize();
-//        oldPos = pos - oldPos;
 
-        aabb.setOldPos(oldPos);
         aabb.setPos(pos);
     }
+    else if ( Pad.Held.Up || Pad.Held.Down || Pad.Held.Left || Pad.Held.Right )
+    {
+
+        Vector2<int> pos, oldPos, v, newPos, f;
+        int objspeed = 4;
+        int maxspeed = 20;
+
+        f.x = f.y = 0;
+        if ( Pad.Held.Up )
+            f.y -= (objspeed - gravity);
+        else if ( Pad.Held.Down )
+            f.y += objspeed;
+        if ( Pad.Held.Left )
+            f.x -= objspeed;
+        else if ( Pad.Held.Right )
+            f.x += objspeed;
+
+        oldPos = aabb.getPos();
+        pos = aabb.getPos();
+        v = pos - oldPos;
+
+        newPos = v + f;
+        if ( newPos.y < -maxspeed ) newPos.y = -maxspeed;
+        if ( newPos.x < -maxspeed ) newPos.x = -maxspeed;
+        if ( newPos.x > maxspeed ) newPos.x = maxspeed;
+        if ( newPos.y > maxspeed ) newPos.y = maxspeed;
+
+        aabb.setPos(newPos+oldPos);
+    }
+
+    aabb.CollideVsTile(demoTile);
+    aabb.CollideVsWorldBounds();
 
     return true;
 }
@@ -73,7 +103,7 @@ void myApp::render()
 //
 //    std::vector< Vector2<int> > vList;
 
-    vr.Clear();
+//    vr.Clear();
     //PA_Draw16bitRect(0, 0, 0, 100, 100, 0x801F);
 
     //vList.push_back(k); vList.push_back(l); vList.push_back(m);
@@ -85,8 +115,9 @@ void myApp::render()
     //AABB<int> aabb();
 
     aabb.Draw();
+    demoTile.Draw();
 
-    PA_16bitSwapBuffer(0);
+//    PA_16bitSwapBuffer(0);
 //    PA_Draw16bitRect(0, 0, 0, 100, 100, 0x801F);
 }
 

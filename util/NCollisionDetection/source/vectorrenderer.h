@@ -46,7 +46,7 @@ public:
 template <class T>
         VectorRenderer<T>::VectorRenderer()
 {
-    PA_Init16bitDblBuffer(0, 3);
+    PA_Init16bitDblBuffer(0, 0);
     //PA_Init16bitBg(0, 5);
     colorFG = 0x0000;
     colorBG = 0xFFFF;

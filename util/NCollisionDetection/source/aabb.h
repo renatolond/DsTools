@@ -5,6 +5,8 @@
 #include "vectorrenderer.h"
 #include "collidable.h"
 #include "constants.h"
+#include "spritecontroller.h"
+#include "all_gfx.h"
 
 template <class T>
         class AABB : public virtual Collidable<T>
@@ -13,6 +15,7 @@ template <class T>
     Vector2<T> oldPos;
     T xw;
     T yw;
+    SpriteController spr;
 
 public:
     VectorRenderer<T> *vr;
@@ -42,12 +45,17 @@ AABB<T>::AABB(Vector2<T> _pos, T _xw, T _yw)
     oldPos = pos = _pos;
     xw = _xw;
     yw = _yw;
+    PA_LoadSpritePal(0, 1, (void *) square_Pal);
+    spr.create((void *)(square_Sprite), OBJ_SIZE_16X16, 1);
 }
 
 template<class T>
 void AABB<T>::Draw()
 {
-    vr->DrawAABB(pos.x-xw, pos.x+xw, pos.y-yw, pos.y+yw);
+    spr.pos.x = pos.x-xw;
+    spr.pos.y = pos.y-yw;
+    spr.render();
+    //vr->DrawAABB(pos.x-xw, pos.x+xw, pos.y-yw, pos.y+yw);
 }
 
 template<class T>
@@ -169,7 +177,8 @@ void AABB<T>::CollideVsTile(TileMapCell<T> tile)
                     x = 0;
             }
 
-            ResolveBoxTile(x, y, *this, tile);
+            tile.projAABB(x, y, *this);
+            //ResolveBoxTile(x, y, *this, tile);
         }
     }
 }

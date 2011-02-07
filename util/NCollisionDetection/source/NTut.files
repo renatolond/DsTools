@@ -6,3 +6,5 @@ constants.cpp
 tilemapcell.h
 aabb.h
 collidable.h
+spritecontroller.h
+spritecontroller.cpp

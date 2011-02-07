@@ -2,6 +2,8 @@
 #define TILEMAPCELL_H
 
 #include "vector2.h"
+#include "aabb.h"
+#include "all_gfx.h"
 
 #define SQRT2 1.414214E+000
 #define SQRT5 2.236068E+000
@@ -83,21 +85,32 @@ template <class T>
 
     TileEnum::TileID id;
     CTypeEnum::CType ctype;
+    SpriteController s;
 public:
     Vector2<T> pos;
     T xw;
     T yw;
 
+    TileMapCell();
     TileMapCell(T x, T y, T xW, T yW);
     void SetState(TileEnum::TileID ID);
     void Clear();
     void UpdateType();
     void Draw();
+    void projAABB(T x, T y, AABB<T>& aabb);
+    void projAABBFull(T x, T y, AABB<T>& aabb);
     T minX();
     T maxX();
     T minY();
     T maxY();
 };
+
+template <class T>
+        TileMapCell<T>::TileMapCell()
+{
+
+}
+
 
 template <class T>
         TileMapCell<T>::TileMapCell(T x, T y, T xW, T yW)
@@ -107,6 +120,29 @@ template <class T>
     yw = yW;
     id = TileEnum::empty;
     ctype = CTypeEnum::_empty;
+
+    PA_LoadSpritePal(0, 2, (void *)tiles_Pal);
+    s.create((void*)tiles_Sprite, OBJ_SIZE_16X16, 2);
+    s.addAnimation(0,0,0);
+    s.addAnimation(1,1,0);
+    s.addAnimation(2,2,0);
+    s.addAnimation(3,3,0);
+    s.addAnimation(4,4,0);
+}
+
+template <class T>
+void TileMapCell<T>::projAABBFull(T x, T y, AABB<T>& aabb)
+{
+    double temp;
+    temp = sqrt(x*x + y*y);
+    aabb.ReportCollisionVsWorld(x, y, x/temp, y/temp);
+}
+
+template <class T>
+void TileMapCell<T>::projAABB(T x, T y, AABB<T>& aabb)
+{
+    if ( ctype == CTypeEnum::_full )
+        projAABBFull(x, y, aabb);
 }
 
 template <class T>
@@ -271,7 +307,13 @@ void TileMapCell<T>::UpdateType()
 template <class T>
 void TileMapCell<T>::Draw()
 {
+    s.pos.x = pos.x;
+    s.pos.y = pos.y;
+
+    if ( ctype == CTypeEnum::_full )
+        s.beginAnimation(0);
     // GotoAndStop(id+1) ?
+    s.render();
 }
 
 #endif // TILEMAPCELL_H

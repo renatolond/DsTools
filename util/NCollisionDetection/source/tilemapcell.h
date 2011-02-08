@@ -122,6 +122,7 @@ template <class T>
     ctype = CTypeEnum::_empty;
 
     PA_LoadSpritePal(0, 2, (void *)tiles_Pal);
+    s.init(0, 1);
     s.create((void*)tiles_Sprite, OBJ_SIZE_16X16, 2);
     s.addAnimation(0,0,0);
     s.addAnimation(1,1,0);
@@ -307,8 +308,8 @@ void TileMapCell<T>::UpdateType()
 template <class T>
 void TileMapCell<T>::Draw()
 {
-    s.pos.x = pos.x;
-    s.pos.y = pos.y;
+    s.pos.x = pos.x-xw;
+    s.pos.y = pos.y-yw;
 
     if ( ctype == CTypeEnum::_full )
         s.beginAnimation(0);

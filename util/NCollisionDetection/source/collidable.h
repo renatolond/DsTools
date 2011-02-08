@@ -26,12 +26,12 @@ public:
     virtual void getExt(T &xw, T &yw)=0;
 };
 
-void ReportCollisionVsWorldGeneric(Collidable<int> &c, double px, double py, double dx, double dy)
+void ReportCollisionVsWorldGeneric(Collidable<double> &c, double px, double py, double dx, double dy)
 {
     PA_OutputText(1, 0, 0, "Colliding vs world...");
-    Vector2<int> pos, oldPos;
-    int xw, yw, vx, vy;
-    int temp, nx, ny, tx, ty;
+    Vector2<double> pos, oldPos;
+    double xw, yw, vx, vy;
+    double temp, nx, ny, tx, ty;
     double fx, fy, bx, by;
     pos = c.getPos();
     oldPos = c.getOldPos();
@@ -68,10 +68,10 @@ void ReportCollisionVsWorldGeneric(Collidable<int> &c, double px, double py, dou
     c.setOldPos(oldPos);
 }
 
-void IntegrateVerletGeneric(Collidable<int> &c)
+void IntegrateVerletGeneric(Collidable<double> &c)
 {
     Vector2<double> pos, oldPos, newPos, d;
-    Vector2<int> iPos, iOldPos;
+    Vector2<double> iPos, iOldPos;
 
     pos.x = c.getPos().x;
     pos.y = c.getPos().y;

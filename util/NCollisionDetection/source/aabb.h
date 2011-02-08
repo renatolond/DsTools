@@ -52,8 +52,8 @@ AABB<T>::AABB(Vector2<T> _pos, T _xw, T _yw)
 template<class T>
 void AABB<T>::Draw()
 {
-    spr.pos.x = pos.x-xw;
-    spr.pos.y = pos.y-yw;
+    spr.pos.x = (float)(pos.x-xw);
+    spr.pos.y = (float)(pos.y-yw);
     spr.render();
     //vr->DrawAABB(pos.x-xw, pos.x+xw, pos.y-yw, pos.y+yw);
 }

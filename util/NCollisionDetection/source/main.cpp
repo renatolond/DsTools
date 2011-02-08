@@ -16,8 +16,8 @@
 class myApp : public PA::Application
 {
 //       VectorRenderer<int> vr;
-       AABB<int> aabb;
-       TileMapCell<int> demoTile;
+       AABB<double> aabb;
+       TileMapCell<double> demoTile;
        void init();
     void render();
     bool update();
@@ -31,9 +31,9 @@ void myApp::init()
     PA_LoadBackground(0, 1, &bg_blank);
 
 //    vr = VectorRenderer<int>();
-    aabb = AABB<int>(Vector2<int>((screenMinX+screenSizeX)/2, 2), 8, 8);
-    demoTile = TileMapCell<int>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
-    demoTile.SetState(TileEnum::full);
+    aabb = AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
+    demoTile = TileMapCell<double>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
+    demoTile.SetState(TileEnum::_45degPN);
 //    aabb.vr = &vr;
 //    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
 //    vr.Clear();
@@ -50,17 +50,17 @@ bool myApp::update()
 
     if ( Stylus.Held )
     {
-        Vector2<int> pos;//oldPos,
-        pos = Vector2<int>(Stylus.X, Stylus.Y);
+        Vector2<double> pos;//oldPos,
+        pos = Vector2<double>(Stylus.X, Stylus.Y);
 
         aabb.setPos(pos);
     }
     else if ( Pad.Held.Up || Pad.Held.Down || Pad.Held.Left || Pad.Held.Right )
     {
 
-        Vector2<int> pos, oldPos, v, newPos, f;
-        int objspeed = 4;
-        int maxspeed = 20;
+        Vector2<double> pos, oldPos, v, newPos, f;
+        double objspeed = 4;
+        double maxspeed = 20;
 
         f.x = f.y = 0;
         if ( Pad.Held.Up )
@@ -95,11 +95,11 @@ void myApp::render()
 {
 
 
-    Vector2<int> k, l, m, n;
-//    k = Vector2<int>(2,3);
-    l = Vector2<int>(100, 45);
-    m = Vector2<int>(100, 75);
-    n = Vector2<int>(130, 75);
+//    Vector2<int> k, l, m, n;
+////    k = Vector2<int>(2,3);
+//    l = Vector2<int>(100, 45);
+//    m = Vector2<int>(100, 75);
+//    n = Vector2<int>(130, 75);
 //
 //    std::vector< Vector2<int> > vList;
 

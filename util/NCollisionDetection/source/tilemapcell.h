@@ -99,6 +99,7 @@ public:
     void Draw();
     void projAABB(T x, T y, AABB<T>& aabb);
     void projAABBFull(T x, T y, AABB<T>& aabb);
+    void projAABB45deg(T x, T y, AABB<T>& aabb);
     T minX();
     T maxX();
     T minY();
@@ -140,10 +141,44 @@ void TileMapCell<T>::projAABBFull(T x, T y, AABB<T>& aabb)
 }
 
 template <class T>
+void TileMapCell<T>::projAABB45deg(T x, T y, AABB<T>& aabb)
+{
+    T ox, oy;
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
+    ox = aabb.getPos().x - signx * aabbxw - pos.x;
+    oy = aabb.getPos().y - signy * aabbyw - pos.y;
+
+    T dp = ox * sx + oy * sy;
+    if ( dp < 0 )
+    {
+        T ssx, ssy;
+        ssx = sx*-dp;
+        ssy = sy*-dp;
+
+        T lenN, lenP;
+        lenN = sqrt(ssx*ssx + ssy*ssy);
+        lenP = sqrt(x*x + y*y);
+
+        if ( lenP < lenN )
+        {
+            aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+        }
+        else
+        {
+            aabb.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+        }
+    }
+//    return NoCollision
+}
+
+template <class T>
 void TileMapCell<T>::projAABB(T x, T y, AABB<T>& aabb)
 {
     if ( ctype == CTypeEnum::_full )
         projAABBFull(x, y, aabb);
+    if ( ctype == CTypeEnum::_45deg )
+        projAABB45deg(x, y, aabb);
 }
 
 template <class T>
@@ -308,11 +343,13 @@ void TileMapCell<T>::UpdateType()
 template <class T>
 void TileMapCell<T>::Draw()
 {
-    s.pos.x = pos.x-xw;
-    s.pos.y = pos.y-yw;
+    s.pos.x = (float)(pos.x-xw);
+    s.pos.y = (float)(pos.y-yw);
 
     if ( ctype == CTypeEnum::_full )
         s.beginAnimation(0);
+    if ( ctype == CTypeEnum::_45deg )
+        s.beginAnimation(1);
     // GotoAndStop(id+1) ?
     s.render();
 }

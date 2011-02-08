@@ -101,6 +101,12 @@ public:
     void projAABBFull(T x, T y, AABB<T>& aabb);
     void projAABB45deg(T x, T y, AABB<T>& aabb);
     void projAABBConcave(T x, T y, AABB<T>& aabb);
+    void projAABBConvex(T x, T y, AABB<T>& aabb);
+    void projAABB22degS(T x, T y, AABB<T>& aabb);
+    void projAABB22degB(T x, T y, AABB<T>& aabb);
+    void projAABB67degS(T x, T y, AABB<T>& aabb);
+    void projAABB67degB(T x, T y, AABB<T>& aabb);
+    void projAABBHalf(T x, T y, AABB<T>& aabb);
     T minX();
     T maxX();
     T minY();
@@ -134,7 +140,7 @@ template <class T>
 }
 
 template <class T>
-void TileMapCell<T>::projAABBFull(T x, T y, AABB<T>& aabb)
+        void TileMapCell<T>::projAABBFull(T x, T y, AABB<T>& aabb)
 {
     double temp;
     temp = sqrt(x*x + y*y);
@@ -142,7 +148,7 @@ void TileMapCell<T>::projAABBFull(T x, T y, AABB<T>& aabb)
 }
 
 template <class T>
-void TileMapCell<T>::projAABB45deg(T x, T y, AABB<T>& aabb)
+        void TileMapCell<T>::projAABB45deg(T x, T y, AABB<T>& aabb)
 {
     T ox, oy;
     T aabbxw, aabbyw;
@@ -173,7 +179,7 @@ void TileMapCell<T>::projAABB45deg(T x, T y, AABB<T>& aabb)
 }
 
 template <class T>
-void TileMapCell<T>::projAABBConcave(T x, T y, AABB<T>& aabb)
+        void TileMapCell<T>::projAABBConcave(T x, T y, AABB<T>& aabb)
 {
     T ox, oy, twid;
     T aabbxw, aabbyw;
@@ -202,7 +208,105 @@ void TileMapCell<T>::projAABBConcave(T x, T y, AABB<T>& aabb)
 }
 
 template <class T>
-void TileMapCell<T>::projAABB(T x, T y, AABB<T>& aabb)
+        void TileMapCell<T>::projAABBConvex(T x, T y, AABB<T>& aabb)
+{
+    T ox, oy, twid;
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
+    ox = aabb.getPos().x - signx * aabbxw - (pos.x - signx * xw);
+    oy = aabb.getPos().y - signy * aabbyw - (pos.y - signy * yw);
+    twid = xw * 2;
+
+    T len = sqrt(ox*ox+oy*oy);
+    T pen = twid - len;
+    if ( signx * ox < 0 || signy * oy < 0 )
+    {
+        T lenP = sqrt(x*x + y*y);
+        aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+    }
+    else if ( pen > 0 )
+    {
+        ox = ox / len;
+        oy = oy / len;
+        aabb.ReportCollisionVsWorld(ox * pen, oy * pen, ox, oy);
+    }
+}
+
+template <class T>
+        void TileMapCell<T>::projAABB22degS(T x, T y, AABB<T>& aabb)
+{
+    T py;
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
+
+    py = aabb.getPos().y - signy * aabbyw;
+
+    T cy = pos.y - py;
+
+    if ( cy*signy > 0 )
+    {
+        T ox, oy;
+        ox = aabb.getPos().x - signx * aabbxw - (pos.x + signx*xw);
+        oy = aabb.getPos().y - signy * aabbyw - (pos.y - signy*yw);
+
+        T dp = ox * sx + oy * sy;
+        if ( dp < 0 )
+        {
+            T ssx, ssy;
+            ssx = sx*-dp;
+            ssy = sy*-dp;
+
+            T lenN, lenP;
+            lenN = sqrt(ssx*ssx + ssy*ssy);
+            lenP = sqrt(x*x + y*y);
+
+            T ay = fabs(cy);
+
+            if ( lenP < lenN )
+            {
+                if ( ay < lenP )
+                    aabb.ReportCollisionVsWorld(0, cy, 0, cy/ay);
+                else
+                    aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+            }
+            else
+            {
+                if ( ay < lenN )
+                    aabb.ReportCollisionVsWorld(0, cy, 0, cy/ay);
+                else
+                    aabb.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+            }
+        }
+    }
+}
+
+template <class T>
+        void TileMapCell<T>::projAABB22degB(T x, T y, AABB<T>& aabb)
+{
+
+}
+
+template <class T>
+        void TileMapCell<T>::projAABB67degS(T x, T y, AABB<T>& aabb)
+{
+
+}
+
+template <class T>
+        void TileMapCell<T>::projAABB67degB(T x, T y, AABB<T>& aabb)
+{
+
+}
+
+template <class T>
+        void TileMapCell<T>::projAABBHalf(T x, T y, AABB<T>& aabb)
+{
+
+}
+
+
+template <class T>
+        void TileMapCell<T>::projAABB(T x, T y, AABB<T>& aabb)
 {
     if ( ctype == CTypeEnum::_full )
         projAABBFull(x, y, aabb);
@@ -210,6 +314,10 @@ void TileMapCell<T>::projAABB(T x, T y, AABB<T>& aabb)
         projAABB45deg(x, y, aabb);
     if ( ctype == CTypeEnum::concave )
         projAABBConcave(x, y, aabb);
+    if ( ctype == CTypeEnum::convex )
+        projAABBConvex(x, y, aabb);
+    if ( ctype == CTypeEnum::_22degs )
+        projAABB22degS(x, y, aabb);
 }
 
 template <class T>
@@ -253,7 +361,7 @@ template <class T>
 
 // Useless function?
 template <class T>
-void TileMapCell<T>::Clear()
+        void TileMapCell<T>::Clear()
 {
     id = TileEnum::empty;
     UpdateType();
@@ -261,7 +369,7 @@ void TileMapCell<T>::Clear()
 }
 
 template <class T>
-void TileMapCell<T>::UpdateType()
+        void TileMapCell<T>::UpdateType()
 {
     // Defining sign in x and y
     if ( id == TileEnum::_45degNN || id == TileEnum::concaveNN || id == TileEnum::convexNN || id == TileEnum::_22degNNb ||
@@ -270,19 +378,19 @@ void TileMapCell<T>::UpdateType()
         signx = signy = -1;
     }
     else if ( id == TileEnum::_45degNP || id == TileEnum::concaveNP || id == TileEnum::convexNP || id == TileEnum::_22degNPb ||
-         id == TileEnum::_22degNPs || id == TileEnum::_67degNPb || id == TileEnum::_67degNPs )
+              id == TileEnum::_22degNPs || id == TileEnum::_67degNPb || id == TileEnum::_67degNPs )
     {
         signx = -1;
         signy = 1;
     }
     else if ( id == TileEnum::_45degPN || id == TileEnum::concavePN || id == TileEnum::convexPN || id == TileEnum::_22degPNb ||
-         id == TileEnum::_22degPNs || id == TileEnum::_67degPNb || id == TileEnum::_67degPNs )
+              id == TileEnum::_22degPNs || id == TileEnum::_67degPNb || id == TileEnum::_67degPNs )
     {
         signx = 1;
         signy = -1;
     }
     else if ( id == TileEnum::_45degPP || id == TileEnum::concavePP || id == TileEnum::convexPP || id == TileEnum::_22degPPb ||
-         id == TileEnum::_22degPPs || id == TileEnum::_67degPPb || id == TileEnum::_67degPPs )
+              id == TileEnum::_22degPPs || id == TileEnum::_67degPPb || id == TileEnum::_67degPPs )
     {
         signx = signy = 1;
     }
@@ -372,7 +480,7 @@ void TileMapCell<T>::UpdateType()
 }
 
 template <class T>
-void TileMapCell<T>::Draw()
+        void TileMapCell<T>::Draw()
 {
     s.pos.x = (float)(pos.x-xw);
     s.pos.y = (float)(pos.y-yw);
@@ -383,6 +491,10 @@ void TileMapCell<T>::Draw()
         s.beginAnimation(1);
     if ( ctype == CTypeEnum::concave )
         s.beginAnimation(2);
+    if ( ctype == CTypeEnum::convex )
+        s.beginAnimation(3);
+    if ( ctype == CTypeEnum::_22degs )
+        s.beginAnimation(4);
     // GotoAndStop(id+1) ?
     s.render();
 }

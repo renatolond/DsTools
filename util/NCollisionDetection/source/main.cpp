@@ -33,7 +33,7 @@ void myApp::init()
 //    vr = VectorRenderer<int>();
     aabb = AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
     demoTile = TileMapCell<double>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
-    demoTile.SetState(TileEnum::_45degPN);
+    demoTile.SetState(TileEnum::concaveNN);
 //    aabb.vr = &vr;
 //    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
 //    vr.Clear();

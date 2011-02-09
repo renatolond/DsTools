@@ -368,13 +368,67 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projAABB67degB(T x, T y, AABB<T>& aabb)
 {
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
 
+    T ox, oy;
+    ox = aabb.getPos().x - signx * aabbxw - (pos.x + signx*xw);
+    oy = aabb.getPos().y - signy * aabbyw - (pos.y - signy*yw);
+
+    T dp = ox * sx + oy * sy;
+    if ( dp < 0 )
+    {
+        T ssx, ssy;
+        ssx = sx*-dp;
+        ssy = sy*-dp;
+
+        T lenN, lenP;
+        lenN = sqrt(ssx*ssx + ssy*ssy);
+        lenP = sqrt(x*x + y*y);
+
+
+        if ( lenP < lenN )
+        {
+            aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+        }
+        else
+        {
+            aabb.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+        }
+    }
 }
 
 template <class T>
         void TileMapCell<T>::projAABBHalf(T x, T y, AABB<T>& aabb)
 {
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
 
+    T ox, oy;
+    ox = aabb.getPos().x - signx * aabbxw - pos.x;
+    oy = aabb.getPos().y - signy * aabbyw - pos.y;
+
+    T dp = ox * sx + oy * sy;
+    if ( dp < 0 )
+    {
+        T ssx, ssy;
+        ssx = sx*-dp;
+        ssy = sy*-dp;
+
+        T lenN, lenP;
+        lenN = sqrt(ssx*ssx + ssy*ssy);
+        lenP = sqrt(x*x + y*y);
+
+
+        if ( lenP < lenN )
+        {
+            aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+        }
+        else
+        {
+            aabb.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+        }
+    }
 }
 
 
@@ -395,6 +449,10 @@ template <class T>
         projAABB22degB(x, y, aabb);
     if ( ctype == CTypeEnum::_67degs )
         projAABB67degS(x, y, aabb);
+    if ( ctype == CTypeEnum::_67degb )
+        projAABB67degB(x, y, aabb);
+    if ( ctype == CTypeEnum::half )
+        projAABBHalf(x, y, aabb);
 }
 
 template <class T>
@@ -520,6 +578,8 @@ template <class T>
     }
     else if ( id == TileEnum::halfD || id == TileEnum::halfL || id == TileEnum::halfR || id == TileEnum::halfU )
     {
+        ctype = CTypeEnum::half;
+
         if ( id == TileEnum::halfD )
         {
             signx = 0;
@@ -576,6 +636,10 @@ template <class T>
         s.beginAnimation(5);
     if ( ctype == CTypeEnum::_67degs )
         s.beginAnimation(6);
+    if ( ctype == CTypeEnum::_67degb )
+        s.beginAnimation(7);
+    if ( ctype == CTypeEnum::half )
+        s.beginAnimation(8);
     // GotoAndStop(id+1) ?
     s.render();
 }

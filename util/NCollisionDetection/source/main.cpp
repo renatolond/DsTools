@@ -54,7 +54,7 @@ void myApp::init()
     //demoObj = new AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
     demoObj = new Circle<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8);
     demoTile = TileMapCell<double>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
-    demoTile.SetState(states[1]);
+    demoTile.SetState(states[2]);
 //    aabb.vr = &vr;
 //    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
 //    vr.Clear();
@@ -80,8 +80,8 @@ bool myApp::update()
     {
 
         Vector2<double> pos, oldPos, v, newPos, f;
-        double objspeed = 4;
-        double maxspeed = 20;
+        double objspeed = 2;
+        double maxspeed = 10;
 
         f.x = f.y = 0;
         if ( Pad.Held.Up )

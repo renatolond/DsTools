@@ -15,9 +15,9 @@ extern const int milisecondsBetweenInputCycles = 50;
 extern const double maxVerticalSpeed = 12;
 extern const double verticalSpeedStep = 1.2;
 extern const int jumpDelay = 100;
-double friction = 0.5;
-double bounce = 0;  // 0.9;
+double friction = 0.05;
+double bounce =  0.3;
 double drag = 0.99;
-double gravity = 2;
+double gravity = 0.2;
 
 

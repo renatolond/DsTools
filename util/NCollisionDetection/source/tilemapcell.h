@@ -475,8 +475,8 @@ template <class T>
         projCircle45deg(x, y, oh, ov, circle);
     if ( ctype == CTypeEnum::concave )
         projCircleConcave(x, y, oh, ov, circle);
-    //    if ( ctype == CTypeEnum::convex )
-    //        projAABBConvex(x, y, aabb);
+    if ( ctype == CTypeEnum::convex )
+        projCircleConvex(x, y, oh, ov, circle);
     //    if ( ctype == CTypeEnum::_22degs )
     //        projAABB22degS(x, y, aabb);
     //    if ( ctype == CTypeEnum::_22degb )
@@ -492,9 +492,9 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projCircleFull(T x, T y, T oh, T ov, Circle<T>& circle)
 {
-    if ( oh == 0 )
+    if ( fabs(oh) < eps )
     {
-        if ( ov == 0 )
+        if ( fabs(ov) < eps )
         {
             if ( x < y )
             {
@@ -518,7 +518,7 @@ template <class T>
     }
     else
     {
-        if ( ov == 0 )
+        if ( fabs(ov) < eps )
             circle.ReportCollisionVsWorld(x * oh, 0, oh, 0);
         else
         {
@@ -553,9 +553,9 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projCircle45deg(T x, T y, T oh, T ov, Circle<T> &circle)
 {
-    if ( oh == 0 )
+    if ( fabs(oh) < eps )
     {
-        if ( ov == 0 )
+        if ( fabs(ov) < eps )
         {
             T r;
             T ox, oy;
@@ -632,7 +632,7 @@ template <class T>
     }
     else
     {
-        if ( ov == 0 )
+        if ( fabs(ov) < eps )
         {
             if ( signx * oh < 0 )
             {
@@ -684,7 +684,7 @@ template <class T>
 
             if ( pen > 0 )
             {
-                if ( len == 0 )
+                if ( fabs(len) < eps )
                 {
                     dx = oh / SQRT2;
                     dy = ov / SQRT2;
@@ -703,9 +703,9 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projCircleConcave(T x, T y, T oh, T ov, Circle<T> &circle)
 {
-    if ( oh == 0 )
+    if ( fabs(oh) < eps )
     {
-        if ( ov == 0 )
+        if ( fabs(ov) < eps )
         {
             T ox, oy;
             ox = pos.x + signx * xw - circle.getPos().x;
@@ -778,7 +778,7 @@ template <class T>
     }
     else
     {
-        if ( ov == 0 )
+        if ( fabs(ov) < eps )
         {
             if ( signx * oh < 0 )
             {
@@ -835,6 +835,153 @@ template <class T>
                     dy /= len;
                 }
                 circle.ReportCollisionVsWorld(dx*pen, dy*pen, dx, dy);
+            }
+        }
+    }
+}
+
+template <class T>
+        void TileMapCell<T>::projCircleConvex(T x, T y, T oh, T ov, Circle<T> &circle)
+{
+    if ( fabs(oh) < eps )
+    {
+        if ( fabs(ov) < eps )
+        {
+            T ox, oy, trad, len, pen;
+            T r;
+            circle.getExt(r, r);
+
+            ox = circle.getPos().x - ( pos.x - signx * xw );
+            oy = circle.getPos().y - ( pos.y - signy * yw );
+            trad = xw * 2;
+            len = sqrt(ox*ox + oy*oy);
+            pen = trad + r - len;
+            if ( pen > 0 )
+            {
+                T lenP;
+                if ( x < y )
+                {
+                    lenP = x;
+                    y = 0;
+                    if ( circle.getPos().x - pos.x < 0 )
+                        x *= -1;
+                }
+                else
+                {
+                    lenP = y;
+                    x = 0;
+                    if ( circle.getPos().y - pos.y < 0 )
+                        y *= -1;
+                }
+
+                if ( lenP < pen )
+                    circle.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+                else
+                {
+                    ox /= len;
+                    oy /= len;
+                    circle.ReportCollisionVsWorld(ox*pen, oy*pen, ox, oy);
+                }
+            }
+        }
+        else
+        {
+            if ( signy * ov < 0 )
+                circle.ReportCollisionVsWorld(0, y*ov, 0, ov);
+            else
+            {
+                T ox, oy, trad, len, pen;
+                T r;
+                circle.getExt(r, r);
+
+                ox = circle.getPos().x - ( pos.x - signx * xw );
+                oy = circle.getPos().y - ( pos.y - signy * yw );
+                trad = xw * 2;
+                len = sqrt(ox*ox + oy*oy);
+                pen = trad + r - len;
+                if ( pen > 0 )
+                {
+                    ox /= len;
+                    oy /= len;
+                    circle.ReportCollisionVsWorld(ox*pen, oy*pen, ox, oy);
+                }
+            }
+        }
+    }
+    else
+    {
+        if ( fabs(ov) < eps )
+        {
+            if ( signx * oh < 0 )
+            {
+                circle.ReportCollisionVsWorld(x*oh, 0, oh, 0);
+            }
+            else
+            {
+                T ox, oy, trad, len, pen;
+                T r;
+                circle.getExt(r, r);
+
+                ox = circle.getPos().x - ( pos.x - signx * xw );
+                oy = circle.getPos().y - ( pos.y - signy * yw );
+                trad = xw * 2;
+                len = sqrt(ox*ox + oy*oy);
+                pen = trad + r - len;
+                if ( pen > 0 )
+                {
+                    ox /= len;
+                    oy /= len;
+                    circle.ReportCollisionVsWorld(ox*pen, oy*pen, ox, oy);
+                }
+
+            }
+        }
+        else
+        {
+            if ( signx * oh + signy * ov > 0 )
+            {
+                T ox, oy, trad, len, pen;
+                T r;
+                circle.getExt(r, r);
+
+                ox = circle.getPos().x - ( pos.x - signx * xw );
+                oy = circle.getPos().y - ( pos.y - signy * yw );
+                trad = xw * 2;
+                len = sqrt(ox*ox + oy*oy);
+                pen = trad + r - len;
+                if ( pen > 0 )
+                {
+                    ox /= len;
+                    oy /= len;
+                    circle.ReportCollisionVsWorld(ox*pen, oy*pen, ox, oy);
+                }
+            }
+            else
+            {
+                T vx, vy, len, pen, dx, dy;
+                T r;
+                circle.getExt(r, r);
+
+                vx = pos.x + oh * xw;
+                vy = pos.y + ov * yw;
+                dx = circle.getPos().x - vx;
+                dy = circle.getPos().y - vy;
+                len = sqrt(dx*dx + dy*dy);
+                pen = r - len;
+                if ( pen > 0 )
+                {
+                    if ( fabs(len) < eps )
+                    {
+                        dx = oh / SQRT2;
+                        dy = ov / SQRT2;
+                    }
+                    else
+                    {
+                        dx /= len;
+                        dy /= len;
+                    }
+                    circle.ReportCollisionVsWorld(dx*pen, dy*pen, dx, dy);
+                }
             }
         }
     }

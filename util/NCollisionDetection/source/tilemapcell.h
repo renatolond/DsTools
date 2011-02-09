@@ -137,6 +137,10 @@ template <class T>
     s.addAnimation(2,2,0);
     s.addAnimation(3,3,0);
     s.addAnimation(4,4,0);
+    s.addAnimation(5,5,0);
+    s.addAnimation(6,6,0);
+    s.addAnimation(7,7,0);
+    s.addAnimation(8,8,0);
 }
 
 template <class T>
@@ -283,13 +287,82 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projAABB22degB(T x, T y, AABB<T>& aabb)
 {
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
 
+    T ox, oy;
+    ox = aabb.getPos().x - signx * aabbxw - (pos.x - signx*xw);
+    oy = aabb.getPos().y - signy * aabbyw - (pos.y + signy*yw);
+
+    T dp = ox * sx + oy * sy;
+    if ( dp < 0 )
+    {
+        T ssx, ssy;
+        ssx = sx*-dp;
+        ssy = sy*-dp;
+
+        T lenN, lenP;
+        lenN = sqrt(ssx*ssx + ssy*ssy);
+        lenP = sqrt(x*x + y*y);
+
+
+        if ( lenP < lenN )
+        {
+            aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+        }
+        else
+        {
+            aabb.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+        }
+    }
 }
 
 template <class T>
         void TileMapCell<T>::projAABB67degS(T x, T y, AABB<T>& aabb)
 {
+    T px;
+    T aabbxw, aabbyw;
+    aabb.getExt(aabbxw, aabbyw);
 
+    px = aabb.getPos().x - signx * aabbxw;
+
+    T cx = pos.x - px;
+
+    if ( cx*signx > 0 )
+    {
+        T ox, oy;
+        ox = aabb.getPos().x - signx * aabbxw - (pos.x - signx*xw);
+        oy = aabb.getPos().y - signy * aabbyw - (pos.y + signy*yw);
+
+        T dp = ox * sx + oy * sy;
+        if ( dp < 0 )
+        {
+            T ssx, ssy;
+            ssx = sx*-dp;
+            ssy = sy*-dp;
+
+            T lenN, lenP;
+            lenN = sqrt(ssx*ssx + ssy*ssy);
+            lenP = sqrt(x*x + y*y);
+
+            T ax = fabs(cx);
+
+            if ( lenP < lenN )
+            {
+                if ( ax < lenP )
+                    aabb.ReportCollisionVsWorld(cx, 0, cx/ax, 0);
+                else
+                    aabb.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+            }
+            else
+            {
+                if ( ax < lenN )
+                    aabb.ReportCollisionVsWorld(cx, 0, cx/ax, 0);
+                else
+                    aabb.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+            }
+        }
+    }
 }
 
 template <class T>
@@ -318,6 +391,10 @@ template <class T>
         projAABBConvex(x, y, aabb);
     if ( ctype == CTypeEnum::_22degs )
         projAABB22degS(x, y, aabb);
+    if ( ctype == CTypeEnum::_22degb )
+        projAABB22degB(x, y, aabb);
+    if ( ctype == CTypeEnum::_67degs )
+        projAABB67degS(x, y, aabb);
 }
 
 template <class T>
@@ -495,6 +572,10 @@ template <class T>
         s.beginAnimation(3);
     if ( ctype == CTypeEnum::_22degs )
         s.beginAnimation(4);
+    if ( ctype == CTypeEnum::_22degb )
+        s.beginAnimation(5);
+    if ( ctype == CTypeEnum::_67degs )
+        s.beginAnimation(6);
     // GotoAndStop(id+1) ?
     s.render();
 }

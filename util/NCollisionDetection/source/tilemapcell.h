@@ -3,6 +3,7 @@
 
 #include "vector2.h"
 #include "aabb.h"
+#include "circle.h"
 #include "all_gfx.h"
 
 #define SQRT2 1.414214E+000
@@ -107,6 +108,16 @@ public:
     void projAABB67degS(T x, T y, AABB<T>& aabb);
     void projAABB67degB(T x, T y, AABB<T>& aabb);
     void projAABBHalf(T x, T y, AABB<T>& aabb);
+    void projCircle(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircleFull(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircle45deg(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircleConcave(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircleConvex(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircle22degS(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircle22degB(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircle67degS(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircle67degB(T px, T py, T oh, T ov, Circle<T>& circle);
+    void projCircleHalf(T px, T py, T oh, T ov, Circle<T>& circle);
     T minX();
     T maxX();
     T minY();
@@ -129,9 +140,9 @@ template <class T>
     id = TileEnum::empty;
     ctype = CTypeEnum::_empty;
 
-    PA_LoadSpritePal(0, 2, (void *)tiles_Pal);
+    PA_LoadSpritePal(0, 1, (void *)tiles_Pal);
     s.init(0, 1);
-    s.create((void*)tiles_Sprite, OBJ_SIZE_16X16, 2);
+    s.create((void*)tiles_Sprite, OBJ_SIZE_16X16, 1);
     s.addAnimation(0,0,0);
     s.addAnimation(1,1,0);
     s.addAnimation(2,2,0);
@@ -453,6 +464,90 @@ template <class T>
         projAABB67degB(x, y, aabb);
     if ( ctype == CTypeEnum::half )
         projAABBHalf(x, y, aabb);
+}
+
+template <class T>
+        void TileMapCell<T>::projCircle(T x, T y, T oh, T ov, Circle<T>& circle)
+{
+    if ( ctype == CTypeEnum::_full )
+        projCircleFull(x, y, oh, ov, circle);
+    //    if ( ctype == CTypeEnum::_45deg )
+    //        projAABB45deg(x, y, aabb);
+    //    if ( ctype == CTypeEnum::concave )
+    //        projAABBConcave(x, y, aabb);
+    //    if ( ctype == CTypeEnum::convex )
+    //        projAABBConvex(x, y, aabb);
+    //    if ( ctype == CTypeEnum::_22degs )
+    //        projAABB22degS(x, y, aabb);
+    //    if ( ctype == CTypeEnum::_22degb )
+    //        projAABB22degB(x, y, aabb);
+    //    if ( ctype == CTypeEnum::_67degs )
+    //        projAABB67degS(x, y, aabb);
+    //    if ( ctype == CTypeEnum::_67degb )
+    //        projAABB67degB(x, y, aabb);
+    //    if ( ctype == CTypeEnum::half )
+    //        projAABBHalf(x, y, aabb);
+}
+
+template <class T>
+        void TileMapCell<T>::projCircleFull(T x, T y, T oh, T ov, Circle<T>& circle)
+{
+    if ( oh == 0 )
+    {
+        if ( ov == 0 )
+        {
+            if ( x < y )
+            {
+                T dx = circle.getPos().x - pos.x;
+                if ( dx < 0 )
+                    circle.ReportCollisionVsWorld(-x, 0, -1, 0);
+                else
+                    circle.ReportCollisionVsWorld(x, 0, 1, 0);
+            }
+            else
+            {
+                T dy = circle.getPos().y - pos.y;
+                if ( dy < 0 )
+                    circle.ReportCollisionVsWorld(0, -y, 0, -1);
+                else
+                    circle.ReportCollisionVsWorld(0, y, 0, 1);
+            }
+        }
+        else
+            circle.ReportCollisionVsWorld(0, y*ov, 0, ov);
+    }
+    else
+    {
+        if ( ov == 0 )
+            circle.ReportCollisionVsWorld(x * oh, 0, oh, 0);
+        else
+        {
+            T vx, vy, dx, dy, len, pen, r;
+            vx = pos.x + oh * xw;
+            vy = pos.y + ov * yw;
+            dx = circle.getPos().x - vx;
+            dy = circle.getPos().y - vy;
+            len = sqrt(dx*dx + dy*dy);
+            circle.getExt(r, r);
+            pen = r - len;
+
+            if ( pen > 0 )
+            {
+                if ( fabs(len) < eps )
+                {
+                    dx = oh / SQRT2;
+                    dy = oh / SQRT2;
+                }
+                else
+                {
+                    dx = dx / len;
+                    dy = dy / len;
+                }
+
+                circle.ReportCollisionVsWorld(dx * pen, dy * pen, dx, dy);
+            }
+        }
+    }
 }
 
 template <class T>

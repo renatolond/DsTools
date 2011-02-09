@@ -45,8 +45,8 @@ AABB<T>::AABB(Vector2<T> _pos, T _xw, T _yw)
     oldPos = pos = _pos;
     xw = _xw;
     yw = _yw;
-    PA_LoadSpritePal(0, 1, (void *) square_Pal);
-    spr.create((void *)(square_Sprite), OBJ_SIZE_16X16, 1);
+    PA_LoadSpritePal(0, 0, (void *) square_Pal);
+    spr.create((void *)(square_Sprite), OBJ_SIZE_16X16, 0);
 }
 
 template<class T>
@@ -104,7 +104,7 @@ void AABB<T>::ReportCollisionVsWorld(T px, T py, T dx, T dy)
 template<class T>
 void AABB<T>::CollideVsWorldBounds()
 {
-    int x, y;
+    T x, y;
 
     x = screenMinX - (pos.x - xw);
 

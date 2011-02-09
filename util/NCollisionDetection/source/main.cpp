@@ -12,16 +12,26 @@
 #include "vectorrenderer.h"
 #include "tilemapcell.h"
 #include "aabb.h"
+#include "circle.h"
+#include <vector>
 
 class myApp : public PA::Application
 {
 //       VectorRenderer<int> vr;
-       AABB<double> aabb;
+       Collidable<double> *demoObj;
+       //Circle<double> demoObj;
        TileMapCell<double> demoTile;
+       std::vector<TileEnum::TileID> states;
        void init();
     void render();
     bool update();
+    void cleanup();
 };
+
+void myApp::cleanup()
+{
+    delete demoObj;
+}
 
 void myApp::init()
 {
@@ -30,10 +40,21 @@ void myApp::init()
 
     PA_LoadBackground(0, 1, &bg_blank);
 
+    states.push_back(TileEnum::full);
+    states.push_back(TileEnum::_45degPN);
+    states.push_back(TileEnum::concaveNN);
+    states.push_back(TileEnum::convexPN);
+    states.push_back(TileEnum::_22degNNs);
+    states.push_back(TileEnum::_22degPNb);
+    states.push_back(TileEnum::_67degNNs);
+    states.push_back(TileEnum::_67degPNb);
+    states.push_back(TileEnum::halfL);
+
 //    vr = VectorRenderer<int>();
-    aabb = AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
+    //demoObj = new AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
+    demoObj = new Circle<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8);
     demoTile = TileMapCell<double>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
-    demoTile.SetState(TileEnum::halfL);
+    demoTile.SetState(states[0]);
 //    aabb.vr = &vr;
 //    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
 //    vr.Clear();
@@ -43,17 +64,17 @@ bool myApp::update()
 {
 //    vr.Clear();
 
-    PA_OutputText(1, 0, 20, "X %d Y %d", aabb.getPos().x, aabb.getPos().y);
+    PA_OutputText(1, 0, 20, "X %d Y %d", demoObj->getPos().x, demoObj->getPos().y);
 
     if ( Pad.Newpress.A || Pad.Held.L )
-    aabb.IntegrateVerlet();
+    demoObj->IntegrateVerlet();
 
     if ( Stylus.Held )
     {
         Vector2<double> pos;//oldPos,
         pos = Vector2<double>(Stylus.X, Stylus.Y);
 
-        aabb.setPos(pos);
+        demoObj->setPos(pos);
     }
     else if ( Pad.Held.Up || Pad.Held.Down || Pad.Held.Left || Pad.Held.Right )
     {
@@ -72,8 +93,8 @@ bool myApp::update()
         else if ( Pad.Held.Right )
             f.x += objspeed;
 
-        oldPos = aabb.getPos();
-        pos = aabb.getPos();
+        oldPos = demoObj->getPos();
+        pos = demoObj->getPos();
         v = pos - oldPos;
 
         newPos = v + f;
@@ -82,11 +103,11 @@ bool myApp::update()
         if ( newPos.x > maxspeed ) newPos.x = maxspeed;
         if ( newPos.y > maxspeed ) newPos.y = maxspeed;
 
-        aabb.setPos(newPos+oldPos);
+        demoObj->setPos(newPos+oldPos);
     }
 
-    aabb.CollideVsTile(demoTile);
-    aabb.CollideVsWorldBounds();
+    demoObj->CollideVsTile(demoTile);
+    demoObj->CollideVsWorldBounds();
 
     return true;
 }
@@ -114,7 +135,7 @@ void myApp::render()
     //TileMapCell<int> t(1,2,3,4);
     //AABB<int> aabb();
 
-    aabb.Draw();
+    demoObj->Draw();
     demoTile.Draw();
 
 //    PA_16bitSwapBuffer(0);

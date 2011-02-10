@@ -21,6 +21,8 @@ class myApp : public PA::Application
        Collidable<double> *demoObj;
        //Circle<double> demoObj;
        TileMapCell<double> demoTile;
+       int state;
+       bool obj;
        std::vector<TileEnum::TileID> states;
        void init();
     void render();
@@ -49,12 +51,14 @@ void myApp::init()
     states.push_back(TileEnum::_67degNNs);
     states.push_back(TileEnum::_67degPNb);
     states.push_back(TileEnum::halfL);
+    state = 0;
+    obj = 0;
 
 //    vr = VectorRenderer<int>();
     //demoObj = new AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
     demoObj = new Circle<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8);
     demoTile = TileMapCell<double>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
-    demoTile.SetState(states[8]);
+    demoTile.SetState(states[state]);
 //    aabb.vr = &vr;
 //    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
 //    vr.Clear();
@@ -68,6 +72,30 @@ bool myApp::update()
 
     if ( Pad.Newpress.A || Pad.Held.L )
     demoObj->IntegrateVerlet();
+
+    if ( Pad.Newpress.X )
+    {
+        state++;
+        state %= states.size();
+        demoTile.SetState(states[state]);
+    }
+    if ( Pad.Newpress.Y )
+    {
+        Collidable<double> *temp;
+        if ( obj )
+            temp = new Circle<double>(demoObj->getPos(), 8);
+        else
+            temp = new AABB<double>(demoObj->getPos(), 8, 8);
+
+        temp->setOldPos(demoObj->getOldPos());
+
+        obj = !obj;
+        demoObj->setPos(Vector2<double>(-100,-100));
+        demoObj->Draw();
+        delete demoObj;
+        demoObj = temp;
+        temp = 0;
+    }
 
     if ( Stylus.Held )
     {

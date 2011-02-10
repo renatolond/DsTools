@@ -20,6 +20,7 @@ template <class T>
 public:
     VectorRenderer<T> *vr;
     AABB();
+    ~AABB();
     AABB(Vector2<T> _pos, T _xw, T _yw);
 
     Vector2<T> getPos();
@@ -40,6 +41,12 @@ AABB<T>::AABB()
 }
 
 template<class T>
+AABB<T>::~AABB()
+{
+    spr.remove();
+}
+
+template<class T>
 AABB<T>::AABB(Vector2<T> _pos, T _xw, T _yw)
 {
     oldPos = pos = _pos;
@@ -47,6 +54,7 @@ AABB<T>::AABB(Vector2<T> _pos, T _xw, T _yw)
     yw = _yw;
     PA_LoadSpritePal(0, 0, (void *) square_Pal);
     spr.create((void *)(square_Sprite), OBJ_SIZE_16X16, 0);
+    Draw();
 }
 
 template<class T>

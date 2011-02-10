@@ -22,6 +22,7 @@ public:
     VectorRenderer<T> *vr;
     Circle();
     Circle(Vector2<T> _pos, T r);
+    ~Circle();
 
     Vector2<T> getPos();
     Vector2<T> getOldPos();
@@ -38,6 +39,18 @@ public:
 template<class T>
 Circle<T>::Circle()
 {
+    oldPos = pos = Vector2<T>(0, 0);
+    r = 8;
+
+    PA_LoadSpritePal(0, 2, (void *) circle_Pal);
+    spr.init(0, 2);
+    spr.create((void *)(circle_Sprite), OBJ_SIZE_16X16, 2);
+}
+
+template<class T>
+Circle<T>::~Circle()
+{
+    spr.remove();
 }
 
 template<class T>
@@ -47,7 +60,8 @@ Circle<T>::Circle(Vector2<T> _pos, T _r)
     r = _r;
     PA_LoadSpritePal(0, 2, (void *) circle_Pal);
     spr.init(0, 2);
-     spr.create((void *)(circle_Sprite), OBJ_SIZE_16X16, 2);
+    spr.create((void *)(circle_Sprite), OBJ_SIZE_16X16, 2);
+    Draw();
 }
 
 template<class T>

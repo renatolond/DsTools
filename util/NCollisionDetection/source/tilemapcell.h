@@ -1269,7 +1269,7 @@ template <class T>
         {
             T r;
             circle.getExt(r,r);
-            if ( signx * oh + signy * ov )
+            if ( signx * oh + signy * ov > 0)
             {
                 T ox, oy, dp;
                 ox = circle.getPos().x - sx*r - (pos.x - signx*xw);
@@ -1470,13 +1470,165 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projCircle67degB(T x, T y, T oh, T ov, Circle<T> &circle)
 {
+    if ( fabs(oh) < eps )
+    {
+        if ( fabs(ov) < eps )
+        {
+            T ox, oy, dp;
+            T r;
+            circle.getExt(r, r);
+            ox = circle.getPos().x - sx * r - (pos.x + signx * xw);
+            oy = circle.getPos().y - sy * r - (pos.y - signy * yw);
+            dp = ox * sx + oy * sy;
+            if ( dp < 0 )
+            {
+                T ssx, ssy, lenN, lenP;
+                ssx = sx * -dp;
+                ssy = sy * -dp;
+                lenN = sqrt(ssx*ssx + ssy*ssy);
+                if ( x < y )
+                {
+                    lenP = x;
+                    y = 0;
+                    if ( circle.getPos().x - pos.x < 0 )
+                        x *= -1;
+                }
+                else
+                {
+                    lenP = y;
+                    x = 0;
+                    if ( circle.getPos().y - pos.y < 0 )
+                        y *= -1;
+                }
 
+                if ( lenP < lenN )
+                    circle.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+                else
+                    circle.ReportCollisionVsWorld(ssx, ssy, sx, sy);
+            }
+        }
+        else
+        {
+            if ( signy * ov < 0 )
+                circle.ReportCollisionVsWorld(0, y*ov, 0, ov);
+	    else
+	    {
+                T r;
+                circle.getExt(r, r);
+                T ox, oy;
+                ox = circle.getPos().x - pos.x;
+                oy = circle.getPos().y - (pos.y + signy*yw);
+                if ( signx * ox < 0 )
+                    circle.ReportCollisionVsWorld(0, y*ov, 0, ov);
+                else
+                {
+                    T perp = ox * -sy + oy * sx;
+                    if ( perp * signx * signy > 0 )
+                    {
+                        T len, pen;
+                        len = sqrt(ox*ox + oy*oy);
+                        pen = r - len;
+                        if ( pen > 0 )
+                        {
+                            ox /= len;
+                            oy /= len;
+                            circle.ReportCollisionVsWorld(ox*pen, oy*pen, ox, oy);
+                        }
+                    }
+                    else
+                    {
+                        T dp, pen;
+                        dp = ox*sx + oy*sy;
+                        pen = r - fabs(dp);
+                        if ( pen > 0 )
+                            circle.ReportCollisionVsWorld(sx*pen, sy*pen, sx, sy);
+                    }
+                }
+	    }
+        }
+    }
+    else
+    {
+        if ( fabs(ov) < eps )
+        {
+            if ( signx * oh < 0 )
+                circle.ReportCollisionVsWorld(x*oh, 0, oh, 0);
+            else
+            {
+                T ox, oy, perp;
+                T r;
+                circle.getExt(r, r);
+                ox = circle.getPos().x - (pos.x + signx*xw);
+                oy = circle.getPos().y - (pos.y - signy*yw);
+                perp = ox * -sy + oy * sx;
+                if ( perp * signx * signy < 0 )
+                {
+                    T len, pen;
+                    len = sqrt(ox*ox+oy*oy);
+                    pen = r - len;
+                    if ( pen > 0 )
+                    {
+                        ox /= len;
+                        oy /= len;
+                        circle.ReportCollisionVsWorld(ox*pen, oy*pen, ox, oy);
+                    }
+                }
+                else
+                {
+                    T dp = ox * sx + oy * sy;
+                    T pen = r - fabs(dp);
+                    if ( pen > 0 )
+                        circle.ReportCollisionVsWorld(sx*pen, sy*pen, sx, sy);
+                }
+
+            }
+        }
+        else
+        {
+            T r;
+            circle.getExt(r,r);
+            if ( signx * oh + signy * ov > 0 )
+            {
+                T ox, oy, dp;
+                ox = circle.getPos().x - sx*r - (pos.x + signx*xw);
+                oy = circle.getPos().y - sy*r - (pos.y - signy*yw);
+                dp = ox*sx + oy*sy;
+                if ( dp < 0 )
+                    circle.ReportCollisionVsWorld(-sx*dp, -sy*dp, sx, sy);
+            }
+            else
+            {
+                T vx, vy, dx, dy, len, pen;
+                vx = pos.x + oh*xw;
+                vy = pos.y + ov*yw;
+                dx = circle.getPos().x - vx;
+                dy = circle.getPos().y - vy;
+                len = sqrt(dx*dx + dy*dy);
+                pen = r - len;
+                if ( pen > 0 )
+                {
+                    if ( fabs(len) < eps )
+                    {
+                        dx = oh / SQRT2;
+                        dy = ov / SQRT2;
+                    }
+                    else
+                    {
+                        dx /= len;
+                        dy /= len;
+                    }
+                    circle.ReportCollisionVsWorld(dx*pen, dy*pen, dx, dy);
+                }
+            }
+        }
+    }
 }
 
 template <class T>
         void TileMapCell<T>::projCircleHalf(T x, T y, T oh, T ov, Circle<T> &circle)
 {
-
+    if ( oh * signx + ov * signy > 0 ) // celldp?
+        return;
 }
 
 

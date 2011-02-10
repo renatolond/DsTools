@@ -54,7 +54,7 @@ void myApp::init()
     //demoObj = new AABB<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8, 8);
     demoObj = new Circle<double>(Vector2<double>((screenMinX+screenSizeX)/2, 2), 8);
     demoTile = TileMapCell<double>((screenMinX+screenMaxX)/2, (screenMinY+screenMaxY)/2, tileSizeX, tileSizeY);
-    demoTile.SetState(states[3]);
+    demoTile.SetState(states[4]);
 //    aabb.vr = &vr;
 //    vr.SetStyle(1, 0xFF0000, 0xFFFFFF, 0x1);
 //    vr.Clear();

@@ -23,6 +23,7 @@ class myApp : public PA::Application
        TileMapCell<double> demoTile;
        int state;
        bool obj;
+       bool running;
        std::vector<TileEnum::TileID> states;
        void init();
     void render();
@@ -39,6 +40,7 @@ void myApp::init()
 {
     PA_Init();
     PA_InitText(1, 0);
+    running = true;
 
     PA_LoadBackground(0, 1, &bg_blank);
 
@@ -70,8 +72,11 @@ bool myApp::update()
 
     PA_OutputText(1, 0, 20, "X %d Y %d", demoObj->getPos().x, demoObj->getPos().y);
 
-    if ( Pad.Newpress.A || Pad.Held.L )
-    demoObj->IntegrateVerlet();
+    if ( Pad.Newpress.A )
+        running = !running;
+
+    if ( running )
+        demoObj->IntegrateVerlet();
 
     if ( Pad.Newpress.X )
     {

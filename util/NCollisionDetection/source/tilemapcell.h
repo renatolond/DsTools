@@ -1629,6 +1629,133 @@ template <class T>
 {
     if ( oh * signx + ov * signy > 0 ) // celldp?
         return;
+
+    if ( fabs(oh) < eps )
+    {
+        if ( fabs(ov) < eps )
+        {
+            T r;
+            circle.getExt(r, r);
+            T ox, oy, dp;
+            ox = circle.getPos().x - signx * r - pos.x;
+            oy = circle.getPos().y - signy * r - pos.y;
+            dp = ox*sx + oy*sy;
+            if ( dp < 0 )
+            {
+                T ssx, ssy;
+                ssx = sx*-dp;
+                ssy = sy*-dp;
+
+                T lenN, lenP;
+                lenN = sqrt(ssx*ssx + ssy*ssy);
+                lenP = sqrt(x*x + y*y);
+                if ( lenP < lenN )
+                    circle.ReportCollisionVsWorld(x, y, x/lenP, y/lenP);
+                else
+                    circle.ReportCollisionVsWorld(ssx, ssy, signx, signy);
+            }
+        }
+        else
+        {
+            if ( fabs(oh * signx + ov * signy) < eps )
+            {
+                T r;
+                circle.getExt(r, r);
+                T dx, dy;
+                dx = circle.getPos().x - pos.x;
+                if ( dx * signx < 0 )
+                    circle.ReportCollisionVsWorld(0, y*ov, 0, ov);
+                else
+                {
+                    T len, pen;
+                    dy = circle.getPos().y - (pos.y + ov * yw);
+                    len = sqrt(dx*dx + dy*dy);
+                    pen = r - len;
+                    if ( pen > 0 )
+                    {
+                        if ( fabs(len) < 0 )
+                        {
+                            dx = signx / SQRT2;
+                            dy = ov / SQRT2;
+                        }
+                        else
+                        {
+                            dx /= len;
+                            dy /= len;
+                        }
+                        circle.ReportCollisionVsWorld(dx*pen, dy*pen, dx, dy);
+                    }
+                }
+            }
+            else
+                circle.ReportCollisionVsWorld(0, y*ov, 0, ov);
+        }
+    }
+    else
+    {
+        if ( fabs(ov) < eps )
+        {
+            if ( fabs(oh * signx + ov * signy) < eps )
+            {
+                T r;
+                circle.getExt(r, r);
+                T dx, dy;
+                dy = circle.getPos().y - pos.y;
+                if ( dy * signy < 0 )
+                    circle.ReportCollisionVsWorld(x*oh, 0, oh, 0);
+                else
+                {
+                    T len, pen;
+                    dx = circle.getPos().x - (pos.x + oh*xw);
+                    len = sqrt(dx*dx + dy*dy);
+                    pen = r - len;
+                    if ( pen > 0 )
+                    {
+                        if ( fabs(len) < 0 )
+                        {
+                            dx = signx / SQRT2;
+                            dy = ov / SQRT2;
+                        }
+                        else
+                        {
+                            dx /= len;
+                            dy /= len;
+                        }
+                        circle.ReportCollisionVsWorld(dx*pen, dy*pen, dx, dy);
+                    }
+                }
+            }
+            else
+                circle.ReportCollisionVsWorld(x*oh, 0, oh, 0);
+
+        }
+        else
+        {
+            T vx, vy, dx, dy, len, pen;
+            T r;
+            circle.getExt(r, r);
+            vx = pos.x + oh * xw;
+            vy = pos.y + ov * yw;
+            dx = circle.getPos().x - vx;
+            dy = circle.getPos().y - vy;
+            len = sqrt(dx*dx+dy*dy);
+            pen = r - len;
+            if ( pen > 0 )
+            {
+                if ( fabs(len) < eps )
+                {
+                    dx = oh / SQRT2;
+                    dy = ov / SQRT2;
+                }
+                else
+                {
+                    dx /= len;
+                    dy /= len;
+                }
+                circle.ReportCollisionVsWorld(dx*pen, dy*pen, dx, dy);
+            }
+        }
+    }
 }
 
 

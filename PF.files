@@ -14,3 +14,10 @@ source/playercontroller.h
 source/playercontroller.cpp
 source/constants.h
 source/constants.cpp
+source/vectorrenderer.h
+source/vector2.h
+source/tilemapcell.h
+source/collidable.h
+source/aabb.h
+source/circle.h
+source/collidable.cpp

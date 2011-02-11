@@ -5,17 +5,20 @@
 
 #include "all_gfx.h"
 #include "spritecontroller.h"
+#include "tilemapcell.h"
 #include "playercontroller.h"
 
 class CollisionController
 {
-    PlayerController *player;
+    PlayerController<double> *player;
+    TileMapCell<double> **map;
 public:
     CollisionController();
     void checkForCollisions(const int &scroll);
     void addCollideableSprite(SpriteController *s);
-    void addCollideablePlayer(PlayerController *p);
+    void addCollideablePlayer(PlayerController<double> *p);
     bool isCollideable(s16 tile);
+    void loadTileMap();
 };
 
 #endif // COLLISIONCONTROLLER_H

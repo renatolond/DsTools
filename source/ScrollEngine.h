@@ -11,8 +11,8 @@
 #include <nds/ndstypes.h>
 
 #include "constants.h"
-#include "playercontroller.h"
 #include "collisioncontroller.h"
+#include "playercontroller.h"
 
 // Include our graphics
 #include "all_gfx.h"
@@ -32,7 +32,7 @@ class ScrollEngine: public PA::Application{
 	// in the ScrollEngine.cpp file!
 	static int nframe;
 //	static PA::Sprite rocket;
-        static PlayerController smallMario;
+        static PlayerController<double> smallMario;
         static CollisionController collisionController;
 
 	// Main methods (needed by run())
@@ -41,5 +41,5 @@ class ScrollEngine: public PA::Application{
 	bool update();
 
 	// Our own methods
-	void loadgraphics();
+        void loadGraphics();
 };

@@ -10,13 +10,12 @@
 // Declare variables
 int ScrollEngine::nframe = 0;
 //PA::Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
-// Should be 16x16, not tilesize!
-PlayerController<double> ScrollEngine::smallMario(Vector2<double>(0, 0), tileSizeX, tileSizeY, 0, 1);
-CollisionController ScrollEngine::collisionController;
+PlayerController<myint> ScrollEngine::smallMario(Vector2<myint>(0, 0), tileSizeX, tileSizeY, 0, 1);
+CollisionController<myint> ScrollEngine::collisionController;
 int SpriteCount;
 /*u16 my_Map[4096];
 u16 my_Map2[4096];*/
-s32 scroll;
+double scroll;
 int greatest_bg;
 int timer;
 int oldTimer;
@@ -64,7 +63,7 @@ void ScrollEngine::loadGraphics(){
     //	rocket.create((void*)rocket_Sprite, OBJ_SIZE_32X32, 0);
 
     smallMario.spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
-    smallMario.spr.move(0, screenSizeY-tileSizeY*5);
+    smallMario.spr.move(0, screenSizeY-(tileSizeY/100)*5);
     smallMario.spr.priority(0);
     smallMario.spr.addAnimation(1,3,SMALL_MARIO_ANIM_SPEED); // Walking
     smallMario.spr.addAnimation(4,4,0); // Drag
@@ -96,6 +95,11 @@ void ScrollEngine::render(){
     //
     // Render the rocket
     //	rocket.render();
+    char message[1024];
+    sprintf(message,"pos: x %ld y %ld",smallMario.getPos().x, smallMario.getPos().y);
+    PA_OutputText(1,1,4, "%s", message);
+    sprintf(message,"oldP   os: x %ld y %ld",smallMario.getOldPos().x, smallMario.getOldPos().y);
+    PA_OutputText(1,1,5, "%s", message);
     smallMario.Draw();
 }
 
@@ -138,18 +142,34 @@ bool ScrollEngine::update(){
 
 //        smallMario.applyGravity();
     }
+    smallMario.IntegrateVerlet();
+    collisionController.checkForCollisions(scroll);
     if ( timer - gameTimer > milisecondsBetweenGameCycles )
     {
         gameTimer = timer;
 
         int horzSpeed;
-//        horzSpeed = smallMario.getHorizontalSpeed();
-//        if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
-//            horzSpeed = smallMario.centerOnScreen(horzSpeed);
+        if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
+            horzSpeed = smallMario.centerOnScreen();
+        //double horzSpeed;
+        //horzSpeed = smallMario.getHorizontalSpeed();
+        //if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
+         //   horzSpeed = smallMario.centerOnScreen();
 //        else if ( horzSpeed < 0 )
 //            horzSpeed = smallMario.uncenterOnScreen(horzSpeed, scroll);
 
         scroll += horzSpeed;
+//        Vector2<double> p, op;
+//        p = smallMario.getPos();
+//        op = smallMario.getOldPos();
+//        double speed = p.x - op.x;
+//        double xw, yw;
+//        smallMario.getExt(xw, yw);
+//
+//        p.x = ((screenMaxX-screenMinX)/2 - xw*2);
+//        op.x = p.x - speed;
+//        smallMario.setPos(p);
+//        smallMario.setOldPos(op);
 
 //        int vertSpeed = smallMario.getVerticalSpeed(timer);
 //        PA_OutputText(1, 1, 5, "vertSpeed: %d       ",vertSpeed);
@@ -157,7 +177,6 @@ bool ScrollEngine::update(){
 //        smallMario.pos.y = smallMario.pos.y + vertSpeed;
     }
 
-    collisionController.checkForCollisions(scroll);
 
     if ( scroll < 0 ) scroll = 0;
     if ( scroll > greatest_bg - screenSizeX ) scroll = greatest_bg - screenSizeX;

@@ -6,30 +6,28 @@
 
 #include <cmath>
 
-#define eps 0.0001f
-
 template <class T>
         class PlayerController : public AABB<T>
 {
-        double acceleration;
-        double breaking;
-        double verticalAcceleration;
-        double verticalBreaking;
-        double horizontalSpeed;
-        double verticalSpeed;
-        int horizontalDelta;
+    double acceleration;
+    double breaking;
+    double verticalAcceleration;
+    double verticalBreaking;
+    double horizontalSpeed;
+    double verticalSpeed;
+    int horizontalDelta;
     //    bool running;
     //    int jumpTime;
     //    bool jumping;
 public:
     SpriteController spr;
-
+    
     PlayerController();
     PlayerController(Vector2<T> _pos, T _xw, T _yw, int scr, int sprn);
     void Draw();
     //    void isRunning(bool playerState);
-    //    bool isCenteredOnScreen();
-    //    int centerOnScreen(int speed);
+    bool isCenteredOnScreen();
+    T centerOnScreen();
     //    int uncenterOnScreen(int speed, int scroll);
     void accelerateLeft();
     void accelerateRight();
@@ -37,7 +35,7 @@ public:
     //    void accelerateUp(int timer);
     //    void applyGravity();
     //    void applyFriction();
-    //    int getHorizontalSpeed();
+    T getHorizontalSpeed();
     //    int getVerticalSpeed(int timer);
     //    void horizontalAnimation(int horizontalSpeed);
     //    void ceaseMovement() { verticalSpeed = horizontalSpeed = 0; }
@@ -46,8 +44,8 @@ public:
 template <class T>
         void PlayerController<T>::Draw()
 {
-    spr.pos.x = (float)(this->pos.x-this->xw);
-    spr.pos.y = (float)(this->pos.y-this->yw);
+    spr.pos.x = (float)((this->pos.x - this->xw)/100);
+    spr.pos.y = (float)((this->pos.y - this->yw)/100);
     spr.render();
 }
 
@@ -56,11 +54,11 @@ template <class T>
 {
     AABB<T>::IntegrateVerlet();
     if ( this->pos.x - this->oldPos.x > maxHorizontalSpeed )
-    {
         this->pos.x = this->oldPos.x + maxHorizontalSpeed;
-    }
+    else if ( this->pos.x - this->oldPos.x < -maxHorizontalSpeed )
+        this->pos.x = this->oldPos.x - maxHorizontalSpeed;
     
-//    horizontalSpeed = this->pos.x - this->oldPos.x;
+    //    horizontalSpeed = this->pos.x - this->oldPos.x;
 }
 
 template <class T>
@@ -109,20 +107,20 @@ template <class T>
 {
     //    acceleration = -0.1f;
     //    breaking = 50;
-//    if ( running )
-//        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, -1);
-//    else
-//        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, -1);
+    //    if ( running )
+    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, -1);
+    //    else
+    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, -1);
     this->pos.x -= horizontalSpeedStep;
 }
 
 template <class T>
         void PlayerController<T>::accelerateRight()
 {
-//    if ( running )
-//        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, 1);
-//    else
-//        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, 1);
+    //    if ( running )
+    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, 1);
+    //    else
+    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, 1);
     this->pos.x += horizontalSpeedStep;
 }
 
@@ -200,16 +198,18 @@ template <class T>
 //
 //}
 //
-//int PlayerController::getHorizontalSpeed()
-//{
-//    horizontalAnimation(horizontalSpeed);
-//    //    horizontalSpeed += acceleration - (horizontalSpeed) / breaking;
-//
-//    //    acceleration = 0;
-//    //    breaking = 10;
-//
-//    return int(horizontalSpeed);
-//}
+template <class T>
+        T PlayerController<T>::getHorizontalSpeed()
+{
+    //    horizontalAnimation(horizontalSpeed);
+    //    //    horizontalSpeed += acceleration - (horizontalSpeed) / breaking;
+    //
+    //    //    acceleration = 0;
+    //    //    breaking = 10;
+    //
+    //    return int(horizontalSpeed);
+    return this->pos.x - this->oldPos.x;
+}
 //
 //int PlayerController::getVerticalSpeed(int timer)
 //{
@@ -234,35 +234,56 @@ template <class T>
 //    return int(verticalSpeed);
 //}
 //
-//bool PlayerController::isCenteredOnScreen()
-//{
-//    int x = pos.x;
+template <class T>
+        bool PlayerController<T>::isCenteredOnScreen()
+{
+    if ( fabs(this->pos.x - ((screenMaxX-screenMinX)/2 - this->xw*2)) < eps )
+        return true;
+    return false;
+}
+////
+template <class T>
+        T PlayerController<T>::centerOnScreen()
+{
+    int x, ox, xw, px;
+
+    x = this->pos.x;
+    ox = this->oldPos.x;
+    xw = this->xw;
+    px = (x+xw) - ((screenMaxX-screenMinX)/2);
+    T speed = this->pos.x - this->oldPos.x;
+
+
+    if ( px > 0 )
+    {
+        T dist;
+        dist = this->pos.x - ((screenMaxX-screenMinX)/2);
+        this->pos.x = ((screenMaxX-screenMinX)/2);
+        this->oldPos.x = this->pos.x - speed;
+
+        return speed;
+        // -x, 0, -1, 0
+    }
+//    //    int x = pos.x;
+//    //
+//    if ( this->pos.x > (screenMaxX-screenMinX)/2.0 )
+//        this->pos.x = ((screenMaxX-screenMinX)/2.0);
 //
-//    if ( x == (screenSizeX/2 - sizeX) )
-//        return true;
-//    return false;
-//}
 //
-//int PlayerController::centerOnScreen(int speed)
-//{
-//    int x = pos.x;
+//    //    if ( speed >= dist )
+//    //    {
+//    //        ret = speed - dist;
+//    //        this->pos.x = ((screenMaxX-screenMinX)/2 - this->xw*2);
+//    //    }
+//    //    else
+//    //    {
+//    //        ret = 0;
+//    //        this->pos.x += speed;
+//    //    }
+//    //    this->oldPos.x = this->pos.x - speed;
 //
-//    int dist = (screenSizeX/2 - sizeX) - x;
-//    if ( speed >= dist )
-//    {
-//        speed = speed - dist;
-//        x = (screenSizeX/2 - sizeX);
-//        pos.x = x;
-//    }
-//    else
-//    {
-//        x = speed+x;
-//        speed = 0;
-//        pos.x = x;
-//    }
-//
-//    return speed;
-//}
+    return 0;
+}
 //
 //int PlayerController::uncenterOnScreen(int speed, int scroll)
 //{

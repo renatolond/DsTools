@@ -5,7 +5,7 @@
 #include <sstream>
 #include <cmath>
 
-#define eps 0.0001
+#include "constants.h"
 
 template <class T>
 class Vector2
@@ -18,6 +18,7 @@ public:
     std::string ToString();
     Vector2<T> operator +(const Vector2<T> &b) const;
     Vector2<T> operator -(const Vector2<T> &b) const;
+    Vector2<T> operator -(const T &b) const;
     Vector2<T> normR();
     Vector2<T> dir();
     Vector2<T> proj(const Vector2<T> &b);
@@ -65,6 +66,14 @@ template <class T>
 Vector2<T> Vector2<T>::operator -(const Vector2<T> &b) const
 {
     Vector2<T> temp(this->x - b.x, this->y - b.y);
+
+    return temp;
+}
+
+template <class T>
+Vector2<T> Vector2<T>::operator -(const T &b) const
+{
+    Vector2<T> temp(this->x - b, this->y - b);
 
     return temp;
 }

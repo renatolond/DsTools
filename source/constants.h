@@ -1,6 +1,10 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#define eps 0.0001f
+
+typedef long int myint;
+
 extern const double maxHorizontalSpeed;
 extern const double maxHorizontalRunningSpeed;
 extern const double horizontalSpeedStep;

@@ -28,6 +28,8 @@ public:
 };
 
 void ReportCollisionVsWorldGeneric(Collidable<double> &c, double px, double py, double dx, double dy);
+void ReportCollisionVsWorldGeneric(Collidable<myint> &c, myint px, myint py, myint dx, myint dy);
+void IntegrateVerletGeneric(Collidable<myint> &c);
 void IntegrateVerletGeneric(Collidable<double> &c);
 
 //template <class T>

@@ -155,12 +155,12 @@ void AABB<T>::CollideVsTile(TileMapCell<T> tile)
     T x, y;
 
     dx = pos.x - tile.pos.x;
-    x = tile.xw + xw - abs(dx);
+    x = tile.xw + xw - fabs(dx);
 
     if ( x > 0 )
     {
         dy = pos.y - tile.pos.y;
-        y = tile.yw + yw - abs(dy);
+        y = tile.yw + yw - fabs(dy);
 
         if ( y > 0 )
         {

@@ -69,7 +69,7 @@ void CollisionController<T>::loadTileMap()
             //            map[i][j].yw = tileSizeY;
             //            asm volatile (
             //                    "mov r11, r11");
-            map[i][j] = TileMapCell<T>((j+1)*tileSizeX, (i+1)*tileSizeY, tileSizeX, tileSizeY);
+            map[i][j] = TileMapCell<T>((j+1)*tileSizeXmult, (i+1)*tileSizeYmult, tileSizeXmult, tileSizeYmult);
             //            asm volatile (
             //                    "mov r11, r11");
             int index = j+i*(bgtool0.width/tileSizeX);
@@ -88,12 +88,15 @@ void CollisionController<T>::loadTileMap()
 template <class T>
 void CollisionController<T>::checkForCollisions(const int& scroll)
 {
-    int playerTileX, playerTileY, playerTileY2;
+    int playerTileX, playerTileY;//, playerTileY2;
     s16 *bgMap = (s16 *)bgtool0.BgMap;
     // TODO: Colisão com todos o bgmaps ou ao menos, com os delimitados pelo programador.
 
-    playerTileX = (player->getPos().x) / tileSizeX;
-    playerTileY = (player->getPos().y) / tileSizeY;
+    playerTileX = player->getPos().x / tileSizeXmult;
+    asm("mov r11,r11");
+    playerTileY = player->getPos().y / tileSizeYmult;
+    asm("mov r11,r11");
+    PA_OutputText(1, 1, 12,"x: %d y: %d     ", player->getPos().x, player->getPos().y);
     //playerTileY2 = ((int)player->getPos().y -2*tileSizeY) / tileSizeY;
 
     //    AABB<double> pl = AABB<double>(Vector2<double>(player->pos.x, player->pos.y), tileSizeX, tileSizeY);
@@ -122,8 +125,8 @@ void CollisionController<T>::checkForCollisions(const int& scroll)
     //playerTileX = 0;
     //playerTileY = 11;
 
-    PA_OutputText(1, 1, 9,"Tile: %d      ", (int)bgMap[playerTileX+playerTileY*bgtool0.width/tileSizeX]);
-    PA_OutputText(1, 1, 10,"Tile: %d+%d %d %d      ", player->getPos().x, scroll, playerTileX, playerTileY);
+    PA_OutputText(1, 1, 9,"Tile: %d      ", bgMap[(int)playerTileX+playerTileY*bgtool0.width/tileSizeX]);
+    PA_OutputText(1, 1, 10,"Tile: %d+%d %d %d %d %d     ", player->getPos().y, scroll, playerTileX, playerTileY, tileSizeYmult, player->getPos().y/tileSizeYmult);
     //    if ( isCollideable(bgMap[playerTileX+playerTileY*bgtool0.width/tileSizeX]) )
     //    {
     //        player->ceaseMovement();

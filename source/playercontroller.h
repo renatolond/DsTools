@@ -28,7 +28,7 @@ public:
     //    void isRunning(bool playerState);
     bool isCenteredOnScreen();
     T centerOnScreen();
-    //    int uncenterOnScreen(int speed, int scroll);
+    T uncenterOnScreen(int scroll);
     void accelerateLeft();
     void accelerateRight();
     void IntegrateVerlet();
@@ -111,6 +111,7 @@ template <class T>
     //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, -1);
     //    else
     //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, -1);
+    asm("mov r11,r11");
     this->pos.x -= horizontalSpeedStep;
 }
 
@@ -237,7 +238,7 @@ template <class T>
 template <class T>
         bool PlayerController<T>::isCenteredOnScreen()
 {
-    if ( fabs(this->pos.x - ((screenMaxX-screenMinX)/2 - this->xw*2)) < eps )
+    if ( fabs(this->pos.x - ((screenMaxX-screenMinX)/2 - this->xw)) < eps )
         return true;
     return false;
 }
@@ -245,22 +246,18 @@ template <class T>
 template <class T>
         T PlayerController<T>::centerOnScreen()
 {
-    int x, ox, xw, px;
+    T px;
 
-    x = this->pos.x;
-    ox = this->oldPos.x;
-    xw = this->xw;
-    px = (x+xw) - ((screenMaxX-screenMinX)/2);
+    px = this->pos.x + this->xw - ((screenMaxX-screenMinX)/2);
     T speed = this->pos.x - this->oldPos.x;
-
 
     if ( px > 0 )
     {
-        T dist;
-        dist = this->pos.x - ((screenMaxX-screenMinX)/2);
-        this->pos.x = ((screenMaxX-screenMinX)/2);
+        //T dist;
+        //dist = this->pos.x - ((screenMaxX-screenMinX)/2);
+        this->pos.x = (screenMaxX-screenMinX)/2 - this->xw;
         this->oldPos.x = this->pos.x - speed;
-
+//
         return speed;
         // -x, 0, -1, 0
     }
@@ -285,12 +282,20 @@ template <class T>
     return 0;
 }
 //
-//int PlayerController::uncenterOnScreen(int speed, int scroll)
-//{
+template <class T>
+T PlayerController<T>::uncenterOnScreen(int scroll)
+{
 //    int x = pos.x;
 //
-//    if ( scroll > 0 )
-//        return speed;
+    if ( scroll > 0 )
+    {
+        asm("mov r11, r11");
+        T speed = this->pos.x - this->oldPos.x;
+        this->pos.x = (screenMaxX-screenMinX)/2 - this->xw;
+        this->oldPos.x = this->pos.x - speed;
+
+        return (this->pos.x - this->oldPos.x);
+    }
 //
 //    x = speed+x;
 //    if ( x <= 0 )
@@ -298,7 +303,7 @@ template <class T>
 //
 //    pos.x = x;
 //
-//    return 0;
-//}
+    return 0;
+}
 
 #endif // PLAYERCONTROLLER_H

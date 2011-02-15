@@ -7,11 +7,9 @@ source/ScrollEngine.h
 source/spritecontroller.h
 source/spritecontroller.cpp
 source/collisioncontroller.h
-source/collisioncontroller.cpp
 gfx/bin/bgtool1.c
 gfx/bin/bgtool0.c
 source/playercontroller.h
-source/playercontroller.cpp
 source/constants.h
 source/constants.cpp
 source/vectorrenderer.h

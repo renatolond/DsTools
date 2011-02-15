@@ -49,6 +49,7 @@ void ReportCollisionVsWorldGeneric(Collidable<myint> &c, myint px, myint py, myi
     myint xw, yw, vx, vy;
     myint temp, nx, ny, tx, ty;
     myint fx, fy, bx, by;
+//    double dfx, dfy, dbx, dby;
     pos = c.getPos();
     oldPos = c.getOldPos();
     c.getExt(xw, yw);
@@ -65,12 +66,13 @@ void ReportCollisionVsWorldGeneric(Collidable<myint> &c, myint px, myint py, myi
 
     if ( temp < 0 )
     {
+        fx = (tx*friction)/100;
+        fy = (ty*friction)/100;
 
-        fx = tx - (friction*(tx/100));
-        fy = ty - (friction*(ty/100));
 
-        bx = nx + (bounce*(nx/100));
-        by = ny + (bounce*(ny/100));
+        bx = nx*(bounce+100)/100;
+        by = ny*(bounce+100)/100;
+
     }
     else
     {
@@ -83,13 +85,15 @@ void ReportCollisionVsWorldGeneric(Collidable<myint> &c, myint px, myint py, myi
 //    nocashMessage(message);
 //    sprintf(message,"x %ld, y %ld",pos.x, pos.y);
 //    nocashMessage(message);
-//    sprintf(message,"tx %ld, ty %ld",tx, ty);
+//    sprintf(message,"tx %d, ty %d",tx, ty);
 //    nocashMessage(message);
 //    sprintf(message,"vx %ld, vy %ld",tx, ty);
 //    nocashMessage(message);
 //    sprintf(message,"temp %ld, nx %ld, ny %ld",temp, nx, ny);
 //    nocashMessage(message);
-//    sprintf(message,"bx %ld, by %ld, fx %ld, fy %ld",bx,by,fx,fy);
+//    sprintf(message,"bx %d, by %d, fx %d, fy %d",bx,by,fx,fy);
+//    nocashMessage(message);
+//    sprintf(message,"============");
 //    nocashMessage(message);
     //asm("mov r11,r11");
 
@@ -113,8 +117,8 @@ void IntegrateVerletGeneric(Collidable<myint> &c)
     pos = c.getPos();
     oldPos = c.getOldPos();
 
-    newPos.x = pos.x + ((pos.x-(drag*(pos.x/100))) - (oldPos.x-(drag*(oldPos.x/100))));
-    newPos.y = pos.y + ((pos.y-(drag*(pos.y/100))) - (oldPos.y-(drag*(oldPos.y/100))));
+    newPos.x = pos.x + ((pos.x-((100-drag)*(pos.x/100))) - (oldPos.x-((100-drag)*(oldPos.x/100))));
+    newPos.y = pos.y + ((pos.y-((100-drag)*(pos.y/100))) - (oldPos.y-((100-drag)*(oldPos.y/100))));
     newPos.y += gravity;
 
     iPos.x = newPos.x;

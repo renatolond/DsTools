@@ -102,10 +102,10 @@ void CollisionController<T>::checkForCollisions(const int& scroll)
     //    AABB<double> pl = AABB<double>(Vector2<double>(player->pos.x, player->pos.y), tileSizeX, tileSizeY);
     //
 
-    for ( int i = playerTileX ; i < playerTileX+4 ; i++ )
-        for ( int j = playerTileY ; j < playerTileY+4 ; j++ )
-            if ( i >= 0 && i < 32 && j >= 0 && j < 24 )
-                player->CollideVsTile(map[j][i]);
+//    for ( int i = playerTileX ; i < playerTileX+2 ; i++ )
+//    for ( int j = playerTileY ; j < playerTileY+2 ; j++ )
+//            if ( i >= 0 && i < 32 && j >= 0 && j < 24 )
+//                player->CollideVsTile(map[j][i]);
 
 //    player->CollideVsTile(map[playerTileY][playerTileX]);
 //    if ( playerTileY+1 < 24 )

@@ -10,8 +10,8 @@
 // Declare variables
 int ScrollEngine::nframe = 0;
 //PA::Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
-PlayerController<myint> ScrollEngine::smallMario(Vector2<myint>(0, 0), tileSizeXmult, tileSizeYmult, 0, 1);
-CollisionController<myint> ScrollEngine::collisionController;
+PlayerController<mytype> ScrollEngine::smallMario(Vector2<mytype>(0, 0), tileSizeXmult, tileSizeYmult, 0, 1);
+CollisionController<mytype> ScrollEngine::collisionController;
 int SpriteCount;
 /*u16 my_Map[4096];
 u16 my_Map2[4096];*/
@@ -100,7 +100,7 @@ void ScrollEngine::render(){
     PA_OutputText(1,1,4, "%s", message);
     sprintf(message,"oldPos: x %d y %d",smallMario.getOldPos().x, smallMario.getOldPos().y);
     PA_OutputText(1,1,5, "%s", message);
-    Vector2<myint> d;
+    Vector2<mytype> d;
     d = smallMario.getPos() - smallMario.getOldPos();
     sprintf(message,"dx %d dy %d",d.x, d.y);
     PA_OutputText(1,1,6, "%s", message);
@@ -182,7 +182,7 @@ bool ScrollEngine::update(){
         horzSpeed = smallMario.centerOnScreen();
     else if ( horzSpeed < 0 )
         horzSpeed = smallMario.uncenterOnScreen(scroll);
-    scroll += horzSpeed/100;
+    scroll += horzSpeed/multiplier;
 
 
     if ( scroll < 0 ) scroll = 0;

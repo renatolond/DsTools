@@ -42,13 +42,13 @@ void ReportCollisionVsWorldGeneric(Collidable<double> &c, double px, double py, 
     c.setOldPos(oldPos);
 }
 
-void ReportCollisionVsWorldGeneric(Collidable<myint> &c, myint px, myint py, myint dx, myint dy)
+void ReportCollisionVsWorldGeneric(Collidable<mytype> &c, mytype px, mytype py, mytype dx, mytype dy)
 {
 //    PA_OutputText(1, 0, 0, "Colliding vs world...");
-    Vector2<myint> pos, oldPos;
-    myint xw, yw, vx, vy;
-    myint temp, nx, ny, tx, ty;
-    myint fx, fy, bx, by;
+    Vector2<mytype> pos, oldPos;
+    mytype xw, yw, vx, vy;
+    mytype temp, nx, ny, tx, ty;
+    mytype fx, fy, bx, by;
 //    double dfx, dfy, dbx, dby;
     pos = c.getPos();
     oldPos = c.getOldPos();
@@ -109,16 +109,16 @@ void ReportCollisionVsWorldGeneric(Collidable<myint> &c, myint px, myint py, myi
     c.setOldPos(oldPos);
 }
 
-void IntegrateVerletGeneric(Collidable<myint> &c)
+void IntegrateVerletGeneric(Collidable<mytype> &c)
 {
-    Vector2<myint> pos, oldPos, newPos;
-    Vector2<myint> iPos, iOldPos;
+    Vector2<mytype> pos, oldPos, newPos;
+    Vector2<mytype> iPos, iOldPos;
 
     pos = c.getPos();
     oldPos = c.getOldPos();
 
-    newPos.x = pos.x + ((pos.x-((100-drag)*(pos.x/100))) - (oldPos.x-((100-drag)*(oldPos.x/100))));
-    newPos.y = pos.y + ((pos.y-((100-drag)*(pos.y/100))) - (oldPos.y-((100-drag)*(oldPos.y/100))));
+    newPos.x = pos.x + ((mytype)((pos.x*drag)/100) - (mytype)((oldPos.x*drag)/100));
+    newPos.y = pos.y + ((mytype)((pos.y*drag)/100) - (mytype)((oldPos.y*drag)/100));
     newPos.y += gravity;
 
     iPos.x = newPos.x;

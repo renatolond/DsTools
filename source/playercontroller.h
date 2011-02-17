@@ -44,8 +44,8 @@ public:
 template <class T>
         void PlayerController<T>::Draw()
 {
-    spr.pos.x = (float)((this->pos.x - this->xw)/100);
-    spr.pos.y = (float)((this->pos.y - this->yw)/100);
+    spr.pos.x = (float)((this->pos.x - this->xw)/multiplier);
+    spr.pos.y = (float)((this->pos.y - this->yw)/multiplier);
     spr.render();
 }
 
@@ -294,7 +294,7 @@ T PlayerController<T>::uncenterOnScreen(int scroll)
         this->pos.x = (screenMaxX-screenMinX)/2 - this->xw;
         this->oldPos.x = this->pos.x - speed;
 
-        return (this->pos.x - this->oldPos.x);
+        return speed;
     }
 //
 //    x = speed+x;

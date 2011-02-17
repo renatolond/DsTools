@@ -1,4 +1,4 @@
-int multiplier = 100;
+extern const int multiplier = 100;
 extern const double maxHorizontalSpeed = 6*multiplier;
 extern const double maxHorizontalRunningSpeed = 10*multiplier;
 extern const double horizontalSpeedStep = 0.4*multiplier;

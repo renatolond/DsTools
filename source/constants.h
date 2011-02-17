@@ -3,8 +3,9 @@
 
 #define eps 0.0001f
 
-typedef int myint;
+typedef int mytype;
 
+extern const int multiplier;
 extern const double maxHorizontalSpeed;
 extern const double maxHorizontalRunningSpeed;
 extern const double horizontalSpeedStep;

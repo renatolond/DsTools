@@ -32,8 +32,8 @@ class ScrollEngine: public PA::Application{
 	// in the ScrollEngine.cpp file!
 	static int nframe;
 //	static PA::Sprite rocket;
-        static PlayerController<myint> smallMario;
-        static CollisionController<myint> collisionController;
+        static PlayerController<mytype> smallMario;
+        static CollisionController<mytype> collisionController;
 
 	// Main methods (needed by run())
 	void init();

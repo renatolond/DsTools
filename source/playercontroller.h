@@ -32,6 +32,8 @@ public:
     void accelerateLeft();
     void accelerateRight();
     void IntegrateVerlet();
+
+    T getParallaxX();
     //    void accelerateUp(int timer);
     //    void applyGravity();
     //    void applyFriction();
@@ -44,9 +46,20 @@ public:
 template <class T>
         void PlayerController<T>::Draw()
 {
-    spr.pos.x = (float)((this->pos.x - this->xw)/multiplier);
-    spr.pos.y = (float)((this->pos.y - this->yw)/multiplier);
+    if ( this->getParallaxX() > 0 )
+        spr.pos.x = (float)(((screenMaxX-screenMinX)/2 - 2*this->xw)/multiplier);
+    else
+        spr.pos.x = (float)((this->pos.x-this->xw)/multiplier);
+    spr.pos.y = (float)((this->pos.y-this->yw)/multiplier);
     spr.render();
+}
+template <class T>
+        T PlayerController<T>::getParallaxX()
+{
+    T parallax = this->pos.x - ((screenMaxX-screenMinX)/2 - this->xw);
+    if ( parallax > 0 )
+        return parallax/multiplier;
+    return 0;
 }
 
 template <class T>
@@ -105,23 +118,12 @@ inline void modifySpeed(double &speed, int &delta, double maxSpeed, double speed
 template <class T>
         void PlayerController<T>::accelerateLeft()
 {
-    //    acceleration = -0.1f;
-    //    breaking = 50;
-    //    if ( running )
-    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, -1);
-    //    else
-    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, -1);
-    asm("mov r11,r11");
     this->pos.x -= horizontalSpeedStep;
 }
 
 template <class T>
         void PlayerController<T>::accelerateRight()
 {
-    //    if ( running )
-    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalRunningSpeed, horizontalRunningSpeedStep, 1);
-    //    else
-    //        modifySpeed(horizontalSpeed, horizontalDelta, maxHorizontalSpeed, horizontalSpeedStep, 1);
     this->pos.x += horizontalSpeedStep;
 }
 
@@ -199,18 +201,6 @@ template <class T>
 //
 //}
 //
-template <class T>
-        T PlayerController<T>::getHorizontalSpeed()
-{
-    //    horizontalAnimation(horizontalSpeed);
-    //    //    horizontalSpeed += acceleration - (horizontalSpeed) / breaking;
-    //
-    //    //    acceleration = 0;
-    //    //    breaking = 10;
-    //
-    //    return int(horizontalSpeed);
-    return this->pos.x - this->oldPos.x;
-}
 //
 //int PlayerController::getVerticalSpeed(int timer)
 //{
@@ -235,75 +225,5 @@ template <class T>
 //    return int(verticalSpeed);
 //}
 //
-template <class T>
-        bool PlayerController<T>::isCenteredOnScreen()
-{
-    if ( fabs(this->pos.x - ((screenMaxX-screenMinX)/2 - this->xw)) < eps )
-        return true;
-    return false;
-}
-////
-template <class T>
-        T PlayerController<T>::centerOnScreen()
-{
-    T px;
-
-    px = this->pos.x + this->xw - ((screenMaxX-screenMinX)/2);
-    T speed = this->pos.x - this->oldPos.x;
-
-    if ( px > 0 )
-    {
-        //T dist;
-        //dist = this->pos.x - ((screenMaxX-screenMinX)/2);
-        this->pos.x = (screenMaxX-screenMinX)/2 - this->xw;
-        this->oldPos.x = this->pos.x - speed;
-//
-        return speed;
-        // -x, 0, -1, 0
-    }
-//    //    int x = pos.x;
-//    //
-//    if ( this->pos.x > (screenMaxX-screenMinX)/2.0 )
-//        this->pos.x = ((screenMaxX-screenMinX)/2.0);
-//
-//
-//    //    if ( speed >= dist )
-//    //    {
-//    //        ret = speed - dist;
-//    //        this->pos.x = ((screenMaxX-screenMinX)/2 - this->xw*2);
-//    //    }
-//    //    else
-//    //    {
-//    //        ret = 0;
-//    //        this->pos.x += speed;
-//    //    }
-//    //    this->oldPos.x = this->pos.x - speed;
-//
-    return 0;
-}
-//
-template <class T>
-T PlayerController<T>::uncenterOnScreen(int scroll)
-{
-//    int x = pos.x;
-//
-    if ( scroll > 0 )
-    {
-        asm("mov r11, r11");
-        T speed = this->pos.x - this->oldPos.x;
-        this->pos.x = (screenMaxX-screenMinX)/2 - this->xw;
-        this->oldPos.x = this->pos.x - speed;
-
-        return speed;
-    }
-//
-//    x = speed+x;
-//    if ( x <= 0 )
-//        x = 0;
-//
-//    pos.x = x;
-//
-    return 0;
-}
 
 #endif // PLAYERCONTROLLER_H

@@ -69,7 +69,7 @@ template <class T>
             //            map[i][j].yw = tileSizeY;
             //            asm volatile (
             //                    "mov r11, r11");
-            map[i][j] = TileMapCell<T>((j+1)*tileSizeXmult, (i+1)*tileSizeYmult, tileSizeXmult, tileSizeYmult);
+            map[i][j] = TileMapCell<T>((j+0.5)*tileSizeXmult, (i+0.5)*tileSizeYmult, tileSizeXmult/2, tileSizeYmult/2);
             //            asm volatile (
             //                    "mov r11, r11");
             int index = j+i*(bgtool0.width/tileSizeX);
@@ -95,65 +95,21 @@ template <class T>
     s16 *bgMap = (s16 *)bgtool0.BgMap;
     // TODO: Colisão com todos o bgmaps ou ao menos, com os delimitados pelo programador.
 
-    playerTileX = (player->getPos().x / tileSizeXmult) + (scroll/tileSizeX);
+    playerTileX = player->getPos().x / tileSizeXmult;
     asm("mov r11,r11");
     playerTileY = player->getPos().y / tileSizeYmult;
     asm("mov r11,r11");
-    //PA_OutputText(1, 1, 12,"x: %d y: %d     ", player->getPos().x, player->getPos().y);
-    //playerTileY2 = ((int)player->getPos().y -2*tileSizeY) / tileSizeY;
 
-    //    AABB<double> pl = AABB<double>(Vector2<double>(player->pos.x, player->pos.y), tileSizeX, tileSizeY);
-    //
-
-    //    for ( int i = 0 ; i < screenSizeX / tileSizeXmult ; i++ )
-    //    {
-    //        for ( int j = 0 ; j < screenSizeY / tileSizeYmult ; j++ )
-    //        {
-
-    //        }
-    //    }
-    Vector2<mytype> tempPos = player->getPos();
-    Vector2<mytype> tempOldPos = player->getOldPos();
-    //Vector2<mytype> tempPos(pos), tempOldPos(oldPos);
-
-    tempPos.x += scroll*multiplier;
-    tempOldPos.x += scroll*multiplier;
-    player->setPos(tempPos);
-    player->setOldPos(tempOldPos);
-
-    //int i = playerTileX;
     for ( int i = playerTileX-1 ; i <= playerTileX+1 ; i++ )
         for ( int j = playerTileY-1 ; j <= playerTileY+1 ; j++ )
             if ( i >= 0 && i < worldMaxX/tileSizeXmult && j >= 0 && j < worldMaxY/tileSizeYmult )
                 player->CollideVsTile(map[j][i]);
 
-    //    player->CollideVsTile(map[playerTileY][playerTileX]);
-    //    if ( playerTileY+1 < 24 )
-    //    player->CollideVsTile(map[playerTileY+1][playerTileX]);
-    //    if ( playerTileY+2 < 24 )
-    //    player->CollideVsTile(map[playerTileY+2][playerTileX]);
-
     player->CollideVsWorldBounds();
 
-    tempPos = player->getPos();
-    tempOldPos = player->getOldPos();
-    tempPos.x -= scroll*multiplier;
-    tempOldPos.x -= scroll*multiplier;
-    player->setPos(tempPos);
-    player->setOldPos(tempOldPos);
-    //    Vector2<double> pos;
-    //    pos = pl.getPos();
-    //    player->pos.x = (float)pos.x;
-    //    player->pos.y = (float)pos.y;
-
-
-    //playerTileY2 = screenSizeY/tileSizeY;
-
-    //playerTileX = 0;
-    //playerTileY = 11;
 
     PA_OutputText(1, 1, 9,"Tile: %d      ", bgMap[(int)playerTileX+playerTileY*bgtool0.width/tileSizeX]);
-    PA_OutputText(1, 1, 10,"Tile: %d+%d %d %d %d %d     ", player->getPos().y, scroll, playerTileX, playerTileY, tileSizeYmult, player->getPos().y/tileSizeYmult);
+    PA_OutputText(1, 1, 10,"Tile: %d+%d %d %d %d %d     ", player->getPos().x, scroll, playerTileX, playerTileY, tileSizeYmult, player->getPos().y/tileSizeYmult);
     //    if ( isCollideable(bgMap[playerTileX+playerTileY*bgtool0.width/tileSizeX]) )
     //    {
     //        player->ceaseMovement();

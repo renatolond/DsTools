@@ -1,10 +1,10 @@
 build
 gfx
 source
-/home/nat/DsDev/PAlib/include/nds
-/home/nat/DsDev/devkitARM/include
-/home/nat/DsDev/libnds/include
-/home/nat/DsDev/PAlib/include/nds/arm9/cpp/
+/home/natalia/DsDev/PAlib/include/nds
+/home/natalia/DsDev/devkitARM/include
+/home/natalia/DsDev/libnds/include
+/home/natalia/DsDev/PAlib/include/nds/arm9/cpp/
 /home/lond/DsDev/PAlib/include/nds
 /home/lond/DsDev/devkitARM/include
 /home/lond/DsDev/libnds/include

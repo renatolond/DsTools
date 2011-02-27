@@ -121,6 +121,8 @@ void ScrollEngine::render(){
 //    nocashMessage(message);
 //    PA_OutputText(1,1,6, "%s", message);
 
+    scroll = smallMario.getParallaxX();
+    PA_ParallaxScrollX(0,scroll);
     smallMario.Draw();
 }
 
@@ -192,19 +194,19 @@ bool ScrollEngine::update(){
     smallMario.IntegrateVerlet();
     collisionController.checkForCollisions(scroll);
 
-    int horzSpeed;
-    horzSpeed = smallMario.getHorizontalSpeed();
-    if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
-        horzSpeed = smallMario.centerOnScreen();
-    else if ( horzSpeed < 0 )
-        horzSpeed = smallMario.uncenterOnScreen(scroll);
-    scroll += horzSpeed/multiplier;
+//    int horzSpeed;
+//    horzSpeed = smallMario.getHorizontalSpeed();
+//    if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
+//        horzSpeed = smallMario.centerOnScreen();
+//    else if ( horzSpeed < 0 )
+//        horzSpeed = smallMario.uncenterOnScreen(scroll);
+//    scroll += horzSpeed/multiplier;
 
 
-    if ( scroll < 0 ) scroll = 0;
-    if ( scroll > greatest_bg - screenSizeX ) scroll = greatest_bg - screenSizeX;
+//    if ( scroll < 0 ) scroll = 0;
+//    if ( scroll > greatest_bg - screenSizeX ) scroll = greatest_bg - screenSizeX;
 
-    PA_ParallaxScrollX(0, scroll);
+//    PA_ParallaxScrollX(0, scroll);
 
     // Keep going
     return true;

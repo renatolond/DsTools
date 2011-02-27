@@ -21,6 +21,10 @@ int timer;
 int oldTimer;
 int moveTimer;
 int gameTimer;
+int worldMaxX;
+int worldMaxY;
+int worldMinX;
+int worldMinY;
 
 void timerFunction()
 {
@@ -50,7 +54,10 @@ void ScrollEngine::loadGraphics(){
     PA_LoadSpritePal(0, 1, (void*) small_mario_Pal);
 
     greatest_bg = bgtool0.width;
-
+    worldMaxX = bgtool0.width*multiplier;
+    worldMaxY = bgtool0.height*multiplier;
+    worldMinX = 0;
+    worldMinY = 0;
 
     PA_LoadBackground(0, 0, &bgtool0);
     //PA_LoadBackground(0, 1, &bgtool1);
@@ -86,24 +93,33 @@ void ScrollEngine::loadGraphics(){
 // Render function: called after each VBlank
 void ScrollEngine::render(){
     // Output the value of our variable
-    PA_OutputText(1, 1, 1, "Frame counter: %d", nframe);
-    PA_OutputText(1, 1, 2, "Miliseconds: %d  ", timer);
-    PA_OutputText(1, 1, 3, "fTime: %d",(timer-oldTimer));
-    //	PA_OutputText(1, 1, 3, "Y: %d"  , int(rocket.pos.y));
-    //
-    //        PA_OutputText(1, 1, 4, "Scroll: %03d", scroll);
-    //
-    // Render the rocket
-    //	rocket.render();
-    char message[1024];
-    sprintf(message,"pos: x %d y %d",smallMario.getPos().x, smallMario.getPos().y);
-    PA_OutputText(1,1,4, "%s", message);
-    sprintf(message,"oldPos: x %d y %d",smallMario.getOldPos().x, smallMario.getOldPos().y);
-    PA_OutputText(1,1,5, "%s", message);
-    Vector2<mytype> d;
-    d = smallMario.getPos() - smallMario.getOldPos();
-    sprintf(message,"dx %d dy %d",d.x, d.y);
-    PA_OutputText(1,1,6, "%s", message);
+//    char message[1024];
+//    sprintf(message,"Frame counter: %d", nframe);
+//    nocashMessage(message);
+//    //PA_OutputText(1, 1, 1, "%s", message);
+//    sprintf(message,"Miliseconds: %d  ", timer);
+//    nocashMessage(message);
+//    //PA_OutputText(1, 1, 2, "%s", message);
+//    sprintf(message,"fTime: %d",(timer-oldTimer));
+//    nocashMessage(message);
+//    //PA_OutputText(1, 1, 3, "%s", message);
+//    //	PA_OutputText(1, 1, 3, "Y: %d"  , int(rocket.pos.y));
+//    //
+//    //        PA_OutputText(1, 1, 4, "Scroll: %03d", scroll);
+//    //
+//    // Render the rocket
+//    //	rocket.render();
+//    sprintf(message,"pos: x %d y %d",smallMario.getPos().x, smallMario.getPos().y);
+//    nocashMessage(message);
+////    PA_OutputText(1,1,4, "%s", message);
+//    sprintf(message,"oldPos: x %d y %d",smallMario.getOldPos().x, smallMario.getOldPos().y);
+//    nocashMessage(message);
+////    PA_OutputText(1,1,5, "%s", message);
+//    Vector2<mytype> d;
+//    d = smallMario.getPos() - smallMario.getOldPos();
+//    sprintf(message,"dx %d dy %d",d.x, d.y);
+//    nocashMessage(message);
+//    PA_OutputText(1,1,6, "%s", message);
 
     smallMario.Draw();
 }
@@ -117,7 +133,7 @@ bool ScrollEngine::update(){
     // Increment the counter
     nframe ++;
 
-    PA_OutputText(1, 1, 11,"Ready?");
+//    PA_OutputText(1, 1, 11,"Ready?");
     if ( timer - moveTimer > milisecondsBetweenInputCycles )
     {
         moveTimer = timer;

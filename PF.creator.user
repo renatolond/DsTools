@@ -1,222 +1,74 @@
 <!DOCTYPE QtCreatorProject>
 <qtcreator>
  <data>
-  <variable>activeRunConfiguration</variable>
+  <variable>GenericProjectManager.GenericProject.Toolchain</variable>
   <value type="int">0</value>
  </data>
  <data>
-  <variable>activebuildconfiguration</variable>
-  <value type="QString">all</value>
- </data>
- <data>
-  <variable>buildConfiguration-all</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">all</value>
-   <value key="buildDirectory" type="QString">/home/lond/sources/PF</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-all-buildstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">all</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ANT_HOME=/usr/share/ant</value>
-    <value type="QString">CONFIG_PROTECT=/etc/entropy /usr/share/config</value>
-    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild /etc/splash</value>
-    <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-upQMaUquld,guid=b5305a95e69b20d5e4d1734c00000044</value>
-    <value type="QString">DESKTOP_SESSION=KDE-4</value>
-    <value type="QString">DISPLAY=:0</value>
-    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">EDITOR=/bin/nano</value>
-    <value type="QString">GDK_USE_XFT=1</value>
-    <value type="QString">GDM_LANG=en_US.UTF-8</value>
-    <value type="QString">GENERATION=2</value>
-    <value type="QString">GSETTINGS_BACKEND=gconf</value>
-    <value type="QString">GS_LIB=/home/lond/.fonts</value>
-    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/lond/.gtkrc-2.0:/home/lond/.gtkrc-2.0-kde4:/home/lond/.kde4/share/config/gtkrc-2.0</value>
-    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/lond/.gtkrc::/home/lond/.kde4/share/config/gtkrc</value>
-    <value type="QString">HOME=/home/lond</value>
-    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/info:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/info</value>
-    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">KDE_FULL_SESSION=true</value>
-    <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1001</value>
-    <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">LADSPA_PATH=/usr/lib/ladspa</value>
-    <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=en_US.UTF-8</value>
-    <value type="QString">LC_ALL=en_US.UTF-8</value>
-    <value type="QString">LC_MESSAGES=en_US.UTF-8</value>
-    <value type="QString">LESS=-R -M --shift 5</value>
-    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
-    <value type="QString">LOGNAME=lond</value>
-    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/man:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/man:/opt/blackdown-jdk-1.4.2.03/man:/etc/java-config/system-vm/man/:/usr/lib/php5.3/man/:/usr/share/postgresql-8.4/man:/usr/share/postgresql-9.0/man</value>
-    <value type="QString">OPENGL_PROFILE=nvidia</value>
-    <value type="QString">PAGER=/usr/bin/less</value>
-    <value type="QString">PATH=/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.4:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
-    <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
-    <value type="QString">PWD=/home/lond</value>
-    <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
-    <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6750,unix/workstation-do-estagiario:/tmp/.ICE-unix/6750</value>
-    <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHLVL=1</value>
-    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
-    <value type="QString">SYSFONT=latarcyrheb-sun16</value>
-    <value type="QString">USB_DEVFS_PATH=/dev/bus/usb</value>
-    <value type="QString">USER=lond</value>
-    <value type="QString">VMHANDLE=blackdown-jdk-1.4.2</value>
-    <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSORS_THEME=Blue</value>
-    <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
-    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
-    <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
-    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1295372619.909638-1470107093</value>
-    <value type="QString">XDM_MANAGED=method=classic</value>
-    <value type="QString">_=/usr/lib/kde4/libexec/start_kdeinit_wrapper</value>
-   </valuelist>
-   <valuelist key="abstractProcess.arguments" type="QVariantList"/>
-   <value key="abstractProcess.command" type="QString">make</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/home/lond/sources/PF</value>
-   <valuelist key="buildTargets" type="QVariantList"/>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfiguration-all-cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">all</value>
-   <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ANT_HOME=/usr/share/ant</value>
-    <value type="QString">COLORFGBG=15;0</value>
-    <value type="QString">CONFIG_PROTECT=/etc/entropy /usr/share/config</value>
-    <value type="QString">CONFIG_PROTECT_MASK=/etc/gentoo-release /etc/sandbox.d /etc/env.d/java/ /etc/php/cli-php5.3/ext-active/ /etc/php/cgi-php5.3/ext-active/ /etc/php/apache2-php5.3/ext-active/ /etc/fonts/fonts.conf /etc/gconf /etc/terminfo /etc/eselect/postgresql /etc/ca-certificates.conf /etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/revdep-rebuild /etc/splash</value>
-    <value type="QString">CVS_RSH=ssh</value>
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-bXi3O0aH1e,guid=994db8783875e6fccd2fc32e00000042</value>
-    <value type="QString">DESKTOP_SESSION=KDE-4</value>
-    <value type="QString">DEVKITARM=/home/lond/DsDev/devkitARM</value>
-    <value type="QString">DEVKITPRO=/home/lond/DsDev</value>
-    <value type="QString">DISPLAY=:0</value>
-    <value type="QString">DM_CONTROL=/var/run/xdmctl</value>
-    <value type="QString">EDITOR=/usr/bin/vim</value>
-    <value type="QString">GDK_USE_XFT=1</value>
-    <value type="QString">GDM_LANG=en_US.UTF-8</value>
-    <value type="QString">GENERATION=2</value>
-    <value type="QString">GSETTINGS_BACKEND=gconf</value>
-    <value type="QString">GS_LIB=/home/lond/.fonts</value>
-    <value type="QString">GTK2_RC_FILES=/etc/gtk-2.0/gtkrc:/home/lond/.gtkrc-2.0:/home/lond/.gtkrc-2.0-kde4:/home/lond/.kde4/share/config/gtkrc-2.0</value>
-    <value type="QString">GTK_RC_FILES=/etc/gtk/gtkrc:/home/lond/.gtkrc::/home/lond/.kde4/share/config/gtkrc</value>
-    <value type="QString">HISTCONTROL=ignoreboth</value>
-    <value type="QString">HOME=/home/lond</value>
-    <value type="QString">INFOPATH=/usr/share/info:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/info:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/info:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/info</value>
-    <value type="QString">JAVAC=/etc/java-config-2/current-system-vm/bin/javac</value>
-    <value type="QString">JAVA_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">JDK_HOME=/etc/java-config-2/current-system-vm</value>
-    <value type="QString">KDE_FULL_SESSION=true</value>
-    <value type="QString">KDE_MULTIHEAD=false</value>
-    <value type="QString">KDE_SESSION_UID=1001</value>
-    <value type="QString">KDE_SESSION_VERSION=4</value>
-    <value type="QString">KONSOLE_DBUS_SERVICE=:1.50</value>
-    <value type="QString">KONSOLE_DBUS_SESSION=/Sessions/2</value>
-    <value type="QString">LADSPA_PATH=/usr/lib/ladspa</value>
-    <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=en_US.UTF-8</value>
-    <value type="QString">LC_ALL=en_US.UTF-8</value>
-    <value type="QString">LC_MESSAGES=en_US.UTF-8</value>
-    <value type="QString">LESS=-R -M --shift 5</value>
-    <value type="QString">LESSOPEN=|lesspipe.sh %s</value>
-    <value type="QString">LOGNAME=lond</value>
-    <value type="QString">LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.pdf=00;32:*.ps=00;32:*.txt=00;32:*.patch=00;32:*.diff=00;32:*.log=00;32:*.tex=00;32:*.doc=00;32:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:</value>
-    <value type="QString">MANPATH=/etc/java-config-2/current-system-vm/man:/usr/local/share/man:/usr/share/man:/usr/share/binutils-data/i686-pc-linux-gnu/2.20.1/man:/usr/share/gcc-data/i586-pc-linux-gnu/4.2.3/man:/usr/share/gcc-data/i686-pc-linux-gnu/4.4.4/man:/opt/blackdown-jdk-1.4.2.03/man:/etc/java-config/system-vm/man/:/usr/lib/php5.3/man/:/usr/share/postgresql-8.4/man:/usr/share/postgresql-9.0/man</value>
-    <value type="QString">OPENGL_PROFILE=nvidia</value>
-    <value type="QString">PAGER=/usr/bin/less</value>
-    <value type="QString">PATH=/usr/local/bin:/usr/bin:/bin:/opt/bin:/usr/i586-pc-linux-gnu/gcc-bin/4.2.3:/usr/i686-pc-linux-gnu/gcc-bin/4.4.4:/opt/blackdown-jdk-1.4.2.03/bin:/opt/blackdown-jdk-1.4.2.03/jre/bin:/usr/games/bin</value>
-    <value type="QString">PRELINK_PATH_MASK=/usr/lib/libfreebl3.so:/usr/lib/libnssdbm3.so:/usr/lib/libsoftokn3.so</value>
-    <value type="QString">PROFILEHOME=</value>
-    <value type="QString">PWD=/home/lond/sources/PF</value>
-    <value type="QString">PYTHONPATH=/usr/lib/entropy/libraries</value>
-    <value type="QString">QT_PLUGIN_PATH=/home/lond/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString">SANE_CONFIG_DIR=/etc/sane.d</value>
-    <value type="QString">SESSION_MANAGER=local/workstation-do-estagiario:@/tmp/.ICE-unix/6730,unix/workstation-do-estagiario:/tmp/.ICE-unix/6730</value>
-    <value type="QString">SHELL=/bin/bash</value>
-    <value type="QString">SHELL_SESSION_ID=eed5ac2009d1469093c6a136c5336112</value>
-    <value type="QString">SHLVL=2</value>
-    <value type="QString">STRIGI_PLUGIN_PATH=/usr/lib/strigi:</value>
-    <value type="QString">SYSFONT=latarcyrheb-sun16</value>
-    <value type="QString">TERM=xterm</value>
-    <value type="QString">USB_DEVFS_PATH=/dev/bus/usb</value>
-    <value type="QString">USER=lond</value>
-    <value type="QString">VMHANDLE=blackdown-jdk-1.4.2</value>
-    <value type="QString">WINDOWID=48234535</value>
-    <value type="QString">WINDOWPATH=7</value>
-    <value type="QString">XCURSORS_THEME=Blue</value>
-    <value type="QString">XCURSOR_THEME=Oxygen_Black</value>
-    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg</value>
-    <value type="QString">XDG_DATA_DIRS=/usr/share:/usr/local/share:/usr/share</value>
-    <value type="QString">XDG_MENU_PREFIX=kde-4.5-</value>
-    <value type="QString">XDG_SESSION_COOKIE=c783803966318cbeaefb380046e9bafa-1295445772.661667-1705901550</value>
-    <value type="QString">XDM_MANAGED=method=classic</value>
-    <value type="QString">_=/usr/bin/qtcreator</value>
-   </valuelist>
-   <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">clean</value>
-   </valuelist>
-   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
-   <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">/home/lond/sources/PF</value>
-   <value key="workingDirectory" type="QString">$BUILDDIR</value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildconfigurations</variable>
-  <valuelist type="QVariantList">
-   <value type="QString">all</value>
-  </valuelist>
- </data>
- <data>
-  <variable>buildstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
-  </valuemap>
- </data>
- <data>
-  <variable>buildsteps</variable>
-  <valuelist type="QVariantList">
-   <value type="QString">GenericProjectManager.MakeStep</value>
-  </valuelist>
- </data>
- <data>
-  <variable>cleanstep0</variable>
-  <valuemap type="QVariantMap">
-   <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString"></value>
-   <value key="ProjectExplorer.ProcessStep.DisplayName" type="QString">Make</value>
-  </valuemap>
- </data>
- <data>
-  <variable>cleansteps</variable>
-  <valuelist type="QVariantList">
-   <value type="QString">projectexplorer.processstep</value>
-  </valuelist>
- </data>
- <data>
-  <variable>defaultFileEncoding</variable>
-  <value type="QByteArray">UTF-8</value>
- </data>
- <data>
-  <variable>includePaths</variable>
-  <valuelist type="QVariantList"/>
- </data>
- <data>
-  <variable>project</variable>
-  <valuemap type="QVariantMap"/>
- </data>
- <data>
-  <variable>toolChain</variable>
+  <variable>ProjectExplorer.Project.ActiveTarget</variable>
   <value type="int">0</value>
+ </data>
+ <data>
+  <variable>ProjectExplorer.Project.EditorSettings</variable>
+  <valuemap type="QVariantMap">
+   <value key="EditorConfiguration.Codec" type="QByteArray">UTF-8</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>ProjectExplorer.Project.Target.0</variable>
+  <valuemap type="QVariantMap">
+   <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Desktop</value>
+   <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">GenericProjectManager.GenericTarget</value>
+   <value key="ProjectExplorer.Target.ActiveBuildConfiguration" type="int">0</value>
+   <value key="ProjectExplorer.Target.ActiveRunConfiguration" type="int">0</value>
+   <valuemap key="ProjectExplorer.Target.BuildConfiguration.0" type="QVariantMap">
+    <value key="GenericProjectManager.GenericBuildConfiguration.BuildDirectory" type="QString">/home/lond/sources/PF</value>
+    <valuemap key="ProjectExplorer.BuildConfiguration.BuildStep.0" type="QVariantMap">
+     <valuelist key="GenericProjectManager.GenericMakeStep.BuildTargets" type="QVariantList"/>
+     <valuelist key="GenericProjectManager.GenericMakeStep.MakeArguments" type="QVariantList"/>
+     <value key="GenericProjectManager.GenericMakeStep.MakeCommand" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString"></value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">GenericProjectManager.GenericMakeStep</value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.BuildStepsCount" type="int">1</value>
+    <valuemap key="ProjectExplorer.BuildConfiguration.CleanStep.0" type="QVariantMap">
+     <valuelist key="ProjectExplorer.ProcessStep.Arguments" type="QVariantList">
+      <value type="QString">clean</value>
+     </valuelist>
+     <value key="ProjectExplorer.ProcessStep.Command" type="QString">/usr/bin/make</value>
+     <value key="ProjectExplorer.ProcessStep.Enabled" type="bool">true</value>
+     <value key="ProjectExplorer.ProcessStep.WorkingDirectory" type="QString">$BUILDDIR</value>
+     <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Make</value>
+     <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">ProjectExplorer.ProcessStep</value>
+    </valuemap>
+    <value key="ProjectExplorer.BuildConfiguration.CleanStepsCount" type="int">1</value>
+    <value key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment" type="bool">false</value>
+    <valuelist key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">all</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">GenericProjectManager.GenericBuildConfiguration</value>
+   </valuemap>
+   <value key="ProjectExplorer.Target.BuildConfigurationCount" type="int">1</value>
+   <valuemap key="ProjectExplorer.Target.RunConfiguration.0" type="QVariantMap">
+    <valuelist key="ProjectExplorer.CustomExecutableRunConfiguration.Arguments" type="QVariantList"/>
+    <value key="ProjectExplorer.CustomExecutableRunConfiguration.BaseEnvironmentBase" type="int">2</value>
+    <value key="ProjectExplorer.CustomExecutableRunConfiguration.Executable" type="QString"></value>
+    <value key="ProjectExplorer.CustomExecutableRunConfiguration.UseTerminal" type="bool">false</value>
+    <valuelist key="ProjectExplorer.CustomExecutableRunConfiguration.UserEnvironmentChanges" type="QVariantList"/>
+    <value key="ProjectExplorer.CustomExecutableRunConfiguration.UserName" type="QString"></value>
+    <value key="ProjectExplorer.CustomExecutableRunConfiguration.UserSetName" type="bool">false</value>
+    <value key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory" type="QString">$BUILDDIR</value>
+    <value key="ProjectExplorer.ProjectConfiguration.DisplayName" type="QString">Custom Executable</value>
+    <value key="ProjectExplorer.ProjectConfiguration.Id" type="QString">ProjectExplorer.CustomExecutableRunConfiguration</value>
+   </valuemap>
+   <value key="ProjectExplorer.Target.RunConfigurationCount" type="int">1</value>
+  </valuemap>
+ </data>
+ <data>
+  <variable>ProjectExplorer.Project.TargetCount</variable>
+  <value type="int">1</value>
+ </data>
+ <data>
+  <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
+  <value type="int">4</value>
  </data>
 </qtcreator>

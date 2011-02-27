@@ -9,7 +9,7 @@
 #include "playercontroller.h"
 
 template <class T>
-class CollisionController
+        class CollisionController
 {
     PlayerController<T> *player;
     TileMapCell<T> **map;
@@ -18,22 +18,22 @@ public:
     void checkForCollisions(const int &scroll);
     void addCollideableSprite(SpriteController *s);
     void addCollideablePlayer(PlayerController<T> *p);
-//    bool isCollideable(s16 tile);
+    //    bool isCollideable(s16 tile);
     void loadTileMap();
 };
 
 template <class T>
-CollisionController<T>::CollisionController()
+        CollisionController<T>::CollisionController()
 {
 }
 
 template <class T>
-void CollisionController<T>::addCollideableSprite(SpriteController *s)
+        void CollisionController<T>::addCollideableSprite(SpriteController *s)
 {
 }
 
 template <class T>
-void CollisionController<T>::addCollideablePlayer(PlayerController<T> *p)
+        void CollisionController<T>::addCollideablePlayer(PlayerController<T> *p)
 {
     player = p;
 }
@@ -53,7 +53,7 @@ void CollisionController<T>::addCollideablePlayer(PlayerController<T> *p)
 
 
 template <class T>
-void CollisionController<T>::loadTileMap()
+        void CollisionController<T>::loadTileMap()
 {
 
     s16 *bgMap = (s16 *)bgtool0.BgMap;
@@ -75,6 +75,9 @@ void CollisionController<T>::loadTileMap()
             int index = j+i*(bgtool0.width/tileSizeX);
             if ( bgMap[index] == 60 || bgMap[index] == 61 || bgMap[index] == 62 || bgMap[index] == 63 ) // PLACEHOLDER!
             {
+                //                char message[1024];
+                //                sprintf(message, "x:%d y:%d", j,i);
+                //                nocashMessage(message);
                 map[i][j].SetState(TileEnum::full);
             }
             else
@@ -86,34 +89,58 @@ void CollisionController<T>::loadTileMap()
 }
 
 template <class T>
-void CollisionController<T>::checkForCollisions(const int& scroll)
+        void CollisionController<T>::checkForCollisions(const int& scroll)
 {
     int playerTileX, playerTileY;//, playerTileY2;
     s16 *bgMap = (s16 *)bgtool0.BgMap;
     // TODO: Colisão com todos o bgmaps ou ao menos, com os delimitados pelo programador.
 
-    playerTileX = player->getPos().x / tileSizeXmult;
+    playerTileX = (player->getPos().x / tileSizeXmult) + (scroll/tileSizeX);
     asm("mov r11,r11");
     playerTileY = player->getPos().y / tileSizeYmult;
     asm("mov r11,r11");
-    PA_OutputText(1, 1, 12,"x: %d y: %d     ", player->getPos().x, player->getPos().y);
+    //PA_OutputText(1, 1, 12,"x: %d y: %d     ", player->getPos().x, player->getPos().y);
     //playerTileY2 = ((int)player->getPos().y -2*tileSizeY) / tileSizeY;
 
     //    AABB<double> pl = AABB<double>(Vector2<double>(player->pos.x, player->pos.y), tileSizeX, tileSizeY);
     //
 
-//    for ( int i = playerTileX ; i < playerTileX+2 ; i++ )
-//    for ( int j = playerTileY ; j < playerTileY+2 ; j++ )
-//            if ( i >= 0 && i < 32 && j >= 0 && j < 24 )
-//                player->CollideVsTile(map[j][i]);
+    //    for ( int i = 0 ; i < screenSizeX / tileSizeXmult ; i++ )
+    //    {
+    //        for ( int j = 0 ; j < screenSizeY / tileSizeYmult ; j++ )
+    //        {
 
-//    player->CollideVsTile(map[playerTileY][playerTileX]);
-//    if ( playerTileY+1 < 24 )
-//    player->CollideVsTile(map[playerTileY+1][playerTileX]);
-//    if ( playerTileY+2 < 24 )
-//    player->CollideVsTile(map[playerTileY+2][playerTileX]);
+    //        }
+    //    }
+    Vector2<mytype> tempPos = player->getPos();
+    Vector2<mytype> tempOldPos = player->getOldPos();
+    //Vector2<mytype> tempPos(pos), tempOldPos(oldPos);
+
+    tempPos.x += scroll*multiplier;
+    tempOldPos.x += scroll*multiplier;
+    player->setPos(tempPos);
+    player->setOldPos(tempOldPos);
+
+    //int i = playerTileX;
+    for ( int i = playerTileX-1 ; i <= playerTileX+1 ; i++ )
+        for ( int j = playerTileY-1 ; j <= playerTileY+1 ; j++ )
+            if ( i >= 0 && i < worldMaxX/tileSizeXmult && j >= 0 && j < worldMaxY/tileSizeYmult )
+                player->CollideVsTile(map[j][i]);
+
+    //    player->CollideVsTile(map[playerTileY][playerTileX]);
+    //    if ( playerTileY+1 < 24 )
+    //    player->CollideVsTile(map[playerTileY+1][playerTileX]);
+    //    if ( playerTileY+2 < 24 )
+    //    player->CollideVsTile(map[playerTileY+2][playerTileX]);
 
     player->CollideVsWorldBounds();
+
+    tempPos = player->getPos();
+    tempOldPos = player->getOldPos();
+    tempPos.x -= scroll*multiplier;
+    tempOldPos.x -= scroll*multiplier;
+    player->setPos(tempPos);
+    player->setOldPos(tempOldPos);
     //    Vector2<double> pos;
     //    pos = pl.getPos();
     //    player->pos.x = (float)pos.x;

@@ -115,7 +115,7 @@ void AABB<T>::CollideVsWorldBounds()
 {
     T x, y;
 
-    x = screenMinX - (pos.x - xw);
+    x = worldMinX - (pos.x - xw);
 
     // collision against left side
     if ( x > 0 )
@@ -124,7 +124,7 @@ void AABB<T>::CollideVsWorldBounds()
     }
     else
     {
-        x = pos.x + xw - screenMaxX;
+        x = pos.x + xw - worldMaxX;
 
         // collision against right side
         if ( x > 0 )
@@ -133,7 +133,7 @@ void AABB<T>::CollideVsWorldBounds()
         }
     }
 
-    y = screenMinY - (pos.y - yw);
+    y = worldMinY - (pos.y - yw);
     // collision against upper bounds
     if ( y > 0 )
     {
@@ -141,7 +141,7 @@ void AABB<T>::CollideVsWorldBounds()
     }
     else
     {
-        y = pos.y + yw - screenMaxY;
+        y = pos.y + yw - worldMaxY;
         if ( y > 0 )
         {
             ReportCollisionVsWorld(0, -y, 0, -1);

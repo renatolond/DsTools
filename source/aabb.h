@@ -187,6 +187,7 @@ void AABB<T>::CollideVsTile(TileMapCell<T> tile)
             }
 
             tile.projAABB(x, y, *this);
+
             //ResolveBoxTile(x, y, *this, tile);
         }
     }

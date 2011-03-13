@@ -69,11 +69,12 @@ template <class T>
             //            map[i][j].yw = tileSizeY;
             //            asm volatile (
             //                    "mov r11, r11");
-            map[i][j] = TileMapCell<T>((j+0.5)*tileSizeXmult, (i+0.5)*tileSizeYmult, tileSizeXmult/2, tileSizeYmult/2);
+            map[i][j] = TileMapCell<T>(j*tileSizeXmult+(T)(tileSizeXmult/2), i*tileSizeYmult+(T)(tileSizeYmult/2), (T)(tileSizeXmult/2), (T)(tileSizeYmult/2));
             //            asm volatile (
             //                    "mov r11, r11");
             int index = j+i*(bgtool0.width/tileSizeX);
-            if ( bgMap[index] == 60 || bgMap[index] == 61 || bgMap[index] == 62 || bgMap[index] == 63 ) // PLACEHOLDER!
+            if (bgMap[index] == 60 || bgMap[index] == 61 || bgMap[index] == 62 || bgMap[index] == 63 ||
+                bgMap[index] == 19 || bgMap[index] == 20 || bgMap[index] == 25 || bgMap[index] == 26) // PLACEHOLDER!
             {
                 //                char message[1024];
                 //                sprintf(message, "x:%d y:%d", j,i);
@@ -89,6 +90,13 @@ template <class T>
 }
 
 template <class T>
+        inline void collideVsTile(TileMapCell<T> **map, PlayerController<T> *player, int j, int i)
+{
+    if ( i >= 0 && i < worldMaxX/tileSizeXmult && j >= 0 && j < worldMaxY/tileSizeYmult )
+        player->CollideVsTile(map[j][i]);
+}
+
+template <class T>
         void CollisionController<T>::checkForCollisions(const int& scroll)
 {
     int playerTileX, playerTileY;//, playerTileY2;
@@ -100,10 +108,20 @@ template <class T>
     playerTileY = player->getPos().y / tileSizeYmult;
     asm("mov r11,r11");
 
-    for ( int i = playerTileX-1 ; i <= playerTileX+1 ; i++ )
-        for ( int j = playerTileY-1 ; j <= playerTileY+1 ; j++ )
-            if ( i >= 0 && i < worldMaxX/tileSizeXmult && j >= 0 && j < worldMaxY/tileSizeYmult )
-                player->CollideVsTile(map[j][i]);
+//    collideVsTile(map, player, playerTileY+1, playerTileX-1);
+    collideVsTile(map, player, playerTileY+1, playerTileX);
+//    collideVsTile(map, player, playerTileY+1, playerTileX+1);
+    collideVsTile(map, player, playerTileY, playerTileX-1);
+    collideVsTile(map, player, playerTileY, playerTileX);
+    collideVsTile(map, player, playerTileY, playerTileX+1);
+    collideVsTile(map, player, playerTileY-1, playerTileX-1);
+    collideVsTile(map, player, playerTileY-1, playerTileX);
+    collideVsTile(map, player, playerTileY-1, playerTileX+1);
+
+//    for ( int i = playerTileX-1 ; i <= playerTileX+1 ; i++ )
+//        for ( int j = playerTileY+1 ; j >= playerTileY-1 ; j-- )
+//            if ( i >= 0 && i < worldMaxX/tileSizeXmult && j >= 0 && j < worldMaxY/tileSizeYmult )
+//                player->CollideVsTile(map[j][i]);
 
     player->CollideVsWorldBounds();
 

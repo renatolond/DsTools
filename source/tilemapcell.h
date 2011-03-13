@@ -446,6 +446,13 @@ template <class T>
 template <class T>
         void TileMapCell<T>::projAABB(T x, T y, AABB<T>& aabb)
 {
+    if ( ctype != CTypeEnum::_empty )
+    {
+        char message[1024];
+        sprintf(message,"Collided against %d,%d",(int)pos.x, (int)pos.y);
+        //nocashMessage(message);
+    }
+
     if ( ctype == CTypeEnum::_full )
         projAABBFull(x, y, aabb);
     if ( ctype == CTypeEnum::_45deg )

@@ -9,13 +9,13 @@
 template <class T>
         class PlayerController : public AABB<T>
 {
-    double acceleration;
-    double breaking;
-    double verticalAcceleration;
-    double verticalBreaking;
-    double horizontalSpeed;
-    double verticalSpeed;
-    int horizontalDelta;
+//    double acceleration;
+//    double breaking;
+//    double verticalAcceleration;
+//    double verticalBreaking;
+//    double horizontalSpeed;
+//    double verticalSpeed;
+//    int horizontalDelta;
     //    bool running;
     //    int jumpTime;
     //    bool jumping;
@@ -34,7 +34,7 @@ public:
     void IntegrateVerlet();
 
     T getParallaxX();
-    //    void accelerateUp(int timer);
+    void accelerateUp(int timer);
     //    void applyGravity();
     //    void applyFriction();
     T getHorizontalSpeed();
@@ -66,9 +66,11 @@ template <class T>
         void PlayerController<T>::IntegrateVerlet()
 {
     AABB<T>::IntegrateVerlet();
-    if ( this->pos.x - this->oldPos.x > maxHorizontalSpeed )
+    T dx = this->pos.x - this->oldPos.x;
+
+    if ( dx > maxHorizontalSpeed )
         this->pos.x = this->oldPos.x + maxHorizontalSpeed;
-    else if ( this->pos.x - this->oldPos.x < -maxHorizontalSpeed )
+    else if ( dx < -maxHorizontalSpeed )
         this->pos.x = this->oldPos.x - maxHorizontalSpeed;
     
     //    horizontalSpeed = this->pos.x - this->oldPos.x;
@@ -127,8 +129,10 @@ template <class T>
     this->pos.x += horizontalSpeedStep;
 }
 
-//void PlayerController::accelerateUp(int timer)
-//{
+template <class T>
+void PlayerController<T>::accelerateUp(int timer)
+{
+    this->pos.y -= verticalSpeedStep;
 //    if ( fabs(verticalSpeed) > eps )
 //        return;
 //
@@ -143,7 +147,7 @@ template <class T>
 //    verticalSpeed = -15;
 //    verticalSpeed += (screenSizeY-jumpHeight)/100*3.75;
 //    if ( horizontalSpeed >= maxHorizontalSpeed ) verticalSpeed += (horizontalSpeed - maxHorizontalSpeed)/20;
-//}
+}
 //
 //void PlayerController::applyGravity()
 //{

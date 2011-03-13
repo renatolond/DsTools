@@ -93,7 +93,7 @@ void ScrollEngine::loadGraphics(){
 // Render function: called after each VBlank
 void ScrollEngine::render(){
     // Output the value of our variable
-//    char message[1024];
+    char message[1024];
 //    sprintf(message,"Frame counter: %d", nframe);
 //    nocashMessage(message);
 //    //PA_OutputText(1, 1, 1, "%s", message);
@@ -109,17 +109,17 @@ void ScrollEngine::render(){
 //    //
 //    // Render the rocket
 //    //	rocket.render();
-//    sprintf(message,"pos: x %d y %d",smallMario.getPos().x, smallMario.getPos().y);
-//    nocashMessage(message);
-////    PA_OutputText(1,1,4, "%s", message);
+    sprintf(message,"pos: x %d y %d",smallMario.getPos().x, smallMario.getPos().y);
+    nocashMessage(message);
+    PA_OutputText(1,1,4, "%s", message);
 //    sprintf(message,"oldPos: x %d y %d",smallMario.getOldPos().x, smallMario.getOldPos().y);
 //    nocashMessage(message);
 ////    PA_OutputText(1,1,5, "%s", message);
-//    Vector2<mytype> d;
-//    d = smallMario.getPos() - smallMario.getOldPos();
-//    sprintf(message,"dx %d dy %d",d.x, d.y);
-//    nocashMessage(message);
-//    PA_OutputText(1,1,6, "%s", message);
+    Vector2<mytype> d;
+    d = smallMario.getPos() - smallMario.getOldPos();
+    sprintf(message,"dx %d dy %d",d.x, d.y);
+    //nocashMessage(message);
+   PA_OutputText(1,1,6, "%s       ", message);
 
     scroll = smallMario.getParallaxX();
     PA_ParallaxScrollX(0,scroll);
@@ -158,10 +158,10 @@ bool ScrollEngine::update(){
 ////            smallMario.applyFriction();
 //        }
 //
-//        if ( Pad.Held.Up )
-//        {
-//            smallMario.accelerateUp(timer);
-//        }
+        if ( Pad.Held.Up )
+        {
+            smallMario.accelerateUp(timer);
+        }
 
 //        smallMario.applyGravity();
     }

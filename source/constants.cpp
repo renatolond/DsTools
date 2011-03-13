@@ -19,7 +19,7 @@ extern const double maxVerticalSpeed = 12*multiplier;
 extern const double verticalSpeedStep = 1.2*multiplier;
 extern const int jumpDelay = 100;
 double friction = 0.00*multiplier;
-double bounce =  0.3*multiplier;
+double bounce =  0.0*multiplier;
 double drag = 0.99*multiplier;
 double gravity = 0.2*multiplier;
 

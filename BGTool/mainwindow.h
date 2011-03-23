@@ -23,6 +23,7 @@ private:
 private slots:
 
 private slots:
+    void on_actionNew_Project_triggered();
     void on_tabWidget_currentChanged(int index);
 };
 

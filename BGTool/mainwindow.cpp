@@ -33,3 +33,8 @@ void MainWindow::on_tabWidget_currentChanged(int index)
     if ( index == 0 )
         ui->widget_all->completeImgData(ui->widget0->imgData, ui->widget1->imgData);
 }
+
+void MainWindow::on_actionNew_Project_triggered()
+{
+
+}

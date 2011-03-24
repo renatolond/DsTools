@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "project.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,5 +37,10 @@ void MainWindow::on_tabWidget_currentChanged(int index)
 
 void MainWindow::on_actionNew_Project_triggered()
 {
+  if(m_project != NULL)
+  {
+    // Mostra um alerta, dizendo ao usuário que continuar irá destruir o projeto atual
+  }
 
+  m_project = new cProject();
 }

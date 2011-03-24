@@ -1,6 +1,8 @@
 #include "tabbg.h"
 #include "ui_tabbg.h"
 
+#include <QFileDialog>
+
 TabBG::TabBG(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TabBG)

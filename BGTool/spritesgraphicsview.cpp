@@ -1,14 +1,21 @@
 #include "spritesgraphicsview.h"
 
+#include "logger.h"
+
+#include <QMouseEvent>
+#include <QFlags>
+#include <QGraphicsItem>
+
 SpritesGraphicsView::SpritesGraphicsView(QWidget *parent) :
     QGraphicsView(parent)
 {
     imgData = 0;
-    log = logger(__FILE__);
+    log = new logger(__FILE__);
 }
 
 SpritesGraphicsView::~SpritesGraphicsView()
 {
+  delete log;
 }
 
 void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
@@ -19,7 +26,7 @@ void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
     std::ostringstream outs;
     outs << e->pos().x() << "," << e->pos().y() << std::endl;
     outs << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
-    log.log(__LINE__, outs);
+    log->log(__LINE__, outs);
 
     QGraphicsItem *i = scene()->itemAt(e->pos());
     QGraphicsPixmapItem *p;
@@ -77,7 +84,7 @@ void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
     imgData->selectedSprite.setY(selSpriteY*(sprite_height+imgData->sprite_grid_height));
     imgData->selectedSpriteId = (imgData->selectedSprite.y()*sprites_per_line + imgData->selectedSprite.x())/(sprite_width+imgData->sprite_grid_width);
     outs << "Selected id: " << imgData->selectedSpriteId << std::endl;
-    log.log(__LINE__, outs);
+    log->log(__LINE__, outs);
     QPen l;
     l.setColor(Qt::yellow);
     l.setWidth(2);

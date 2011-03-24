@@ -7,6 +7,7 @@
 #include <QGraphicsItem>
 #include <QScrollBar>
 #include <imagesData.h>
+#include "logger.h"
 
 class VisualizationGraphicsView : public QGraphicsView
 {

@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "imagesData.h"
+
+class cProject;
 
 namespace Ui {
     class MainWindow;
@@ -16,6 +17,7 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    cProject *m_project;
 
 private:
     Ui::MainWindow *ui;

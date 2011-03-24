@@ -3,15 +3,17 @@
 
 #include <QGraphicsView>
 #include <iostream>
-#include <QMouseEvent>
-#include <QFlags>
-#include <QGraphicsItem>
 #include "imagesData.h"
+
+class imagesData;
+class QMouseEvent;
+class QWidget;
+struct logger;
 
 class SpritesGraphicsView : public QGraphicsView
 {
     Q_OBJECT
-    logger log;
+    logger *log;
 public:
     SpritesGraphicsView(QWidget *parent = 0);
     ~SpritesGraphicsView();

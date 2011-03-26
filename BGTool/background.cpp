@@ -17,41 +17,112 @@ cBackground::cBackground(QString name, sGlobalData *global_data):
 }
 
 
-void cBackground::insert_into_palette(QColor* c)
+void cBackground::insert_into_palette(QColor c)
 {
-  m_palette.push_back(c);
+  m_palette.push_back(c.rgba());
+}
+
+QRgb toR5G5B5A1(QColor c, QColor *neutral)
+{
+  if(c.alpha() != 255)
+    return neutral->rgba();
+
+  unsigned int color;
+  color = c.red();
+  color = color >> 3;
+  color = color << 3;
+  c.setRed(color);
+
+  color = c.green();
+  color = color >> 3;
+  color = color << 3;
+  c.setGreen(color);
+
+  color = c.blue();
+  color = color >> 3;
+  color = color << 3;
+  c.setBlue(color);
+
+  return c.rgba();
+}
+
+void cBackground::find_palette(QImage &image)
+{
+  m_neutral = new QColor();
+  m_neutral->setAlpha(0); // 0 significa que a cor não é visível
+  m_neutral->setRed(m_global_data->neutral_red);
+  m_neutral->setGreen(m_global_data->neutral_green);
+  m_neutral->setBlue(m_global_data->neutral_blue);
+  insert_into_palette(*m_neutral);
+  QColor c;
+  c.setRgba(toR5G5B5A1(*m_neutral, m_neutral));
+  m_color_hash[m_neutral->rgba()] = 0;
+
+  for(int i(0); i < image.height(); i++)
+  {
+    for(int j(0); j < image.width(); j++)
+    {
+      c.setRgba(toR5G5B5A1(image.pixel(j, i), m_neutral));
+      if(!m_color_hash.contains(c.rgba()))
+      {
+        m_color_hash[c.rgba()] = m_palette.size();
+        insert_into_palette(c);
+      }
+    }
+  }
 }
 
 void cBackground::find_sprites(QImage &image)
 {
-  QColor *neutral = new QColor();
-  neutral->setAlpha(0); // 0 significa que a cor não é visível
-  neutral->setRed(m_global_data->neutral_red);
-  neutral->setGreen(m_global_data->neutral_green);
-  neutral->setBlue(m_global_data->neutral_blue);
-  insert_into_palette(neutral);
 
   QImage *empty_sprite = new QImage(m_global_data->sprite_width, m_global_data->sprite_height,
                       QImage::Format_Indexed8);
-  empty_sprite->setColor(0, // Primeiro índice da tabela de cores
-                        neutral->rgba());
-  empty_sprite->fill(0); // Primeiro índice da tabela de cores
+  empty_sprite->setColorTable(m_palette);
+  empty_sprite->fill(0); // Primeiro índice da tabela de cores é sempre a cor neutra, transparente
 
-
-
-
+  for(int i(0); i < (image.height() / m_global_data->sprite_height) ; ++i)
+  {
+    for(int j(0); j < (image.width() / m_global_data->sprite_width) ; ++j)
+    {
+      QImage *sprite = new QImage(m_global_data->sprite_width, m_global_data->sprite_height,
+                                  QImage::Format_Indexed8);
+      sprite->setColorTable(m_palette);
+      for(int k(0); k < m_global_data->sprite_height ; ++k)
+      {
+        for(int l(0); l < m_global_data->sprite_width ; ++l)
+        {
+          int height_index = i*m_global_data->sprite_height + k;
+          int width_index = j*m_global_data->sprite_width + l;
+          QColor c;
+          c.setRgba(toR5G5B5A1(image.pixel(width_index, height_index), m_neutral));
+          sprite->setPixel(l, k, m_color_hash[c.rgba()]);
+        }
+      }
+      eSpriteFlipping sprite_flipping;
+      int sprite_index = insert_into_sprites(sprite, sprite_flipping);
+      push_back_map_matrix(i, sprite_index, sprite_flipping);
+    }
+  }
 
   m_sprites.push_back(empty_sprite);
 }
 
-void cBackground::fill_map_matrix()
+int cBackground::insert_into_sprites(QImage *sprite, eSpriteFlipping &sprite_flipping)
 {
+  return 0;
+}
 
+void cBackground::push_back_map_matrix(int y, int sprite_index, eSpriteFlipping sprite_flipping)
+{
+  sSpriteInfo sprite_info;
+  sprite_info.sprite_index = sprite_index;
+  m_map_matrix[y].push_back(sprite_index);
 }
 
 void cBackground::import_image(QString path)
 {
   QImage image(path);
+  find_palette(image);
   find_sprites(image);
 }
 
@@ -64,30 +135,30 @@ void cBackground::export_to_ds()
   map = "../gfx/bin/" + m_name + "_Map.bin";
   cfile = "../gfx/bin/" + m_name + ".c";
 
-  // exporting palette
+  // exporting palette7
   QFile file_pal(pal);
   if(file_pal.open(QIODevice::WriteOnly | QFile::Truncate))
   {
     QDataStream out(&file_pal);
     for ( int i = 0 ; i < m_palette.size() ; i++ )
     {
-      QColor *c;
+      QColor c;
       c = m_palette[i];
 
       unsigned char high, low;
       high = 1;
       high = high << 5;
-      high += ( c->blue() >> 3 );
+      high += ( c.blue() >> 3 );
       high = high << 2;
-      high += ( c->green() >> 6 );
+      high += ( c.green() >> 6 );
 
-      unsigned char green = c->green() - ((c->green() >> 6)<<6);
+      unsigned char green = c.green() - ((c.green() >> 6)<<6);
       low = (green >> 3);
       low = low << 5;
-      low += ( c->red() >> 3);
+      low += ( c.red() >> 3);
 
-      unsigned char red, blue;
-      red = c->red(); green = c->green(); blue = c->blue();
+      //unsigned char red, blue;
+      //red = c->red(); green = c->green(); blue = c->blue();
 
       out.writeRawData((const char *)&low, 1);
       out.writeRawData((const char *)&high, 1);

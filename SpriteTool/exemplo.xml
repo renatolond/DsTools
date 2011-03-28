@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Projeto nome="Projeto 00">
+   <BgTool>
+   </BgTool>
+   <SpriteTool>
+     <Sprite name="Mario" sizex="16" sizey="16">
+        <Frame id=1 path="frame01.png"/>
+        <Frame id=2 path="frame02.png"/>
+        <Frame id=3 path="frame03.png"/>
+        <Frame id=4 path="frame04.png"/>
+        <Frame id=5 path="frame05.png"/>
+     </Sprite>
+     <Sprite name="Luigi" sizex="16" sizey="16">
+        <Frame id=1 path="luigi01.png"/>
+        <Frame id=2 path="luigi02.png"/>
+        <Frame id=3 path="luigi03.png"/>
+        <Frame id=4 path="luigi04.png"/>
+        <Frame id=5 path="luigi05.png"/>
+     </Sprite>
+   </SpriteTool>
+</Projeto>

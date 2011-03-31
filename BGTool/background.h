@@ -1,9 +1,9 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-#include <QVector>
-#include <QString>
 #include <QHash>
+#include <QString>
+#include <QVector>
 
 class QColor;
 class QImage;

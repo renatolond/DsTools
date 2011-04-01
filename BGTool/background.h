@@ -40,7 +40,7 @@ class cBackground
   void insert_into_palette(QColor c);
   int insert_into_sprites(QImage *sprite, eSpriteFlipping &sprite_flipping);
  public:
-  cBackground(QString name, sGlobalData *global_data);
+  cBackground(QString name, int size_x, int size_y, sGlobalData *global_data);
   void import_image(QString path);
   void export_to_ds();
 };

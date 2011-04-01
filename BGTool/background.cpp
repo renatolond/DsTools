@@ -10,7 +10,7 @@
 #include "globaldata.h"
 
 
-cBackground::cBackground(QString name, sGlobalData *global_data):
+cBackground::cBackground(QString name, int size_x, int size_y, sGlobalData *global_data):
                         m_name(name),
                         m_global_data(global_data)
 {

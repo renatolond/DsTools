@@ -33,7 +33,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab0">
      <attribute name="title">
@@ -50,36 +50,6 @@
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab1">
-     <attribute name="title">
-      <string>Bg_0</string>
-     </attribute>
-     <widget class="TabBG" name="widget0" native="true">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>416</width>
-        <height>452</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab2">
-     <attribute name="title">
-      <string>Bg_1</string>
-     </attribute>
-     <widget class="TabBG" name="widget1" native="true">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>416</width>
-        <height>452</height>
-       </rect>
       </property>
      </widget>
     </widget>
@@ -141,12 +111,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>TabBG</class>
-   <extends>QWidget</extends>
-   <header>tabbg.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>Tab_BgAll</class>
    <extends>QWidget</extends>

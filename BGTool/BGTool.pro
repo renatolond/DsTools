@@ -10,15 +10,26 @@ SOURCES += main.cpp \
     visualizationgraphicsview.cpp \
     logger.cpp \
     tabbg.cpp \
-    tab_bgall.cpp
+    tab_bgall.cpp \
+    project.cpp \
+    background.cpp \
+    level.cpp \
+    globaldata.cpp \
+    newprojectdialog.cpp
 HEADERS += mainwindow.h \
     imagesData.h \
     spritesgraphicsview.h \
     visualizationgraphicsview.h \
     logger.h \
     tabbg.h \
-    tab_bgall.h
+    tab_bgall.h \
+    project.h \
+    level.h \
+    globaldata.h \
+    background.h \
+    newprojectdialog.h
 FORMS += mainwindow.ui \
     tabbg.ui \
     tabbg.ui \
-    tab_bgall.ui
+    tab_bgall.ui \
+    newprojectdialog.ui

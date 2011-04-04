@@ -10,7 +10,7 @@
 #include "globaldata.h"
 
 
-cBackground::cBackground(QString name, sGlobalData *global_data):
+cBackground::cBackground(QString name, int size_x, int size_y, sGlobalData *global_data):
                         m_name(name),
                         m_global_data(global_data)
 {
@@ -109,7 +109,41 @@ void cBackground::find_sprites(QImage &image)
 
 int cBackground::insert_into_sprites(QImage *sprite, eSpriteFlipping &sprite_flipping)
 {
-  return 0;
+  QImage HFlip, VFlip, VHFlip;
+
+  HFlip  = sprite->transformed(QTransform().scale(-1,  1));
+  VFlip  = sprite->transformed(QTransform().scale( 1, -1));
+  VHFlip = sprite->transformed(QTransform().scale(-1, -1));
+
+  for(int i(0); i < m_sprites.size(); i++)
+  {
+    if((*sprite) == (*m_sprites[i]))
+    {
+      sprite_flipping = NO_FLIPPING;
+      return i;
+    }
+    if(HFlip == (*m_sprites[i]))
+    {
+      sprite_flipping = HORIZONTAL_FLIPPING;
+      return i;
+    }
+    if(VFlip == (*m_sprites[i]))
+    {
+      sprite_flipping = VERTICAL_FLIPPING;
+      return i;
+    }
+    if(VHFlip == (*m_sprites[i]))
+    {
+      sprite_flipping = VERTICAL_AND_HORIZONTAL_FLIPPING;
+      return i;
+    }
+  }
+
+  int index = m_sprites.size();
+  m_sprites.push_back(sprite);
+  sprite_flipping = NO_FLIPPING;
+
+  return index;
 }
 
 void cBackground::push_back_map_matrix(int y, int sprite_index, eSpriteFlipping sprite_flipping)

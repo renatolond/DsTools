@@ -4,6 +4,8 @@
 #include <QMainWindow>
 
 class cProject;
+class TabBG;
+struct sGlobalData;
 
 namespace Ui {
     class MainWindow;
@@ -14,6 +16,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void create_level(QString project_name, int num_layers, int x, int y);
 
 protected:
     void changeEvent(QEvent *e);
@@ -21,6 +24,10 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    void clear_active(void);
+    TabBG *m_tabbg_widgets[5];
+    QWidget *m_tabs[5];
+    sGlobalData *m_global_data;
 
 private slots:
 

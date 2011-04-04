@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
+    <width>407</width>
     <height>300</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="btn_AddFrame">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>120</y>
+      <x>310</x>
+      <y>90</y>
       <width>81</width>
       <height>23</height>
      </rect>
@@ -82,8 +82,8 @@
    <widget class="QPushButton" name="btn_DeleteFrame">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>150</y>
+      <x>310</x>
+      <y>120</y>
       <width>81</width>
       <height>23</height>
      </rect>
@@ -92,13 +92,55 @@
      <string>Delete Frame</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_Left">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>200</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;&lt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_Right">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>200</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt;&gt;</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="gv_Canvas">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>40</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>80</horstretch>
+      <verstretch>80</verstretch>
+     </sizepolicy>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>387</width>
+     <width>407</width>
      <height>21</height>
     </rect>
    </property>

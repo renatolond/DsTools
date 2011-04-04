@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+
 #include "sprite.h"
 
 
@@ -18,16 +21,18 @@ public:
     ~MainWindow();
 
     void createSprite(QString nome, int w, int h);
+    void createSprite(QString nome);
     void enable(void);
     void disable(void);
+    void showFrame(int i);
 
 private:
     Ui::MainWindow *ui;
 
     Sprite sprite;
+    QGraphicsScene *scene;
 
 private slots:
-    void on_btn_AddFrame_clicked();
     void newProject();
     void saveProject();
     void openProject();

@@ -13,11 +13,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     newprojectwindow.cpp \
-    sprite.cpp
+    sprite.cpp \
+    openprojectwindow.cpp
 
 HEADERS  += mainwindow.h \
     newprojectwindow.h \
-    sprite.h
+    sprite.h \
+    openprojectwindow.h
 
 FORMS    += mainwindow.ui \
-    newprojectwindow.ui
+    newprojectwindow.ui \
+    openprojectwindow.ui

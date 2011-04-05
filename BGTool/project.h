@@ -12,6 +12,7 @@ class cProject
 public:
     cLevel* active_level(void);
     void new_level(cLevel *level);
+    void delete_active_level(void);
     cProject();
 };
 

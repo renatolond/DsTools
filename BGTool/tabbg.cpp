@@ -3,63 +3,67 @@
 
 #include <QFileDialog>
 
+#include "background.h"
+
 TabBG::TabBG(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TabBG)
+  QWidget(parent),
+  ui(new Ui::TabBG)
 {
-    ui->setupUi(this);
-    imgData = new imagesData(QImage(),QImage());
-    ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
-    index = -1;
+  ui->setupUi(this);
+  imgData = new imagesData(QImage(),QImage());
+  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
+  index = -1;
 }
 void TabBG::setIndex(int i)
 {
-    index = i;
-    imgData->index = i;
+  index = i;
+//  imgData->index = i;
 }
 
 TabBG::~TabBG()
 {
-    delete ui;
+  delete ui;
 }
 
 void TabBG::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+  QWidget::changeEvent(e);
+  switch (e->type()) {
+  case QEvent::LanguageChange:
+    ui->retranslateUi(this);
+    break;
+  default:
+    break;
+  }
 }
 
 void TabBG::on_btConvert_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
-    if ( filename == "" ) return;
+  QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
+  if ( filename == "" ) return;
 
-    if ( imgData != 0 )
-    {
-	delete imgData;
-	imgData = 0;
-    }
+  m_background->import_image(filename);
 
-    imgData = new imagesData(QImage(),QImage());
-    imgData->index = this->index;
-    ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
-    imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
+//  if ( imgData != 0 )
+//  {
+//    delete imgData;
+//    imgData = 0;
+//  }
+
+//  imgData = new imagesData(QImage(),QImage());
+//  imgData->index = this->index;
+//  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
+//  imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
 }
 
 void TabBG::on_btPaint_toggled(bool checked)
 {
-    ui->visualizationView->btPaintPressed = checked;
+  ui->visualizationView->btPaintPressed = checked;
 }
 
 void TabBG::on_btDump_clicked()
 {
-    imgData->dumpBgMatrix();
+  imgData->dumpBgMatrix();
 }
 
 void TabBG::on_btHighlight_clicked()
@@ -68,15 +72,20 @@ void TabBG::on_btHighlight_clicked()
 
 void TabBG::on_btExportPng_clicked()
 {
-    imgData->exportPng();
+  imgData->exportPng();
 }
 
 void TabBG::on_btExport_clicked()
 {
-    imgData->exportBG();
+  imgData->exportBG();
 }
 
 void TabBG::on_btHighlight_toggled(bool checked)
 {
-    imgData->highlightSelectedSprite(checked);
+  imgData->highlightSelectedSprite(checked);
+}
+
+void TabBG::set_background(cBackground *background)
+{
+  m_background = background;
 }

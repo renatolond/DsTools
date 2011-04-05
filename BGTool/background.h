@@ -27,7 +27,7 @@ struct sSpriteInfo
 class cBackground
 {
  protected:
-  QVector< QVector<int> > m_map_matrix;
+  QVector< QVector<sSpriteInfo> > m_map_matrix;
   QVector<QImage *> m_sprites;
   QVector<QRgb> m_palette;
   QHash<QRgb, int> m_color_hash;

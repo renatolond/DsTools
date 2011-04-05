@@ -16,6 +16,8 @@ public:
     int num_layers(void);
     cLevel(QString name, int num_layers, int size_x, int size_y, sGlobalData *global_data);
     cLevel();
+
+    cBackground *get_background(int n);
 };
 
 #endif // LEVEL_H

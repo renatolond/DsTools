@@ -20,6 +20,7 @@ private slots:
 
   void on_buttonBox_rejected();
 
+  void validate();
 private:
     Ui::cNewProjectDialog *ui;
 };

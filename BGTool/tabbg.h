@@ -8,6 +8,8 @@ namespace Ui {
     class TabBG;
 }
 
+class cBackground;
+
 class TabBG : public QWidget {
     Q_OBJECT
 public:
@@ -15,9 +17,11 @@ public:
     ~TabBG();
     imagesData *imgData;
     void setIndex(int i);
+    void set_background(cBackground *bg);
 
 protected:
     void changeEvent(QEvent *e);
+    cBackground *m_background;
 
 private:
     Ui::TabBG *ui;

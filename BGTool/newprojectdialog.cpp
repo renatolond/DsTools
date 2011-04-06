@@ -4,12 +4,15 @@
 #include "mainwindow.h"
 #include <QMessageBox>
 
-cNewProjectDialog::cNewProjectDialog(QWidget *parent) :
+#include "globaldata.h"
+
+cNewProjectDialog::cNewProjectDialog(sGlobalData *global_data, QWidget *parent) :
   QDialog(parent),
   ui(new Ui::cNewProjectDialog)
 {
   ui->setupUi(this);
   connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(validate()));
+  m_global_data = global_data;
 }
 
 cNewProjectDialog::~cNewProjectDialog()
@@ -32,6 +35,23 @@ void cNewProjectDialog::on_buttonBox_accepted()
   {
     QMessageBox error_msg;
     error_msg.setText("As medidas do background tem que ser maiores que zero.");
+    error_msg.exec();
+    return;
+  }
+  if(x % m_global_data->sprite_width)
+  {
+    QMessageBox error_msg;
+    error_msg.setText("A largura do background tem que ser multipla de " +
+                      QString::number(m_global_data->sprite_width) + ".");
+    error_msg.exec();
+    return;
+  }
+  if(y % m_global_data->sprite_height)
+  {
+    QMessageBox error_msg;
+    QString msg = "A altura do background tem que ser múltipla de " +
+        QString::number(m_global_data->sprite_height) + ".";
+    error_msg.setText(trUtf8(msg.toAscii()));
     error_msg.exec();
     return;
   }

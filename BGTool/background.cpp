@@ -14,6 +14,13 @@ cBackground::cBackground(QString name, int size_x, int size_y, sGlobalData *glob
                         m_name(name),
                         m_global_data(global_data)
 {
+  QImage empty_image = QImage(size_x, size_y, QImage::Format_Indexed8);
+  QColor c = QColor(m_global_data->neutral_red, m_global_data->neutral_green,
+                    m_global_data->neutral_red, 0);
+  empty_image.setColor(0, c.rgb());
+  empty_image.fill(0);
+  find_palette(empty_image);
+  find_sprites(empty_image);
 }
 
 

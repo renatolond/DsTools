@@ -7,12 +7,14 @@ namespace Ui {
     class cNewProjectDialog;
 }
 
+struct sGlobalData;
+
 class cNewProjectDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit cNewProjectDialog(QWidget *parent = 0);
+    explicit cNewProjectDialog(sGlobalData *global_data, QWidget *parent = 0);
     ~cNewProjectDialog();
 
 private slots:
@@ -23,6 +25,7 @@ private slots:
   void validate();
 private:
     Ui::cNewProjectDialog *ui;
+    sGlobalData *m_global_data;
 };
 
 #endif // NEWPROJECTDIALOG_H

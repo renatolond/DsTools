@@ -54,7 +54,7 @@ void MainWindow::on_actionNew_Project_triggered()
     // Mostra um alerta, dizendo ao usuário que continuar irá destruir o projeto atual
   }
 
-  cNewProjectDialog new_project(this);
+  cNewProjectDialog new_project(m_global_data, this);
   new_project.exec();
 }
 

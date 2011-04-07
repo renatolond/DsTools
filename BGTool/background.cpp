@@ -286,3 +286,14 @@ void cBackground::export_to_ds()
   }
   file_cfile.close();
 }
+
+const QVector<QRgb>& cBackground::get_palette(void)
+{
+  return m_palette;
+}
+
+const QVector<QImage *>& cBackground::get_sprites(void)
+{
+  return m_sprites;
+}
+

@@ -9,6 +9,7 @@ namespace Ui {
 }
 
 class cBackground;
+class cViewController;
 
 class TabBG : public QWidget {
     Q_OBJECT
@@ -22,6 +23,7 @@ public:
 protected:
     void changeEvent(QEvent *e);
     cBackground *m_background;
+    cViewController *m_view_controller;
 
 private:
     Ui::TabBG *ui;

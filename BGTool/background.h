@@ -33,7 +33,6 @@ class cBackground
   QHash<QRgb, int> m_color_hash;
   QString m_name;
   QColor *m_neutral;
-  sGlobalData *m_global_data;
   void find_sprites(QImage &p);
   void find_palette(QImage &p);
   void push_back_map_matrix(int y, int sprite_index, eSpriteFlipping sprite_flipping);
@@ -41,8 +40,11 @@ class cBackground
   int insert_into_sprites(QImage *sprite, eSpriteFlipping &sprite_flipping);
  public:
   cBackground(QString name, int size_x, int size_y, sGlobalData *global_data);
+  sGlobalData *m_global_data;
   void import_image(QString path);
   void export_to_ds();
+  const QVector<QRgb>& get_palette(void);
+  const QVector<QImage *>& get_sprites(void);
 };
 
 #endif // BACKGROUND_H

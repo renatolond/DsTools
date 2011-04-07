@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     background.cpp \
     level.cpp \
     globaldata.cpp \
-    newprojectdialog.cpp
+    newprojectdialog.cpp \
+    viewcontroller.cpp
 HEADERS += mainwindow.h \
     imagesData.h \
     spritesgraphicsview.h \
@@ -27,7 +28,8 @@ HEADERS += mainwindow.h \
     level.h \
     globaldata.h \
     background.h \
-    newprojectdialog.h
+    newprojectdialog.h \
+    viewcontroller.h
 FORMS += mainwindow.ui \
     tabbg.ui \
     tabbg.ui \

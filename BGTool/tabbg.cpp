@@ -4,11 +4,14 @@
 #include <QFileDialog>
 
 #include "background.h"
+#include "viewcontroller.h"
 
 TabBG::TabBG(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::TabBG)
 {
+  m_background = NULL;
+  m_view_controller = NULL;
   ui->setupUi(this);
   imgData = new imagesData(QImage(),QImage());
   ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
@@ -39,7 +42,11 @@ void TabBG::changeEvent(QEvent *e)
 
 void TabBG::on_btConvert_clicked()
 {
-  QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./", QObject::tr("Images (*.png *.xpm *.jpg)"));
+  if(m_background == NULL)
+    return;
+
+  QString filename = QFileDialog::getOpenFileName(this, QObject::tr("Open Image..."), "./",
+                                                  QObject::tr("Images (*.png *.xpm *.jpg)"));
   if ( filename == "" ) return;
 
   m_background->import_image(filename);
@@ -53,7 +60,16 @@ void TabBG::on_btConvert_clicked()
 //  imgData = new imagesData(QImage(),QImage());
 //  imgData->index = this->index;
 //  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
-//  imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView, filename);
+//  imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView,
+//                     filename);
+  m_view_controller = new cViewController();
+  m_view_controller->set_background(m_background);
+  m_view_controller->set_editor_view(ui->visualizationView);
+  m_view_controller->set_palette_view(ui->paletteView);
+  m_view_controller->set_selected_sprite_view(ui->selectedView);
+  m_view_controller->set_sprites_view(ui->spritesView);
+
+  m_view_controller->update_views();
 }
 
 void TabBG::on_btPaint_toggled(bool checked)

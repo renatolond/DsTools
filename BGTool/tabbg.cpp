@@ -13,8 +13,7 @@ TabBG::TabBG(QWidget *parent) :
   m_background = NULL;
   m_view_controller = NULL;
   ui->setupUi(this);
-  imgData = new imagesData(QImage(),QImage());
-  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
+//  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
   index = -1;
 }
 void TabBG::setIndex(int i)
@@ -79,7 +78,7 @@ void TabBG::on_btPaint_toggled(bool checked)
 
 void TabBG::on_btDump_clicked()
 {
-  imgData->dumpBgMatrix();
+//  imgData->dumpBgMatrix();
 }
 
 void TabBG::on_btHighlight_clicked()
@@ -88,17 +87,17 @@ void TabBG::on_btHighlight_clicked()
 
 void TabBG::on_btExportPng_clicked()
 {
-  imgData->exportPng();
+//  imgData->exportPng();
 }
 
 void TabBG::on_btExport_clicked()
 {
-  imgData->exportBG();
+//  imgData->exportBG();
 }
 
 void TabBG::on_btHighlight_toggled(bool checked)
 {
-  imgData->highlightSelectedSprite(checked);
+//  imgData->highlightSelectedSprite(checked);
 }
 
 void TabBG::set_background(cBackground *background)

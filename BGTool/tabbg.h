@@ -2,7 +2,6 @@
 #define TABBG_H
 
 #include <QWidget>
-#include "imagesData.h"
 
 namespace Ui {
     class TabBG;
@@ -16,7 +15,6 @@ class TabBG : public QWidget {
 public:
     TabBG(QWidget *parent = 0);
     ~TabBG();
-    imagesData *imgData;
     void setIndex(int i);
     void set_background(cBackground *bg);
 

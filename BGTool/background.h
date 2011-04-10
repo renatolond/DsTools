@@ -38,6 +38,7 @@ class cBackground
   void push_back_map_matrix(int y, int sprite_index, eSpriteFlipping sprite_flipping);
   void insert_into_palette(QColor c);
   int insert_into_sprites(QImage *sprite, eSpriteFlipping &sprite_flipping);
+  void clear_background(void);
  public:
   cBackground(QString name, int size_x, int size_y, sGlobalData *global_data);
   sGlobalData *m_global_data;

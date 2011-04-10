@@ -2,7 +2,6 @@
 #define TAB_BGALL_H
 
 #include <QWidget>
-#include "imagesData.h"
 
 namespace Ui {
     class tab_bgall;
@@ -13,7 +12,7 @@ class Tab_BgAll : public QWidget {
 public:
     Tab_BgAll(QWidget *parent = 0);
     ~Tab_BgAll();
-    void completeImgData(imagesData*, imagesData*);
+//    void completeImgData(imagesData*, imagesData*);
 protected:
     void changeEvent(QEvent *e);
 

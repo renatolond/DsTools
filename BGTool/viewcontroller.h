@@ -17,6 +17,7 @@ class cViewController
   VisualizationGraphicsView *m_editor_view;
   int m_sprites_per_row;
   int m_sprites_per_column;
+  int m_selected_sprite;
 
  public:
   cViewController(void);

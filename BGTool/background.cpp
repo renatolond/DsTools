@@ -56,8 +56,6 @@ QRgb toR5G5B5A1(QColor c, QColor *neutral)
 void cBackground::find_palette(QImage &image)
 {
   m_neutral = new QColor(Qt::magenta);
-  if(m_neutral == NULL)
-    int x = 5;
   m_neutral->setAlpha(0); // 0 significa que a cor não é visível
   m_neutral->setRed(m_global_data->neutral_red);
   m_neutral->setGreen(m_global_data->neutral_green);
@@ -165,8 +163,30 @@ void cBackground::push_back_map_matrix(int y, int sprite_index, eSpriteFlipping 
   m_map_matrix[y].push_back(sprite_info);
 }
 
+void cBackground::clear_background(void)
+{
+  int size = m_sprites.size();
+  for(int i(0); i < size; ++i)
+  {
+    QImage *img = m_sprites.last();
+    delete img;
+    m_sprites.pop_back();
+  }
+
+  m_palette.clear();
+  m_color_hash.clear();
+
+  size = m_map_matrix.size();
+  for(int i(0); i < size; ++i)
+  {
+    m_map_matrix[i].clear();
+  }
+  m_map_matrix.clear();
+}
+
 void cBackground::import_image(QString path)
 {
+  clear_background();
   QImage image(path);
   find_palette(image);
   find_sprites(image);

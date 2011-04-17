@@ -32,7 +32,10 @@ void cBackground::insert_into_palette(QColor c)
 QRgb toR5G5B5A1(QColor c, QColor *neutral)
 {
   if(c.alpha() != 255)
-    return neutral->rgba();
+  {
+    c = *neutral;
+    c.setAlpha(255);
+  }
 
   unsigned int color;
   color = c.red();
@@ -63,7 +66,7 @@ void cBackground::find_palette(QImage &image)
   insert_into_palette(*m_neutral);
   QColor c;
   c.setRgba(toR5G5B5A1(*m_neutral, m_neutral));
-  m_color_hash[m_neutral->rgba()] = 0;
+  m_color_hash[c.rgba()] = 0;
 
   for(int i(0); i < image.height(); i++)
   {
@@ -316,4 +319,10 @@ const QVector<QImage *>& cBackground::get_sprites(void)
 {
   return m_sprites;
 }
+
+const QVector< QVector<sSpriteInfo> >& cBackground::get_map_matrix(void)
+{
+  return m_map_matrix;
+}
+
 

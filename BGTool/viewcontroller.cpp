@@ -3,6 +3,7 @@
 #include "background.h"
 #include "globaldata.h"
 #include "spritesgraphicsview.h"
+#include "visualizationgraphicsview.h"
 
 #include <QColor>
 #include <QImage>
@@ -55,12 +56,128 @@ void cViewController::set_sprites_view(SpritesGraphicsView *sprites_view)
 
 void cViewController::update_editor_view(void)
 {
+  const QVector< QVector<sSpriteInfo> > &map_matrix = m_background->get_map_matrix();
+  const QVector<QImage *> &sprites = m_background->get_sprites();
 
+  int editor_grid_height = map_matrix.size() * m_global_data->sprite_height +
+                           map_matrix.size() * m_global_data->grid_heigth;
+  int editor_grid_width = map_matrix[0].size() * m_global_data->sprite_width +
+                          map_matrix[0].size() * m_global_data->grid_width;
+
+  QImage editor_grid = QImage(editor_grid_width, editor_grid_height, QImage::Format_Indexed8);
+  editor_grid.setColorTable(m_background->get_palette());
+  editor_grid.fill(0);
+
+  for(int i(0); i < map_matrix.size(); ++i)
+  {
+    for(int j(0); j < map_matrix[i].size(); ++j)
+    {
+      sSpriteInfo current = map_matrix[i][j];
+      QImage* sprite = sprites[current.sprite_index];
+      QImage transformed_sprite;
+
+      if(current.sprite_flipping == HORIZONTAL_FLIPPING)
+      {
+        transformed_sprite = sprite->transformed(QTransform().scale(-1, 1));
+      }
+      else if(current.sprite_flipping == VERTICAL_FLIPPING)
+      {
+        transformed_sprite = sprite->transformed(QTransform().scale(1, -1));
+      }
+      else if(current.sprite_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
+      {
+        transformed_sprite = sprite->transformed(QTransform().scale(-1, -1));
+      }
+      else
+      {
+        transformed_sprite = QImage(*sprite);
+      }
+
+      for(int m(0); m < m_global_data->sprite_height; ++m)
+      {
+        for(int n(0); n < m_global_data->sprite_width; ++n)
+        {
+          int editor_grid_row = (m_global_data->sprite_height+m_global_data->grid_heigth)*i + m;
+          int editor_grid_column = (m_global_data->sprite_width+m_global_data->grid_width)*j + n;
+
+          editor_grid.setPixel(editor_grid_column, editor_grid_row,
+                               transformed_sprite.pixelIndex(n, m));
+        }
+      }
+    }
+  }
+
+  QPixmap editor_grid_pixmap = QPixmap::fromImage(editor_grid);
+  m_editor_view->setSceneRect(editor_grid_pixmap.rect());
+  QGraphicsScene *scene = m_editor_view->scene();
+  if(!scene)
+  {
+    scene = new QGraphicsScene(m_editor_view);
+    m_editor_view->setScene(scene);
+  }
+  scene->addPixmap(editor_grid_pixmap);
+  m_editor_view->show();
 }
 
 void cViewController::update_palette_view(void)
 {
+  const QVector<QRgb> &palette = m_background->get_palette();
+  int row, column;
+  const int color_width = 8;
+  const int color_height = 8;
 
+  int colors_per_column = 8;
+  int colors_per_row = palette.size() / colors_per_column;
+  if(palette.size() % colors_per_column)
+    ++colors_per_row;
+
+  row = column = 0;
+
+  int palette_grid_height = color_height*colors_per_row + colors_per_row*m_global_data->grid_heigth;
+  int palette_grid_width = color_width * colors_per_column +
+                           colors_per_column * m_global_data->grid_width;
+
+  QImage palette_grid = QImage(palette_grid_width, palette_grid_height, QImage::Format_Indexed8);
+  palette_grid.setColorTable(palette);
+  QColor neutral_without_alpha(palette_grid.color(0));
+  neutral_without_alpha.setRgb(neutral_without_alpha.rgb());
+
+  palette_grid.setColor(0, neutral_without_alpha.rgb()); // Tirando o canal alpha da primeira cor
+  palette_grid.setColorCount(palette_grid.colorCount()+1); // criando uma cor nova, por default e
+                                                         // transparente
+  palette_grid.fill(palette_grid.colorCount()-1);
+
+  for(int i(0); i < palette.size(); ++i)
+  {
+    for(int m(0); m < color_height; ++m)
+    {
+      for(int n(0); n < color_width; ++n)
+      {
+        int palette_grid_row = (color_height+m_global_data->grid_heigth)*row + n;
+        int palette_grid_column = (color_width+m_global_data->grid_width)*column + m;
+
+        palette_grid.setPixel(palette_grid_column, palette_grid_row, i);
+      }
+    }
+
+    ++column;
+    if(column == colors_per_column)
+    {
+      column = 0;
+      ++row;
+    }
+  }
+
+  QPixmap palette_grid_pixmap = QPixmap::fromImage(palette_grid);
+  m_palette_view->setSceneRect(palette_grid_pixmap.rect());
+  QGraphicsScene *scene = m_palette_view->scene();
+  if(!scene)
+  {
+    scene = new QGraphicsScene(m_palette_view);
+    m_palette_view->setScene(scene);
+  }
+  scene->addPixmap(palette_grid_pixmap);
+  m_palette_view->show();
 }
 
 void cViewController::update_selected_sprite_view(void)

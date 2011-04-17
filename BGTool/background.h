@@ -46,6 +46,7 @@ class cBackground
   void export_to_ds();
   const QVector<QRgb>& get_palette(void);
   const QVector<QImage *>& get_sprites(void);
+  const QVector< QVector<sSpriteInfo> >& get_map_matrix(void);
 };
 
 #endif // BACKGROUND_H

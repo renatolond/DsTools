@@ -3,7 +3,7 @@
 
 struct sGlobalData
 {
-  int grid_heigth;
+  int grid_height;
   int grid_width;
 
   int neutral_red;

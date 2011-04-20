@@ -47,6 +47,7 @@ class cBackground
   const QVector<QRgb>& get_palette(void);
   const QVector<QImage *>& get_sprites(void);
   const QVector< QVector<sSpriteInfo> >& get_map_matrix(void);
+  void set_map_matrix(int x, int y, int sprite_index, eSpriteFlipping sprite_flipping);
 };
 
 #endif // BACKGROUND_H

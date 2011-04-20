@@ -337,3 +337,11 @@ const QVector< QVector<sSpriteInfo> >& cBackground::get_map_matrix(void)
 }
 
 
+void cBackground::set_map_matrix(int x, int y, int sprite_index, eSpriteFlipping sprite_flipping)
+{
+  sSpriteInfo sprite_info;
+  sprite_info.sprite_index = sprite_index;
+  sprite_info.sprite_flipping = sprite_flipping;
+
+  m_map_matrix[y][x] = sprite_info;
+}

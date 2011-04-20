@@ -1,7 +1,9 @@
 #include "viewcontroller.h" // Class definition
 
 // QT libraries
+#include <QBitmap>
 #include <QColor>
+#include <QGraphicsPixmapItem>
 #include <QImage>
 #include <QPixmap>
 // End of QT libraries
@@ -36,6 +38,7 @@ void cViewController::set_background(cBackground *background)
 void cViewController::set_editor_view(VisualizationGraphicsView *editor_view)
 {
   m_editor_view = editor_view;
+  m_editor_view->set_view_controller(this);
 }
 
 void cViewController::set_global_data(sGlobalData *global_data)
@@ -64,7 +67,7 @@ void cViewController::update_editor_view(void)
   const QVector<QImage *> &sprites = m_background->get_sprites();
 
   int editor_grid_height = map_matrix.size() * m_global_data->sprite_height +
-      map_matrix.size() * m_global_data->grid_heigth;
+      map_matrix.size() * m_global_data->grid_height;
   int editor_grid_width = map_matrix[0].size() * m_global_data->sprite_width +
       map_matrix[0].size() * m_global_data->grid_width;
 
@@ -101,7 +104,7 @@ void cViewController::update_editor_view(void)
       {
         for(int n(0); n < m_global_data->sprite_width; ++n)
         {
-          int editor_grid_row = (m_global_data->sprite_height+m_global_data->grid_heigth)*i + m;
+          int editor_grid_row = (m_global_data->sprite_height+m_global_data->grid_height)*i + m;
           int editor_grid_column = (m_global_data->sprite_width+m_global_data->grid_width)*j + n;
 
           editor_grid.setPixel(editor_grid_column, editor_grid_row,
@@ -137,7 +140,7 @@ void cViewController::update_palette_view(void)
 
   row = column = 0;
 
-  int palette_grid_height = color_height*colors_per_row + colors_per_row*m_global_data->grid_heigth;
+  int palette_grid_height = color_height*colors_per_row + colors_per_row*m_global_data->grid_height;
   int palette_grid_width = color_width * colors_per_column +
       colors_per_column * m_global_data->grid_width;
 
@@ -157,7 +160,7 @@ void cViewController::update_palette_view(void)
     {
       for(int n(0); n < color_width; ++n)
       {
-        int palette_grid_row = (color_height+m_global_data->grid_heigth)*row + n;
+        int palette_grid_row = (color_height+m_global_data->grid_height)*row + n;
         int palette_grid_column = (color_width+m_global_data->grid_width)*column + m;
 
         palette_grid.setPixel(palette_grid_column, palette_grid_row, i);
@@ -245,7 +248,7 @@ void cViewController::update_sprites_view(void)
       m_sprites_per_column * m_global_data->grid_width;
 
   sprite_grid_height = m_global_data->sprite_height * m_sprites_per_row +
-      m_sprites_per_row * m_global_data->grid_heigth;
+      m_sprites_per_row * m_global_data->grid_height;
 
 
   QImage sprite_grid = QImage(sprite_grid_width, sprite_grid_height, QImage::Format_Indexed8);
@@ -273,7 +276,7 @@ void cViewController::update_sprites_view(void)
         {
           int sprite_grid_column, sprite_grid_row;
           sprite_grid_column = (m_global_data->sprite_width+m_global_data->grid_width)*column + m;
-          sprite_grid_row = (m_global_data->sprite_height+m_global_data->grid_heigth)*row + n;
+          sprite_grid_row = (m_global_data->sprite_height+m_global_data->grid_height)*row + n;
 
           sprite_grid.setPixel(sprite_grid_column, sprite_grid_row, sprites[i]->pixelIndex(m, n));
         }
@@ -392,14 +395,33 @@ void cViewController::sprites_view_clicked(int x, int y)
 
 void cViewController::editor_view_clicked(int x, int y)
 {
-  QGraphicsScene *scene = m_editor_view->scene();
-  if ( !scene )
-    return;
-
   if(m_paint_mode)
   {
     editor_view_clicked_paint(x, y);
   }
+  //    } // end if ( btPaintPressed )
+  //    else
+  //    {
+  //	// Somente para testar o efeito de mudar uma cor num objeto com formato 8-bit indexed.
+  //	// Apagar depois dos testes!
+  //	QList<QGraphicsItem *> items = scene()->items();
+  //	QList<QGraphicsItem *>::iterator it;
+  //	QGraphicsPixmapItem *pi;
+
+  //	it = items.begin();
+  //	while ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(*it)) && it != items.end() )
+  //	{
+  //	    it++;
+  //	}
+  //	if ( it == items.end() ) return;
+
+  //	QPixmap gridPix ;
+  //	QColor q = Qt::darkMagenta;
+  //	imgData->visualizationGrid.setColor(2,q.rgba());
+  //	gridPix = gridPix.fromImage(imgData->visualizationGrid);
+  //	pi->setPixmap(gridPix);
+
+  //    }
 }
 
 void cViewController::set_paint_mode(bool status)
@@ -433,112 +455,87 @@ void cViewController::turn_off_highlight(void)
 
 void cViewController::editor_view_clicked_paint(int x, int y)
 {
+  if(!m_editor_view)
+    return;
+  QGraphicsScene *scene = m_editor_view->scene();
+  if(!scene)
+    return;
+  m_selected_sprite = 12;
+  if(m_selected_sprite < 0)
+    return;
 
-  //    if ( btPaintPressed )
-  //    {
-  //        QPoint p = e->pos();
+  QGraphicsPixmapItem *editor_pixmap_item;
+  {
+    QGraphicsItem* item = scene->itemAt(x, y);
+    if(!item)
+      return;
 
-  //        std::ostringstream outs;
-  //        outs << p.x() << "," << p.y() << std::endl;
-  //        outs << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
-  //        log.log(__LINE__, outs);
+    editor_pixmap_item = dynamic_cast<QGraphicsPixmapItem *>(item);
+    if(!editor_pixmap_item)
+      return;
+  }
 
-  //        QList<QGraphicsItem *> items = scene()->items();
-  //        QList<QGraphicsItem *>::iterator it;
-  //        QGraphicsPixmapItem *pi;
+  QPixmap editor_pixmap = editor_pixmap_item->pixmap();
+  QImage editor_image = editor_pixmap.toImage();
 
-  //        it = items.begin();
-  //        while ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(*it)) && it != items.end() )
-  //        {
-  //            it++;
-  //        }
-  //	if ( it == items.end() ) return;
-  //	// Encontramos assim o Pixmap que está sendo usado no VisualizationGrid
+  QBitmap bit_mask = QBitmap(editor_pixmap.mask());
+  QPainter bit_mask_painter, editor_painter;
 
-  //        p.setX(p.x()+horizontalScrollBar()->value());
-  //        p.setX(p.x()/(sprite_width+imgData->visualization_grid_width));
-  //        p.setY(p.y()/(sprite_height+imgData->visualization_grid_height));
+  const QVector< QVector<sSpriteInfo> > &map_matrix = m_background->get_map_matrix();
+  const QVector<QImage *> &sprites = m_background->get_sprites();
+  const QVector<QRgb> &palette = m_background->get_palette();
+  int map_x, map_y;
 
-  //	outs << "Sprite: " << p.x() << "," << p.y() << std::endl;
-  //        log.log(__LINE__,outs);
+  get_map_coords_from_view_coords(x, y, map_x, map_y);
 
-  //        if ( imgData->selectedSprite.x() >= 0 )
-  //        {
-  //            QPixmap gridPix = pi->pixmap();
+  sAction *action = new sAction();
+  action->type = sAction::PAINT;
+  action->x = x;
+  action->y = y;
+  action->n_x = map_x;
+  action->n_y = map_y;
 
-  //            QPoint spritePt = imgData->selectedSprite;
+  // TODO(renatolond, 20-04-2011) levar em conta o flipping.
+  m_background->set_map_matrix(map_x, map_y, m_selected_sprite, NO_FLIPPING);
 
-  //	    QBitmap bitMask = QBitmap(gridPix.mask());
-  //	    QPainter painter;
+  // Painter actions
+  bit_mask_painter.begin(&bit_mask);
+  {
+    for(int i(0); i < m_global_data->sprite_height; ++i)
+    {
+      for(int j(0); j < m_global_data->sprite_width; ++j)
+      {
+        int color_index = sprites[m_selected_sprite]->pixelIndex(j, i);
+        QColor color = QColor::fromRgba(palette[color_index]);
 
+        get_view_coords_from_map_coords(map_x, map_y, x, y);
 
-  //	    int mySpriteIndex;
-  //	    mySpriteIndex = (spritePt.y() / (sprite_height+imgData->sprite_grid_height));
-  //	    mySpriteIndex *= (imgData->spriteGrid.width()+1) / (sprite_width+imgData->sprite_grid_width);
-  //	    mySpriteIndex += (spritePt.x() / (sprite_width+imgData->sprite_grid_width));
-  //	    // Simplemente o índice do sprite que foi selecionado. Desse modo, podemos facilmente
-  //	    // acessar os sprites no vetor. Sprites esses que já estão indexados pela paletta.
-  //	    // Ou seja, basta usarmos o índice na hora de usá-los.
+        // Aqui nós desenhamos o alpha mask do visualizationGrid.
+        if(color.alpha() != 255)
+          bit_mask_painter.setPen(Qt::color0);
+        else
+          bit_mask_painter.setPen(Qt::color1);
 
-  //	    painter.begin(&bitMask);
-  //	    for ( int i = 0 ; i < sprite_height ; i++ )
-  //            {
-  //                for ( int j = 0 ; j < sprite_width ; j++ )
-  //                {
-  //		    int cIndex = imgData->sprites[mySpriteIndex].pixelIndex(j,i);
-  //		    QColor srcColor = QColor::fromRgba(imgData->nPalette[cIndex]);
+        bit_mask_painter.drawPoint(x+j, y+i);
+        editor_image.setPixel(x+j, y+i, color.rgb());
+      }
+    }
+  }
+  bit_mask_painter.end();
 
-  //		    int x;
-  //		    int y;
+  editor_pixmap = QPixmap::fromImage(editor_image);
+  editor_pixmap.setMask(bit_mask);
+  editor_pixmap_item->setPixmap(editor_pixmap);
+}
 
-  //		    x = j+p.x()*(sprite_width+imgData->visualization_grid_width);
-  //		    y = i+p.y()*(sprite_height+imgData->visualization_grid_height);
-  //		    // Aqui nós desenhamos o alpha mask do visualizationGrid.
-  //		    // Caso a cor tenha alpha, ela é desenhado como transparente,
-  //		    // pois no DS só há um bit de transparência.
-  //		    if ( srcColor.alpha() != 255 )
-  //		    {
-  //			painter.setPen(Qt::color0);
-  //			painter.drawPoint(x, y);
-  //		    }
-  //		    else
-  //		    {
-  //			painter.setPen(Qt::color1);
-  //			painter.drawPoint(x, y);
-  //		    }
-  //		    imgData->visualizationGrid.setPixel(x, y, cIndex);
-  //                }
-  //            }
-  //	    painter.end();
+void cViewController::get_map_coords_from_view_coords(int x, int y, int &map_x, int &map_y)
+{
+  map_x = x/(m_global_data->sprite_width+m_global_data->grid_width);
+  map_y = y/(m_global_data->sprite_height+m_global_data->grid_height);
+}
 
-  //	    gridPix = gridPix.fromImage(imgData->visualizationGrid);
-  //	    gridPix.setMask(bitMask);
-  //            pi->setPixmap(gridPix);
-
-  //            imgData->bgmatrix[p.y()][p.x()] = imgData->selectedSpriteId;
-  //	} // end if ( imgData->selectedSprite.x() >= 0 )
-  //    } // end if ( btPaintPressed )
-  //    else
-  //    {
-  //	// Somente para testar o efeito de mudar uma cor num objeto com formato 8-bit indexed.
-  //	// Apagar depois dos testes!
-  //	QList<QGraphicsItem *> items = scene()->items();
-  //	QList<QGraphicsItem *>::iterator it;
-  //	QGraphicsPixmapItem *pi;
-
-  //	it = items.begin();
-  //	while ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(*it)) && it != items.end() )
-  //	{
-  //	    it++;
-  //	}
-  //	if ( it == items.end() ) return;
-
-  //	QPixmap gridPix ;
-  //	QColor q = Qt::darkMagenta;
-  //	imgData->visualizationGrid.setColor(2,q.rgba());
-  //	gridPix = gridPix.fromImage(imgData->visualizationGrid);
-  //	pi->setPixmap(gridPix);
-
-  //    }
-
+void cViewController::get_view_coords_from_map_coords(int map_x, int map_y, int &x, int &y)
+{
+  x = map_x*(m_global_data->sprite_width+m_global_data->grid_width);
+  y = map_y*(m_global_data->sprite_height+m_global_data->grid_height);
 }

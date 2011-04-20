@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
   m_global_data->neutral_green = 0;
   m_global_data->sprite_height = 8;
   m_global_data->sprite_width = 8;
-  m_global_data->grid_heigth = 1;
+  m_global_data->grid_height = 1;
   m_global_data->grid_width = 1;
 
   ui->setupUi(this);

@@ -1,11 +1,28 @@
 #ifndef VIEWCONTROLLER_H
 #define VIEWCONTROLLER_H
 
+#include <QVector>
+
 class cBackground;
 class QGraphicsView;
 class SpritesGraphicsView;
 class VisualizationGraphicsView;
 struct sGlobalData;
+
+
+struct sAction
+{
+  enum eActionType
+  {
+    PAINT
+  };
+
+  eActionType type;
+  int x;
+  int y;
+  int n_x;
+  int n_y;
+};
 
 class cViewController
 {
@@ -15,10 +32,14 @@ class cViewController
   sGlobalData *m_global_data;
   SpritesGraphicsView *m_sprites_view;
   VisualizationGraphicsView *m_editor_view;
+  QVector<sAction *> m_undo_buffer;
   bool m_paint_mode;
   int m_sprites_per_row;
   int m_sprites_per_column;
   int m_selected_sprite;
+ protected:
+  void get_map_coords_from_view_coords(int x, int y, int &map_x, int &map_y);
+  void get_view_coords_from_map_coords(int map_x, int map_y, int &x, int &y);
 
  public:
   cViewController(void);

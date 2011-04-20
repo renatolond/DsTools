@@ -5,6 +5,7 @@
 
 class cBackground;
 class QGraphicsView;
+class QGraphicsRectItem;
 class SpritesGraphicsView;
 class VisualizationGraphicsView;
 struct sGlobalData;
@@ -33,6 +34,7 @@ class cViewController
   SpritesGraphicsView *m_sprites_view;
   VisualizationGraphicsView *m_editor_view;
   QVector<sAction *> m_undo_buffer;
+  QGraphicsRectItem *m_selected_sprite_square;
   bool m_paint_mode;
   int m_sprites_per_row;
   int m_sprites_per_column;

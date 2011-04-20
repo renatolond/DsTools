@@ -23,6 +23,7 @@ cViewController::cViewController(void)
   m_palette_view = NULL;
   m_selected_sprite_view = NULL;
   m_sprites_view = NULL;
+  m_selected_sprite_square = NULL;
 
   m_selected_sprite = -1;
 
@@ -321,21 +322,21 @@ void cViewController::update_views(void)
 
 void cViewController::sprites_view_clicked(int x, int y)
 {
+  if(!m_sprites_view)
+    return;
+  QGraphicsScene *scene = m_sprites_view->scene();
+  if(!scene)
+    return;
 
+  QGraphicsItem *item = scene->itemAt(x, y);
+//  QGraphicsPixmapItem *p;
 
-  //std::ostringstream outs;
-  //outs << e->pos().x() << "," << e->pos().y() << std::endl;
-  //outs << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
-  //log->log(__LINE__, outs);
-
-  //QGraphicsItem *i = scene()->itemAt(e->pos());
-  //QGraphicsPixmapItem *p;
-
-  //if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
-  //{
-  //  scene()->removeItem(r);
-  //  return;
-  //}
+  if ( QGraphicsRectItem *square = dynamic_cast<QGraphicsRectItem *>(item) )
+  {
+    scene->removeItem(square);
+    m_selected_sprite_square = NULL;
+    return;
+  }
 
   //if ( !(p = dynamic_cast<QGraphicsPixmapItem*>(i)) )
   //  return;
@@ -478,7 +479,7 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   QPixmap editor_pixmap = editor_pixmap_item->pixmap();
   QImage editor_image = editor_pixmap.toImage();
 
-  QBitmap bit_mask = QBitmap(editor_pixmap.mask());
+//  QBitmap bit_mask = QBitmap(editor_pixmap.mask());
   QPainter bit_mask_painter, editor_painter;
 
   const QVector< QVector<sSpriteInfo> > &map_matrix = m_background->get_map_matrix();
@@ -499,7 +500,7 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   m_background->set_map_matrix(map_x, map_y, m_selected_sprite, NO_FLIPPING);
 
   // Painter actions
-  bit_mask_painter.begin(&bit_mask);
+//  bit_mask_painter.begin(&bit_mask);
   {
     for(int i(0); i < m_global_data->sprite_height; ++i)
     {
@@ -511,20 +512,20 @@ void cViewController::editor_view_clicked_paint(int x, int y)
         get_view_coords_from_map_coords(map_x, map_y, x, y);
 
         // Aqui nós desenhamos o alpha mask do visualizationGrid.
-        if(color.alpha() != 255)
-          bit_mask_painter.setPen(Qt::color0);
-        else
-          bit_mask_painter.setPen(Qt::color1);
+//        if(color.alpha() != 255)
+//          bit_mask_painter.setPen(Qt::color0);
+//        else
+//          bit_mask_painter.setPen(Qt::color1);
 
-        bit_mask_painter.drawPoint(x+j, y+i);
+        //bit_mask_painter.drawPoint(x+j, y+i);
         editor_image.setPixel(x+j, y+i, color.rgb());
       }
     }
   }
-  bit_mask_painter.end();
+  //bit_mask_painter.end();
 
   editor_pixmap = QPixmap::fromImage(editor_image);
-  editor_pixmap.setMask(bit_mask);
+  //editor_pixmap.setMask(bit_mask);
   editor_pixmap_item->setPixmap(editor_pixmap);
 }
 

@@ -204,7 +204,7 @@ void cBackground::export_to_ds()
   map = "../gfx/bin/" + m_name + "_Map.bin";
   cfile = "../gfx/bin/" + m_name + ".c";
 
-  // exporting palette7
+  // exporting palette
   QFile file_pal(pal);
   if(file_pal.open(QIODevice::WriteOnly | QFile::Truncate))
   {
@@ -226,9 +226,6 @@ void cBackground::export_to_ds()
       low = low << 5;
       low += ( c.red() >> 3);
 
-      //unsigned char red, blue;
-      //red = c->red(); green = c->green(); blue = c->blue();
-
       out.writeRawData((const char *)&low, 1);
       out.writeRawData((const char *)&high, 1);
     }
@@ -242,44 +239,58 @@ void cBackground::export_to_ds()
   }
   file_pal.close();
 
-
   //exporting tiles
-  //  sout = fopen(tiles.c_str(), "wb");
-  //  for ( QVector<QImage *>::iterator it = m_sprites.begin() ; it != m_sprites.end() ; it++ )
-  //  {
-  //    QImage *pt = *it;
-  //    for ( int i = 0 ; i < 8 ; i++ )
-  //    {
-  //      for ( int j = 0 ; j < 8 ; j++ )
-  //      {
-  //        unsigned char k = pt->pixelIndex(j,i);
-  //        fwrite(&k, 1, sizeof(k), sout);
-  //      }
-  //    }
-  //  }
+  QFile file_tiles(tiles);
+  if(file_tiles.open(QIODevice::WriteOnly | QFile::Truncate))
+  {
+    QDataStream out(&file_tiles);
+    for(QVector<QImage *>::iterator it = m_sprites.begin(); it != m_sprites.end(); ++it)
+    {
+      QImage *pt = *it;
+      for(int i(0); i < m_global_data->sprite_height; ++i)
+      {
+        for(int j(0); j < m_global_data->sprite_width; ++j)
+        {
+          unsigned char color_index = pt->pixelIndex(j, i);
+          out.writeRawData((const char *)&color_index, 1);
+        }
+      }
+    }
+  }
+  file_tiles.close();
 
-  //  for ( int i = 0 ; i < 64 ; i++ )
-  //  {
-  //    unsigned char k = 0;
-  //    fwrite(&k,1,sizeof(k),sout);
-  //  }
-  //  fclose(sout);
-
-  //  //exporting map
-  //  sout = fopen(map.c_str(), "wb");
-  //  for ( int i = 0 ; i < m_map_matrix.size() ; i++ )
-  //  {
-  //    for ( int j = 0 ; j < m_map_matrix[i].size() ; j++ )
-  //    {
-  // TODO(lond, 2011-03-23) Fazer um map dos ponteiros apontando para os sprites
-  //      //unsigned char k = m_map_matrix[i][j];
-  //      unsigned char k;
-  //      unsigned char zero = 0;
-  //      fwrite(&k,1,sizeof(k),sout);
-  //      fwrite(&zero, 1, sizeof(zero), sout);
-  //    }
-  //  }
-  //  fclose(sout);
+  //exporting map
+  QFile file_map(map);
+  if(file_map.open(QIODevice::WriteOnly | QFile::Truncate))
+  {
+    QDataStream out(&file_map);
+    for(int i(0); i < m_map_matrix.size(); ++i)
+    {
+      for(int j(0); j < m_map_matrix[i].size(); ++j)
+      {
+        unsigned char tile_index;
+        unsigned char tile_flipping;
+        sSpriteInfo tile = m_map_matrix[i][j];
+        tile_index = (unsigned char) tile.sprite_index;
+        tile_flipping = ((tile.sprite_index & (1024+512)) >> 8);
+        if(tile.sprite_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
+        {
+          tile_flipping |= 4 + 8; // bit 3 e 4
+        }
+        if(tile.sprite_flipping == HORIZONTAL_FLIPPING)
+        {
+          tile_flipping |= 4;
+        }
+        if(tile.sprite_flipping == VERTICAL_FLIPPING)
+        {
+          tile_flipping |= 8;
+        }
+        out.writeRawData((const char *)&tile_index, 1);
+        out.writeRawData((const char *)&tile_flipping, 1);
+      }
+    }
+  }
+  file_map.close();
 
   QFile file_cfile(cfile);
   if(file_cfile.open(QIODevice::WriteOnly | QFile::Truncate))
@@ -291,17 +302,17 @@ void cBackground::export_to_ds()
 
     out << "#include <PA_BgStruct.h>" << endl;
     out << endl;
-    out << "extern const char bgtool" << m_name << "_Tiles[];" << endl;
-    out << "extern const char bgtool" << m_name << "_Map[];" << endl;
-    out << "extern const char bgtool" << m_name << "_Pal[];" << endl;
+    out << "extern const char " << m_name << "_Tiles[];" << endl;
+    out << "extern const char " << m_name << "_Map[];" << endl;
+    out << "extern const char " << m_name << "_Pal[];" << endl;
     out << endl;
-    out << "const PA_BgStruct bgtool" << m_name << " = {" << endl;
+    out << "const PA_BgStruct " << m_name << " = {" << endl;
     out << "  PA_BgLarge," << endl;
     out << "  " << map_matrix_width*8 << ", " << map_matrix_height*8 << "," << endl;
     out << endl;
-    out << "bgtool" << m_name << "_Tiles," << endl;
-    out << "bgtool" << m_name << "_Map," << endl;
-    out << "{bgtool" << m_name << "_Pal}," << endl;
+    out << "" << m_name << "_Tiles," << endl;
+    out << "" << m_name << "_Map," << endl;
+    out << "{" << m_name << "_Pal}," << endl;
     out << endl;
     out << m_sprites.size()*8*8 << "," << endl;
     out << "{" << map_matrix_height*map_matrix_width*2 << "}" << endl;

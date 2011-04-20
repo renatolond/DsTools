@@ -1,10 +1,14 @@
-#include "tabbg.h"
-#include "ui_tabbg.h"
+#include "tabbg.h"// Class definition
 
+// QT libraries
 #include <QFileDialog>
+// End of QT libraries
 
+// Project libraries
 #include "background.h"
 #include "viewcontroller.h"
+#include "ui_tabbg.h"
+// End of Project libraries
 
 TabBG::TabBG(QWidget *parent) :
   QWidget(parent),
@@ -13,13 +17,11 @@ TabBG::TabBG(QWidget *parent) :
   m_background = NULL;
   m_view_controller = NULL;
   ui->setupUi(this);
-//  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
   index = -1;
 }
 void TabBG::setIndex(int i)
 {
   index = i;
-//  imgData->index = i;
 }
 
 TabBG::~TabBG()
@@ -50,17 +52,6 @@ void TabBG::on_btConvert_clicked()
 
   m_background->import_image(filename);
 
-//  if ( imgData != 0 )
-//  {
-//    delete imgData;
-//    imgData = 0;
-//  }
-
-//  imgData = new imagesData(QImage(),QImage());
-//  imgData->index = this->index;
-//  ui->spritesView->imgData = ui->visualizationView->imgData = imgData;
-//  imgData->importPng(ui->visualizationView, ui->spritesView, ui->selectedView, ui->paletteView,
-//                     filename);
   m_view_controller = new cViewController();
   m_view_controller->set_background(m_background);
   m_view_controller->set_editor_view(ui->visualizationView);
@@ -73,31 +64,30 @@ void TabBG::on_btConvert_clicked()
 
 void TabBG::on_btPaint_toggled(bool checked)
 {
-  ui->visualizationView->btPaintPressed = checked;
+  m_view_controller->set_paint_mode(checked);
 }
 
 void TabBG::on_btDump_clicked()
 {
-//  imgData->dumpBgMatrix();
-}
-
-void TabBG::on_btHighlight_clicked()
-{
+  m_view_controller->dump_map_matrix();
 }
 
 void TabBG::on_btExportPng_clicked()
 {
-//  imgData->exportPng();
+  m_view_controller->export_to_png();
 }
 
 void TabBG::on_btExport_clicked()
 {
-//  imgData->exportBG();
+  m_view_controller->export_background();
 }
 
 void TabBG::on_btHighlight_toggled(bool checked)
 {
-//  imgData->highlightSelectedSprite(checked);
+  if(checked)
+    m_view_controller->highlight_selected_sprite();
+  else
+    m_view_controller->turn_off_highlight();
 }
 
 void TabBG::set_background(cBackground *background)

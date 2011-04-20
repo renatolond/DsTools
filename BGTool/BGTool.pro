@@ -6,7 +6,6 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     spritesgraphicsview.cpp \
-    imagesData.cpp \
     visualizationgraphicsview.cpp \
     logger.cpp \
     tabbg.cpp \
@@ -18,7 +17,6 @@ SOURCES += main.cpp \
     newprojectdialog.cpp \
     viewcontroller.cpp
 HEADERS += mainwindow.h \
-    imagesData.h \
     spritesgraphicsview.h \
     visualizationgraphicsview.h \
     logger.h \
@@ -31,7 +29,6 @@ HEADERS += mainwindow.h \
     newprojectdialog.h \
     viewcontroller.h
 FORMS += mainwindow.ui \
-    tabbg.ui \
     tabbg.ui \
     tab_bgall.ui \
     newprojectdialog.ui

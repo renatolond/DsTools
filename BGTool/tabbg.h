@@ -1,7 +1,7 @@
 #ifndef TABBG_H
 #define TABBG_H
 
-#include <QWidget>
+#include <QWidget> // Base type
 
 namespace Ui {
     class TabBG;
@@ -31,7 +31,6 @@ private slots:
     void on_btHighlight_toggled(bool checked);
     void on_btExport_clicked();
     void on_btExportPng_clicked();
-    void on_btHighlight_clicked();
     void on_btDump_clicked();
     void on_btPaint_toggled(bool checked);
     void on_btConvert_clicked();

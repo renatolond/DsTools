@@ -19,9 +19,9 @@ cBackground* cLevel::get_background(int n)
 }
 
 cLevel::cLevel(QString name, int num_layers, int size_x, int size_y, sGlobalData *global_data):
-  m_name(name),
   m_size_x(size_x),
-  m_size_y(size_y)
+  m_size_y(size_y),
+  m_name(name)
 {
   for(int i(0); i < num_layers; ++i)
   {

@@ -1,13 +1,17 @@
-#include "viewcontroller.h"
+#include "viewcontroller.h" // Class definition
 
+// QT libraries
+#include <QColor>
+#include <QImage>
+#include <QPixmap>
+// End of QT libraries
+
+// Project libraries
 #include "background.h"
 #include "globaldata.h"
 #include "spritesgraphicsview.h"
 #include "visualizationgraphicsview.h"
-
-#include <QColor>
-#include <QImage>
-#include <QPixmap>
+// End of Project libraries
 
 cViewController::cViewController(void)
 {
@@ -60,9 +64,9 @@ void cViewController::update_editor_view(void)
   const QVector<QImage *> &sprites = m_background->get_sprites();
 
   int editor_grid_height = map_matrix.size() * m_global_data->sprite_height +
-                           map_matrix.size() * m_global_data->grid_heigth;
+      map_matrix.size() * m_global_data->grid_heigth;
   int editor_grid_width = map_matrix[0].size() * m_global_data->sprite_width +
-                          map_matrix[0].size() * m_global_data->grid_width;
+      map_matrix[0].size() * m_global_data->grid_width;
 
   QImage editor_grid = QImage(editor_grid_width, editor_grid_height, QImage::Format_Indexed8);
   editor_grid.setColorTable(m_background->get_palette());
@@ -135,7 +139,7 @@ void cViewController::update_palette_view(void)
 
   int palette_grid_height = color_height*colors_per_row + colors_per_row*m_global_data->grid_heigth;
   int palette_grid_width = color_width * colors_per_column +
-                           colors_per_column * m_global_data->grid_width;
+      colors_per_column * m_global_data->grid_width;
 
   QImage palette_grid = QImage(palette_grid_width, palette_grid_height, QImage::Format_Indexed8);
   palette_grid.setColorTable(palette);
@@ -144,7 +148,7 @@ void cViewController::update_palette_view(void)
 
   palette_grid.setColor(0, neutral_without_alpha.rgb()); // Tirando o canal alpha da primeira cor
   palette_grid.setColorCount(palette_grid.colorCount()+1); // criando uma cor nova, por default e
-                                                         // transparente
+  // transparente
   palette_grid.fill(palette_grid.colorCount()-1);
 
   for(int i(0); i < palette.size(); ++i)
@@ -194,7 +198,8 @@ void cViewController::update_selected_sprite_view(void)
   if(pixel_height < pixel_size)
     pixel_size = pixel_height;
 
-  QImage selected_sprite = QImage(pixel_size*sprite_width, pixel_size*sprite_height,
+  QImage selected_sprite = QImage(pixel_size*m_global_data->sprite_width,
+                                  pixel_size*m_global_data->sprite_height,
                                   QImage::Format_Indexed8);
 
   selected_sprite.setColorTable(m_background->get_palette());
@@ -237,10 +242,10 @@ void cViewController::update_sprites_view(void)
 
   int sprite_grid_width, sprite_grid_height;
   sprite_grid_width = m_global_data->sprite_width * m_sprites_per_column +
-                      m_sprites_per_column * m_global_data->grid_width;
+      m_sprites_per_column * m_global_data->grid_width;
 
   sprite_grid_height = m_global_data->sprite_height * m_sprites_per_row +
-                      m_sprites_per_row * m_global_data->grid_heigth;
+      m_sprites_per_row * m_global_data->grid_heigth;
 
 
   QImage sprite_grid = QImage(sprite_grid_width, sprite_grid_height, QImage::Format_Indexed8);
@@ -253,7 +258,7 @@ void cViewController::update_sprites_view(void)
   sprite_grid.setColor(0, neutral_without_alpha.rgb()); // Tirando o canal alpha da primeira cor
 
   sprite_grid.setColorCount(sprite_grid.colorCount()+1); // criando uma cor nova, por default e
-                                                         // transparente
+  // transparente
   sprite_grid.fill(sprite_grid.colorCount()-1);
 
   {
@@ -309,4 +314,231 @@ void cViewController::update_views(void)
     if(m_sprites_view)
       update_sprites_view();
   }
+}
+
+void cViewController::sprites_view_clicked(int x, int y)
+{
+
+
+  //std::ostringstream outs;
+  //outs << e->pos().x() << "," << e->pos().y() << std::endl;
+  //outs << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
+  //log->log(__LINE__, outs);
+
+  //QGraphicsItem *i = scene()->itemAt(e->pos());
+  //QGraphicsPixmapItem *p;
+
+  //if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
+  //{
+  //  scene()->removeItem(r);
+  //  return;
+  //}
+
+  //if ( !(p = dynamic_cast<QGraphicsPixmapItem*>(i)) )
+  //  return;
+
+  //QImage t = p->pixmap().toImage();
+
+  //int selSpriteX, selSpriteY;
+  //selSpriteX = e->pos().x() / (sprite_width+imgData->sprite_grid_width);
+  //selSpriteY = e->pos().y() / (sprite_height+imgData->sprite_grid_height);
+
+  //int sel = (selSpriteY*sprites_per_line + selSpriteX);
+
+  //if ( imgData->sprites.size() <= sel )
+  //{
+  //  return;
+  //  if ( imgData->selectedSprite.x() >= 0 )
+  //  {
+  //    QGraphicsItem *i = scene()->itemAt(imgData->selectedSprite);
+
+  //    if ( QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(i) )
+  //    {
+  //      scene()->removeItem(r);
+  //    }
+  //  }
+
+  //  QImage selSprite = QImage(sprite_width,sprite_height,t.format());
+  //  {
+  //    int spriteI, spriteJ;
+  //    spriteI = e->pos().y() / (sprite_height+imgData->sprite_grid_height);
+  //    spriteJ = e->pos().x() / (sprite_width+imgData->sprite_grid_width);
+  //    for ( int i = 0 ; i < sprite_height ; i++ )
+  //    {
+  //      for ( int j = 0 ; j < sprite_width ; j++ )
+  //      {
+  //        selSprite.setPixel(j, i, t.pixel(j+spriteJ*(sprite_width+imgData->sprite_grid_width),
+  //                                         i+spriteI*(sprite_height+imgData->sprite_grid_height)));
+  //      }
+  //    }
+  //  }
+  //  imgData->setSelectedSprite(selSprite);
+
+
+  //  imgData->selectedSprite.setX(selSpriteX*(sprite_width+imgData->sprite_grid_width));
+  //  imgData->selectedSprite.setY(selSpriteY*(sprite_height+imgData->sprite_grid_height));
+  //  imgData->selectedSpriteId = (imgData->selectedSprite.y()*sprites_per_line + imgData->selectedSprite.x())/(sprite_width+imgData->sprite_grid_width);
+  //  outs << "Selected id: " << imgData->selectedSpriteId << std::endl;
+  //  log->log(__LINE__, outs);
+  //  QPen l;
+  //  l.setColor(Qt::yellow);
+  //  l.setWidth(2);
+  //  scene()->addRect(selSpriteX*(sprite_width+imgData->sprite_grid_width)-1,
+  //                   selSpriteY*(sprite_height+imgData->sprite_grid_height)-1,
+  //                   (sprite_width+imgData->sprite_grid_width),
+  //                   (sprite_height+imgData->sprite_grid_height), l);
+
+}
+
+void cViewController::editor_view_clicked(int x, int y)
+{
+  QGraphicsScene *scene = m_editor_view->scene();
+  if ( !scene )
+    return;
+
+  if(m_paint_mode)
+  {
+    editor_view_clicked_paint(x, y);
+  }
+}
+
+void cViewController::set_paint_mode(bool status)
+{
+  m_paint_mode = status;
+}
+
+void cViewController::dump_map_matrix(void)
+{
+
+}
+
+void cViewController::export_to_png(void)
+{
+}
+
+void cViewController::export_background(void)
+{
+  m_background->export_to_ds();
+}
+
+void cViewController::highlight_selected_sprite(void)
+{
+
+}
+
+void cViewController::turn_off_highlight(void)
+{
+
+}
+
+void cViewController::editor_view_clicked_paint(int x, int y)
+{
+
+  //    if ( btPaintPressed )
+  //    {
+  //        QPoint p = e->pos();
+
+  //        std::ostringstream outs;
+  //        outs << p.x() << "," << p.y() << std::endl;
+  //        outs << "Left? "<< (e->buttons()&Qt::LeftButton) << " Right? " << (e->buttons()&Qt::RightButton) << std::endl;
+  //        log.log(__LINE__, outs);
+
+  //        QList<QGraphicsItem *> items = scene()->items();
+  //        QList<QGraphicsItem *>::iterator it;
+  //        QGraphicsPixmapItem *pi;
+
+  //        it = items.begin();
+  //        while ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(*it)) && it != items.end() )
+  //        {
+  //            it++;
+  //        }
+  //	if ( it == items.end() ) return;
+  //	// Encontramos assim o Pixmap que está sendo usado no VisualizationGrid
+
+  //        p.setX(p.x()+horizontalScrollBar()->value());
+  //        p.setX(p.x()/(sprite_width+imgData->visualization_grid_width));
+  //        p.setY(p.y()/(sprite_height+imgData->visualization_grid_height));
+
+  //	outs << "Sprite: " << p.x() << "," << p.y() << std::endl;
+  //        log.log(__LINE__,outs);
+
+  //        if ( imgData->selectedSprite.x() >= 0 )
+  //        {
+  //            QPixmap gridPix = pi->pixmap();
+
+  //            QPoint spritePt = imgData->selectedSprite;
+
+  //	    QBitmap bitMask = QBitmap(gridPix.mask());
+  //	    QPainter painter;
+
+
+  //	    int mySpriteIndex;
+  //	    mySpriteIndex = (spritePt.y() / (sprite_height+imgData->sprite_grid_height));
+  //	    mySpriteIndex *= (imgData->spriteGrid.width()+1) / (sprite_width+imgData->sprite_grid_width);
+  //	    mySpriteIndex += (spritePt.x() / (sprite_width+imgData->sprite_grid_width));
+  //	    // Simplemente o índice do sprite que foi selecionado. Desse modo, podemos facilmente
+  //	    // acessar os sprites no vetor. Sprites esses que já estão indexados pela paletta.
+  //	    // Ou seja, basta usarmos o índice na hora de usá-los.
+
+  //	    painter.begin(&bitMask);
+  //	    for ( int i = 0 ; i < sprite_height ; i++ )
+  //            {
+  //                for ( int j = 0 ; j < sprite_width ; j++ )
+  //                {
+  //		    int cIndex = imgData->sprites[mySpriteIndex].pixelIndex(j,i);
+  //		    QColor srcColor = QColor::fromRgba(imgData->nPalette[cIndex]);
+
+  //		    int x;
+  //		    int y;
+
+  //		    x = j+p.x()*(sprite_width+imgData->visualization_grid_width);
+  //		    y = i+p.y()*(sprite_height+imgData->visualization_grid_height);
+  //		    // Aqui nós desenhamos o alpha mask do visualizationGrid.
+  //		    // Caso a cor tenha alpha, ela é desenhado como transparente,
+  //		    // pois no DS só há um bit de transparência.
+  //		    if ( srcColor.alpha() != 255 )
+  //		    {
+  //			painter.setPen(Qt::color0);
+  //			painter.drawPoint(x, y);
+  //		    }
+  //		    else
+  //		    {
+  //			painter.setPen(Qt::color1);
+  //			painter.drawPoint(x, y);
+  //		    }
+  //		    imgData->visualizationGrid.setPixel(x, y, cIndex);
+  //                }
+  //            }
+  //	    painter.end();
+
+  //	    gridPix = gridPix.fromImage(imgData->visualizationGrid);
+  //	    gridPix.setMask(bitMask);
+  //            pi->setPixmap(gridPix);
+
+  //            imgData->bgmatrix[p.y()][p.x()] = imgData->selectedSpriteId;
+  //	} // end if ( imgData->selectedSprite.x() >= 0 )
+  //    } // end if ( btPaintPressed )
+  //    else
+  //    {
+  //	// Somente para testar o efeito de mudar uma cor num objeto com formato 8-bit indexed.
+  //	// Apagar depois dos testes!
+  //	QList<QGraphicsItem *> items = scene()->items();
+  //	QList<QGraphicsItem *>::iterator it;
+  //	QGraphicsPixmapItem *pi;
+
+  //	it = items.begin();
+  //	while ( !(pi = dynamic_cast<QGraphicsPixmapItem*>(*it)) && it != items.end() )
+  //	{
+  //	    it++;
+  //	}
+  //	if ( it == items.end() ) return;
+
+  //	QPixmap gridPix ;
+  //	QColor q = Qt::darkMagenta;
+  //	imgData->visualizationGrid.setColor(2,q.rgba());
+  //	gridPix = gridPix.fromImage(imgData->visualizationGrid);
+  //	pi->setPixmap(gridPix);
+
+  //    }
+
 }

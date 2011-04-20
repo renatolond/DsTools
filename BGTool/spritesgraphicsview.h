@@ -1,28 +1,24 @@
 #ifndef MOUSEGRAPHICSVIEW_H
 #define MOUSEGRAPHICSVIEW_H
 
-#include <QGraphicsView>
-#include <iostream>
-#include "imagesData.h"
+#include <QGraphicsView> // Base type
 
-class imagesData;
+class cViewController;
 class QMouseEvent;
 class QWidget;
-struct logger;
 
 class SpritesGraphicsView : public QGraphicsView
 {
     Q_OBJECT
-    logger *log;
 public:
     SpritesGraphicsView(QWidget *parent = 0);
     ~SpritesGraphicsView();
-   // QGraphicsScene *scene;
-    imagesData *imgData;
+
+    void set_view_controller(cViewController *view_controller);
 
 protected:
     void mousePressEvent(QMouseEvent *);
-//    void changeEvent(QEvent *e);
+    cViewController *m_view_controller;
 
 private:
 };

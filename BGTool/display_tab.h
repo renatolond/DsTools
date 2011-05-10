@@ -4,20 +4,20 @@
 #include <QWidget>
 
 namespace Ui {
-    class tab_bgall;
+    class cDisplayTab;
 }
 
-class Tab_BgAll : public QWidget {
+class cDisplayTab : public QWidget {
     Q_OBJECT
 public:
-    Tab_BgAll(QWidget *parent = 0);
-    ~Tab_BgAll();
+    cDisplayTab(QWidget *parent = 0);
+    ~cDisplayTab();
 //    void completeImgData(imagesData*, imagesData*);
 protected:
     void changeEvent(QEvent *e);
 
 private:
-    Ui::tab_bgall *ui;
+    Ui::cDisplayTab *ui;
 };
 
 #endif // TAB_BGALL_H

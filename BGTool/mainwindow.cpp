@@ -3,7 +3,7 @@
 
 #include "project.h"
 #include "level.h"
-#include "tabbg.h"
+#include "drawing_tab.h"
 #include "newprojectdialog.h"
 #include "globaldata.h"
 #include "level.h"
@@ -91,7 +91,7 @@ void MainWindow::create_level(QString project_name, int num_layers, int x, int y
   for(int i(0); i < num_layers ; ++i)
   {
     m_tabs[i] = new QWidget();
-    m_tabbg_widgets[i] = new TabBG(m_tabs[i]);
+    m_tabbg_widgets[i] = new cDrawingTab(m_tabs[i]);
     m_tabbg_widgets[i]->set_background(level->get_background(i));
     ui->tabWidget->addTab(m_tabs[i], "BG"+QString::number(i));
   }

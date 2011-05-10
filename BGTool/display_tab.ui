@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>tab_bgall</class>
- <widget class="QWidget" name="tab_bgall">
+ <class>cDisplayTab</class>
+ <widget class="QWidget" name="cDisplayTab">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>399</width>
+    <width>450</width>
     <height>366</height>
    </rect>
   </property>
@@ -18,11 +18,17 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>391</width>
+     <width>451</width>
      <height>365</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>-1</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>

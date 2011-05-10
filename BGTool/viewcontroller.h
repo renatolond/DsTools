@@ -4,6 +4,7 @@
 #include <QVector>
 
 class cBackground;
+class QGraphicsRectItem;
 class QGraphicsView;
 class SpritesGraphicsView;
 class VisualizationGraphicsView;
@@ -27,19 +28,22 @@ struct sAction
 class cViewController
 {
   cBackground *m_background;
+  QGraphicsRectItem *m_selected_sprite_rect;
   QGraphicsView *m_palette_view;
   QGraphicsView *m_selected_sprite_view;
   sGlobalData *m_global_data;
   SpritesGraphicsView *m_sprites_view;
   VisualizationGraphicsView *m_editor_view;
   QVector<sAction *> m_undo_buffer;
+  bool m_selected_sprite_vflip;
+  bool m_selected_sprite_hflip;
   bool m_paint_mode;
-  int m_sprites_per_row;
   int m_sprites_per_column;
-  int m_selected_sprite;
+  int m_sprites_per_row;
+  int m_selected_sprite_index;
  protected:
-  void get_map_coords_from_view_coords(int x, int y, int &map_x, int &map_y);
-  void get_view_coords_from_map_coords(int map_x, int map_y, int &x, int &y);
+  void get_sprite_coords_from_view_coords(int x, int y, int &map_x, int &map_y);
+  void get_view_coords_from_sprite_coords(int map_x, int map_y, int &x, int &y);
 
  public:
   cViewController(void);
@@ -49,6 +53,8 @@ class cViewController
   void set_paint_mode(bool status);
   void set_palette_view(QGraphicsView *palette_view);
   void set_selected_sprite_view(QGraphicsView *selected_sprite_view);
+  void set_selected_sprite_hflip(bool status);
+  void set_selected_sprite_vflip(bool status);
   void set_sprites_view(SpritesGraphicsView *sprites_view);
 
   void dump_map_matrix(void);

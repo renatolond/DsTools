@@ -8,8 +8,8 @@ SOURCES += main.cpp \
     spritesgraphicsview.cpp \
     visualizationgraphicsview.cpp \
     logger.cpp \
-    tabbg.cpp \
-    tab_bgall.cpp \
+    drawing_tab.cpp \
+    display_tab.cpp \
     project.cpp \
     background.cpp \
     level.cpp \
@@ -20,8 +20,8 @@ HEADERS += mainwindow.h \
     spritesgraphicsview.h \
     visualizationgraphicsview.h \
     logger.h \
-    tabbg.h \
-    tab_bgall.h \
+    drawing_tab.h \
+    display_tab.h \
     project.h \
     level.h \
     globaldata.h \
@@ -29,6 +29,6 @@ HEADERS += mainwindow.h \
     newprojectdialog.h \
     viewcontroller.h
 FORMS += mainwindow.ui \
-    tabbg.ui \
-    tab_bgall.ui \
+    drawing_tab.ui \
+    display_tab.ui \
     newprojectdialog.ui

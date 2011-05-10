@@ -28,6 +28,6 @@ void VisualizationGraphicsView::mousePressEvent(QMouseEvent *e)
   if(!m_view_controller)
     return;
 
-  if(e->buttons() == Qt::RightButton)
+  if(e->buttons() == Qt::LeftButton)
     m_view_controller->editor_view_clicked(e->x()+horizontalScrollBar()->value(), e->y());
 }

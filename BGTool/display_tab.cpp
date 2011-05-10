@@ -1,14 +1,17 @@
-#include "tab_bgall.h"
-#include "ui_tab_bgall.h"
+#include "display_tab.h" // Class definition
 
-Tab_BgAll::Tab_BgAll(QWidget *parent) :
+// Project libraries
+#include "ui_display_tab.h"
+// End of Project libraries
+
+cDisplayTab::cDisplayTab(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::tab_bgall)
+    ui(new Ui::cDisplayTab)
 {
     ui->setupUi(this);
 }
 
-Tab_BgAll::~Tab_BgAll()
+cDisplayTab::~cDisplayTab()
 {
     delete ui;
 }
@@ -51,7 +54,7 @@ Tab_BgAll::~Tab_BgAll()
 //    }
 //    w->show();
 //}
-void Tab_BgAll::changeEvent(QEvent *e)
+void cDisplayTab::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

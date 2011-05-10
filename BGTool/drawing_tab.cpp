@@ -1,4 +1,4 @@
-#include "tabbg.h"// Class definition
+#include "drawing_tab.h" // Class definition
 
 // QT libraries
 #include <QFileDialog>
@@ -7,29 +7,29 @@
 // Project libraries
 #include "background.h"
 #include "viewcontroller.h"
-#include "ui_tabbg.h"
+#include "ui_drawing_tab.h"
 // End of Project libraries
 
-TabBG::TabBG(QWidget *parent) :
+cDrawingTab::cDrawingTab(QWidget *parent) :
   QWidget(parent),
-  ui(new Ui::TabBG)
+  ui(new Ui::cDrawingTab)
 {
   m_background = NULL;
   m_view_controller = NULL;
   ui->setupUi(this);
   index = -1;
 }
-void TabBG::setIndex(int i)
+void cDrawingTab::setIndex(int i)
 {
   index = i;
 }
 
-TabBG::~TabBG()
+cDrawingTab::~cDrawingTab()
 {
   delete ui;
 }
 
-void TabBG::changeEvent(QEvent *e)
+void cDrawingTab::changeEvent(QEvent *e)
 {
   QWidget::changeEvent(e);
   switch (e->type()) {
@@ -41,7 +41,7 @@ void TabBG::changeEvent(QEvent *e)
   }
 }
 
-void TabBG::on_btConvert_clicked()
+void cDrawingTab::on_btConvert_clicked()
 {
   if(m_background == NULL)
     return;
@@ -62,27 +62,27 @@ void TabBG::on_btConvert_clicked()
   m_view_controller->update_views();
 }
 
-void TabBG::on_btPaint_toggled(bool checked)
+void cDrawingTab::on_btPaint_toggled(bool checked)
 {
   m_view_controller->set_paint_mode(checked);
 }
 
-void TabBG::on_btDump_clicked()
+void cDrawingTab::on_btDump_clicked()
 {
   m_view_controller->dump_map_matrix();
 }
 
-void TabBG::on_btExportPng_clicked()
+void cDrawingTab::on_btExportPng_clicked()
 {
   m_view_controller->export_to_png();
 }
 
-void TabBG::on_btExport_clicked()
+void cDrawingTab::on_btExport_clicked()
 {
   m_view_controller->export_background();
 }
 
-void TabBG::on_btHighlight_toggled(bool checked)
+void cDrawingTab::on_btHighlight_toggled(bool checked)
 {
   if(checked)
     m_view_controller->highlight_selected_sprite();
@@ -90,7 +90,17 @@ void TabBG::on_btHighlight_toggled(bool checked)
     m_view_controller->turn_off_highlight();
 }
 
-void TabBG::set_background(cBackground *background)
+void cDrawingTab::set_background(cBackground *background)
 {
   m_background = background;
+}
+
+void cDrawingTab::on_bt_hflip_toggled(bool checked)
+{
+  m_view_controller->set_selected_sprite_hflip(checked);
+}
+
+void cDrawingTab::on_bt_vflip_toggled(bool checked)
+{
+  m_view_controller->set_selected_sprite_vflip(checked);
 }

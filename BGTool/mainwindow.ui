@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
+    <width>455</width>
     <height>523</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>421</width>
+      <width>455</width>
       <height>481</height>
      </rect>
     </property>
@@ -39,12 +39,12 @@
      <attribute name="title">
       <string>Bg_All</string>
      </attribute>
-     <widget class="Tab_BgAll" name="widget_all" native="true">
+     <widget class="cDisplayTab" name="widget_all" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>416</width>
+        <width>450</width>
         <height>422</height>
        </rect>
       </property>
@@ -60,7 +60,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>431</width>
+     <width>455</width>
      <height>23</height>
     </rect>
    </property>
@@ -112,9 +112,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Tab_BgAll</class>
+   <class>cDisplayTab</class>
    <extends>QWidget</extends>
-   <header>tab_bgall.h</header>
+   <header>display_tab.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

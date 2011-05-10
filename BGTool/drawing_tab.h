@@ -4,17 +4,17 @@
 #include <QWidget> // Base type
 
 namespace Ui {
-    class TabBG;
+    class cDrawingTab;
 }
 
 class cBackground;
 class cViewController;
 
-class TabBG : public QWidget {
+class cDrawingTab : public QWidget {
     Q_OBJECT
 public:
-    TabBG(QWidget *parent = 0);
-    ~TabBG();
+    cDrawingTab(QWidget *parent = 0);
+    ~cDrawingTab();
     void setIndex(int i);
     void set_background(cBackground *bg);
 
@@ -24,7 +24,7 @@ protected:
     cViewController *m_view_controller;
 
 private:
-    Ui::TabBG *ui;
+    Ui::cDrawingTab *ui;
     int index;
 
 private slots:
@@ -34,6 +34,8 @@ private slots:
     void on_btDump_clicked();
     void on_btPaint_toggled(bool checked);
     void on_btConvert_clicked();
+    void on_bt_hflip_toggled(bool checked);
+    void on_bt_vflip_toggled(bool checked);
 };
 
 #endif // TABBG_H

@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 class cProject;
-class TabBG;
+class cDrawingTab;
 struct sGlobalData;
 
 namespace Ui {
@@ -25,7 +25,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     void clear_active(void);
-    TabBG *m_tabbg_widgets[5];
+    cDrawingTab *m_tabbg_widgets[5];
     QWidget *m_tabs[5];
     sGlobalData *m_global_data;
 

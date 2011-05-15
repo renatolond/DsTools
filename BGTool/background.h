@@ -6,6 +6,8 @@
 #include <QVector>
 
 class QColor;
+class QDomDocument;
+class QDomElement;
 class QImage;
 struct sGlobalData;
 typedef unsigned int QRgb;
@@ -48,6 +50,7 @@ class cBackground
   const QVector<QImage *>& get_sprites(void);
   const QVector< QVector<sSpriteInfo> >& get_map_matrix(void);
   void set_map_matrix(int x, int y, int sprite_index, eSpriteFlipping sprite_flipping);
+  void export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node);
 };
 
 #endif // BACKGROUND_H

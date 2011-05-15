@@ -8,6 +8,8 @@
 #include "globaldata.h"
 #include "level.h"
 
+#include <QFileDialog>
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -83,7 +85,7 @@ void MainWindow::clear_active()
 void MainWindow::create_level(QString project_name, int num_layers, int x, int y)
 {
   clear_active();
-  m_project = new cProject();
+  m_project = new cProject(project_name);
   cLevel *level = new cLevel(project_name, num_layers, x, y, m_global_data);
   m_project->new_level(level);
 
@@ -101,4 +103,12 @@ void MainWindow::create_level(QString project_name, int num_layers, int x, int y
 void MainWindow::on_actionClose_Project_triggered()
 {
   clear_active();
+}
+
+void MainWindow::on_actionSave_Project_triggered()
+{
+  QString filename = QFileDialog::getSaveFileName(this, tr("Save Project", "saveprojectfilename"),
+                                                  "../"+m_project->get_project_name(),
+                                                  tr("XML Files(*.xml);;All Files(*.*)"));
+  m_project->export_to_xml(filename);
 }

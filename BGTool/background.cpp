@@ -2,6 +2,7 @@
 
 #include <QColor>
 #include <QDataStream>
+#include <QDomDocument>
 #include <QFile>
 #include <QImage>
 #include <QPixmap>
@@ -344,4 +345,11 @@ void cBackground::set_map_matrix(int x, int y, int sprite_index, eSpriteFlipping
   sprite_info.sprite_flipping = sprite_flipping;
 
   m_map_matrix[y][x] = sprite_info;
+}
+
+void cBackground::export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node)
+{
+  QDomElement background_node = xml_document->createElement("Background");
+  backgrounds_node->appendChild(background_node);
+  background_node.setAttribute("Name", m_name);
 }

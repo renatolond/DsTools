@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>448</width>
+     <width>450</width>
      <height>450</height>
     </rect>
    </property>
@@ -147,7 +147,7 @@
          </spacer>
         </item>
         <item row="0" column="4">
-         <widget class="QToolButton" name="btDump">
+         <widget class="QToolButton" name="btSaveXML">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -155,7 +155,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Dump</string>
+           <string>XML</string>
           </property>
          </widget>
         </item>

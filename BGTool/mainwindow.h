@@ -35,6 +35,7 @@ private slots:
     void on_actionNew_Project_triggered();
     void on_tabWidget_currentChanged(int index);
     void on_actionClose_Project_triggered();
+    void on_actionSave_Project_triggered();
 };
 
 #endif // MAINWINDOW_H

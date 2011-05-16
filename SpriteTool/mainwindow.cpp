@@ -14,6 +14,7 @@
 #include <QDir>
 #include <QWaitCondition>
 #include <QMutex>
+#include <QTimer>
 
 #define PATH "../SpriteTool/resources/"
 
@@ -41,6 +42,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_AddFrame,SIGNAL(clicked()),this,SLOT(addFrame()));
     connect(ui->btn_DeleteFrame,SIGNAL(clicked()),this,SLOT(delFrame()));
     connect(ui->btn_Animate,SIGNAL(clicked()),this,SLOT(animate()));
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(showFrame2()));
+
+    inAnimation = false;
 
 }
 
@@ -388,6 +394,8 @@ void MainWindow::showRight()
 
 void MainWindow::manageArrows()
 {
+    if (inAnimation) return;
+
     qDebug() << "manageArrows: currentFrame" << currentFrame;
     qDebug() << "manageArrows: sprite size" << sprite.size();
 
@@ -420,6 +428,34 @@ void MainWindow::sleep(unsigned long msecs)
       sleepmutex.unlock();
 }
 
+void MainWindow::showFrame2()
+{
+    qDebug() << "currentframe do timer:" << currentFrame;
+
+    if (currentFrame < sprite.size())
+    {
+        this->showFrame(currentFrame);
+        currentFrame++;
+
+        timer->start(500);
+    }
+    else
+    {
+        this->showFrame(0);
+
+        timer->stop();
+        inAnimation = false;
+
+        ui->btn_AddFrame->setEnabled(true);
+        ui->btn_DeleteFrame->setEnabled(true);
+        ui->btn_Left->setEnabled(true);
+        ui->btn_Right->setEnabled(true);
+        ui->btn_CloseProject->setEnabled(true);
+        ui->btn_SaveProject->setEnabled(true);
+    }
+
+}
+
 void MainWindow::animate()
 {
     ui->btn_AddFrame->setDisabled(true);
@@ -429,22 +465,11 @@ void MainWindow::animate()
     ui->btn_CloseProject->setDisabled(true);
     ui->btn_SaveProject->setDisabled(true);
 
-    for (int i = 0; i < sprite.size(); i++)
-    {
-        this->showFrame(i);
-        //sleep(500);   // a second
-        qDebug() << "500 ms!" << i;
 
-    }
-
-    ui->btn_AddFrame->setEnabled(true);
-    ui->btn_DeleteFrame->setEnabled(true);
-    ui->btn_Left->setEnabled(true);
-    ui->btn_Right->setEnabled(true);
-    ui->btn_CloseProject->setEnabled(true);
-    ui->btn_SaveProject->setEnabled(true);
 
     this->showFrame(0);
+    timer->start(500);
+    inAnimation = true;
 
 }
 

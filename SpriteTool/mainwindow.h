@@ -38,6 +38,9 @@ private:
     QGraphicsScene *scene;
     int currentFrame;
 
+    QTimer *timer;
+    bool inAnimation;
+
 private slots:
     void newProject();
     void saveProject();
@@ -49,6 +52,8 @@ private slots:
     void addFrame();
     void delFrame();
     void animate();
+    void showFrame2();
+
 };
 
 #endif // MAINWINDOW_H

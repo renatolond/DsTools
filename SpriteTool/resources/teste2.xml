@@ -1,0 +1,9 @@
+<!DOCTYPE xmldocument>
+<BGTool>
+<BG2 sizex="8" sizey="8"/>
+<BG sizex="8" sizey="8"/>
+<SpriteTool>
+<Sprite name="Ness" sizex="16" sizey="32"/>
+<Sprite name="Lucas" sizex="8" sizey="8"/>
+</SpriteTool>
+</BGTool>

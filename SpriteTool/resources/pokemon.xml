@@ -1,0 +1,8 @@
+<!DOCTYPE xmldocument>
+<SpriteTool>
+<Sprite name="Pokemon" sizex="64" sizey="64">
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/004.png" id="0"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/005.png" id="1"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/006.png" id="2"/>
+</Sprite>
+</SpriteTool>

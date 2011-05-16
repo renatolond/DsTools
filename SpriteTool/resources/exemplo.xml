@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Projeto nome="Projeto 00">
+<BgTool/>
+<SpriteTool>
+<Sprite name="Mario" sizex="8" sizey="8"/>
+<Sprite name="Luigi" sizex="16" sizey="16">
+<Frame path="luigi01.png" id="0"/>
+<Frame path="luigi02.png" id="1"/>
+<Frame path="luigi03.png" id="2"/>
+<Frame path="luigi04.png" id="3"/>
+<Frame path="luigi05.png" id="4"/>
+</Sprite>
+<Sprite name="Caterpie" sizex="64" sizey="64">
+<Frame path="C:\Users\VISTA\Documents\PF\proj\SpriteTool\resources\pkm\010.png" id="0"/>
+</Sprite>
+</SpriteTool>
+</Projeto>

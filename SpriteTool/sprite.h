@@ -25,10 +25,12 @@ public:
     int getHeight();
     void setWidth(int w);
     void setHeight(int h);
+    void setPath(int i, QString str);
     void clear();
     QImage* getFrame(int i);
     QString getPath(int i);
     void addFrame(QString path);
+    void delFrame(int pos);
     int size();
 
 };

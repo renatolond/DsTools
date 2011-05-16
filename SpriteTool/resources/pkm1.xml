@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BGTool>
+<BG2 sizex="8" sizey="8"/>
+<BG sizex="8" sizey="8"/>
+</BGTool>
+<SpriteTool>
+<Sprite name="Bug" sizex="64" sizey="64">
+<Frame path="C:\Users\VISTA\Documents\PF\proj\SpriteTool\resources\pkm\010.png" id="0" />
+</Sprite>
+</SpriteTool>

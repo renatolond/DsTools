@@ -43,6 +43,11 @@ void Sprite::setWidth(int w){
     this->width = w;
 }
 
+void Sprite::setPath(int i, QString str)
+{
+    this->path[i] = str;
+}
+
 QImage* Sprite::getFrame(int i){
 
     return frame[i];
@@ -60,12 +65,26 @@ int Sprite::size(){
 
 void Sprite::addFrame(QString path)
 {
+
     qDebug() << "Chegou no addframe com path " << path;
 
     QImage* img = new QImage(path);
 
     this->frame.push_back(img);
     this->path.push_back(path);
+}
+
+void Sprite::delFrame(int pos)
+{
+    QImage *img = frame[pos];
+
+    frame.remove(pos);
+    path.remove(pos);
+
+    delete(img);
+
+  //  for (int i = 0; i < frame.size(); i++)
+  //      qDebug() << "Vetor pos " << i << ": " << path[i];
 }
 
 void Sprite::clear()

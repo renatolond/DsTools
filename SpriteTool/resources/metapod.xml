@@ -1,0 +1,7 @@
+<!DOCTYPE xmldocument>
+<SpriteTool>
+<Sprite name="Caterpie" sizex="64" sizey="64">
+<Frame path="C:\Users\VISTA\Documents\PF\proj\SpriteTool\resources\pkm\010.png" id="0"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/011.png" id="1"/>
+</Sprite>
+</SpriteTool>

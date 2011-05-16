@@ -11,12 +11,9 @@
 #include <QDataStream>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
+#include <QDir>
 
-#include <QPixmap>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-
-#define PATH "..\resources"
+#define PATH "../SpriteTool/resources/"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     sprite.clear();
     scene = new QGraphicsScene(this);
+    currentFrame = -1;
     ui->gv_Canvas = new QGraphicsView(scene);
 
     this->disable();
@@ -34,6 +32,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_SaveProject,SIGNAL(clicked()),this,SLOT(saveProject()));
     connect(ui->btn_OpenProject,SIGNAL(clicked()),this,SLOT(openProject()));
     connect(ui->btn_CloseProject,SIGNAL(clicked()),this,SLOT(closeProject()));
+    connect(ui->btn_Right,SIGNAL(clicked()),this,SLOT(showRight()));
+    connect(ui->btn_Left,SIGNAL(clicked()),this,SLOT(showLeft()));
+    connect(scene,SIGNAL(changed(QList<QRectF>)),this,SLOT(manageArrows())); //teste | ps: no add/del frame, modificar as setas tb
+    connect(ui->btn_AddFrame,SIGNAL(clicked()),this,SLOT(addFrame()));
+    connect(ui->btn_DeleteFrame,SIGNAL(clicked()),this,SLOT(delFrame()));
+    connect(ui->btn_Animate,SIGNAL(clicked()),this,SLOT(animate()));
 
 }
 
@@ -50,9 +54,13 @@ void MainWindow::disable(void)
 
     ui->btn_AddFrame->hide();
     ui->btn_DeleteFrame->hide();
+    ui->btn_Animate->hide();
+    ui->btn_Right->hide();
+    ui->btn_Left->hide();
 
     ui->btn_SaveProject->setDisabled(true);
     ui->btn_CloseProject->setDisabled(true);
+
 }
 
 void MainWindow::enable(void)
@@ -62,6 +70,9 @@ void MainWindow::enable(void)
 
     ui->btn_AddFrame->show();
     ui->btn_DeleteFrame->show();
+    ui->btn_Animate->show();
+    ui->btn_Right->show();
+    ui->btn_Left->show();
 
     ui->btn_SaveProject->setEnabled(true);
     ui->btn_CloseProject->setEnabled(true);
@@ -80,16 +91,15 @@ void MainWindow::newProject()
 void MainWindow::closeProject()
 {
     sprite.clear();
+    toDeleteFiles.clear();
     disable();
 }
 
 void MainWindow::saveProject()
 {
     QString filename = QFileDialog::getSaveFileName(this,
-                            tr("Salvar Projeto"),"..\\",
+                            tr("Salvar Projeto"),PATH,
                             tr("Arquivos XML (*.xml);;All Files (*)"));
-
-    // mudar "..\\" pra pasta resources
 
     if (filename.isEmpty())
         return;
@@ -129,6 +139,9 @@ void MainWindow::saveProject()
 
         docElem = doc.documentElement();
     }
+
+    this->deleteImages();
+    this->saveImages();
 
     qDebug() << "raiz" << doc.documentElement().tagName();
 
@@ -242,7 +255,7 @@ void MainWindow::saveProject()
 void MainWindow::openProject()
 {
     QString filename = QFileDialog::getOpenFileName(this,
-                        tr("Abrir Projeto"), "..\\",
+                        tr("Abrir Projeto"), "..\\SpriteTool/resources",
                         tr("XML Files (*xml);;All Files (*)"));
 
     if (filename.isEmpty())
@@ -309,7 +322,7 @@ void MainWindow::openProject()
 
             for (int j = 0; j < children.size(); j++)
             {
-                qDebug() << "Frame" << children.at(j).toElement().attribute("path");
+                qDebug() << "OPEN: Frame" << children.at(j).toElement().attribute("path");
 
                 sprite.addFrame(children.at(j).toElement().attribute("path"));
             }
@@ -324,21 +337,92 @@ void MainWindow::openProject()
 
 void MainWindow::showFrame(int i)
 {
+    scene->clear();
 
-    QGraphicsView *pal = ui->gv_Canvas;
-    QGraphicsScene *palScn = new QGraphicsScene(pal);
-    pal->setScene(palScn);
-    QPixmap palPix = palPix.fromImage(*sprite.getFrame(i));
-    palScn->setSceneRect(0,0,palPix.width(), palPix.height());
-    palScn->addPixmap(palPix);
-    pal->show();
+    scene->addPixmap(QPixmap::fromImage(*sprite.getFrame(i)));
 
+    this->ui->gv_Canvas->setScene(scene);
+    this->ui->gv_Canvas->show();
 
-    //scene->addPixmap(QPixmap::fromImage(*sprite.getFrame(i)));
+    this->currentFrame = i;
+}
 
-    //this->ui->gv_Canvas->setScene(scene);
-    //this->ui->gv_Canvas->show();
+void MainWindow::showLeft()
+{
+    currentFrame--;
 
+    this->showFrame(currentFrame);
+
+}
+
+void MainWindow::showRight()
+{
+    currentFrame++;
+
+    this->showFrame(currentFrame);
+
+}
+
+void MainWindow::manageArrows()
+{
+    qDebug() << "manageArrows: currentFrame" << currentFrame;
+
+    if (sprite.size() == 1)
+    {
+        ui->btn_Left->setDisabled(true);
+        ui->btn_Right->setDisabled(true);
+
+        return;
+    }
+
+    if (currentFrame <= 0)
+        ui->btn_Left->setDisabled(true);
+    else
+        ui->btn_Left->setEnabled(true);
+
+    if (currentFrame >= sprite.size()-1)
+        ui->btn_Right->setDisabled(true);
+    else
+        ui->btn_Right->setEnabled(true);
+}
+
+void MainWindow::animate()
+{
+
+    if (ui->btn_Animate->text() == "Animate")
+    {
+        ui->btn_Animate->setText("Stop");
+
+        ui->btn_AddFrame->setDisabled(true);
+        ui->btn_DeleteFrame->setDisabled(true);
+        ui->btn_Left->setDisabled(true);
+        ui->btn_Right->setDisabled(true);
+        ui->btn_CloseProject->setDisabled(true);
+        ui->btn_SaveProject->setDisabled(true);
+
+        while(1)
+        {
+           // QTest::qWait(500);
+
+            currentFrame++;
+            if (currentFrame == sprite.size())
+                currentFrame = 0;
+
+            this->showFrame(currentFrame);
+        }
+    }
+    else
+    {
+
+        ui->btn_AddFrame->setEnabled(true);
+        ui->btn_DeleteFrame->setEnabled(true);
+        ui->btn_Left->setEnabled(true);
+        ui->btn_Right->setEnabled(true);
+        ui->btn_CloseProject->setEnabled(true);
+        ui->btn_SaveProject->setEnabled(true);
+
+        ui->btn_Animate->setText("Animate");
+    }
 
 }
 
@@ -354,4 +438,111 @@ void MainWindow::createSprite(QString nome)
     this->sprite = Sprite(nome);
 
     this->enable();
+}
+
+void MainWindow::addFrame()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                        tr("Abrir Projeto"), PATH,
+                        tr("PNG Files (*png);;All Files (*)"));
+
+    if (filename.isEmpty())
+        return;
+
+    qDebug() << "adicionando o frame" << filename;
+
+    //o addFrame recebe o caminho inteiro do frame pq a imagem vai ser construida
+    //dentro da função. O caminho é mudado so pro nome do arquivo no SaveImages
+    //como pos processamento, na hora que tudo e salvo.
+
+    sprite.addFrame(filename);
+
+    if (currentFrame == -1)
+    {
+        currentFrame++;
+        this->showFrame(currentFrame);
+    }
+
+    //chamar o managearrows
+    this->manageArrows();
+
+    //verifica se o arquivo adicionado ja tinha sido apagado
+    QString imgname = filename.split("/").last();
+
+    //procura e remove uma ocorrencia daquela string, se tiver
+    toDeleteFiles.removeOne(imgname);
+}
+
+void MainWindow::saveImages()
+{
+    //salva as imagens na pasta resources/nomedoprojeto
+
+    QString filepath = PATH + sprite.getNome();
+
+    if (!QDir(filepath).exists())
+        QDir().mkdir(filepath);
+
+    for (int i = 0; i < sprite.size(); i++)
+    {
+        QImage* img = sprite.getFrame(i);
+
+        QString imgname = sprite.getPath(i).split("/").last();
+
+        sprite.setPath(i,imgname);
+        qDebug() << "Mudando o xml p/" << imgname;
+
+        img->save(filepath+"/"+imgname);
+    }
+
+}
+
+void MainWindow::deleteImages()
+{
+    qDebug() << "entrou no deleteImages";
+
+    while (!toDeleteFiles.isEmpty())
+    {
+        QString imgname = toDeleteFiles.first();
+        toDeleteFiles.removeFirst();
+
+        QString filepath = PATH + sprite.getNome();
+
+        qDebug() << "deletar " << filepath;
+
+        QDir().remove(filepath+"/"+imgname);
+    }
+}
+
+void MainWindow::delFrame()
+{
+    // ao deletar um frame que ta sendo mostrado, voltar pro anterior
+    // se for o primeiro, ir pro seguinte
+    // se for o unico, deixar a tela em branco.
+
+    qDebug() << "Path pra deletar: " << sprite.getPath(currentFrame);
+
+    QString imgname = sprite.getPath(currentFrame).split("/").last();
+
+    qDebug() << "Adicionando na dellist: " << imgname;
+
+    this->toDeleteFiles.push_back(imgname);
+
+    if (currentFrame != 0)
+    {
+        this->showLeft();
+        sprite.delFrame(currentFrame+1);
+    }
+    else if (sprite.size() > 1)
+    {
+        this->showRight();
+        sprite.delFrame(currentFrame-1);
+    }
+    else
+    {
+        sprite.delFrame(currentFrame);
+        currentFrame = -1;
+
+    }
+
+
 }

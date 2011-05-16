@@ -25,18 +25,28 @@ public:
     void enable(void);
     void disable(void);
     void showFrame(int i);
+    void saveImages(void);
+    void deleteImages(void);
 
 private:
     Ui::MainWindow *ui;
 
     Sprite sprite;
+    QStringList toDeleteFiles;
     QGraphicsScene *scene;
+    int currentFrame;
 
 private slots:
     void newProject();
     void saveProject();
     void openProject();
     void closeProject();
+    void showRight();
+    void showLeft();
+    void manageArrows();
+    void addFrame();
+    void delFrame();
+    void animate();
 };
 
 #endif // MAINWINDOW_H

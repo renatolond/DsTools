@@ -1,0 +1,11 @@
+<!DOCTYPE xmldocument>
+<SpriteTool>
+<Sprite name="umprojeto" sizex="64" sizey="64">
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/029.png" id="0"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/030.png" id="1"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/031.png" id="2"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/032.png" id="3"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/033.png" id="4"/>
+<Frame path="C:/Users/VISTA/Documents/PF/proj/SpriteTool/resources/pkm/034.png" id="5"/>
+</Sprite>
+</SpriteTool>

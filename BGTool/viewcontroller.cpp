@@ -24,6 +24,7 @@ cViewController::cViewController(void)
   m_selected_sprite_rect = NULL;
   m_selected_sprite_view = NULL;
   m_sprites_view = NULL;
+  m_selected_sprite_square = NULL;
 
   m_selected_sprite_index = -1;
 
@@ -503,7 +504,7 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   }
 
   // Painter actions
-  bit_mask_painter.begin(&bit_mask);
+//  bit_mask_painter.begin(&bit_mask);
   {
     for(int i(0); i < m_global_data->sprite_height; ++i)
     {
@@ -520,15 +521,15 @@ void cViewController::editor_view_clicked_paint(int x, int y)
         else
           bit_mask_painter.setPen(Qt::color1);
 
-        bit_mask_painter.drawPoint(x+j, y+i);
+        //bit_mask_painter.drawPoint(x+j, y+i);
         editor_image.setPixel(x+j, y+i, color.rgb());
       }
     }
   }
-  bit_mask_painter.end();
+  //bit_mask_painter.end();
 
   editor_pixmap = QPixmap::fromImage(editor_image);
-  editor_pixmap.setMask(bit_mask);
+  //editor_pixmap.setMask(bit_mask);
   editor_pixmap_item->setPixmap(editor_pixmap);
 }
 

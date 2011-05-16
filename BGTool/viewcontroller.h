@@ -6,6 +6,7 @@
 class cBackground;
 class QGraphicsRectItem;
 class QGraphicsView;
+class QGraphicsRectItem;
 class SpritesGraphicsView;
 class VisualizationGraphicsView;
 struct sGlobalData;

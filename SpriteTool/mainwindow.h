@@ -52,7 +52,7 @@ private slots:
     void addFrame();
     void delFrame();
     void animate();
-    void showFrame2();
+    void timedAnimation();
 
 };
 

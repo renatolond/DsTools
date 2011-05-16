@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_Animate,SIGNAL(clicked()),this,SLOT(animate()));
 
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(showFrame2()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(timedAnimation()));
 
     inAnimation = false;
 
@@ -428,19 +428,47 @@ void MainWindow::sleep(unsigned long msecs)
       sleepmutex.unlock();
 }
 
-void MainWindow::showFrame2()
+void MainWindow::timedAnimation()
 {
-    qDebug() << "currentframe do timer:" << currentFrame;
+   // qDebug() << "currentframe do timer:" << currentFrame;
 
     if (currentFrame < sprite.size())
     {
         this->showFrame(currentFrame);
         currentFrame++;
-
-        timer->start(500);
     }
     else
     {
+        currentFrame = 0;
+    }
+
+    timer->start();
+
+}
+
+void MainWindow::animate()
+{
+
+    if (ui->btn_Animate->text() == "Animate")
+    {
+        ui->btn_Animate->setText("Stop");
+
+        ui->btn_AddFrame->setDisabled(true);
+        ui->btn_DeleteFrame->setDisabled(true);
+        ui->btn_Left->setDisabled(true);
+        ui->btn_Right->setDisabled(true);
+        ui->btn_CloseProject->setDisabled(true);
+        ui->btn_SaveProject->setDisabled(true);
+
+        timer->setInterval(250);
+        timer->start();
+
+        inAnimation = true;
+    }
+    else if (ui->btn_Animate->text() == "Stop")
+    {
+        ui->btn_Animate->setText("Animate");
+
         this->showFrame(0);
 
         timer->stop();
@@ -453,23 +481,6 @@ void MainWindow::showFrame2()
         ui->btn_CloseProject->setEnabled(true);
         ui->btn_SaveProject->setEnabled(true);
     }
-
-}
-
-void MainWindow::animate()
-{
-    ui->btn_AddFrame->setDisabled(true);
-    ui->btn_DeleteFrame->setDisabled(true);
-    ui->btn_Left->setDisabled(true);
-    ui->btn_Right->setDisabled(true);
-    ui->btn_CloseProject->setDisabled(true);
-    ui->btn_SaveProject->setDisabled(true);
-
-
-
-    this->showFrame(0);
-    timer->start(500);
-    inAnimation = true;
 
 }
 

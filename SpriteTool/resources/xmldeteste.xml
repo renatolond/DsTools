@@ -1,0 +1,12 @@
+<!DOCTYPE xmldocument>
+<SpriteTool>
+<Sprite name="projetodeteste" sizex="64" sizey="64">
+<Frame path="058.png" id="0"/>
+<Frame path="054.png" id="1"/>
+</Sprite>
+<Sprite name="outroteste" sizex="64" sizey="64">
+<Frame path="039.png" id="0"/>
+<Frame path="032.png" id="1"/>
+<Frame path="059.png" id="2"/>
+</Sprite>
+</SpriteTool>

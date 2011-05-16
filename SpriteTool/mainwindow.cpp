@@ -12,6 +12,8 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QDir>
+#include <QWaitCondition>
+#include <QMutex>
 
 #define PATH "../SpriteTool/resources/"
 
@@ -24,7 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     sprite.clear();
     scene = new QGraphicsScene(this);
     currentFrame = -1;
-    ui->gv_Canvas = new QGraphicsView(scene);
+    ui->gv_Canvas->setParent(this);
+    ui->gv_Canvas->setScene(scene);
 
     this->disable();
 
@@ -34,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_CloseProject,SIGNAL(clicked()),this,SLOT(closeProject()));
     connect(ui->btn_Right,SIGNAL(clicked()),this,SLOT(showRight()));
     connect(ui->btn_Left,SIGNAL(clicked()),this,SLOT(showLeft()));
-    connect(scene,SIGNAL(changed(QList<QRectF>)),this,SLOT(manageArrows())); //teste | ps: no add/del frame, modificar as setas tb
+    connect(scene,SIGNAL(changed(QList<QRectF>)),this,SLOT(manageArrows()));
     connect(ui->btn_AddFrame,SIGNAL(clicked()),this,SLOT(addFrame()));
     connect(ui->btn_DeleteFrame,SIGNAL(clicked()),this,SLOT(delFrame()));
     connect(ui->btn_Animate,SIGNAL(clicked()),this,SLOT(animate()));
@@ -86,13 +89,22 @@ void MainWindow::newProject()
 
    qDebug() << "Leu " << sprite.getNome() << " ("
             << sprite.getWidth() << "x" << sprite.getHeight() << ")";
+
+   this->manageArrows();
 }
 
 void MainWindow::closeProject()
 {
-    sprite.clear();
+    sprite.clear();    
     toDeleteFiles.clear();
+
+    scene = new QGraphicsScene(this);
+    currentFrame = -1;
+    ui->gv_Canvas->setParent(this);
+    ui->gv_Canvas->setScene(scene);
+
     disable();
+
 }
 
 void MainWindow::saveProject()
@@ -324,7 +336,12 @@ void MainWindow::openProject()
             {
                 qDebug() << "OPEN: Frame" << children.at(j).toElement().attribute("path");
 
-                sprite.addFrame(children.at(j).toElement().attribute("path"));
+                //mandar o caminho completo pro addframe
+
+                QString imgname = children.at(j).toElement().attribute("path");
+                QString filepath = PATH + sprite.getNome();
+
+                sprite.addFrame(filepath+"/"+imgname);
             }
 
             break;
@@ -332,6 +349,8 @@ void MainWindow::openProject()
     }
 
     showFrame(0);
+
+    manageArrows();
 
 }
 
@@ -353,6 +372,8 @@ void MainWindow::showLeft()
 
     this->showFrame(currentFrame);
 
+    manageArrows();
+
 }
 
 void MainWindow::showRight()
@@ -361,11 +382,14 @@ void MainWindow::showRight()
 
     this->showFrame(currentFrame);
 
+    manageArrows();
+
 }
 
 void MainWindow::manageArrows()
 {
     qDebug() << "manageArrows: currentFrame" << currentFrame;
+    qDebug() << "manageArrows: sprite size" << sprite.size();
 
     if (sprite.size() == 1)
     {
@@ -386,43 +410,41 @@ void MainWindow::manageArrows()
         ui->btn_Right->setEnabled(true);
 }
 
+void MainWindow::sleep(unsigned long msecs)
+{
+      QWaitCondition w;
+      QMutex sleepmutex;
+
+      sleepmutex.lock();
+      w.wait(&sleepmutex, msecs);
+      sleepmutex.unlock();
+}
+
 void MainWindow::animate()
 {
+    ui->btn_AddFrame->setDisabled(true);
+    ui->btn_DeleteFrame->setDisabled(true);
+    ui->btn_Left->setDisabled(true);
+    ui->btn_Right->setDisabled(true);
+    ui->btn_CloseProject->setDisabled(true);
+    ui->btn_SaveProject->setDisabled(true);
 
-    if (ui->btn_Animate->text() == "Animate")
+    for (int i = 0; i < sprite.size(); i++)
     {
-        ui->btn_Animate->setText("Stop");
+        this->showFrame(i);
+        //sleep(500);   // a second
+        qDebug() << "500 ms!" << i;
 
-        ui->btn_AddFrame->setDisabled(true);
-        ui->btn_DeleteFrame->setDisabled(true);
-        ui->btn_Left->setDisabled(true);
-        ui->btn_Right->setDisabled(true);
-        ui->btn_CloseProject->setDisabled(true);
-        ui->btn_SaveProject->setDisabled(true);
-
-        while(1)
-        {
-           // QTest::qWait(500);
-
-            currentFrame++;
-            if (currentFrame == sprite.size())
-                currentFrame = 0;
-
-            this->showFrame(currentFrame);
-        }
     }
-    else
-    {
 
-        ui->btn_AddFrame->setEnabled(true);
-        ui->btn_DeleteFrame->setEnabled(true);
-        ui->btn_Left->setEnabled(true);
-        ui->btn_Right->setEnabled(true);
-        ui->btn_CloseProject->setEnabled(true);
-        ui->btn_SaveProject->setEnabled(true);
+    ui->btn_AddFrame->setEnabled(true);
+    ui->btn_DeleteFrame->setEnabled(true);
+    ui->btn_Left->setEnabled(true);
+    ui->btn_Right->setEnabled(true);
+    ui->btn_CloseProject->setEnabled(true);
+    ui->btn_SaveProject->setEnabled(true);
 
-        ui->btn_Animate->setText("Animate");
-    }
+    this->showFrame(0);
 
 }
 
@@ -457,9 +479,9 @@ void MainWindow::addFrame()
 
     sprite.addFrame(filename);
 
-    if (currentFrame == -1)
+    if (sprite.size() == 1)
     {
-        currentFrame++;
+        currentFrame = 0;
         this->showFrame(currentFrame);
     }
 

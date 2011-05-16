@@ -28,6 +28,8 @@ public:
     void saveImages(void);
     void deleteImages(void);
 
+    void sleep(unsigned long msecs);
+
 private:
     Ui::MainWindow *ui;
 

@@ -9,7 +9,6 @@ QT       += core gui xml
 TARGET = SpriteTool
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     newprojectwindow.cpp \

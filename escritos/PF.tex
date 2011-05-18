@@ -127,20 +127,20 @@ Nesse trabalho, nos focamos nas duas primeiras iterações do Nintendo DS, o Nin
 
 Ambos possuem hardware muito parecido, e as maiores diferenças são a estética e o contraste e iluminação da tela. Vamos às especificações:
 
-Nintendo DS:
-Peso: 275 gramas
-Dimensões: 148.7mm x 84.7mm x 28.9mm
-Telas: Duas telas, ambas com 3 polegadas, de LCD TFT (Thin-Film Transistor) com 18-bit de cor, resolução de 256x192. As duas telas tem um espaço entre elas de aproximadamente 21mm, e a tela de baixo é possui touchscreen resistivo, que responde a um ponto de pressão por vez, fazendo a média no caso de vários pontos serem pressionados de uma vez.
-Possui iluminação traseira, que pode ser desligada por software.
-Entradas: Possui duas entradas de cartucho, uma para o formato de cartucho do seu antecessor, o Gameboy Advance(GBA), na parte inferior,e uma para seu próprio formato de cartucho na parte superior.
-Processadores: Possui dois processadores ARM, um ARM946E-S a 67MHz, que é o processador principal responsável principalmente pelo loop de jogo e renderização de vídeo e um coprocessador ARM7TDMI a 33MHz, responsável pelo som, wi-fi, e, quando em modo GBA, passa a ter 16MHz, e passa a ser responsável pelo processamento principal.
-Memória: Possui 4MiB de RAM principal, expansíveis através da entrada de Gameboy Advance, no entanto, essa expansão só foi usada em jogos oficiais pelo Opera Browser.
-Wireless: Possui uma conexão IEEE802.11b, compatível com encriptação por WEP. WPA e WPA2 não são suportadas. Essa conexão também pode ser usada para comunicação entre consoles.
+\noindent\large{\bf Nintendo DS:}\\
+{\bf Peso:} 275 gramas\\
+{\bf Dimensões:} 148.7mm x 84.7mm x 28.9mm\\
+{\bf Telas:} Duas telas, ambas com 3 polegadas, de LCD TFT (Thin-Film Transistor) com 18-bit de cor, resolução de 256x192. As duas telas tem um espaço entre elas de aproximadamente 21mm, e a tela de baixo possui touchscreen resistivo, que responde a um ponto de pressão por vez, fazendo a média no caso de vários pontos serem pressionados de uma vez.\\
+Possui iluminação traseira, que pode ser desligada por software.\\
+{\bf Entradas:} Possui duas entradas de cartucho, uma para o formato de cartucho do seu antecessor, o Gameboy Advance(GBA), na parte inferior,e uma para seu próprio formato de cartucho na parte superior.\\
+{\bf Processadores:} Possui dois processadores ARM, um ARM946E-S a 67MHz, que é o processador principal, responsável pelo loop de jogo e renderização de vídeo e um coprocessador ARM7TDMI a 33MHz, responsável pelo som, wi-fi, e, quando em modo GBA, diminui seu clock para 16MHz, e passa a ser responsável pelo processamento principal.\\
+{\bf Memória:} Possui 4MiB de RAM principal, expansíveis através da entrada de Gameboy Advance, no entanto, essa expansão só foi usada em jogos oficiais pelo Opera Browser.\\
+{\bf Wireless:} Possui uma conexão IEEE802.11b, compatível com encriptação por WEP. WPA e WPA2 não são suportadas. Essa conexão também pode ser usada para comunicação entre consoles.\\
 
-Nintendo DS Lite:
-Peso: 218 gramas
-Dimensões: 133mm x 73.9mm x 21.87mm
-Telas: Mesma especificação que o original, no entanto, possui quatro níveis de iluminação que podem ser reguladas por software. A tela também possui um contraste melhor que o original.
+\noindent\large{\bf Nintendo DS Lite:}\\
+{\bf Peso:} 218 gramas\\
+{\bf Dimensões:} 133mm x 73.9mm x 21.87mm\\
+{\bf Telas:} Mesma especificação que o original, no entanto, possui quatro níveis de iluminação que podem ser reguladas por software. A tela também possui um contraste melhor que o original.\\
 Existem algumas diferenças em relação ao original, como a mudança do chip que controla o Wireless, o controlador do touch também é ligeiramente diferente, mas para fins práticos, o resto da configuração é igual ao original.
 
 \section{Desenvolvimento}
@@ -154,12 +154,13 @@ Em cima do devkitArm existe a libnds, feita especificamente para o hardware do D
 Nesse caso, usamos a PALib, uma biblioteca escrita com intenção de facilitar o desenvolvimento de jogos em duas dimensões, que usem Sprites e mapas de fundo, que é o nosso caso.
 Ainda assim, o uso dessas ferramentas permanece um mistério para a maioria, já que o jeito como as coisas são feitas (inclusões de imagens, geração dessas imagens e etc) é bem diferente de como é feito num programa normal, de desktop. E daí entra o conjunto de ferramentas que desenvolvemos. Como as ferramentas são, em sua maioria, visuais, o uso dessas ferramentas para criação assustam menos do que um conjunto pré-definido de lugares onde escrever arquivos e tipos de arquivos desconhecidos ao usuário.
 
-\chapter{A criação do jogo\label{workflow}}
+\chapter{A criação do jogo\label{cap:workflow}}
 
-Um jogo necessita de algumas partes constituintes, como por exemplo, suas fases e cenários, seus ítens, inimigos e personagem principal. No caso, tentamos cobrir essas partes em algumas ferramentas diferentes.
+Um jogo necessita de algumas partes, como por exemplo, suas fases e cenários, seus ítens, inimigos e personagem principal. Tentamos cobrir essas partes em algumas ferramentas diferentes.
 
-Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases aparecem encadeadas para o usuário.
-Depois, o usuário cria os 
+Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases aparecerão encadeadas para o jogador, quando ele as exportar para o formato aceito pelo DS.
+
+Depois, o usuário usa a SpriteTool para criar tudo relacionado aos sprites do jogo, sejam eles do personagem, dos inimigos ou de itens. Ela serve para adicionar os vários frames que compõe a animação, e encadear a animação.
 
 \chapter{A criação das ferramentas\label{cap:engine}}
 

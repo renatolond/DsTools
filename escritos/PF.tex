@@ -35,12 +35,14 @@
 
 \usepackage{color}
 \usepackage{xcolor}
-\usepackage{caption}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{xunxos-utp}
+\usepackage{caption}
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.98\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
 
 \makeatletter
 \usepackage{babel}
@@ -48,6 +50,7 @@
 \begin{document}
 
 \autor{Renato dos Santos Cerqueira}
+\coautor{Felipe Pedrosa Martinez}
 \titulo{Title Placeholder}
 \orientador{Adriano Joaquim de Oliveira Cruz}
 \comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade 
@@ -56,12 +59,12 @@ Federal do Rio de Janeiro.}
 \local{Rio de Janeiro - RJ, Brasil}
 \data{21/12/2012}
 
-\capa
-\folhaderosto
+\Ncapa
+\NFolhaDeRosto
 
 \begin{folhadeaprovacao}
 Monografia de Projeto Final de Graduação sob o título \textit{``\ABNTtitulodata''},
-defendida por \ABNTautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
+defendida por \ABNTautordata e \ABNTcoautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
 Estado do Rio de Janeiro, pela banca examinadora constituída pelos
 professores: \setlength{\ABNTsignthickness}{0.4pt}
 
@@ -104,22 +107,28 @@ da mesma.
 
 \section{Objetivo deste trabalho}
 
-É comum ver retrospectivas lembrando da evolução dos jogos ao longo dos últimos anos. Jogos eletrônicos, como é sabido, são coisas relativamente recentes, sendo o primeiro exemplo conhecido de 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \\\cite{2455992}.
+A área de jogos eletrônicos é uma área relativamente nova, se comparada a outros ramos da ciência da computação. No entanto, por mais que compreenda conceitos importantes de computação, engloba conceitos importantes que fogem do seu escopo. Para o desenvolvimento de um jogo eletrônico, além de conhecimentos de linguagens de programação, algoritmos e estruturas de dados, interface humano-computador, inteligência artifical, etc; é preciso considerar aspectos mais subjetivos que dizem respeito a um jogo de forma geral, seja ele eletrônico ou não. O gameplay, ou a mecânica do jogo, ou seja, a forma com que o jogo vai se desenrolar e o seu funcionamento, é um exemplo claro de que o seu desenvolvimento e sua concepção vão muito além do que pode ser programado, compilado e executado em um computador.
 
-No entanto, muita coisa mudou nas poucas décadas da existências dos jogos eletrônicos. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação \cite{PrimeiroDevName}.
+É possível observar o crescimento da área se notarmos que o primeiro exemplo conhecido de jogo eletrônico aparece em 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \\\cite{2455992}. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação \cite{PrimeiroDevName}.
 
-Hoje em dia, porém, a indústria de jogos sendo a grande indústria que é, conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
+Mas observamos que com a tecnologia cada vez mais aprimorada, é possível vermos conceitos básicos que definiam os jogos daquela época serem trocados por formas cada vez mais rebuscadas. Podemos observar o desenvolvimento de novas áreas de jogos, onde antes haviam poucos estilos bem definidos, como corrida, luta e aventura, hoje há muitos mais, há jogos casuais, sociais e de multiplay massivo.
 
-Neste trabalho o que tentamos fazer é nos inserir um pouco no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa tão grande cadeia de trabalho: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, tentamos criar um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. E tentamos fazer com que a engine que roda o jogo seja mais fácil de reutilizar através de ferramentas de criação de fases e de configuração do personagem, itens, dentre outras coisas que compõe o mundo do jogo.
+Hoje em dia a indústria de jogos conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
 
-Nosso objetivo, porém, é fazer o papel do desenvolvedor. E somente criar as ferramentas, imaginando como os outros times as usariam.
+Neste trabalho o que nos propomos a fazer é nos inserir no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa grande cadeia de desenvolvimento: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, criando um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. Para isso, desenvolvemos uma engine, responsável por controlar todas as partes envolvidas no funcionamento do jogo como áudio, vídeo, estruturas de dados, controle de personagens, fases, itens etc. Parte do nosso objetivo é tornar esta engine  simples e de fácil reutilização. Isto foi feito através de ferramentas de criação e configuração dos componentes pertinentes ao mundo do jogo.
+
+Nos propomos a fazer o papel do desenvolvedor: Criar as ferramentas, imaginando como os outros times as usariam e aprimorando ao máximo para esse fim.
 
 \section{Estrutura da monografia}
 
 No capítulo~\ref{cap:engine} é apresentado o estado da arte
 na área de segurança de redes ...
 
-\chapter{O Hardware do Nintendo DS\label{cap:hardds}}
+\chapter{Desenvolvendo para o Nintendo DS\label{cap:hardds}}
+
+\section{Motivação}
+
+Há poucos trabalhos que desenvolvam para plataformas diferentes do PC, seja pelo maior número de usuários da plataforma, maior versatilidade de ferramentas de desenvolvimento ou mesmo maior facilidade para encontrar documentação relativa ao desenvolvimento. A nossa motivação, além dessa pequena quantidade de trabalhos, é a de termos em nossas mãos, num console real, algo funcional feito por nossas mãos, e ao desenvolvermos as ferramentas, levarmos essa possibilidade para mais pessoas. Apesar das dificuldades no caminho.
 
 \section{Especificações}
 
@@ -145,13 +154,16 @@ Existem algumas diferenças em relação ao original, como a mudança do chip qu
 
 \section{Desenvolvimento}
 
-O desenvolvimento no DS segue os mesmos moldes de desenvolvimento em consoles diversos: a Nintendo disponibiliza unidades especiais, de desenvolvimento, para os desenvolvedores licenciados. Essas unidades especiais são compostas de um console e uma unidade para debug, de modo que o jogo sendo desenvolvido possa ser enviado imediatamente para a unidade conectada e debugada num console que é quase igual ao original. A diferença dessa unidade para a unidade que é comercializada é principalmente no tamanho da memória principal, que passa de 4Mb para 8Mb.
+O desenvolvimento oficial no DS segue os mesmos moldes do desenvolvimento em consoles diversos: a Nintendo possui um time interno chamado de Intelligent Systems Co., Ltd. que é responsável pelas ferramentas de desenvolvimento para vários consoles da Nintendo, dentre eles, o Nintendo DS. O desenvolvedor interessado pode entrar em contato com a empresa em busca das ferramentas, que incluem uma unidade especial que é conectada ao computador por meio de uma porta USB. Essa unidade possui o dobro de memória de uma unidade normal, para facilitar o Debug. No entanto, para adquiri-las, é necessário assinar um Acordo de Confidencialidade (do inglês, Non-Disclosure Agreement), que não permite que se comente ou escreva sobre esses kits de desenvolvimento. Por causa disto, é difícil encontrar mais detalhes acerca do funcionamento dessas unidades.
 
-No entanto, normalmente, desenvolvedores pequenos não tem acesso ao kit de desenvolvimento oficial, seja por causa dos altos custos para adquirir o hardware, seja pela dificuldade de adquirir as licenças. Nesse caso, cabe recorrer ao desenvolvimento não oficial, apelidado de Homebrew. A cadeia de ferramentas usada é chamada devkitArm. O devkitArm serve para compilar programas em C e C++ para consoles com processadores ARM. 
+No entanto, normalmente, desenvolvedores pequenos não tem acesso ao kit de desenvolvimento oficial, seja por causa dos altos custos para adquirir o hardware, seja pela dificuldade de adquirir as licenças. Por isso não é fácil ver desenvolvedores pequenos publicando jogos para consoles.
+
+Para nós, cabe recorrer ao desenvolvimento não oficial, apelidado de Homebrew. A cadeia de ferramentas usada é chamada devkitArm. Ela serve para compilar programas em C e C++ para consoles com processadores ARM. Ao contrário do desenvolvimento oficial, não é possível produzir cartuchos de jogos Homebrew. Para testarmos, no entanto, podemos fazer uso de emuladores ou de uma unidade normal com uso de um flash cart, que não é suportado pela nintendo.
 
 Em cima do devkitArm existe a libnds, feita especificamente para o hardware do DS. São funções de baixo nível que acessam todo o hardware: som, video, wireless, controle, e outras funções de hardware. O desenvolvimento nessa biblioteca não é exatamente fácil, já que muitas vezes é necessário o uso de endereços de memória, cópias diretas da memória para a memória de vídeo, dentre outras coisas que dificultam o desenvolvimento. Assim, surge em cima da libnds algumas bibliotecas que facilitam o uso.
 
 Nesse caso, usamos a PALib, uma biblioteca escrita com intenção de facilitar o desenvolvimento de jogos em duas dimensões, que usem Sprites e mapas de fundo, que é o nosso caso.
+
 Ainda assim, o uso dessas ferramentas permanece um mistério para a maioria, já que o jeito como as coisas são feitas (inclusões de imagens, geração dessas imagens e etc) é bem diferente de como é feito num programa normal, de desktop. E daí entra o conjunto de ferramentas que desenvolvemos. Como as ferramentas são, em sua maioria, visuais, o uso dessas ferramentas para criação assustam menos do que um conjunto pré-definido de lugares onde escrever arquivos e tipos de arquivos desconhecidos ao usuário.
 
 \chapter{A criação do jogo\label{workflow}}

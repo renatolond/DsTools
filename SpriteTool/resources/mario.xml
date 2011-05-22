@@ -1,0 +1,9 @@
+<!DOCTYPE xmldocument>
+<SpriteTool>
+<Sprite name="Mario" sizex="8" sizey="8">
+<Frame path="small_mario_slices-0.png" id="0"/>
+<Frame path="small_mario_slices-1.png" id="1"/>
+<Frame path="small_mario_slices-2.png" id="2"/>
+<Frame path="small_mario_slices-3.png" id="3"/>
+</Sprite>
+</SpriteTool>

@@ -368,7 +368,9 @@ void MainWindow::showFrame(int i)
 {
     scene->clear();
 
-    scene->addPixmap(QPixmap::fromImage(*sprite.getFrame(i)));
+    QImage img = * sprite.getFrame(i);
+
+    scene->addPixmap(QPixmap::fromImage(img.scaled(64,64,Qt::KeepAspectRatio,Qt::FastTransformation)));
 
     this->ui->gv_Canvas->setScene(scene);
     this->ui->gv_Canvas->show();

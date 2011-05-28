@@ -12,9 +12,10 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QDir>
-#include <QWaitCondition>
-#include <QMutex>
 #include <QTimer>
+#include <QRgb>
+#include <QColor>
+#include <QHash>
 
 #define PATH "../SpriteTool/resources/"
 
@@ -42,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_AddFrame,SIGNAL(clicked()),this,SLOT(addFrame()));
     connect(ui->btn_DeleteFrame,SIGNAL(clicked()),this,SLOT(delFrame()));
     connect(ui->btn_Animate,SIGNAL(clicked()),this,SLOT(animate()));
+    connect(ui->btn_Export,SIGNAL(clicked()),this,SLOT(exportDS()));
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timedAnimation()));
@@ -66,6 +68,7 @@ void MainWindow::disable(void)
     ui->btn_Animate->hide();
     ui->btn_Right->hide();
     ui->btn_Left->hide();
+    ui->btn_Export->hide();
 
     ui->btn_SaveProject->setDisabled(true);
     ui->btn_CloseProject->setDisabled(true);
@@ -82,6 +85,7 @@ void MainWindow::enable(void)
     ui->btn_Animate->show();
     ui->btn_Right->show();
     ui->btn_Left->show();
+    ui->btn_Export->show();
 
     ui->btn_SaveProject->setEnabled(true);
     ui->btn_CloseProject->setEnabled(true);
@@ -364,7 +368,9 @@ void MainWindow::showFrame(int i)
 {
     scene->clear();
 
-    scene->addPixmap(QPixmap::fromImage(*sprite.getFrame(i)));
+    QImage img = * sprite.getFrame(i);
+
+    scene->addPixmap(QPixmap::fromImage(img.scaled(64,64,Qt::KeepAspectRatio,Qt::FastTransformation)));
 
     this->ui->gv_Canvas->setScene(scene);
     this->ui->gv_Canvas->show();
@@ -418,16 +424,6 @@ void MainWindow::manageArrows()
         ui->btn_Right->setEnabled(true);
 }
 
-void MainWindow::sleep(unsigned long msecs)
-{
-      QWaitCondition w;
-      QMutex sleepmutex;
-
-      sleepmutex.lock();
-      w.wait(&sleepmutex, msecs);
-      sleepmutex.unlock();
-}
-
 void MainWindow::timedAnimation()
 {
    // qDebug() << "currentframe do timer:" << currentFrame;
@@ -459,6 +455,7 @@ void MainWindow::animate()
         ui->btn_Right->setDisabled(true);
         ui->btn_CloseProject->setDisabled(true);
         ui->btn_SaveProject->setDisabled(true);
+        ui->btn_Export->setDisabled(true);
 
         timer->setInterval(250);
         timer->start();
@@ -480,6 +477,7 @@ void MainWindow::animate()
         ui->btn_Right->setEnabled(true);
         ui->btn_CloseProject->setEnabled(true);
         ui->btn_SaveProject->setEnabled(true);
+        ui->btn_Export->setEnabled(true);
     }
 
 }
@@ -529,6 +527,182 @@ void MainWindow::addFrame()
 
     //procura e remove uma ocorrencia daquela string, se tiver
     toDeleteFiles.removeOne(imgname);
+}
+
+QRgb toR5G5B5A1(QColor c, QColor * neutral)
+{
+    if (c.alpha()!= 255)
+    {
+        c = *neutral;
+        c.setAlpha(255);
+    }
+
+  unsigned int color;
+  color = c.red();
+  color = color >> 3;
+  color = color << 3;
+  c.setRed(color);
+
+  color = c.green();
+  color = color >> 3;
+  color = color << 3;
+  c.setGreen(color);
+
+  color = c.blue();
+  color = color >> 3;
+  color = color << 3;
+  c.setBlue(color);
+
+  return c.rgba();
+}
+
+QVector<QRgb> get_palette(QImage &image)
+{
+    QVector<QRgb> palette;
+    QColor * m_neutral;
+
+  m_neutral = new QColor(Qt::magenta);
+  m_neutral->setAlpha(0); // 0 significa que a cor não é visível
+  m_neutral->setRed(255);
+  m_neutral->setGreen(0);
+  m_neutral->setBlue(255);
+
+  palette.push_back(m_neutral->rgba());
+
+  QColor c;
+  c.setRgba(toR5G5B5A1(*m_neutral, m_neutral));
+
+  QHash<QRgb,int> m_color_hash;
+
+  m_color_hash[c.rgba()] = 0;
+
+  for(int i(0); i < image.height(); i++)
+  {
+    for(int j(0); j < image.width(); j++)
+    {
+      c.setRgba(toR5G5B5A1(image.pixel(j, i), m_neutral));
+      if(!m_color_hash.contains(c.rgba()))
+      {
+        m_color_hash[c.rgba()] = palette.size();
+        palette.push_back(c.rgba());
+      }
+    }
+  }
+
+  return palette;
+}
+
+
+void MainWindow::exportDS()
+{
+    QVector<QImage> pImg;
+
+    QString pal, spr;
+
+    pal = "../gfx/bin/" + sprite.getNome() + "_Pal.bin";
+
+    // exporting palette
+    QFile file_pal(pal);
+
+    if (file_pal.open(QIODevice::WriteOnly | QFile::Truncate))
+    {
+        QDataStream out(&file_pal);
+
+        int k = 0;
+        //exporta a palette
+        for (int i = 0; i < sprite.size();  i++)
+        {
+
+            QVector<QRgb> palette = get_palette(*sprite.getFrame(i));
+
+            pImg.push_back(sprite.getFrame(i)->convertToFormat(QImage::Format_Indexed8, palette, Qt::AvoidDither));
+
+
+
+            for ( int j = 0 ; j < palette.size() ; j++ )
+            {
+                QColor c;
+                c = palette[j];
+
+                unsigned char high, low;
+                high = 1;
+                high = high << 5;
+                high += ( c.blue() >> 3 );
+                high = high << 2;
+                high += ( c.green() >> 6 );
+
+                unsigned char green = c.green() - ((c.green() >> 6)<<6);
+                low = (green >> 3);
+                low = low << 5;
+                low += ( c.red() >> 3);
+
+                out.writeRawData((const char *)&low, 1);
+                out.writeRawData((const char *)&high, 1);
+
+            }
+
+            k += palette.size();
+
+        }
+
+        for ( int j = k ; j < 256 ; j++ )
+        {
+            unsigned char zero;
+            zero = 0;
+            out.writeRawData((const char *)&zero, 1);
+            out.writeRawData((const char *)&zero, 1);
+        }
+    }
+
+    file_pal.close();
+
+    qDebug() << "Palette exportada!";
+
+    spr = "../gfx/bin/" + sprite.getNome() + "_Sprite.bin";
+
+    //exportar o sprite
+    QFile file_spr(spr);
+
+    if (file_spr.open(QIODevice::WriteOnly | QFile::Truncate))
+    {
+        QDataStream out(&file_spr);
+
+        int paletteBias = 0;
+
+        for (int it = 0; it < sprite.size(); it++)
+        {
+            QImage img = pImg.at(it);
+
+            for (int i = 0; i < sprite.getHeight()/8; i++)
+            {
+                for (int j = 0; j < sprite.getWidth()/8; j++)
+                {
+                    for (int ii = 0; ii < 8; ii++)
+                    {
+                        for (int jj = 0; jj < 8; jj++)
+                        {
+                            unsigned char color_index;
+
+                            if (img.pixelIndex(8*j+jj,8*i+ii) == 0)
+                                color_index = 0;
+                            else
+                                color_index = img.pixelIndex(8*j+jj,8*i+ii) + paletteBias;
+                            out.writeRawData((const char *)&color_index,1);
+                        }
+                    }
+
+
+                }
+            }
+
+            paletteBias += img.colorTable().size();
+        }
+    }
+
+    file_spr.close();
+
+    qDebug() << "Sprite Exportado!";
+
 }
 
 void MainWindow::saveImages()

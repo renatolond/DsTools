@@ -35,12 +35,14 @@
 
 \usepackage{color}
 \usepackage{xcolor}
-\usepackage{caption}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{xunxos-utp}
+\usepackage{caption}
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.98\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
 
 \makeatletter
 \usepackage{babel}
@@ -48,6 +50,7 @@
 \begin{document}
 
 \autor{Renato dos Santos Cerqueira}
+\coautor{Felipe Pedrosa Martinez}
 \titulo{Title Placeholder}
 \orientador{Adriano Joaquim de Oliveira Cruz}
 \comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade 
@@ -56,12 +59,12 @@ Federal do Rio de Janeiro.}
 \local{Rio de Janeiro - RJ, Brasil}
 \data{21/12/2012}
 
-\capa
-\folhaderosto
+\Ncapa
+\NFolhaDeRosto
 
 \begin{folhadeaprovacao}
 Monografia de Projeto Final de Graduação sob o título \textit{``\ABNTtitulodata''},
-defendida por \ABNTautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
+defendida por \ABNTautordata~e \ABNTcoautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
 Estado do Rio de Janeiro, pela banca examinadora constituída pelos
 professores: \setlength{\ABNTsignthickness}{0.4pt}
 
@@ -70,13 +73,13 @@ professores: \setlength{\ABNTsignthickness}{0.4pt}
 
 \begin{resumo}
 O objetivo deste trabalho é fazer um \textit{engine} de jogo para o \textit{videogame Nintendo DS\texttrademark} e também um editor de fases 
-e configurações, como seria feito numa equipe de desenvolvimento de um jogo grande, dando a possibilidade aos \textit{designers} 
+e configurações, como seria feito numa equipe de desenvolvimento de um jogo comercial, dando a possibilidade aos \textit{designers} 
 de fazerem seus \textit{sprites} e criarem as fases com eles, sem que fosse necessário mexer com códigos.
 \end{resumo}
 
 \begin{abstract}
 The objective of this paper is to make a game engine to the Nintendo DS\texttrademark system and a level and configurations editor, as it
-would be done in a development team in a big game, giving designers the possibility to make their sprites and create their levels 
+would be done in a development team in a comercial game, giving designers the possibility to make their sprites and create their levels 
 without touching actual source code.
 \end{abstract}
 
@@ -91,10 +94,8 @@ without touching actual source code.
 \chapter{Introdução\label{cap:introducao}}
 
 \vfill{}
-\begin{flushright}{}``\emph{Não há fé inabalável senão aquela que}\\
-\emph{pode encarar a razão face a face, em}\\
-\emph{todas as épocas da Humanidade.}''\\
-{\small Allan Kardec}\end{flushright}{\small \par}
+\begin{flushright}{}``\emph{Quote 1}''\\
+{\small Author1}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo são apresentados o objetivo desta monografia e a estrutura
@@ -104,22 +105,45 @@ da mesma.
 
 \section{Objetivo deste trabalho}
 
-É comum ver retrospectivas lembrando da evolução dos jogos ao longo dos últimos anos. Jogos eletrônicos, como é sabido, são coisas relativamente recentes, sendo o primeiro exemplo conhecido de 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \\\cite{2455992}.
+A área de jogos eletrônicos é uma área relativamente nova, se comparada a outros ramos da ciência da computação. No entanto, por mais que compreenda conceitos importantes de computação, engloba outros que fogem ao seu escopo. Para o desenvolvimento de um jogo eletrônico, além de conhecimentos de linguagens de programação, algoritmos e estruturas de dados, interface humano-computador, inteligência artifical, etc; é preciso considerar aspectos mais subjetivos que dizem respeito a um jogo de forma geral, seja ele eletrônico ou não. O gameplay, ou a mecânica do jogo, ou seja, a forma com que o jogo vai se desenrolar e o seu funcionamento, é um exemplo claro de que o seu desenvolvimento e sua concepção vão muito além do que pode ser programado, compilado e executado em um computador.
 
-No entanto, muita coisa mudou nas poucas décadas da existências dos jogos eletrônicos. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação \cite{PrimeiroDevName}.
+É possível observar o crescimento da área se notarmos que o primeiro exemplo conhecido de jogo eletrônico aparece em 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \\\cite{2455992}. Quando vemos jogos produzidos na época do Atari 2600 e Magnavox Odyssey, estes eram criações de um único desenvolvedor, muitas vezes em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs} que os desenvolvedores usavam para tentar identificar a sua criação \cite{PrimeiroDevName}.
 
-Hoje em dia, porém, a indústria de jogos sendo a grande indústria que é, conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
+Mas observamos que com a tecnologia cada vez mais aprimorada, é possível vermos conceitos básicos que definiam os jogos daquela época serem trocados por formas cada vez mais rebuscadas. Podemos observar o desenvolvimento de novas áreas de jogos, onde antes haviam poucos estilos bem definidos, como corrida, luta e aventura, hoje há muitos mais, há jogos casuais, sociais e de multiplay massivo.
 
-Neste trabalho o que tentamos fazer é nos inserir um pouco no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa tão grande cadeia de trabalho: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, tentamos criar um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. E tentamos fazer com que a engine que roda o jogo seja mais fácil de reutilizar através de ferramentas de criação de fases e de configuração do personagem, itens, dentre outras coisas que compõe o mundo do jogo.
+Hoje em dia, a indústria de jogos conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
 
-Nosso objetivo, porém, é fazer o papel do desenvolvedor. E somente criar as ferramentas, imaginando como os outros times as usariam.
+Neste trabalho, o que nos propomos a fazer é nos inserir no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa grande cadeia de desenvolvimento: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, criando um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. Para isso, desenvolvemos uma engine, responsável por controlar todas as partes envolvidas no funcionamento do jogo como áudio, vídeo, estruturas de dados, controle de personagens, fases, itens etc. Parte do nosso objetivo é tornar esta engine  simples e de fácil reutilização. Isto foi feito através de ferramentas de criação e configuração dos componentes pertinentes ao mundo do jogo.
+
+Nos propomos a fazer o papel do desenvolvedor: Criar as ferramentas, imaginando como os outros times as usariam e aprimorando ao máximo para esse fim.
+
+\section{Contexto}
+
+Nos propomos a criar ferramentas para desenvolver jogos em duas dimensões do tipo de plataforma. Mas, o que é exatamente um jogo de plataforma em duas dimensões? Podemos pensar em exemplos clássicos, como Super Mario World para o Super Nintendo, ou Sonic The Hedgehog para o Sega Mega Drive.
+
+Nem todos os jogos plataforma são em duas dimensões. Mas vamos aqui nos focar neles para facilitar o entendimento e o desenvolvimento de soluções. Nessa modalidade, uma característica comum presente em muitos jogos é o uso de \textit{tiles}, figuras de tamanho pré-definido, que compõem todo o mundo. \textit{Tile}, em inglês, significa ladrilho. Além disso, nesse tipo de jogo, todos os objetos costumam ser feitos da combinações de sprites e muitas vezes um sprite é usado mais de uma vez em diferentes posições, para vários inimigos, por exemplo. Ou seja, os tiles compõem o mundo, como ladrilhos, e os sprites o habitam.
+
+Podemos definir um jogo de plataforma 2D por suas características comuns: o jogador controla um personagem que se movimenta para os lados, pode ou não saltar, ter ou não algum tipo de arma e tem como objetivo percorrer uma série de fases derrotando pequenos inimigos, para ao final derrotar algum grande inimigo e recuperar alguma coisa. Claro que essa é uma definição bem aberta, e é nela que vamos tentar nos inspirar ao escrever o motor que será executado no Nintendo DS.
+
+Nosso objetivo é criar uma engine que leia algum tipo de arquivo de configuração, onde estarão detalhadas informações sobre quais são as imagens que compõem o personagem principal (ou personagens, no caso de haver uma escolha); informações sobre os inimigos como por exemplo a qual tipo de movimento ele obedece; descrição dos itens, como por exemplo qual efeito ele causa no personagem principal ou nos inimigos e informações sobre as fases, posicionamento de itens, inimigos e as imagens que as compõem.
 
 \section{Estrutura da monografia}
 
-No capítulo~\ref{cap:engine} é apresentado o estado da arte
-na área de segurança de redes ...
+Escrever aqui a estrutura da monografia.
 
-\chapter{O Hardware do Nintendo DS\label{cap:hardds}}
+\chapter{Desenvolvendo para o Nintendo DS\label{cap:hardds}}
+
+\vfill{}
+\begin{flushright}{}``\emph{Quote 2}''\\
+{\small Author 2}\end{flushright}{\small \par}
+\vfill{}
+
+Neste capítulo são apresentados a motivação para desenvolver para a plataforma, as suas especificações e como desenvolver.
+\newpage
+
+\section{Motivação}
+
+Há poucos trabalhos desenvolvidos para plataformas diferentes do PC, seja pelo mais restrito número de usuários, menor versatilidade de ferramentas e recursos associados ou mesmo pela maior dificuldade de encontrar documentação relativa ao desenvolvimento. A motivação para este trabalho é, dada essas circunstâncias, criar um facilitador para o desenvolvimento de jogos para um console real, desenvolvendo ferramentas para fomentar uma maior quantidade de trabalhos para a plataforma, apesar das dificuldades.
 
 \section{Especificações}
 
@@ -145,59 +169,195 @@ Existem algumas diferenças em relação ao original, como a mudança do chip qu
 
 \section{Desenvolvimento}
 
-O desenvolvimento no DS segue os mesmos moldes de desenvolvimento em consoles diversos: a Nintendo disponibiliza unidades especiais, de desenvolvimento, para os desenvolvedores licenciados. Essas unidades especiais são compostas de um console e uma unidade para debug, de modo que o jogo sendo desenvolvido possa ser enviado imediatamente para a unidade conectada e debugada num console que é quase igual ao original. A diferença dessa unidade para a unidade que é comercializada é principalmente no tamanho da memória principal, que passa de 4Mb para 8Mb.
+O desenvolvimento oficial no DS segue os mesmos moldes do desenvolvimento em consoles diversos: a Nintendo possui um time interno chamado de Intelligent Systems Co. Ltd. responsável pelas ferramentas de desenvolvimento para os consoles da empresa, dentre eles, o Nintendo DS. O desenvolvedor interessado pode entrar em contato em busca das ferramentas para tal, que incluem uma unidade especial conectada ao computador por meio de uma porta USB. Dentre outras particularidades, esta unidade possui o dobro de memória de uma unidade normal, de forma a facilitar o Debug. No entanto, para adquiri-las, é necessário assinar um Acordo de Confidencialidade (do inglês, Non-Disclosure Agreement), que não permite que se comente ou escreva sobre esses kits de desenvolvimento. Por causa disto, é difícil encontrar mais detalhes acerca de seu funcionamento.
 
-No entanto, normalmente, desenvolvedores pequenos não tem acesso ao kit de desenvolvimento oficial, seja por causa dos altos custos para adquirir o hardware, seja pela dificuldade de adquirir as licenças. Nesse caso, cabe recorrer ao desenvolvimento não oficial, apelidado de Homebrew. A cadeia de ferramentas usada é chamada devkitArm. O devkitArm serve para compilar programas em C e C++ para consoles com processadores ARM. 
+Em geral, desenvolvedores pequenos não têm acesso ao kit de desenvolvimento oficial, seja por causa dos altos custos para adquirir o hardware ou pela dificuldade de adquirir as licenças. Desta forma, a publicação de jogos para consoles do tipo ainda é rara no mercado atual de jogos.
 
-Em cima do devkitArm existe a libnds, feita especificamente para o hardware do DS. São funções de baixo nível que acessam todo o hardware: som, video, wireless, controle, e outras funções de hardware. O desenvolvimento nessa biblioteca não é exatamente fácil, já que muitas vezes é necessário o uso de endereços de memória, cópias diretas da memória para a memória de vídeo, dentre outras coisas que dificultam o desenvolvimento. Assim, surge em cima da libnds algumas bibliotecas que facilitam o uso.
+Para nós, cabe recorrer ao desenvolvimento não oficial, apelidado de Homebrew. A cadeia de ferramentas usada é chamada devkitArm. Ela serve para compilar programas em C e C++ para consoles com processadores ARM. Ao contrário do desenvolvimento oficial, não é possível produzir cartuchos de jogos Homebrew. Para testarmos, no entanto, podemos fazer uso de emuladores ou de uma unidade normal com uso de um flash cart, que não é suportado pela nintendo.
 
-Nesse caso, usamos a PALib, uma biblioteca escrita com intenção de facilitar o desenvolvimento de jogos em duas dimensões, que usem Sprites e mapas de fundo, que é o nosso caso.
-Ainda assim, o uso dessas ferramentas permanece um mistério para a maioria, já que o jeito como as coisas são feitas (inclusões de imagens, geração dessas imagens e etc) é bem diferente de como é feito num programa normal, de desktop. E daí entra o conjunto de ferramentas que desenvolvemos. Como as ferramentas são, em sua maioria, visuais, o uso dessas ferramentas para criação assustam menos do que um conjunto pré-definido de lugares onde escrever arquivos e tipos de arquivos desconhecidos ao usuário.
+Usando-se do devkitArm, existe a libnds, feita especificamente para o hardware do DS. São funções de baixo nível que acessam todo o hardware: som, video, wireless, controle, dentre outros. O desenvolvimento nessa biblioteca apresenta dificuldades dado o seu baixo nível. Muitas vezes é necessário o uso de endereços de memória, cópias diretas da memória principal para a memória de vídeo, dentre outros artifícios não usuais na programação atual. Dado este cenário, surgiram usando a libnds algumas bibliotecas em um nível acima.
 
-\chapter{A criação do jogo\label{cap:workflow}}
+Para o desenvolvimento deste trabalho, foi escolhida a PALib, uma biblioteca que visa facilitar o desenvolvimento de jogos em duas dimensões que usem Sprites e mapas de fundo.
 
-Um jogo necessita de algumas partes, como por exemplo, suas fases e cenários, seus ítens, inimigos e personagem principal. Tentamos cobrir essas partes em algumas ferramentas diferentes.
+Ainda assim, o uso dessas ferramentas não é trivial. Diferente de um programa convencional para desktop, as suas funcionalidades se apresentam em formas menos claras para o desenvolvedor: incluir ou gerar imagens, por exemplo, trazem um fluxo de trabalho diferente do esperado por um time de desenvolvimento convencional. 
 
-Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases aparecerão encadeadas para o jogador, quando ele as exportar para o formato aceito pelo DS.
+O conjunto de ferramentas desenvolvidos nesse trabalho tem como objetivo tornar mais transparente e intuitivo o desenvolvimento no cenário apresentado. As ferramentas desenvolvidas são, em sua maioria, visuais para que o seu uso se dê de uma forma simplificada.
 
-Depois, o usuário usa a SpriteTool para criar tudo relacionado aos sprites do jogo, sejam eles do personagem, dos inimigos ou de itens. Ela serve para adicionar os vários frames que compõe a animação, e encadear a animação.
-
-\chapter{A criação das ferramentas\label{cap:engine}}
+\chapter{As ferramentas\label{cap:ferramentas}}
 
 \vfill{}
-\begin{flushright}{}``\emph{Navegar é preciso, viver não.}''\\
-{\small Luís de Camões}\end{flushright}{\small \par}
+\begin{flushright}{}``\emph{Quote 3}''\\
+{\small Author 3}\end{flushright}{\small \par}
 \vfill{}
 
-Neste capítulo é apresentado o desenvolvimento da parte para o portátil Nintendo DS.
+Neste capítulo são apresentadas as ferramentas e o seu método de uso.
+\newpage
+
+\section{A criação do jogo\label{sec:workflow}}
+
+Um jogo necessita de algumas partes constituintes, como por exemplo, suas fases e cenários, seus ítens, inimigos e personagem principal. Com o uso das ferramentas apresentadas nesse trabalho, o usuário faria os seguintes passos:
+
+Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases no produto final aparecerão encadeadas.
+
+Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito a partir da SpriteTool. 
+\footnote{Precisamos pensar em como juntar as duas coisas. Como o usuário posiciona inimigos e itens no cenário? Há uma terceira ferramenta? Fazemos uma das duas ferramentas fazerem isso, adicionalmente?}
+
+\section{BGTool: A ferramenta de criação de cenários}
+
+A BGTool foi criada com o objetivo de permitir que o usuário importe seus tiles pré-existentes e a partir deles, desenvolva um novo cenário e consiga exportar esse cenário para o formato do Nintendo DS. 
+
+Ao começar um novo projeto, o usuário pode escolher quantas camadas de background o cenário sendo criado terá. O Hardware do DS tem suporte a até cinco camadas de background, no entanto, é possível o uso de menos camadas do que isso. Com as várias camadas, porém, o usuário pode criar uma ilusão de movimento em profundidades diferentes, um recurso conhecido como rolamento em Paralaxe.\footnotemark
+
+\footnotetext{Rolamento em Paralaxe é uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.}
+
+Além disso, o usuário também especifica o tamanho do novo mapa. Esse novo mapa não tem limitação quanto ao seu tamanho, exceto ter suas dimensões múltiplas de oito, assim usamos tiles de tamanho 8x8, o mais simples de ser utilizado no DS.
+
+Ao importar os tiles, o usuário pode usá-los para editar o mapa dos cenários. Uma paleta é gerada automaticamente pela ferramenta a partir dos tiles que o usuário carrega. A ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em tiles, dividindo a imagem em partes de 8x8 e eliminando as partes que são iguais. Como o DS suporta espelhamento na horizontal e na vertical de um tile, verificamos então se o tile em questão sendo avaliado é igual a um dos tiles existentes em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos.
+
+Como armazenamos os sprites como uma imagem, não há um algoritmo de hash para essa imagem disponível no qt, por isso, fazemos uma busca pelo vetor de imagens comparando, manualmente, as imagens geradas com o espelhamento com as imagens que já existem. Embora esse seja um processo relativamente custoso, com O(n) para cada inserção, ignoramos por ora esse custo.
+
+Com os tiles já importados, o usuário pode então construir os mapas que compõe a fase nas abas relativas as várias camadas, e ter uma idéia de como ficará a versão final a partir da aba que mostra a composição das abas existentes.
+
+O projeto pode ser salvo, nesse caso, guardamos o projeto num arquivo XML com um formato delimitado para que suporte todas as ferramentas. A BGTool guarda suas informações num nó BGTool abaixo do nó raiz do documento do projeto. Lá, ficam organizadas suas informações das diversas fases e camadas em cada fase.
+
+A qualquer momento, o usuário pode exportar o que já está pronto para o DS, esse é um projeto transparente em que criamos os arquivos necessários para a execução da fase criada pelo usuário. São criados três arquivos, um arquivo Pal, que contém a paleta, um arquivo Tile que contém os tiles, indexados pela paleta e um arquivo Map, que contém o mapa, indexado pelos tiles.
+
+Todos os três arquivos são binários e obedecem a um formato delimitado pela PALib e suas funções que coordenam o carregamento de cenários.
+
+Uma breve explicação desses formatos é a seguinte:
+
+\begin{itemize}
+ \item Arquivo Pal\\
+ Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. Precisam haver 256 cores, mesmo que o arquivo seja inflado de cores falsas. O Formato usado no arquivo é A1B5G5R5, o que significa que há um bit para o caso da cor ser transparente, 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência. (O padrão sendo o Magenta)
+ \item Arquivo Tiles\\
+ Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal. Neste arquivo, os tiles são escritos em blocos (vetores) de 64 bits. 
+ \item Arquivo Map\\
+ Neste arquivo, fica o mapa do background, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na vertical. Os bits restantes indicam qual paleta está sendo usada para o mapa em questão, ele não é usado nos modos em que só há uma paleta, ou seja, 256 cores.
+ \item Arquivo .c\\
+ Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
+\end{itemize}
+
+A conversão do arquivo de imagem é feita ao longo da BGTool, inicialmente, quando o usuário carrega uma nova imagem, essa imagem é convertida para uma imagem de 256 cores. Idealmente, devido as diferenças de cor, a sugestão é que o usuário já carregue tiles limitados em 256 cores, e no caso de carregar mais de um conjunto de tiles, que estes tenham a mesma paleta.
+
+Depois dessa conversão inicial, todas as ações no programa são feitas usando a paleta gerada na fase de carregamento. Na exportação, a paleta é exportada diretamente, simplesmente a colocamos para o arquivo binário.
+
+Os tiles, quando exportados, também não necessitam de preocupação adicional. Sua conversão para o formato binário apenas envolve obter o indice da cor de cada pixel de cada tile e escrevê-lo no arquivo binário.
+
+O mapa é o que envolve a maior complicação. Internamente na ferramenta, armazenamos o mapa como uma matriz de estruturas do tamanho do cenário, onde a estrutura armazena o indice do tile daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos. Então obtemos essa transformação e jogamos para o formato discutido acima e exportamos isso para o arquivo binário.
+
+Por fim, depois de exportados, esses arquivos estarão prontos para serem usados num estágio posterior e inseridos no jogo final.
+
+\section{SpriteTool: A ferramenta de criação de sprites}
+
+A SpriteTool foi criada com o objetivo de a partir de simples imagens, gerar sprites para o desenvolvimento de um jogo completo executável no Nintendo DS. O objetivo da ferramenta é criar um ambiente para o usuário, no qual ele não tenha que lidar com particularidades do desenvolvimento que não sejam pertinentes a criação do sprite em si.
+
+Além de permitir a portabilidade das imagens para o Nintendo DS, transformando-as em sprites do jogo no formato reconhecido pelo console, a SpriteTool gera um arquivo de projeto no formato XML, que pode ser reconhecido pelas outras ferramentas desenvolvidas neste trabalho. A integração entre estas ferramentas é feita respeitando protocolos pré-estabelecidos de escrita e leitura nestes arquivos, de forma transparente para o usuário.
+
+Ao começar um novo projeto, uma instância de sprite é criada, mesmo que ainda não tenha sido adicionada nenhuma imagem. É importante salientar que o termo “Sprite” neste escopo, engloba uma série de conceitos que vão além de um simples arquivo de imagem. São eles: informações relativas ao tamanho da imagem, uma paleta de cores, informações sobre transparência e enfim os frames do sprite – que são as imagens em si.
+Algumas destas informações são requeridas para a criação do projeto de sprite, como o nome do sprite e as dimensões das imagens que servirão como frames da animação deste. O programa oferece uma gama de formatos de sprite para o usuário escolher, respeitando as restrições das bibliotecas e do hardware do DS sobre as imagens que podem ser usadas como sprites.
+
+\textsc{\textbf{Inserir screenshot mostrando a tela do Create New Sprite com as opções de tamanho de imagens ou explicitar em forma de lista quais são elas?}}
+
+Criado um novo projeto de sprite, o usuário tem a possibilidade de adicionar novas imagens a ele. Além de permitir que o usuário busque uma imagem compatível com o tamanho já definido, o programa cria uma pasta de projeto e mantém uma cópia de cada imagem adicionada lá de forma a permitir uma maior portabilidade de uso, eliminando o uso de caminhos específicos para os arquivos fontes das imagens selecionadas. De forma análoga, as imagens relativas aos frames deletados do projeto são removidas desta pasta que encapsula apenas os arquivos necessários para o funcionamento do SpriteTool.
+
+Com a ferramenta, ainda é possível pré-visualizar a animação do sprite, provendo ao usuário uma ideia do comportamento do mesmo dentro do jogo. Ainda que esta  visualização não ofereça suporte aos eventos normalmente associados com cada parte da animação, como por exemplo o personagem pular ao ser apertado o botão de pulo, ela é um feedback importante para a definição da animação, permitindo verificar o quão fluídos os movimentos do personagem estão.
+
+Depois de adicionar as imagens que vão compor o sprite e de validar o resultado da animação, o fluxo de trabalho para o usuário termina salvando o projeto e exportando para o formato compatível com as especificações de sprite do Nintendo DS/PALib. Todo o processamento feito ao executar estas duas funções é transparente a ele. 
+
+\textsc{\textbf{Fica melhor falar que as especificações são do ds ou da lib? Acaba que são um pouco dos dois... mas fiquei na duvida aqui. Fica pra mudar depois}}
+
+\textsc{\textbf{-- falar especificamente de como a arvore do XML é montada na hora de salvar}}
+
+Ao salvar o projeto, os dados relativos ao sprite serão salvos em um arquivo XML. A estrutura deste arquivo pode ser entendida na forma de uma árvore, e desta forma, adicionar um novo projeto de sprite a ele seria como criar um novo ramo, com as informações relativas ao projeto inteiro guardadas no primeiro nó deste ramo e os frames, cada um com suas particularidades, organizados como filhos dele.
+
+Há ainda a possibilidade de sobrescrever um arquivo XML já existente e isso pode acontecer de diversas formas: 
+
+No primeiro caso, seja um arquivo que nunca tenha sido aberto pelo SpriteTool. O procedimento, então, é criar um novo ramo na raiz do arquivo delimitado pelas tag \textless SpriteTool\textgreater~e \textless /SpriteTool\textgreater. Assim, delimitamos a área onde serão armazenadas as informações que dizem respeito aos projetos de sprites. Cada um destes projetos será armazenado de forma análoga, com o delimitador \textless Sprite\textgreater~contendo as informações referentes a cada projeto que o usuário deseja armazenar naquele mesmo arquivo. 
+
+No segundo caso, o SpriteTool verifica que já existe tags pertinentes ao seu funcionamento no arquivo, e é feita uma busca usando o nome do projeto atual como chave para verificar se este se trata de um sprite que está sendo alterado ou um novo sprite a ser adicionado naquele arquivo de configuração. Dependendo do resultado da busca, duas ações podem ser executadas: alterar as configurações do projeto de sprite que está sendo modificado, e logo existe no arquivo, ou inserir um novo dentro da área delimitada para uso do SpriteTool.
+
+\textsc{\textbf{inserir imagem com exemplo do arquivo XML}}
+
+\textsc{\textbf{-- falar que é análogo na hora de abrir e discursar um pouco}}
+
+Da mesma forma que o SpriteTool suporta a possibilidade de armazenar várias informações de projeto em um mesmo arquivo XML, ao abri-lo, uma busca é feita no mesmo e uma lista de projetos de sprite compatíveis é mostrada ao usuário para que ele escolha em qual gostaria de trabalhar. Vale lembrar que como o arquivo é estruturado em forma de uma árvore, não se faz necessária uma busca exaustiva, bastando seguir os ramos pertinentes à busca. 
+
+\textsc{\textbf{Ver qual seção deve vir primeiro, a parte do spritetool ou a do bgtool... A segunda delas, deveria vir comentando que podem existir tags de arquivos de configuração de outras ferramentas lá e tudo mais.}}
+
+\textsc{\textbf{-- descrever o formato que o ds aceita}}
+\textsc{\textbf{-- falar especificamente de que forma a exportação é feita}}
+
+Por fim, o SpriteTool é o responsável por exportar o sprite para o formato que poderá ser usado no desenvolvimento do jogo dentro da engine. Para que isto aconteça, são necessários dois arquivos: nomedoprojeto\_Pal.bin e nomedoprojeto\_Sprite.bin
+
+O primeiro arquivo contém as informações relativas à paleta de cores daquele sprite. Isto deve ser feito para cada frame contido no projeto, da seguinte forma:
+
+Como o formato de cor aceito pelo Nintendo DS é o formato R5G5B5A1\footnotemark, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela hash tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. 
+\footnotetext{O formato R5G5B5A1 consiste em armazenar uma cor usando 5 bits para o canal vermelho, 5 bits para o canal verde, 5 bits para o canal azul e 1 bit para o canal alfa. Ou seja, 65536 cores.}
+
+Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. Após o processamento de todos os frames do projeto, o arquivo nomedoprojeto\_Pal.bin está completo e pronto para uso na engine.
+
+O segundo arquivo que é gerado nesta etapa, contem as informações referentes aos frames. Nele é descrito como cada frame é organizado, baseando-se nos índices das cores referenciadas na paleta do projeto. O formato no qual isto deve ser feito, exige que o programa itere os frames em blocos de 64 pixels (8 de altura por 8 de largura). O fim do processamento se dá junto ao término dos frames do projeto de sprite. 
+
+Com estes dois arquivos criados, a engine é capaz de reconhecer o sprite e animá-lo conforme conveniente. 
+
+\textsc{\textbf{Vale a pena um pseudo código aqui? Quer dizer, vai ter tudo no apêndice mesmo.}}
+
+\textsc{\textbf{Talvez essa frase aqui de baixo deva entrar numa seção sobre as dificuldades que tivemos durante o PF. ‘Desafios’ ou algo do tipo. Ficou meio solto aqui, mas achei que seria legal pelo menos mencionar esse tipo de coisa.}}
+
+Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos enquanto estavam sendo construídos, além de auxiliar na eliminação dos eventuais bugs no processo. 
+
+\chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
+
+\vfill{}
+\begin{flushright}{}``\emph{Nada se cria, nada se perde, tudo se
+transforma.}''\\
+{\small Lavousier}\end{flushright}{\small \par}
+\vfill{}
+
+Neste capítulo é apresentado as conclusões e alguns trabalhos futuros
+...
 \newpage
 
 
-\section{Introdução}
+\section{Conclusões}
 
-O que é exatamente um jogo de plataforma em duas dimensões? Podemos pensar em exemplos clássicos, como Super Mario World para o Super Nintendo, ou Sonic The Hedgehog para o Sega Mega Drive.
+{\bf Alguns itens interessantes para a conclusão de um projeto de graduação}
 
-Nem todos os jogos plataforma são em duas dimensões. Mas vamos aqui nos focar num jogo plataforma em duas dimensões para facilitar o entendimento e o desenvolvimento de soluções. Nessa modalidade, uma característica comum presente em muitos jogos é o uso de \textit{tiles}, figuras de tamanho pré-definido, que compõem todo o mundo, como um grande quebra-cabeças. Nesse tipo de jogo, todos os objetos costumam ser feitos da combinações de sprites e muitas vezes um sprite é usado mais de uma vez em diferentes posições, para vários inimigos, por exemplo. Já os tiles são usados para compor o cenário, como pequenos tijolos.
+Qual foi o resultado do seu trabalho? melhora na área, testes positivos ou negativos?
+Você acha que o mecanismo gerado produziu resultados interessantes?
+Quais os problemas que você encontrou na elaboração do projeto?
+E na implementação do protótipo?
+Que conclusão você tirou das ferramentas utilizadas? (heurísticas, prolog, ALE, banco de dados).
+Em que outras áreas você julga que este trabalho seria interessante de ser aplicado?
+Que tipo de continuidade você daria a este trabalho?
+Que tipo de conhecimento foi necessário para este projeto de graduação?
+Para que serviu este trabalho na sua formação?
 
-Podemos definir um jogo de plataforma 2D por suas características comuns: o jogador controla um personagem que se movimenta para os lados, pode ou não saltar, ter ou não algum tipo de arma e em geral o objetivo é percorrer uma série de fases derrotando pequenos inimigos, para ao final derrotar algum grande inimigo e recuperar alguma coisa. Claro que essa é uma definição bem aberta, e é nela que vamos tentar nos inspirar ao escrever a parte que será executada no Nintendo DS.
 
-Nosso objetivo é criar uma engine que leia algum tipo de arquivo de configuração, onde estarão detalhadas informações sobre quais são as imagens que compõem o personagem principal (ou personagens, no caso de haver uma escolha); informações sobre os inimigos como por exemplo a qual tipo de movimento ele obedece; descrição dos itens, como por exemplo qual efeito ele causa no personagem principal ou nos inimigos e informações sobre as fases, posicionamento de itens, inimigos e as imagens que as compõem.
+\bibliographystyle{abnt-alf}
+\bibliography{PF}
 
-\section{O processo criativo}
 
-Na última seção, definimos o nosso objetivo. Assim, sabemos as características que queremos alcançar ao fazer nosso jogo. Devemos então começar a buscar ferramentas para alcançar o nosso objetivo. Começamos então nos focando nos elementos mais básicos: vamos pensar em como desenharemos o mundo, ignorando a existência dos inimigos e do jogador. Vamos pensar em como desenharemos o plano de fundo e os elementos imóveis do mundo.
+\anexo
 
-Tentaremos seguir a idéia apresentada em \cite{mameri06culling}, cuja aplicação é direta para nós.
+\chapter{Figuras}
 
-Enquanto não criamos o editor de fases, faremos uma pequena demonstração carregando uma matriz manualmente em nosso código, bem simples, delimitada por caracteres que representam determinados \textit{tiles}.
+\begin{figure}[h]
+\centering
+\includegraphics{imgs/diferenca_cor.png}
+\caption[Comparação de cores]{Comparação de cores: Em cima, a escala sem os três bits menos significativos. Embaixo, com eles. Note a gradação mais suave na parte com mais bits.}
+\label{img:comparacao} 
+\end{figure}
 
-Estamos usando o kit de desenvolvimento \textit{homebrew}\footnotemark para o Nintendo DS, e com ele, a PALib, uma biblioteca que facilita o uso dos recursos de hardware do DS, que são um pouco limitados e curiosos, devido aos seus dois processadores e telas.
+\chapter{Listagens de código}
 
-\footnotetext{O termo Homebrew se refere ao desenvolvimento com o uso de um kit de desenvolvimento extra-oficial, produzido por uma comunidade. Muitas vezes o kit de desenvolvimento oficial tem custo proibitivo e é voltado somente para grandes empresas de desenvolvimento. Desenvolvedores que queiram desenvolver em casa se valem desses kits não-oficiais, muitas vezes de código aberto, que são desenvolvidos em geral fazendo algum tipo de engenharia reversa no hardware original.}
+\lstinputlisting[caption=Exemplo de arquivo de mapa de background .c:,label=list:exemplobg]{codigos/exemplo_bg.c}
 
-Ao investigarmos a fundo, descobrimos que o DS suporta mapas com \textit{tiles}, ou seja, podemos criar um mapa e depois desconstruí-lo em pequenas imagens que serão repetidas várias vezes. Vamos então descobrir como podemos usar dessa característica. 
+\lstinputlisting[caption=Lendo os tiles e os identificando (v1),label=list:tilesv1]{codigos/tiles.cpp}
 
-\subsection{Engine: O formato de background}
+\chapter{Achados e perdidos}
+
+\section{Engine: O formato de background}
 
 Investigamos o formato que é aceito pelo DS, em \cite{DSSpec}. Quando uma figura é colocada como plano de fundo, precisamos de quatro partes:
 
@@ -284,63 +444,6 @@ Assim, a nossa idéia para a colisão foi de implementarmos, no mapa de tiles, q
 Desse modo, nossa primeira preocupação é fazer a colisão entre o personagem e o mundo. Tentaremos fazer as rotinas o mais genéricas possíveis, para que possam ser aproveitadas para todos os nossos objetos dinâmicos. (Personagens, itens que andam e inimigos.)
 
 \footnote{http://unity3d.com/ - Engine para jogos em 3D.}
-
-\chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
-
-\vfill{}
-\begin{flushright}{}``\emph{Nada se cria, nada se perde, tudo se
-transforma.}''\\
-{\small Lavousier}\end{flushright}{\small \par}
-\vfill{}
-
-Neste capítulo é apresentado as conclusões e alguns trabalhos futuros
-...
-\newpage
-
-
-\section{Conclusões}
-
-{\bf Alguns itens interessantes para a conclusão de um projeto de graduação}
-
-Qual foi o resultado do seu trabalho? melhora na área, testes positivos ou negativos?
-Você acha que o mecanismo gerado produziu resultados interessantes?
-Quais os problemas que você encontrou na elaboração do projeto?
-E na implementação do protótipo?
-Que conclusão você tirou das ferramentas utilizadas? (heurísticas, prolog, ALE, banco de dados).
-Em que outras áreas você julga que este trabalho seria interessante de ser aplicado?
-Que tipo de continuidade você daria a este trabalho?
-Que tipo de conhecimento foi necessário para este projeto de graduação?
-Para que serviu este trabalho na sua formação?
-
-
-\bibliographystyle{abnt-alf}
-\bibliography{PF}
-
-
-\anexo
-
-\chapter{Figuras}
-
-\begin{figure}[h]
-\centering
-\includegraphics{imgs/diferenca_cor.png}
-\caption[Comparação de cores]{Comparação de cores: Em cima, a escala sem os três bits menos significativos. Embaixo, com eles. Note a gradação mais suave na parte com mais bits.}
-\label{img:comparacao} 
-\end{figure}
-
-\chapter{Listagens de código}
-
-\lstinputlisting[caption=Exemplo de arquivo de mapa de background .c:,label=list:exemplobg]{codigos/exemplo_bg.c}
-
-\lstinputlisting[caption=Lendo os tiles e os identificando (v1),label=list:tilesv1]{codigos/tiles.cpp}
-
-\chapter{Ferramentas utilizadas}
-
-\section{Qt}
-\label{ferramentas-qt}
-
-
-
 
 \chapter{Ferramentas utilizadas}
 

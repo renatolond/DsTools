@@ -28,8 +28,6 @@ public:
     void saveImages(void);
     void deleteImages(void);
 
-    void sleep(unsigned long msecs);
-
 private:
     Ui::MainWindow *ui;
 
@@ -53,6 +51,7 @@ private slots:
     void delFrame();
     void animate();
     void timedAnimation();
+    void exportDS();
 
 };
 

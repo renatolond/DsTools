@@ -72,11 +72,12 @@ void ScrollEngine::loadGraphics(){
     smallMario.spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
     smallMario.spr.move(0, screenSizeY-tileSizeY*5);
     smallMario.spr.priority(0);
-    smallMario.spr.addAnimation(1,3,SMALL_MARIO_ANIM_SPEED); // Walking
+    smallMario.spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
     smallMario.spr.addAnimation(4,4,0); // Drag
     smallMario.spr.addAnimation(5,5,0); // Jumping
     smallMario.spr.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
-
+	smallMario.spr.beginAnimation(0);
+    
     collisionController.addCollideablePlayer(&smallMario);
     collisionController.loadTileMap();
 

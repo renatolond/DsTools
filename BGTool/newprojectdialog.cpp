@@ -38,19 +38,19 @@ void cNewProjectDialog::on_buttonBox_accepted()
     error_msg.exec();
     return;
   }
-  if(x % m_global_data->sprite_width)
+  if(x % m_global_data->tile_width)
   {
     QMessageBox error_msg;
     error_msg.setText("A largura do background tem que ser multipla de " +
-                      QString::number(m_global_data->sprite_width) + ".");
+                      QString::number(m_global_data->tile_width) + ".");
     error_msg.exec();
     return;
   }
-  if(y % m_global_data->sprite_height)
+  if(y % m_global_data->tile_height)
   {
     QMessageBox error_msg;
     QString msg = "A altura do background tem que ser múltipla de " +
-        QString::number(m_global_data->sprite_height) + ".";
+        QString::number(m_global_data->tile_height) + ".";
     error_msg.setText(trUtf8(msg.toAscii()));
     error_msg.exec();
     return;

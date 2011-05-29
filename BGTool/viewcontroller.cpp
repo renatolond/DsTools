@@ -24,7 +24,6 @@ cViewController::cViewController(void)
   m_selected_sprite_rect = NULL;
   m_selected_sprite_view = NULL;
   m_sprites_view = NULL;
-  m_selected_sprite_square = NULL;
 
   m_selected_sprite_index = -1;
 
@@ -69,12 +68,12 @@ void cViewController::set_sprites_view(SpritesGraphicsView *sprites_view)
 
 void cViewController::update_editor_view(void)
 {
-  const QVector< QVector<sSpriteInfo> > &map_matrix = m_background->get_map_matrix();
-  const QVector<QImage *> &sprites = m_background->get_sprites();
+  const QVector< QVector<sMapInfo> > &map_matrix = m_background->get_map_matrix();
+  const QVector<QImage *> &sprites = m_background->get_tiles();
 
-  int editor_grid_height = map_matrix.size() * m_global_data->sprite_height +
+  int editor_grid_height = map_matrix.size() * m_global_data->tile_height +
       map_matrix.size() * m_global_data->grid_height;
-  int editor_grid_width = map_matrix[0].size() * m_global_data->sprite_width +
+  int editor_grid_width = map_matrix[0].size() * m_global_data->tile_width +
       map_matrix[0].size() * m_global_data->grid_width;
 
   QImage editor_grid = QImage(editor_grid_width, editor_grid_height, QImage::Format_Indexed8);
@@ -85,19 +84,19 @@ void cViewController::update_editor_view(void)
   {
     for(int j(0); j < map_matrix[i].size(); ++j)
     {
-      sSpriteInfo current = map_matrix[i][j];
-      QImage* sprite = sprites[current.sprite_index];
+      sMapInfo current = map_matrix[i][j];
+      QImage* sprite = sprites[current.m_tile_index];
       QImage transformed_sprite;
 
-      if(current.sprite_flipping == HORIZONTAL_FLIPPING)
+      if(current.m_tile_flipping == HORIZONTAL_FLIPPING)
       {
         transformed_sprite = sprite->transformed(QTransform().scale(-1, 1));
       }
-      else if(current.sprite_flipping == VERTICAL_FLIPPING)
+      else if(current.m_tile_flipping == VERTICAL_FLIPPING)
       {
         transformed_sprite = sprite->transformed(QTransform().scale(1, -1));
       }
-      else if(current.sprite_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
+      else if(current.m_tile_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
       {
         transformed_sprite = sprite->transformed(QTransform().scale(-1, -1));
       }
@@ -106,12 +105,12 @@ void cViewController::update_editor_view(void)
         transformed_sprite = QImage(*sprite);
       }
 
-      for(int m(0); m < m_global_data->sprite_height; ++m)
+      for(int m(0); m < m_global_data->tile_height; ++m)
       {
-        for(int n(0); n < m_global_data->sprite_width; ++n)
+        for(int n(0); n < m_global_data->tile_width; ++n)
         {
-          int editor_grid_row = (m_global_data->sprite_height+m_global_data->grid_height)*i + m;
-          int editor_grid_column = (m_global_data->sprite_width+m_global_data->grid_width)*j + n;
+          int editor_grid_row = (m_global_data->tile_height+m_global_data->grid_height)*i + m;
+          int editor_grid_column = (m_global_data->tile_width+m_global_data->grid_width)*j + n;
 
           editor_grid.setPixel(editor_grid_column, editor_grid_row,
                                transformed_sprite.pixelIndex(n, m));
@@ -196,7 +195,7 @@ void cViewController::update_palette_view(void)
 
 void cViewController::update_selected_sprite_view(void)
 {
-  const QVector<QImage *> &sprites = m_background->get_sprites();
+  const QVector<QImage *> &sprites = m_background->get_tiles();
 
   if(m_selected_sprite_index == -1)
     m_selected_sprite_index = sprites.size()-1;
@@ -214,15 +213,15 @@ void cViewController::update_selected_sprite_view(void)
   }
 
 
-  int pixel_width = m_selected_sprite_view->width() / m_global_data->sprite_width;
-  int pixel_height = m_selected_sprite_view->height() / m_global_data->sprite_height;
+  int pixel_width = m_selected_sprite_view->width() / m_global_data->tile_width;
+  int pixel_height = m_selected_sprite_view->height() / m_global_data->tile_height;
 
   int pixel_size = pixel_width;
   if(pixel_height < pixel_size)
     pixel_size = pixel_height;
 
-  QImage selected_sprite = QImage(pixel_size*m_global_data->sprite_width,
-                                  pixel_size*m_global_data->sprite_height,
+  QImage selected_sprite = QImage(pixel_size*m_global_data->tile_width,
+                                  pixel_size*m_global_data->tile_height,
                                   QImage::Format_Indexed8);
 
   selected_sprite.setColorTable(m_background->get_palette());
@@ -233,9 +232,9 @@ void cViewController::update_selected_sprite_view(void)
                                                             // first color
 
 
-  for(int i(0); i < m_global_data->sprite_height; ++i)
+  for(int i(0); i < m_global_data->tile_height; ++i)
   {
-    for(int j(0); j < m_global_data->sprite_width; ++j)
+    for(int j(0); j < m_global_data->tile_width; ++j)
     {
       for(int m(0); m < pixel_size; ++m)
         for(int n(0); n < pixel_size; ++n)
@@ -258,17 +257,17 @@ void cViewController::update_selected_sprite_view(void)
 
 void cViewController::update_sprites_view(void)
 {
-  const QVector<QImage *> &sprites = m_background->get_sprites();
+  const QVector<QImage *> &sprites = m_background->get_tiles();
 
   m_sprites_per_column = (sprites.size()/m_sprites_per_row);
   if(sprites.size() % m_sprites_per_row)
     ++m_sprites_per_column;
 
   int sprite_grid_width, sprite_grid_height;
-  sprite_grid_width = m_global_data->sprite_width * m_sprites_per_row +
+  sprite_grid_width = m_global_data->tile_width * m_sprites_per_row +
       m_sprites_per_row * m_global_data->grid_width;
 
-  sprite_grid_height = m_global_data->sprite_height * m_sprites_per_column +
+  sprite_grid_height = m_global_data->tile_height * m_sprites_per_column +
       m_sprites_per_column * m_global_data->grid_height;
 
 
@@ -291,13 +290,13 @@ void cViewController::update_sprites_view(void)
 
     for(int i(0); i < sprites.size(); ++i)
     {
-      for(int n(0); n < m_global_data->sprite_height; ++n)
+      for(int n(0); n < m_global_data->tile_height; ++n)
       {
-        for(int m(0); m < m_global_data->sprite_width; ++m)
+        for(int m(0); m < m_global_data->tile_width; ++m)
         {
           int sprite_grid_column, sprite_grid_row;
-          sprite_grid_column = (m_global_data->sprite_width+m_global_data->grid_width)*column + m;
-          sprite_grid_row = (m_global_data->sprite_height+m_global_data->grid_height)*row + n;
+          sprite_grid_column = (m_global_data->tile_width+m_global_data->grid_width)*column + m;
+          sprite_grid_row = (m_global_data->tile_height+m_global_data->grid_height)*row + n;
 
           sprite_grid.setPixel(sprite_grid_column, sprite_grid_row, sprites[i]->pixelIndex(m, n));
         }
@@ -374,7 +373,7 @@ void cViewController::sprites_view_clicked(int x, int y)
     selected_sprite_index = (selected_sprite_y*m_sprites_per_row) + selected_sprite_x;
   }
 
-  const QVector<QImage *> &sprites = m_background->get_sprites();
+  const QVector<QImage *> &sprites = m_background->get_tiles();
 
   // If the size of the sprites vector is not greater than the selected sprite index, then we
   // clicked on an empty space within the sprites pixmap
@@ -395,8 +394,8 @@ void cViewController::sprites_view_clicked(int x, int y)
   QPen pen;
   pen.setColor(Qt::yellow);
   pen.setWidth(2);
-  scene->addRect(selected_sprite_view_x, selected_sprite_view_y, m_global_data->sprite_width,
-                 m_global_data->sprite_height, pen);
+  scene->addRect(selected_sprite_view_x, selected_sprite_view_y, m_global_data->tile_width,
+                 m_global_data->tile_height, pen);
   m_selected_sprite_rect = dynamic_cast<QGraphicsRectItem *>(scene->itemAt(selected_sprite_view_x,
                                                                            selected_sprite_view_y));
 }
@@ -466,7 +465,7 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   QBitmap bit_mask = QBitmap(editor_pixmap.mask());
   QPainter bit_mask_painter;
 
-  const QVector<QImage *> &sprites = m_background->get_sprites();
+  const QVector<QImage *> &sprites = m_background->get_tiles();
   const QVector<QRgb> &palette = m_background->get_palette();
   int map_x, map_y;
 
@@ -479,7 +478,7 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   action->n_x = map_x;
   action->n_y = map_y;
 
-  eSpriteFlipping map_flipping;
+  eTileFlipping map_flipping;
   if(m_selected_sprite_vflip && m_selected_sprite_hflip)
     map_flipping = VERTICAL_AND_HORIZONTAL_FLIPPING;
   else if(m_selected_sprite_vflip)
@@ -506,9 +505,9 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   // Painter actions
 //  bit_mask_painter.begin(&bit_mask);
   {
-    for(int i(0); i < m_global_data->sprite_height; ++i)
+    for(int i(0); i < m_global_data->tile_height; ++i)
     {
-      for(int j(0); j < m_global_data->sprite_width; ++j)
+      for(int j(0); j < m_global_data->tile_width; ++j)
       {
         int color_index = original_selected_sprite.pixelIndex(j, i);
         QColor color = QColor::fromRgba(palette[color_index]);
@@ -535,14 +534,14 @@ void cViewController::editor_view_clicked_paint(int x, int y)
 
 void cViewController::get_sprite_coords_from_view_coords(int x, int y, int &map_x, int &map_y)
 {
-  map_x = x/(m_global_data->sprite_width+m_global_data->grid_width);
-  map_y = y/(m_global_data->sprite_height+m_global_data->grid_height);
+  map_x = x/(m_global_data->tile_width+m_global_data->grid_width);
+  map_y = y/(m_global_data->tile_height+m_global_data->grid_height);
 }
 
 void cViewController::get_view_coords_from_sprite_coords(int map_x, int map_y, int &x, int &y)
 {
-  x = map_x*(m_global_data->sprite_width+m_global_data->grid_width);
-  y = map_y*(m_global_data->sprite_height+m_global_data->grid_height);
+  x = map_x*(m_global_data->tile_width+m_global_data->grid_width);
+  y = map_y*(m_global_data->tile_height+m_global_data->grid_height);
 }
 
 void cViewController::set_selected_sprite_hflip(bool status)

@@ -10,8 +10,8 @@ struct sGlobalData
   int neutral_green;
   int neutral_blue;
 
-  int sprite_height;
-  int sprite_width;
+  int tile_height;
+  int tile_width;
 };
 
 #endif // GLOBALDATA_H

@@ -21,7 +21,7 @@ cBackground::cBackground(QString name, int size_x, int size_y, sGlobalData *glob
   empty_image.setColor(0, c.rgb());
   empty_image.fill(0);
   find_palette(empty_image);
-  find_sprites(empty_image);
+  find_tile(empty_image);
 }
 
 
@@ -83,98 +83,98 @@ void cBackground::find_palette(QImage &image)
   }
 }
 
-void cBackground::find_sprites(QImage &image)
+void cBackground::find_tile(QImage &image)
 {
 
-  QImage *empty_sprite = new QImage(m_global_data->sprite_width, m_global_data->sprite_height,
+  QImage *empty_tile = new QImage(m_global_data->tile_width, m_global_data->tile_height,
                       QImage::Format_Indexed8);
-  empty_sprite->setColorTable(m_palette);
-  empty_sprite->fill(0); // Primeiro índice da tabela de cores é sempre a cor neutra, transparente
+  empty_tile->setColorTable(m_palette);
+  empty_tile->fill(0); // Primeiro índice da tabela de cores é sempre a cor neutra, transparente
 
-  for(int i(0); i < (image.height() / m_global_data->sprite_height) ; ++i)
+  for(int i(0); i < (image.height() / m_global_data->tile_height) ; ++i)
   {
-    for(int j(0); j < (image.width() / m_global_data->sprite_width) ; ++j)
+    for(int j(0); j < (image.width() / m_global_data->tile_width) ; ++j)
     {
-      QImage *sprite = new QImage(m_global_data->sprite_width, m_global_data->sprite_height,
+      QImage *tile = new QImage(m_global_data->tile_width, m_global_data->tile_height,
                                   QImage::Format_Indexed8);
-      sprite->setColorTable(m_palette);
-      for(int k(0); k < m_global_data->sprite_height ; ++k)
+      tile->setColorTable(m_palette);
+      for(int k(0); k < m_global_data->tile_height ; ++k)
       {
-        for(int l(0); l < m_global_data->sprite_width ; ++l)
+        for(int l(0); l < m_global_data->tile_width ; ++l)
         {
-          int height_index = i*m_global_data->sprite_height + k;
-          int width_index = j*m_global_data->sprite_width + l;
+          int height_index = i*m_global_data->tile_height + k;
+          int width_index = j*m_global_data->tile_width + l;
           QColor c;
           c.setRgba(toR5G5B5A1(image.pixel(width_index, height_index), m_neutral));
-          sprite->setPixel(l, k, m_color_hash[c.rgba()]);
+          tile->setPixel(l, k, m_color_hash[c.rgba()]);
         }
       }
-      eSpriteFlipping sprite_flipping;
-      int sprite_index = insert_into_sprites(sprite, sprite_flipping);
-      push_back_map_matrix(i, sprite_index, sprite_flipping);
+      eTileFlipping tile_flipping;
+      int tile_index = insert_into_tiles(tile, tile_flipping);
+      push_back_map_matrix(i, tile_index, tile_flipping);
     }
   }
 
-  m_sprites.push_back(empty_sprite);
+  m_tile.push_back(empty_tile);
 }
 
-int cBackground::insert_into_sprites(QImage *sprite, eSpriteFlipping &sprite_flipping)
+int cBackground::insert_into_tiles(QImage *tile, eTileFlipping &tile_flipping)
 {
   QImage HFlip, VFlip, VHFlip;
 
-  HFlip  = sprite->transformed(QTransform().scale(-1,  1));
-  VFlip  = sprite->transformed(QTransform().scale( 1, -1));
-  VHFlip = sprite->transformed(QTransform().scale(-1, -1));
+  HFlip  = tile->transformed(QTransform().scale(-1,  1));
+  VFlip  = tile->transformed(QTransform().scale( 1, -1));
+  VHFlip = tile->transformed(QTransform().scale(-1, -1));
 
-  for(int i(0); i < m_sprites.size(); i++)
+  for(int i(0); i < m_tile.size(); i++)
   {
-    if((*sprite) == (*m_sprites[i]))
+    if((*tile) == (*m_tile[i]))
     {
-      sprite_flipping = NO_FLIPPING;
+      tile_flipping = NO_FLIPPING;
       return i;
     }
-    if(HFlip == (*m_sprites[i]))
+    if(HFlip == (*m_tile[i]))
     {
-      sprite_flipping = HORIZONTAL_FLIPPING;
+      tile_flipping = HORIZONTAL_FLIPPING;
       return i;
     }
-    if(VFlip == (*m_sprites[i]))
+    if(VFlip == (*m_tile[i]))
     {
-      sprite_flipping = VERTICAL_FLIPPING;
+      tile_flipping = VERTICAL_FLIPPING;
       return i;
     }
-    if(VHFlip == (*m_sprites[i]))
+    if(VHFlip == (*m_tile[i]))
     {
-      sprite_flipping = VERTICAL_AND_HORIZONTAL_FLIPPING;
+      tile_flipping = VERTICAL_AND_HORIZONTAL_FLIPPING;
       return i;
     }
   }
 
-  int index = m_sprites.size();
-  m_sprites.push_back(sprite);
-  sprite_flipping = NO_FLIPPING;
+  int index = m_tile.size();
+  m_tile.push_back(tile);
+  tile_flipping = NO_FLIPPING;
 
   return index;
 }
 
-void cBackground::push_back_map_matrix(int y, int sprite_index, eSpriteFlipping sprite_flipping)
+void cBackground::push_back_map_matrix(int y, int tile_index, eTileFlipping tile_flipping)
 {
   if(m_map_matrix.size() == y)
-    m_map_matrix.push_back(QVector<sSpriteInfo>());
-  sSpriteInfo sprite_info;
-  sprite_info.sprite_index = sprite_index;
-  sprite_info.sprite_flipping = sprite_flipping;
-  m_map_matrix[y].push_back(sprite_info);
+    m_map_matrix.push_back(QVector<sMapInfo>());
+  sMapInfo map_info;
+  map_info.m_tile_index = tile_index;
+  map_info.m_tile_flipping = tile_flipping;
+  m_map_matrix[y].push_back(map_info);
 }
 
 void cBackground::clear_background(void)
 {
-  int size = m_sprites.size();
+  int size = m_tile.size();
   for(int i(0); i < size; ++i)
   {
-    QImage *img = m_sprites.last();
+    QImage *img = m_tile.last();
     delete img;
-    m_sprites.pop_back();
+    m_tile.pop_back();
   }
 
   m_palette.clear();
@@ -193,7 +193,7 @@ void cBackground::import_image(QString path)
   clear_background();
   QImage image(path);
   find_palette(image);
-  find_sprites(image);
+  find_tile(image);
 }
 
 void cBackground::export_to_ds()
@@ -245,12 +245,12 @@ void cBackground::export_to_ds()
   if(file_tiles.open(QIODevice::WriteOnly | QFile::Truncate))
   {
     QDataStream out(&file_tiles);
-    for(QVector<QImage *>::iterator it = m_sprites.begin(); it != m_sprites.end(); ++it)
+    for(QVector<QImage *>::iterator it = m_tile.begin(); it != m_tile.end(); ++it)
     {
       QImage *pt = *it;
-      for(int i(0); i < m_global_data->sprite_height; ++i)
+      for(int i(0); i < m_global_data->tile_height; ++i)
       {
-        for(int j(0); j < m_global_data->sprite_width; ++j)
+        for(int j(0); j < m_global_data->tile_width; ++j)
         {
           unsigned char color_index = pt->pixelIndex(j, i);
           out.writeRawData((const char *)&color_index, 1);
@@ -271,18 +271,18 @@ void cBackground::export_to_ds()
       {
         unsigned char tile_index;
         unsigned char tile_flipping;
-        sSpriteInfo tile = m_map_matrix[i][j];
-        tile_index = (unsigned char) tile.sprite_index;
-        tile_flipping = ((tile.sprite_index & (1024+512)) >> 8);
-        if(tile.sprite_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
+        sMapInfo tile = m_map_matrix[i][j];
+        tile_index = (unsigned char) tile.m_tile_index;
+        tile_flipping = ((tile.m_tile_index & (1024+512)) >> 8);
+        if(tile.m_tile_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
         {
           tile_flipping |= 4 + 8; // bit 3 e 4
         }
-        if(tile.sprite_flipping == HORIZONTAL_FLIPPING)
+        if(tile.m_tile_flipping == HORIZONTAL_FLIPPING)
         {
           tile_flipping |= 4;
         }
-        if(tile.sprite_flipping == VERTICAL_FLIPPING)
+        if(tile.m_tile_flipping == VERTICAL_FLIPPING)
         {
           tile_flipping |= 8;
         }
@@ -315,7 +315,7 @@ void cBackground::export_to_ds()
     out << "" << m_name << "_Map," << endl;
     out << "{" << m_name << "_Pal}," << endl;
     out << endl;
-    out << m_sprites.size()*8*8 << "," << endl;
+    out << m_tile.size()*8*8 << "," << endl;
     out << "{" << map_matrix_height*map_matrix_width*2 << "}" << endl;
     out << "};" << endl;
   }
@@ -327,24 +327,24 @@ const QVector<QRgb>& cBackground::get_palette(void)
   return m_palette;
 }
 
-const QVector<QImage *>& cBackground::get_sprites(void)
+const QVector<QImage *>& cBackground::get_tiles(void)
 {
-  return m_sprites;
+  return m_tile;
 }
 
-const QVector< QVector<sSpriteInfo> >& cBackground::get_map_matrix(void)
+const QVector< QVector<sMapInfo> >& cBackground::get_map_matrix(void)
 {
   return m_map_matrix;
 }
 
 
-void cBackground::set_map_matrix(int x, int y, int sprite_index, eSpriteFlipping sprite_flipping)
+void cBackground::set_map_matrix(int x, int y, int tile_index, eTileFlipping tile_flipping)
 {
-  sSpriteInfo sprite_info;
-  sprite_info.sprite_index = sprite_index;
-  sprite_info.sprite_flipping = sprite_flipping;
+  sMapInfo map_info;
+  map_info.m_tile_index = tile_index;
+  map_info.m_tile_flipping = tile_flipping;
 
-  m_map_matrix[y][x] = sprite_info;
+  m_map_matrix[y][x] = map_info;
 }
 
 void cBackground::export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node)

@@ -19,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
   m_global_data->neutral_red = 255;
   m_global_data->neutral_blue = 255;
   m_global_data->neutral_green = 0;
-  m_global_data->sprite_height = 8;
-  m_global_data->sprite_width = 8;
+  m_global_data->tile_height = 8;
+  m_global_data->tile_width = 8;
   m_global_data->grid_height = 1;
   m_global_data->grid_width = 1;
 

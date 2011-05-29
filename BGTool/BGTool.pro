@@ -3,6 +3,7 @@
 # -------------------------------------------------
 TARGET = BGTool
 TEMPLATE = app
+QT += xml
 SOURCES += main.cpp \
     mainwindow.cpp \
     spritesgraphicsview.cpp \

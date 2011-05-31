@@ -56,8 +56,8 @@ void cDrawingTab::on_btConvert_clicked()
   m_view_controller->set_background(m_background);
   m_view_controller->set_editor_view(ui->visualizationView);
   m_view_controller->set_palette_view(ui->paletteView);
-  m_view_controller->set_selected_sprite_view(ui->selectedView);
-  m_view_controller->set_sprites_view(ui->spritesView);
+  m_view_controller->set_selected_tile_view(ui->selectedView);
+  m_view_controller->set_tiles_view(ui->tilesView);
 
   m_view_controller->update_views();
 }
@@ -65,11 +65,6 @@ void cDrawingTab::on_btConvert_clicked()
 void cDrawingTab::on_btPaint_toggled(bool checked)
 {
   m_view_controller->set_paint_mode(checked);
-}
-
-void cDrawingTab::on_btDump_clicked()
-{
-  m_view_controller->dump_map_matrix();
 }
 
 void cDrawingTab::on_btExportPng_clicked()
@@ -85,7 +80,7 @@ void cDrawingTab::on_btExport_clicked()
 void cDrawingTab::on_btHighlight_toggled(bool checked)
 {
   if(checked)
-    m_view_controller->highlight_selected_sprite();
+    m_view_controller->highlight_selected_tile();
   else
     m_view_controller->turn_off_highlight();
 }
@@ -97,10 +92,10 @@ void cDrawingTab::set_background(cBackground *background)
 
 void cDrawingTab::on_bt_hflip_toggled(bool checked)
 {
-  m_view_controller->set_selected_sprite_hflip(checked);
+  m_view_controller->set_selected_tile_hflip(checked);
 }
 
 void cDrawingTab::on_bt_vflip_toggled(bool checked)
 {
-  m_view_controller->set_selected_sprite_vflip(checked);
+  m_view_controller->set_selected_tile_vflip(checked);
 }

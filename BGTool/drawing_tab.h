@@ -31,7 +31,6 @@ private slots:
     void on_btHighlight_toggled(bool checked);
     void on_btExport_clicked();
     void on_btExportPng_clicked();
-    void on_btDump_clicked();
     void on_btPaint_toggled(bool checked);
     void on_btConvert_clicked();
     void on_bt_hflip_toggled(bool checked);

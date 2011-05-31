@@ -3,6 +3,7 @@
 #include "level.h"
 
 #include <QDomDocument>
+#include <QDomElement>
 #include <QFile>
 #include <QTextStream>
 

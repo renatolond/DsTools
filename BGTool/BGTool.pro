@@ -6,7 +6,7 @@ TEMPLATE = app
 QT += xml
 SOURCES += main.cpp \
     mainwindow.cpp \
-    spritesgraphicsview.cpp \
+    tiles_graphics_view.cpp \
     visualizationgraphicsview.cpp \
     logger.cpp \
     drawing_tab.cpp \
@@ -18,7 +18,7 @@ SOURCES += main.cpp \
     newprojectdialog.cpp \
     viewcontroller.cpp
 HEADERS += mainwindow.h \
-    spritesgraphicsview.h \
+    tiles_graphics_view.h \
     visualizationgraphicsview.h \
     logger.h \
     drawing_tab.h \

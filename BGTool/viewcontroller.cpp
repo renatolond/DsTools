@@ -11,7 +11,7 @@
 // Project libraries
 #include "background.h"
 #include "globaldata.h"
-#include "spritesgraphicsview.h"
+#include "tiles_graphics_view.h"
 #include "visualizationgraphicsview.h"
 // End of Project libraries
 
@@ -21,16 +21,16 @@ cViewController::cViewController(void)
   m_editor_view = NULL;
   m_global_data = NULL;
   m_palette_view = NULL;
-  m_selected_sprite_rect = NULL;
-  m_selected_sprite_view = NULL;
-  m_sprites_view = NULL;
+  m_selected_tile_rect = NULL;
+  m_selected_tile_view = NULL;
+  m_tiles_view = NULL;
 
-  m_selected_sprite_index = -1;
+  m_selected_tile_index = -1;
 
-  m_selected_sprite_vflip = false;
-  m_selected_sprite_hflip = false;
+  m_selected_tile_vflip = false;
+  m_selected_tile_hflip = false;
 
-  m_sprites_per_row = 4;
+  m_tiles_per_row = 4;
 }
 
 void cViewController::set_background(cBackground *background)
@@ -55,21 +55,21 @@ void cViewController::set_palette_view(QGraphicsView *palette_view)
   m_palette_view = palette_view;
 }
 
-void cViewController::set_selected_sprite_view(QGraphicsView *selected_sprite_view)
+void cViewController::set_selected_tile_view(QGraphicsView *selected_tile_view)
 {
-  m_selected_sprite_view = selected_sprite_view;
+  m_selected_tile_view = selected_tile_view;
 }
 
-void cViewController::set_sprites_view(SpritesGraphicsView *sprites_view)
+void cViewController::set_tiles_view(cTilesGraphicsView *tile_view)
 {
-  m_sprites_view = sprites_view;
-  m_sprites_view->set_view_controller(this);
+  m_tiles_view = tile_view;
+  m_tiles_view->set_view_controller(this);
 }
 
 void cViewController::update_editor_view(void)
 {
   const QVector< QVector<sMapInfo> > &map_matrix = m_background->get_map_matrix();
-  const QVector<QImage *> &sprites = m_background->get_tiles();
+  const QVector<sTileInfo> &tiles = m_background->get_tiles();
 
   int editor_grid_height = map_matrix.size() * m_global_data->tile_height +
       map_matrix.size() * m_global_data->grid_height;
@@ -85,24 +85,24 @@ void cViewController::update_editor_view(void)
     for(int j(0); j < map_matrix[i].size(); ++j)
     {
       sMapInfo current = map_matrix[i][j];
-      QImage* sprite = sprites[current.m_tile_index];
-      QImage transformed_sprite;
+      QImage* tile = tiles[current.m_tile_index].m_tile;
+      QImage transformed_tile;
 
       if(current.m_tile_flipping == HORIZONTAL_FLIPPING)
       {
-        transformed_sprite = sprite->transformed(QTransform().scale(-1, 1));
+        transformed_tile = tile->transformed(QTransform().scale(-1, 1));
       }
       else if(current.m_tile_flipping == VERTICAL_FLIPPING)
       {
-        transformed_sprite = sprite->transformed(QTransform().scale(1, -1));
+        transformed_tile = tile->transformed(QTransform().scale(1, -1));
       }
       else if(current.m_tile_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
       {
-        transformed_sprite = sprite->transformed(QTransform().scale(-1, -1));
+        transformed_tile = tile->transformed(QTransform().scale(-1, -1));
       }
       else
       {
-        transformed_sprite = QImage(*sprite);
+        transformed_tile = QImage(*tile);
       }
 
       for(int m(0); m < m_global_data->tile_height; ++m)
@@ -113,7 +113,7 @@ void cViewController::update_editor_view(void)
           int editor_grid_column = (m_global_data->tile_width+m_global_data->grid_width)*j + n;
 
           editor_grid.setPixel(editor_grid_column, editor_grid_row,
-                               transformed_sprite.pixelIndex(n, m));
+                               transformed_tile.pixelIndex(n, m));
         }
       }
     }
@@ -193,42 +193,43 @@ void cViewController::update_palette_view(void)
   m_palette_view->show();
 }
 
-void cViewController::update_selected_sprite_view(void)
+void cViewController::update_selected_tile_view(void)
 {
-  const QVector<QImage *> &sprites = m_background->get_tiles();
+  const QVector<sTileInfo> &tiles = m_background->get_tiles();
 
-  if(m_selected_sprite_index == -1)
-    m_selected_sprite_index = sprites.size()-1;
+  if(m_selected_tile_index == -1)
+    m_selected_tile_index = tiles.size()-1;
 
-  QImage original_selected_sprite;
+  QImage original_selected_tile;
   {
     int transform_x, transform_y;
     transform_x = transform_y = 1;
-    if(m_selected_sprite_vflip)
+    if(m_selected_tile_vflip)
       transform_y = -1;
-    if(m_selected_sprite_hflip)
+    if(m_selected_tile_hflip)
       transform_x = -1;
-    original_selected_sprite =
-        sprites[m_selected_sprite_index]->transformed(QTransform().scale(transform_x, transform_y));
+    original_selected_tile =
+        tiles[m_selected_tile_index].m_tile->transformed(QTransform().scale(transform_x,
+                                                                            transform_y));
   }
 
 
-  int pixel_width = m_selected_sprite_view->width() / m_global_data->tile_width;
-  int pixel_height = m_selected_sprite_view->height() / m_global_data->tile_height;
+  int pixel_width = m_selected_tile_view->width() / m_global_data->tile_width;
+  int pixel_height = m_selected_tile_view->height() / m_global_data->tile_height;
 
   int pixel_size = pixel_width;
   if(pixel_height < pixel_size)
     pixel_size = pixel_height;
 
-  QImage selected_sprite = QImage(pixel_size*m_global_data->tile_width,
+  QImage selected_tile = QImage(pixel_size*m_global_data->tile_width,
                                   pixel_size*m_global_data->tile_height,
                                   QImage::Format_Indexed8);
 
-  selected_sprite.setColorTable(m_background->get_palette());
-  QColor neutral_without_alpha(selected_sprite.color(0));
+  selected_tile.setColorTable(m_background->get_palette());
+  QColor neutral_without_alpha(selected_tile.color(0));
   neutral_without_alpha.setRgb(neutral_without_alpha.rgb());
 
-  selected_sprite.setColor(0, neutral_without_alpha.rgb()); // Taking off alpha channel from the
+  selected_tile.setColor(0, neutral_without_alpha.rgb()); // Taking off alpha channel from the
                                                             // first color
 
 
@@ -238,73 +239,73 @@ void cViewController::update_selected_sprite_view(void)
     {
       for(int m(0); m < pixel_size; ++m)
         for(int n(0); n < pixel_size; ++n)
-          selected_sprite.setPixel(j*pixel_size+n, i*pixel_size+m,
-                                   original_selected_sprite.pixelIndex(j, i));
+          selected_tile.setPixel(j*pixel_size+n, i*pixel_size+m,
+                                   original_selected_tile.pixelIndex(j, i));
     }
   }
 
-  QPixmap selected_sprite_pixmap = QPixmap::fromImage(selected_sprite);
-  m_selected_sprite_view->setSceneRect(selected_sprite_pixmap.rect());
-  QGraphicsScene *scene = m_selected_sprite_view->scene();
+  QPixmap selected_tile_pixmap = QPixmap::fromImage(selected_tile);
+  m_selected_tile_view->setSceneRect(selected_tile_pixmap.rect());
+  QGraphicsScene *scene = m_selected_tile_view->scene();
   if(!scene)
   {
-    scene = new QGraphicsScene(m_selected_sprite_view);
-    m_selected_sprite_view->setScene(scene);
+    scene = new QGraphicsScene(m_selected_tile_view);
+    m_selected_tile_view->setScene(scene);
   }
-  scene->addPixmap(selected_sprite_pixmap);
-  m_selected_sprite_view->show();
+  scene->addPixmap(selected_tile_pixmap);
+  m_selected_tile_view->show();
 }
 
-void cViewController::update_sprites_view(void)
+void cViewController::update_tiles_view(void)
 {
-  const QVector<QImage *> &sprites = m_background->get_tiles();
+  const QVector<sTileInfo> &tiles = m_background->get_tiles();
 
-  m_sprites_per_column = (sprites.size()/m_sprites_per_row);
-  if(sprites.size() % m_sprites_per_row)
-    ++m_sprites_per_column;
+  m_tiles_per_column = (tiles.size()/m_tiles_per_row);
+  if(tiles.size() % m_tiles_per_row)
+    ++m_tiles_per_column;
 
-  int sprite_grid_width, sprite_grid_height;
-  sprite_grid_width = m_global_data->tile_width * m_sprites_per_row +
-      m_sprites_per_row * m_global_data->grid_width;
+  int tile_grid_width, tile_grid_height;
+  tile_grid_width = m_global_data->tile_width * m_tiles_per_row +
+      m_tiles_per_row * m_global_data->grid_width;
 
-  sprite_grid_height = m_global_data->tile_height * m_sprites_per_column +
-      m_sprites_per_column * m_global_data->grid_height;
+  tile_grid_height = m_global_data->tile_height * m_tiles_per_column +
+      m_tiles_per_column * m_global_data->grid_height;
 
 
-  QImage sprite_grid = QImage(sprite_grid_width, sprite_grid_height, QImage::Format_Indexed8);
+  QImage tile_grid = QImage(tile_grid_width, tile_grid_height, QImage::Format_Indexed8);
 
-  sprite_grid.setColorTable(m_background->get_palette());
+  tile_grid.setColorTable(m_background->get_palette());
 
-  QColor neutral_without_alpha(sprite_grid.color(0));
+  QColor neutral_without_alpha(tile_grid.color(0));
   neutral_without_alpha.setRgb(neutral_without_alpha.rgb());
 
-  sprite_grid.setColor(0, neutral_without_alpha.rgb()); // Taking off alpha channel from the first
+  tile_grid.setColor(0, neutral_without_alpha.rgb()); // Taking off alpha channel from the first
                                                         // color
-  sprite_grid.setColorCount(sprite_grid.colorCount()+1); // create a new color. By default it is
+  tile_grid.setColorCount(tile_grid.colorCount()+1); // create a new color. By default it is
                                                          // transparent
-  sprite_grid.fill(sprite_grid.colorCount()-1);
+  tile_grid.fill(tile_grid.colorCount()-1);
 
   {
     int row, column;
     row = column = 0;
 
-    for(int i(0); i < sprites.size(); ++i)
+    for(int i(0); i < tiles.size(); ++i)
     {
       for(int n(0); n < m_global_data->tile_height; ++n)
       {
         for(int m(0); m < m_global_data->tile_width; ++m)
         {
-          int sprite_grid_column, sprite_grid_row;
-          sprite_grid_column = (m_global_data->tile_width+m_global_data->grid_width)*column + m;
-          sprite_grid_row = (m_global_data->tile_height+m_global_data->grid_height)*row + n;
+          int tile_grid_column, tile_grid_row;
+          tile_grid_column = (m_global_data->tile_width+m_global_data->grid_width)*column + m;
+          tile_grid_row = (m_global_data->tile_height+m_global_data->grid_height)*row + n;
 
-          sprite_grid.setPixel(sprite_grid_column, sprite_grid_row, sprites[i]->pixelIndex(m, n));
+          tile_grid.setPixel(tile_grid_column, tile_grid_row, tiles[i].m_tile->pixelIndex(m, n));
         }
       }
 
 
       ++column;
-      if(column == m_sprites_per_row)
+      if(column == m_tiles_per_row)
       {
         column = 0;
         ++row;
@@ -312,16 +313,16 @@ void cViewController::update_sprites_view(void)
     }
   }
 
-  QPixmap sprite_grid_pixmap = QPixmap::fromImage(sprite_grid);
-  m_sprites_view->setSceneRect(sprite_grid_pixmap.rect());
-  QGraphicsScene *scene = m_sprites_view->scene();
+  QPixmap tile_grid_pixmap = QPixmap::fromImage(tile_grid);
+  m_tiles_view->setSceneRect(tile_grid_pixmap.rect());
+  QGraphicsScene *scene = m_tiles_view->scene();
   if(!scene)
   {
-    scene = new QGraphicsScene(m_sprites_view);
-    m_sprites_view->setScene(scene);
+    scene = new QGraphicsScene(m_tiles_view);
+    m_tiles_view->setScene(scene);
   }
-  scene->addPixmap(sprite_grid_pixmap);
-  m_sprites_view->show();
+  scene->addPixmap(tile_grid_pixmap);
+  m_tiles_view->show();
 }
 
 void cViewController::update_views(void)
@@ -332,72 +333,72 @@ void cViewController::update_views(void)
       update_editor_view();
     if(m_palette_view)
       update_palette_view();
-    if(m_selected_sprite_view)
-      update_selected_sprite_view();
-    if(m_sprites_view)
-      update_sprites_view();
+    if(m_selected_tile_view)
+      update_selected_tile_view();
+    if(m_tiles_view)
+      update_tiles_view();
   }
 }
 
-void cViewController::sprites_view_clicked(int x, int y)
+void cViewController::tiles_view_clicked(int x, int y)
 {
-  if(!m_sprites_view)
+  if(!m_tiles_view)
     return;
 
-  QGraphicsScene *scene = m_sprites_view->scene();
+  QGraphicsScene *scene = m_tiles_view->scene();
 
   // If the user clicks over an already existing rect, we remove the rect
   if(QGraphicsRectItem *r = dynamic_cast<QGraphicsRectItem *>(scene->itemAt(x, y)))
   {
     scene->removeItem(r);
-    m_selected_sprite_rect = NULL;
-    m_selected_sprite_index = -1;
-    update_selected_sprite_view();
+    m_selected_tile_rect = NULL;
+    m_selected_tile_index = -1;
+    update_selected_tile_view();
     return;
   }
 
-  QGraphicsPixmapItem *sprites_pixmap = dynamic_cast<QGraphicsPixmapItem *>(scene->itemAt(x, y));
+  QGraphicsPixmapItem *tiles_pixmap = dynamic_cast<QGraphicsPixmapItem *>(scene->itemAt(x, y));
   // If the user clicks outside the pixmap, or over something we don't know how to treat, we return
   // TODO(renatolond, 2011-05-08) If is something we don't know how to treat, we should do something
   // maybe log what it was.
-  if(!sprites_pixmap)
+  if(!tiles_pixmap)
     return;
 
-  int selected_sprite_view_x, selected_sprite_view_y;
-  int selected_sprite_index;
+  int selected_tile_view_x, selected_tile_view_y;
+  int selected_tile_index;
   {
-    int selected_sprite_x, selected_sprite_y;
-    get_sprite_coords_from_view_coords(x, y, selected_sprite_x, selected_sprite_y);
-    get_view_coords_from_sprite_coords(selected_sprite_x, selected_sprite_y, selected_sprite_view_x,
-                                       selected_sprite_view_y);
-    selected_sprite_index = (selected_sprite_y*m_sprites_per_row) + selected_sprite_x;
+    int selected_tile_x, selected_tile_y;
+    get_tile_coords_from_view_coords(x, y, selected_tile_x, selected_tile_y);
+    get_view_coords_from_tile_coords(selected_tile_x, selected_tile_y, selected_tile_view_x,
+                                       selected_tile_view_y);
+    selected_tile_index = (selected_tile_y*m_tiles_per_row) + selected_tile_x;
   }
 
-  const QVector<QImage *> &sprites = m_background->get_tiles();
+  const QVector<sTileInfo> &tiles = m_background->get_tiles();
 
-  // If the size of the sprites vector is not greater than the selected sprite index, then we
-  // clicked on an empty space within the sprites pixmap
-  if(sprites.size() <= selected_sprite_index)
+  // If the size of the tiles vector is not greater than the selected tile index, then we
+  // clicked on an empty space within the tiles pixmap
+  if(tiles.size() <= selected_tile_index)
     return;
 
-  // We already had an sprite selected, this means we have to remove the rectangle around it, in
+  // We already had an tile selected, this means we have to remove the rectangle around it, in
   // order to put a new onde around the one we clicked.
-  if(m_selected_sprite_rect != NULL)
+  if(m_selected_tile_rect != NULL)
   {
-    scene->removeItem(m_selected_sprite_rect);
-    m_selected_sprite_rect = NULL;
+    scene->removeItem(m_selected_tile_rect);
+    m_selected_tile_rect = NULL;
   }
 
-  m_selected_sprite_index = selected_sprite_index;
-  update_selected_sprite_view();
+  m_selected_tile_index = selected_tile_index;
+  update_selected_tile_view();
 
   QPen pen;
   pen.setColor(Qt::yellow);
   pen.setWidth(2);
-  scene->addRect(selected_sprite_view_x, selected_sprite_view_y, m_global_data->tile_width,
+  scene->addRect(selected_tile_view_x, selected_tile_view_y, m_global_data->tile_width,
                  m_global_data->tile_height, pen);
-  m_selected_sprite_rect = dynamic_cast<QGraphicsRectItem *>(scene->itemAt(selected_sprite_view_x,
-                                                                           selected_sprite_view_y));
+  m_selected_tile_rect = dynamic_cast<QGraphicsRectItem *>(scene->itemAt(selected_tile_view_x,
+                                                                           selected_tile_view_y));
 }
 
 void cViewController::editor_view_clicked(int x, int y)
@@ -427,7 +428,7 @@ void cViewController::export_background(void)
   m_background->export_to_ds();
 }
 
-void cViewController::highlight_selected_sprite(void)
+void cViewController::highlight_selected_tile(void)
 {
 
 }
@@ -445,7 +446,7 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   if(!scene)
     return;
 
-  if(m_selected_sprite_index < 0)
+  if(m_selected_tile_index < 0)
     return;
 
   QGraphicsPixmapItem *editor_pixmap_item;
@@ -465,11 +466,11 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   QBitmap bit_mask = QBitmap(editor_pixmap.mask());
   QPainter bit_mask_painter;
 
-  const QVector<QImage *> &sprites = m_background->get_tiles();
+  const QVector<sTileInfo> &tiles = m_background->get_tiles();
   const QVector<QRgb> &palette = m_background->get_palette();
   int map_x, map_y;
 
-  get_sprite_coords_from_view_coords(x, y, map_x, map_y);
+  get_tile_coords_from_view_coords(x, y, map_x, map_y);
 
   sAction *action = new sAction();
   action->type = sAction::PAINT;
@@ -479,46 +480,48 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   action->n_y = map_y;
 
   eTileFlipping map_flipping;
-  if(m_selected_sprite_vflip && m_selected_sprite_hflip)
+  if(m_selected_tile_vflip && m_selected_tile_hflip)
     map_flipping = VERTICAL_AND_HORIZONTAL_FLIPPING;
-  else if(m_selected_sprite_vflip)
+  else if(m_selected_tile_vflip)
     map_flipping = VERTICAL_FLIPPING;
-  else if(m_selected_sprite_hflip)
+  else if(m_selected_tile_hflip)
     map_flipping = HORIZONTAL_FLIPPING;
   else
     map_flipping = NO_FLIPPING;
   // TODO(renatolond, 20-04-2011) Take flipping into account
-  m_background->set_map_matrix(map_x, map_y, m_selected_sprite_index, map_flipping);
+  m_background->set_map_matrix(map_x, map_y, m_selected_tile_index, map_flipping);
 
-  QImage original_selected_sprite;
+  QImage original_selected_tile;
   {
     int transform_x, transform_y;
     transform_x = transform_y = 1;
-    if(m_selected_sprite_vflip)
+    if(m_selected_tile_vflip)
       transform_y = -1;
-    if(m_selected_sprite_hflip)
+    if(m_selected_tile_hflip)
       transform_x = -1;
-    original_selected_sprite =
-        sprites[m_selected_sprite_index]->transformed(QTransform().scale(transform_x, transform_y));
+    original_selected_tile =
+        tiles[m_selected_tile_index].m_tile->transformed(QTransform().scale(transform_x,
+                                                                            transform_y));
   }
 
   // Painter actions
+  // TODO(renatolond, 2011-05-30) Fix alpha for showing.
 //  bit_mask_painter.begin(&bit_mask);
   {
     for(int i(0); i < m_global_data->tile_height; ++i)
     {
       for(int j(0); j < m_global_data->tile_width; ++j)
       {
-        int color_index = original_selected_sprite.pixelIndex(j, i);
+        int color_index = original_selected_tile.pixelIndex(j, i);
         QColor color = QColor::fromRgba(palette[color_index]);
 
-        get_view_coords_from_sprite_coords(map_x, map_y, x, y);
+        get_view_coords_from_tile_coords(map_x, map_y, x, y);
 
         // Here we draw the alpha mask of visualizationGrid.
-        if(color.alpha() != 255)
-          bit_mask_painter.setPen(Qt::color0);
-        else
-          bit_mask_painter.setPen(Qt::color1);
+        //if(color.alpha() != 255)
+          //bit_mask_painter.setPen(Qt::color0);
+        //else
+          //bit_mask_painter.setPen(Qt::color1);
 
         //bit_mask_painter.drawPoint(x+j, y+i);
         editor_image.setPixel(x+j, y+i, color.rgb());
@@ -532,26 +535,26 @@ void cViewController::editor_view_clicked_paint(int x, int y)
   editor_pixmap_item->setPixmap(editor_pixmap);
 }
 
-void cViewController::get_sprite_coords_from_view_coords(int x, int y, int &map_x, int &map_y)
+void cViewController::get_tile_coords_from_view_coords(int x, int y, int &map_x, int &map_y)
 {
   map_x = x/(m_global_data->tile_width+m_global_data->grid_width);
   map_y = y/(m_global_data->tile_height+m_global_data->grid_height);
 }
 
-void cViewController::get_view_coords_from_sprite_coords(int map_x, int map_y, int &x, int &y)
+void cViewController::get_view_coords_from_tile_coords(int map_x, int map_y, int &x, int &y)
 {
   x = map_x*(m_global_data->tile_width+m_global_data->grid_width);
   y = map_y*(m_global_data->tile_height+m_global_data->grid_height);
 }
 
-void cViewController::set_selected_sprite_hflip(bool status)
+void cViewController::set_selected_tile_hflip(bool status)
 {
-  m_selected_sprite_hflip = status;
-  update_selected_sprite_view();
+  m_selected_tile_hflip = status;
+  update_selected_tile_view();
 }
 
-void cViewController::set_selected_sprite_vflip(bool status)
+void cViewController::set_selected_tile_vflip(bool status)
 {
-  m_selected_sprite_vflip = status;
-  update_selected_sprite_view();
+  m_selected_tile_vflip = status;
+  update_selected_tile_view();
 }

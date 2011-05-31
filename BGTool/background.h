@@ -20,12 +20,6 @@ enum eTileFlipping
   VERTICAL_AND_HORIZONTAL_FLIPPING
 };
 
-struct sTileInfo
-{
-  QImage *m_tile;
-  eTileFlipping m_tile_flipping;
-};
-
 struct sMapInfo
 {
   int m_tile_index;
@@ -42,13 +36,19 @@ enum eTileCollision
   COLLISION_45VH
 };
 
+struct sTileInfo
+{
+  QImage *m_tile;
+  eTileCollision m_tile_collision;
+};
+
 class cBackground
 {
  protected:
   QVector< QVector<sMapInfo> > m_map_matrix;
-  QVector<QImage *> m_tile;
+  //QVector<QImage *> m_tile;
   QVector<QRgb> m_palette;
-  QVector<eTileCollision> m_tile_collision;
+  QVector<sTileInfo> m_tile_collision;
   QHash<QRgb, int> m_color_hash;
   QString m_name;
   QColor *m_neutral;
@@ -64,7 +64,7 @@ class cBackground
   void import_image(QString path);
   void export_to_ds();
   const QVector<QRgb>& get_palette(void);
-  const QVector<QImage *>& get_tiles(void);
+  const QVector<sTileInfo>& get_tiles(void);
   const QVector< QVector<sMapInfo> >& get_map_matrix(void);
   void set_map_matrix(int x, int y, int tile_index, eTileFlipping tile_flipping);
   void export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node);

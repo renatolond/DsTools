@@ -1,4 +1,4 @@
-#include "spritesgraphicsview.h" // Class definition
+#include "tiles_graphics_view.h" // Class definition
 
 // QT libraries
 #include <QMouseEvent>
@@ -10,27 +10,27 @@
 #include "viewcontroller.h"
 // End of Project libraries
 
-SpritesGraphicsView::SpritesGraphicsView(QWidget *parent) :
+cTilesGraphicsView::cTilesGraphicsView(QWidget *parent) :
   QGraphicsView(parent)
 {
   m_view_controller = NULL;
 }
 
-SpritesGraphicsView::~SpritesGraphicsView()
+cTilesGraphicsView::~cTilesGraphicsView()
 {
 }
 
-void SpritesGraphicsView::set_view_controller(cViewController *view_controller)
+void cTilesGraphicsView::set_view_controller(cViewController *view_controller)
 {
   m_view_controller = view_controller;
 }
 
 
-void SpritesGraphicsView::mousePressEvent(QMouseEvent *e)
+void cTilesGraphicsView::mousePressEvent(QMouseEvent *e)
 {
   if(!m_view_controller)
     return;
 
   if(e->buttons() == Qt::LeftButton)
-    m_view_controller->sprites_view_clicked(e->x(), e->y());
+    m_view_controller->tiles_view_clicked(e->x(), e->y());
 }

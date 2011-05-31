@@ -115,7 +115,10 @@ void cBackground::find_tile(QImage &image)
     }
   }
 
-  m_tile.push_back(empty_tile);
+  sTileInfo tile_info;
+  tile_info.m_tile = empty_tile;
+  tile_info.m_tile_collision = COLLISION_EMPTY;
+  m_tile_collision.push_back(tile_info);
 }
 
 int cBackground::insert_into_tiles(QImage *tile, eTileFlipping &tile_flipping)
@@ -126,32 +129,36 @@ int cBackground::insert_into_tiles(QImage *tile, eTileFlipping &tile_flipping)
   VFlip  = tile->transformed(QTransform().scale( 1, -1));
   VHFlip = tile->transformed(QTransform().scale(-1, -1));
 
-  for(int i(0); i < m_tile.size(); i++)
+  for(int i(0); i < m_tile_collision.size(); i++)
   {
-    if((*tile) == (*m_tile[i]))
+    sTileInfo tile_info = m_tile_collision[i];
+    if((*tile) == (*(tile_info.m_tile)))
     {
       tile_flipping = NO_FLIPPING;
       return i;
     }
-    if(HFlip == (*m_tile[i]))
+    if(HFlip == (*(tile_info.m_tile)))
     {
       tile_flipping = HORIZONTAL_FLIPPING;
       return i;
     }
-    if(VFlip == (*m_tile[i]))
+    if(VFlip == (*(tile_info.m_tile)))
     {
       tile_flipping = VERTICAL_FLIPPING;
       return i;
     }
-    if(VHFlip == (*m_tile[i]))
+    if(VHFlip == (*(tile_info.m_tile)))
     {
       tile_flipping = VERTICAL_AND_HORIZONTAL_FLIPPING;
       return i;
     }
   }
 
-  int index = m_tile.size();
-  m_tile.push_back(tile);
+  int index = m_tile_collision.size();
+  sTileInfo tile_info;
+  tile_info.m_tile = tile;
+  tile_info.m_tile_collision = COLLISION_EMPTY;
+  m_tile_collision.push_back(tile_info);
   tile_flipping = NO_FLIPPING;
 
   return index;
@@ -169,12 +176,12 @@ void cBackground::push_back_map_matrix(int y, int tile_index, eTileFlipping tile
 
 void cBackground::clear_background(void)
 {
-  int size = m_tile.size();
+  int size = m_tile_collision.size();
   for(int i(0); i < size; ++i)
   {
-    QImage *img = m_tile.last();
-    delete img;
-    m_tile.pop_back();
+    sTileInfo tile_info = m_tile_collision.last();
+    delete tile_info.m_tile;
+    m_tile_collision.pop_back();
   }
 
   m_palette.clear();
@@ -245,9 +252,9 @@ void cBackground::export_to_ds()
   if(file_tiles.open(QIODevice::WriteOnly | QFile::Truncate))
   {
     QDataStream out(&file_tiles);
-    for(QVector<QImage *>::iterator it = m_tile.begin(); it != m_tile.end(); ++it)
+    for(QVector<sTileInfo>::iterator it = m_tile_collision.begin(); it != m_tile_collision.end(); ++it)
     {
-      QImage *pt = *it;
+      QImage *pt = it->m_tile;
       for(int i(0); i < m_global_data->tile_height; ++i)
       {
         for(int j(0); j < m_global_data->tile_width; ++j)
@@ -315,7 +322,7 @@ void cBackground::export_to_ds()
     out << "" << m_name << "_Map," << endl;
     out << "{" << m_name << "_Pal}," << endl;
     out << endl;
-    out << m_tile.size()*8*8 << "," << endl;
+    out << m_tile_collision.size()*8*8 << "," << endl;
     out << "{" << map_matrix_height*map_matrix_width*2 << "}" << endl;
     out << "};" << endl;
   }
@@ -327,9 +334,9 @@ const QVector<QRgb>& cBackground::get_palette(void)
   return m_palette;
 }
 
-const QVector<QImage *>& cBackground::get_tiles(void)
+const QVector<sTileInfo>& cBackground::get_tiles(void)
 {
-  return m_tile;
+  return m_tile_collision;
 }
 
 const QVector< QVector<sMapInfo> >& cBackground::get_map_matrix(void)

@@ -7,12 +7,12 @@ class cViewController;
 class QMouseEvent;
 class QWidget;
 
-class SpritesGraphicsView : public QGraphicsView
+class cTilesGraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    SpritesGraphicsView(QWidget *parent = 0);
-    ~SpritesGraphicsView();
+    cTilesGraphicsView(QWidget *parent = 0);
+    ~cTilesGraphicsView();
 
     void set_view_controller(cViewController *view_controller);
 

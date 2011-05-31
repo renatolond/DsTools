@@ -70,7 +70,7 @@
        </widget>
       </item>
       <item>
-       <widget class="SpritesGraphicsView" name="spritesView">
+       <widget class="cTilesGraphicsView" name="tilesView">
         <property name="minimumSize">
          <size>
           <width>45</width>
@@ -352,9 +352,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SpritesGraphicsView</class>
+   <class>cTilesGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>spritesgraphicsview.h</header>
+   <header>tiles_graphics_view.h</header>
   </customwidget>
   <customwidget>
    <class>VisualizationGraphicsView</class>

@@ -5,15 +5,22 @@
 //////////////////////////////////////////////////
 
 // Include the application header
-#include "ScrollEngine.h"
+#include "scroll-engine.h"
+#include "global-data.h"
 
 // Entry point
 int main(){
 	// Initialize PAlib
 	PA_Init();
 
+  sGlobalData global_data;
+
+  global_data.miliseconds_between_game_cycles = 33;
+  global_data.miliseconds_between_input_cycles = 50;
+
 	// Run the application
-	ScrollEngine engine;
+  cScrollEngine engine;
+  engine.set_global_data(&global_data);
 	engine.run();
 
 	return 0;

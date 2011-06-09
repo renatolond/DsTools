@@ -3,7 +3,7 @@
 
 #define eps 0.0001f
 
-typedef int mytype;
+typedef int tDefinedType;
 
 extern const int multiplier;
 extern const double maxHorizontalSpeed;
@@ -20,15 +20,9 @@ extern const int tileSizeX;
 extern const int tileSizeY;
 extern const int tileSizeXmult;
 extern const int tileSizeYmult;
-extern const int milisecondsBetweenGameCycles;
-extern const int milisecondsBetweenInputCycles;
 extern const double maxVerticalSpeed;
 extern const double verticalSpeedStep;
 extern const int jumpDelay;
-extern int worldMaxX;
-extern int worldMaxY;
-extern int worldMinX;
-extern int worldMinY;
 extern double friction;
 extern double bounce;
 extern double drag;

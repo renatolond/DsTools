@@ -1,220 +1,169 @@
-//////////////////////////////////////////////////
-// PAlib C++ project template                   //
-// ScrollEngine.cpp                             //
-// Main project source code file.               //
-//////////////////////////////////////////////////
+#include "scroll-engine.h"
 
-// Include the application header
-#include "ScrollEngine.h"
+#include "all_gfx.h" // File with all the gfx compiled with the game
 
-// Declare variables
-int ScrollEngine::nframe = 0;
-//PA::Sprite ScrollEngine::rocket(1, 0); // screen, sprite number
-PlayerController<mytype> ScrollEngine::smallMario(Vector2<mytype>(0, 0), tileSizeXmult, tileSizeYmult, 0, 1);
-CollisionController<mytype> ScrollEngine::collisionController;
-int SpriteCount;
-/*u16 my_Map[4096];
-u16 my_Map2[4096];*/
-double scroll;
-int greatest_bg;
-int timer;
-int oldTimer;
-int moveTimer;
-int gameTimer;
-int worldMaxX;
-int worldMaxY;
-int worldMinX;
-int worldMinY;
+#include "global-data.h"
+#include "level-data.h"
 
-void timerFunction()
+int timer = 0;
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void millisecond_timer_function()
 {
-    timer++;
+  timer++;
 }
 
-// Initialization function
-void ScrollEngine::init(){
-    // Initialize the text system
-    PA_InitText(1, 0);
-    SpriteCount = 1;
-    scroll = 0;
-    // Load our graphics
-    loadGraphics();
-
-    TIMER_CR(1) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
-    TIMER_DATA(1) = TIMER_FREQ_1024(1000);
-    irqSet(IRQ_TIMER1, timerFunction);
-    irqEnable(IRQ_TIMER1);
-    timer = oldTimer = 0;
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::set_global_data(const sGlobalData *global_data)
+{
+  m_global_data = global_data;
 }
 
-// Graphics loading function
-void ScrollEngine::loadGraphics(){
-    // Load our rocket graphic
-    //	PA_LoadSpritePal(1, 0, (void*) rocket_Pal);
-    PA_LoadSpritePal(0, 1, (void*) small_mario_Pal);
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::load_graphics()
+{
+  PA_LoadSpritePal(0, // Screen
+                   1, // Palette id
+                   (void*) small_mario_Pal); // Pointer to load from
 
-    greatest_bg = bgtool0.width;
-    worldMaxX = bgtool0.width*multiplier;
-    worldMaxY = bgtool0.height*multiplier;
-    worldMinX = 0;
-    worldMinY = 0;
+  PA_LoadBackground(0, // Screen
+                    0, // Background id
+                    &bgtool0);
+  PA_InitParallaxX(0, // Screen
+                   screenSizeX, // Parallax speed for Background 0. 0 is no parallax
+                   screenSizeX,
+                   256,
+                   0);
 
-    PA_LoadBackground(0, 0, &bgtool0);
-    //PA_LoadBackground(0, 1, &bgtool1);
-    PA_InitParallaxX(0, //screen
-                     screenSizeX, //Parallax speed for Background 0. 0 is no parallax (will scroll independently with PA_EasyBgScrollXY)
-                     screenSizeX, // Normal speed for Bg1
-		     256, //   3/4 speed
-		     0);
+  int SMALL_MARIO_ANIM_SPEED = 10;
 
-    //	rocket.create((void*)rocket_Sprite, OBJ_SIZE_32X32, 0);
+  m_player.spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
+  m_player.spr.move(0, screenSizeY-tileSizeY*5);
+  m_player.spr.priority(0);
+  m_player.spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
+  m_player.spr.addAnimation(4,4,0); // Drag
+  m_player.spr.addAnimation(5,5,0); // Jumping
+  m_player.spr.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
+  m_player.spr.beginAnimation(0);
 
-    smallMario.spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
-    smallMario.spr.move(0, screenSizeY-tileSizeY*5);
-    smallMario.spr.priority(0);
-    smallMario.spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
-    smallMario.spr.addAnimation(4,4,0); // Drag
-    smallMario.spr.addAnimation(5,5,0); // Jumping
-    smallMario.spr.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
-	smallMario.spr.beginAnimation(0);
-    
-    collisionController.addCollideablePlayer(&smallMario);
-    collisionController.loadTileMap();
-
-    //smallMario.startanim(0, 3, 5);
-    //PA::Sprite::
-
-
-    //	// Rotate it
-    //	rocket.bindrotset(0);
-    //	rocket.dblsize(true);
-    //	rocket.rotozoom(-64, 128, 128);
+  m_collision_controller.addCollideablePlayer(&m_player);
+  m_collision_controller.loadTileMap();
 }
 
-// Render function: called after each VBlank
-void ScrollEngine::render(){
-    // Output the value of our variable
-    char message[1024];
-//    sprintf(message,"Frame counter: %d", nframe);
-//    nocashMessage(message);
-//    //PA_OutputText(1, 1, 1, "%s", message);
-//    sprintf(message,"Miliseconds: %d  ", timer);
-//    nocashMessage(message);
-//    //PA_OutputText(1, 1, 2, "%s", message);
-//    sprintf(message,"fTime: %d",(timer-oldTimer));
-//    nocashMessage(message);
-//    //PA_OutputText(1, 1, 3, "%s", message);
-//    //	PA_OutputText(1, 1, 3, "Y: %d"  , int(rocket.pos.y));
-//    //
-//    //        PA_OutputText(1, 1, 4, "Scroll: %03d", scroll);
-//    //
-//    // Render the rocket
-//    //	rocket.render();
-    sprintf(message,"pos: x %d y %d",smallMario.getPos().x, smallMario.getPos().y);
-    nocashMessage(message);
-    PA_OutputText(1,1,4, "%s", message);
-//    sprintf(message,"oldPos: x %d y %d",smallMario.getOldPos().x, smallMario.getOldPos().y);
-//    nocashMessage(message);
-////    PA_OutputText(1,1,5, "%s", message);
-    Vector2<mytype> d;
-    d = smallMario.getPos() - smallMario.getOldPos();
-    sprintf(message,"dx %d dy %d",d.x, d.y);
-    //nocashMessage(message);
-   PA_OutputText(1,1,6, "%s       ", message);
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::init()
+{
+  // Initialize the text system
+  PA_InitText(1, 0);
+  m_level_data.m_world_min_height = 0;
+  m_level_data.m_world_min_width = 0;
+  m_level_data.m_world_max_height = bgtool0.height*multiplier;
+  m_level_data.m_world_max_width = bgtool0.width*multiplier;
+  m_level_data.m_scrolled = 0;
 
-    scroll = smallMario.getParallaxX();
-    PA_ParallaxScrollX(0,scroll);
-    smallMario.Draw();
+  load_graphics();
+
+  TIMER_CR(1) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
+  TIMER_DATA(1) = TIMER_FREQ_1024(1000);
+  irqSet(IRQ_TIMER1, millisecond_timer_function);
+  irqEnable(IRQ_TIMER1);
+
+  m_timer = 0;
+  m_old_timer = 0;
+  m_controller_timer = 0;
+  m_game_action_timer = 0;
+
+#ifdef _DEBUG
+  m_frame_count = 0;
+#endif
 }
 
-// Update function (if false, program exits)
-bool ScrollEngine::update(){
-    double fTime;
-    fTime = (timer - oldTimer) / 1000.0;
-    oldTimer = timer;
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::render()
+{
+#ifdef _DEBUG
+  char message[1024];
+  sprintf(message,"worldMax: %d",worldMaxX);
+  nocashMessage(message);
+  PA_OutputText(1,1,3, "%s", message);
+  sprintf(message,"pos: x %d y %d",m_player.getPos().x, m_player.getPos().y);
+  nocashMessage(message);
+  PA_OutputText(1,1,4, "%s", message);
+  Vector2<tDefinedType> d;
+  d = m_player.getPos() - m_player.getOldPos();
+  sprintf(message,"dx %d dy %d",d.x, d.y);
+  PA_OutputText(1,1,6, "%s       ", message);
+#endif
 
-    // Increment the counter
-    nframe ++;
-
-//    PA_OutputText(1, 1, 11,"Ready?");
-    if ( timer - moveTimer > milisecondsBetweenInputCycles )
-    {
-        moveTimer = timer;
-
-//        if ( Pad.Held.A )
-//            smallMario.isRunning(true);
-//        else
-//            smallMario.isRunning(false);
-//
-        if ( Pad.Held.Right )
-        {
-            smallMario.accelerateRight();
-        }
-        else if ( Pad.Held.Left )
-        {
-            smallMario.accelerateLeft();
-        }
-//        else
-//        {
-////            smallMario.applyFriction();
-//        }
-//
-        if ( Pad.Held.Up )
-        {
-            smallMario.accelerateUp(timer);
-        }
-
-//        smallMario.applyGravity();
-    }
-    if ( timer - gameTimer > milisecondsBetweenGameCycles )
-    {
-        gameTimer = timer;
-        //double horzSpeed;
-        //if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
-         //   horzSpeed = smallMario.centerOnScreen();
-//        else if ( horzSpeed < 0 )
-//            horzSpeed = smallMario.uncenterOnScreen(horzSpeed, scroll);
-
-//        Vector2<double> p, op;
-//        p = smallMario.getPos();
-//        op = smallMario.getOldPos();
-//        double speed = p.x - op.x;
-//        double xw, yw;
-//        smallMario.getExt(xw, yw);
-//
-//        p.x = ((screenMaxX-screenMinX)/2 - xw*2);
-//        op.x = p.x - speed;
-//        smallMario.setPos(p);
-//        smallMario.setOldPos(op);
-
-//        int vertSpeed = smallMario.getVerticalSpeed(timer);
-//        PA_OutputText(1, 1, 5, "vertSpeed: %d       ",vertSpeed);
-
-//        smallMario.pos.y = smallMario.pos.y + vertSpeed;
-    }
-    smallMario.IntegrateVerlet();
-    collisionController.checkForCollisions(scroll);
-
-//    int horzSpeed;
-//    horzSpeed = smallMario.getHorizontalSpeed();
-//    if ( horzSpeed > 0 && !smallMario.isCenteredOnScreen() )
-//        horzSpeed = smallMario.centerOnScreen();
-//    else if ( horzSpeed < 0 )
-//        horzSpeed = smallMario.uncenterOnScreen(scroll);
-//    scroll += horzSpeed/multiplier;
-
-
-//    if ( scroll < 0 ) scroll = 0;
-//    if ( scroll > greatest_bg - screenSizeX ) scroll = greatest_bg - screenSizeX;
-
-//    PA_ParallaxScrollX(0, scroll);
-
-    // Keep going
-    return true;
+  m_level_data.m_scrolled = m_player.getParallaxX();
+  PA_ParallaxScrollX(0, // Screen
+                     m_level_data.m_scrolled);
+  m_player.Draw();
 }
 
-// Optional cleanup function
-// void ScrollEngine::cleanup()
-//{
-//}
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+bool cScrollEngine::update()
+{
+  // TODO(renatolond, 2011-06-09) Make this global timer go away
+  m_timer = timer;
+  double fTime;
+  fTime = (m_timer - m_old_timer) / 1000.0;
+  m_old_timer = m_timer;
 
+#ifdef _DEBUG
+  m_frame_count++;
+#endif
+  if(m_timer - m_controller_timer > m_global_data->miliseconds_between_input_cycles)
+  {
+      m_controller_timer = m_timer;
+      if (Pad.Held.Right)
+      {
+          m_player.accelerateRight();
+      }
+      else if (Pad.Held.Left)
+      {
+          m_player.accelerateLeft();
+      }
+
+      if(Pad.Held.Up)
+      {
+          m_player.accelerateUp(m_timer);
+      }
+  }
+  if(m_timer - m_game_action_timer > m_global_data->miliseconds_between_game_cycles)
+  {
+      m_game_action_timer = m_timer;
+  }
+  m_player.IntegrateVerlet();
+  m_collision_controller.check_for_collisions(m_level_data.m_scrolled,
+                                              0); // Not scrolling over y-axis
+  return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+cScrollEngine::cScrollEngine() :
+  m_player(Vector2<tDefinedType>(0, 0), // Initial position
+           tileSizeXmult, // width
+           tileSizeYmult, // height
+           0, // Sprite screen
+           1, // Sprite number
+           &m_level_data),
+  m_collision_controller(&m_level_data)
+
+{
+
+
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+cScrollEngine::~cScrollEngine()
+{
+}

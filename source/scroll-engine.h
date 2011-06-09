@@ -1,45 +1,47 @@
-//////////////////////////////////////////////////
-// PAlib C++ project template                   //
-// ScrollEngine.h                               //
-// Main project header.                         //
-//////////////////////////////////////////////////
+#ifndef SCROLLENGINE_H
+#define SCROLLENGINE_H
 
-#pragma once
-
-// Include the PAlib header
 #include <PA9.h>
-#include <nds/ndstypes.h>
 
-#include "constants.h"
 #include "collisioncontroller.h"
 #include "playercontroller.h"
+#include "level-data.h"
 
-// Include our graphics
-#include "all_gfx.h"
+struct sGlobalData;
 
-// Using statements
-//using PA::Application;
-//using PA::Sprite;
-using PA::Fixed;
+class cScrollEngine : public PA::Application
+{
+  cPlayerController<tDefinedType> m_player;
+  cCollisionController<tDefinedType> m_collision_controller;
 
-#define SMALL_MARIO_ANIM_SPEED 10
-#define HALFSCREEN ((256-16)/2)
+  const sGlobalData *m_global_data;
 
-// Main application class
-class ScrollEngine: public PA::Application{
-	// Put your variables here
-	// Also don't forget to declare them
-	// in the ScrollEngine.cpp file!
-	static int nframe;
-//	static PA::Sprite rocket;
-        static PlayerController<mytype> smallMario;
-        static CollisionController<mytype> collisionController;
+  sLevelData m_level_data;
 
-	// Main methods (needed by run())
-	void init();
-	void render();
-	bool update();
+  int m_timer;
+  int m_old_timer;
+  int m_controller_timer;
+  int m_game_action_timer;
 
-	// Our own methods
-        void loadGraphics();
+#ifdef _DEBUG
+  int m_frame_count;
+#endif
+
+  /**
+   * @brief Carrega os graficos que serao usados durante o jogo
+   */
+  void load_graphics();
+
+ public:
+
+  cScrollEngine();
+  ~cScrollEngine();
+
+  void set_global_data(const sGlobalData *global_data);
+
+  void init();
+  void render();
+  bool update();
 };
+
+#endif // SCROLLENGINE_H

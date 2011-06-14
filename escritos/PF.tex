@@ -306,6 +306,42 @@ Com estes dois arquivos criados, a engine é capaz de reconhecer o sprite e anim
 
 Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos enquanto estavam sendo construídos, além de auxiliar na eliminação dos eventuais bugs no processo. 
 
+\chapter{A Engine - DS}
+
+\section{Introdução}
+
+No capítulo anterior foi demonstrada como este trabalho resolve a primeira parte do processo de criação do jogo: a criação de seus personagens e backgrounds. Ficam então com alguns desafios pela frente: a detecção de colisão, a constituição do mundo e a interligação das fases, isto é, o próprio jogo.
+
+Para resolver esses desafios, é preciso a criação de alguma ferramenta no DS. Não é a intenção deste trabalho apresentar uma engine completa, no entanto, é pretendido se criar uma espécie de engine que consiga usar-se dos personagens e backgrounds criados com as ferramentas previamente apresentadas.
+
+Podemos estabelecer que a engine criada é, na verdade, uma espécie de template, que pode (e deve) ser modificado pelo programador para torná-la adequada ao jogo em desenvolvimento.
+
+\section{O Loop de jogo}
+
+Podemos encontrar, em bibliotecas de jogos, um loop de jogo bastante comum, que é o mesmo que usaremos:
+
+\textsc{\textbf{-- Listagem contendo o loop de jogo padrão, com init, update e render}}
+
+Nesse loop, a idéia é que o usuário possa trabalhar com a seguinte separação lógica de código:
+
+Em init ficam as tarefas a serem realizadas antes do início do jogo. Estão aí o carregamento e organização das imagens e sons a serem usados no jogo. 
+
+Em update ficam as tarefas a serem realizadas ao fim de cada iteração do loop. Normalmente, acelerações advindas da gravidade e de outras forças existentes no ambiente, detecções e tratamento de colisões, avaliação da inteligência artificial, dentre outras.
+
+Em render ficariam simplesmente as rotinas de desenho na tela.
+
+Essa separação, como dito anteriormente, é lógica. Não há restrição a colocar o código de avaliação de inteligência artificial na função de render, exceto de organização.
+
+\section{Colisões}
+
+Colisões são um grande desafio para qualquer simulação. No caso de jogos, há adicionalmente a necessidade de manter a taxa de atualização que o jogador está acostumado. É preciso que, apesar das várias tarefas que precisam ser processadas, que o tempo entre elas seja dividido de um modo que nenhuma delas sofra consideravelmente.
+
+A escolha foi pelo uso de um método de colisão \textit{a posteriori}, isto é, após calcularmos todas as atualizações dos personagens, cenário e itens, usamos essas novas posições para verificar a existência de uma colisão entre esses. No caso da existência de uma colisão, fazemos um passo adicional, o de tomar alguma ação para consertar essa colisão.
+
+No caso da colisão contra um objeto sólido, como uma parede, recolocamos o objeto na sua posição válida anterior. No caso da colisão entre o personagem e um inimigo, descobrimos qual dos dois foi afetado, e o damos como morto.
+
+Para o algoritmo que detecta a colisão usamos uma implementação do teorema dos eixos separados, que dita que dadas duas formas convexas, existe uma linha em que suas projeções vão ser separadas se e somente se eles não estão interceptando. Se uma das formas não for convexa, o teorema não é válido, mas não estamos preocupados com esse caso.
+
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
 \vfill{}

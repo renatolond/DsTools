@@ -37,7 +37,7 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{wrapfig}
-\usepackage{xunxos-utp}
+%\usepackage{xunxos-utp}
 \usepackage{caption}
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.98\textwidth}{#1#2#3}}}
@@ -50,7 +50,7 @@
 \begin{document}
 
 \autor{Renato dos Santos Cerqueira}
-\coautor{Felipe Pedrosa Martinez}
+%\coautor{Felipe Pedrosa Martinez}
 \titulo{Title Placeholder}
 \orientador{Adriano Joaquim de Oliveira Cruz}
 \comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade 
@@ -59,12 +59,15 @@ Federal do Rio de Janeiro.}
 \local{Rio de Janeiro - RJ, Brasil}
 \data{21/12/2012}
 
-\Ncapa
-\NFolhaDeRosto
+%\Ncapa
+%\NFolhaDeRosto
+\capa
+\folhaderosto
 
 \begin{folhadeaprovacao}
 Monografia de Projeto Final de Graduação sob o título \textit{``\ABNTtitulodata''},
-defendida por \ABNTautordata~e \ABNTcoautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
+%defendida por \ABNTautordata~e \ABNTcoautordata~e aprovada em \ABNTdatadata, no Rio de Janeiro,
+defendida por \ABNTautordata~ e aprovada em \ABNTdatadata, no Rio de Janeiro,
 Estado do Rio de Janeiro, pela banca examinadora constituída pelos
 professores: \setlength{\ABNTsignthickness}{0.4pt}
 
@@ -341,6 +344,14 @@ A escolha foi pelo uso de um método de colisão \textit{a posteriori}, isto é,
 No caso da colisão contra um objeto sólido, como uma parede, recolocamos o objeto na sua posição válida anterior. No caso da colisão entre o personagem e um inimigo, descobrimos qual dos dois foi afetado, e o damos como morto.
 
 Para o algoritmo que detecta a colisão usamos uma implementação do teorema dos eixos separados, que dita que dadas duas formas convexas, existe uma linha em que suas projeções vão ser separadas se e somente se eles não estão interceptando. Se uma das formas não for convexa, o teorema não é válido, mas não estamos preocupados com esse caso.
+
+\section{Uso e configurações}
+
+O desenvolvedor precisa informar para a engine quais compõem as fases, quais arquivos são de personagens e inimigos. Isso deve ser feito através do código; para manter a organização, a sugestão é que cada fase tenha um arquivo deste. Por padrão, a engine chama uma função \textit{load\_resources()}, que pode ser implementada em qualquer arquivo, contanto que ele seja compilado junto ao resto do projeto.
+
+Desse modo, fica a cargo do programador chamar, dentro da função \textit{load\_resources()}, funções próprias como por exemplo \textit{load\_stage1()} e \textit{load\_stage2()}. O controle da engine é feito através de estruturas existentes, e é nessas funções que o programador precisa preenchê-las.
+
+\textsc{\textbf{-- Listagem contendo a estrutura, que contém uma fase, seus backgrounds, posicionamento de sprites, dentre outras informações relevantes.}}
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 

@@ -1,0 +1,144 @@
+%% xunxos-utp.sty
+%% Copyright 2010 Bogdano Arendartchuk <bhdn@ukr.net>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Bogdano Arendartchuk.
+%
+% This work consists of the files xunxos-utp.sty and xunxos-utp-doc.tex.
+%
+\NeedsTeXFormat{LaTeX2e}
+
+\providecommand{\ABNTcoautordata}{}
+\newcommand{\coautor}[1]{\renewcommand{\ABNTcoautordata}{#1}}
+
+\newcommand{\Ncapa}%
+{%
+% replacing \begin{titlepage}
+\if@twocolumn
+  \@restonecoltrue\onecolumn
+\else
+  \@restonecolfalse\newpage
+\fi
+\thispagestyle{empty}%
+\setcounter{page}\z@
+\vspace*{1cm}
+\espaco{1.1}
+\ABNTifnotempty{\ABNTautordata}%
+  {%
+  \begin{center}
+    \autorformat\ABNTautordata
+  \end{center}
+  }
+\ABNTifnotempty{\ABNTcoautordata}%
+  {%
+  \begin{center}
+    \autorformat\ABNTcoautordata
+  \end{center}
+  }
+\vfill\vfill
+\ABNTifnotempty{\ABNTtitulodata}%
+  {%
+   \begin{center}
+     {\tituloformat\ABNTtitulodata\par}
+   \end{center}
+  }%
+
+\vspace*{1cm}
+\vfill\vfill\vfill
+\begin{center}
+  \begin{espacosimples}
+    \setlength{\parskip}{.3cm}
+    \ABNTifnotempty{\ABNTlocaldata}
+      {{\localformat\ABNTlocaldata}\par}
+    \ABNTifnotempty{\ABNTdatadata}
+      {{\dataformat\ABNTdatadata}}
+  \end{espacosimples}
+\end{center}
+\vspace*{1cm}
+% replacing \end{titlepage} by its meaning
+\if@restonecol\twocolumn \else \newpage \fi
+\espaco{\ABNTespacodefault}%Corrige bug 114
+}
+
+\newcommand{\NFolhaDeRosto}{
+\begin{titlepage}
+\espaco{1.1}
+\ABNTifnotempty{\ABNTautordata}%
+  {%
+  \begin{center}
+    \autorformat\ABNTautordata
+  \end{center}
+  }
+\ABNTifnotempty{\ABNTcoautordata}%
+  {%
+  \begin{center}
+    \autorformat\ABNTcoautordata
+  \end{center}
+  }
+\vfill\vfill\vfill
+\ABNTifnotempty{\ABNTtitulodata}%
+  {%
+   \begin{center}
+     {\tituloformat\ABNTtitulodata\par}
+   \end{center}
+  }%
+\ABNTifnotempty{\ABNTcomentariodata}%
+  {%
+   \vspace{.8cm}
+   \hspace{.45\textwidth}
+     \begin{minipage}{.5\textwidth}
+       \begin{espacosimples}
+         {\comentarioformat\ABNTcomentariodata}\par
+       \end{espacosimples}
+     \end{minipage}
+   }
+\vspace{.8cm}
+\begin{center}
+\ABNTifnotempty{\ABNTorientadordata}%
+  {%
+   {\orientadornameformat\ABNTorientadorname}
+   {\orientadorformat\ABNTorientadordata}\protect\\
+   \vspace{0.7cm}
+  }
+\ABNTifnotempty{\ABNTcoorientadordata}
+  {%
+   {\coorientadornameformat\ABNTcoorientadorname}
+   {\coorientadorformat\ABNTcoorientadordata}
+  }
+\end{center}
+\vfill
+\begin{center}
+\begin{espacosimples}
+  \setlength{\parskip}{.3cm}
+  \ABNTifnotempty{\ABNTinstituicaodata}%
+    {%
+     \setlength{\parskip}{0cm}
+     {\instituicaoformat\ABNTinstituicaodata\par}
+     \setlength{\parskip}{.3cm}\par
+     
+    }
+\end{espacosimples}
+\end{center}
+\vfill\vfill
+\begin{center}
+  \ABNTifnotempty{\ABNTlocaldata}
+      {{\localformat\ABNTlocaldata}\par}
+    \ABNTifnotempty{\ABNTdatadata}
+      {{\dataformat\ABNTdatadata}}
+
+\end{center}
+\end{titlepage}
+}
+
+\newcommand{\nohyphens}{\hyphenpenalty=10000\exhyphenpenalty=10000\relax}
+
+

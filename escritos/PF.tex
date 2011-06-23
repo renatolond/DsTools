@@ -117,7 +117,7 @@ Neste trabalho, o que nos propomos a fazer é nos inserir no contexto desses tim
 
 Nos propomos a fazer o papel do desenvolvedor: Criar as ferramentas, imaginando como os outros times as usariam e aprimorando ao máximo para esse fim.
 
-\section{Contexto}
+\section{Contextualização}
 
 Nos propomos a criar ferramentas para desenvolver jogos em duas dimensões do tipo de plataforma. Mas, o que é exatamente um jogo de plataforma em duas dimensões? Podemos pensar em exemplos clássicos, como Super Mario World para o Super Nintendo, ou Sonic The Hedgehog para o Sega Mega Drive.
 
@@ -200,25 +200,55 @@ Um jogo necessita de algumas partes constituintes, como por exemplo, suas fases 
 Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases no produto final aparecerão encadeadas.
 
 Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito a partir da SpriteTool. 
-\footnote{Precisamos pensar em como juntar as duas coisas. Como o usuário posiciona inimigos e itens no cenário? Há uma terceira ferramenta? Fazemos uma das duas ferramentas fazerem isso, adicionalmente?}
+%\footnote{Precisamos pensar em como juntar as duas coisas. Como o usuário posiciona inimigos e itens no cenário? Há uma terceira ferramenta? Fazemos uma das duas ferramentas fazerem isso, adicionalmente?}
+
+% escrevi esse parágrafo sobre QT, mas ele provavelmente precisa de uma revisada.
+
+Para desenvolver as ferramentas foi usado o QT. QT é um \textit{Framework} multi-plataforma que permite o uso de interfaces gráficas em C++, além de ter classes que facilitam o acesso a tecnologias como XML, acesso a diversos formatos de arquivos de imagem, dentre outras possibilidades. A escolha foi feita para que as ferramentas funcionem em diversos sistemas operacionais sem precisar de mudanças no código.
 
 \section{BGTool: A ferramenta de criação de cenários}
 
 A BGTool foi criada com o objetivo de permitir que o usuário importe seus tiles pré-existentes e a partir deles, desenvolva um novo cenário e consiga exportar esse cenário para o formato do Nintendo DS. 
 
-Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit{background} o cenário sendo criado terá. O hardware do DS tem suporta até cinco camadas de \textit{background}, no entanto, é possível o uso de menos camadas do que isso. Com as várias camadas, porém, o usuário pode criar uma ilusão de movimento em profundidades diferentes, um recurso conhecido como rolamento em paralaxe.\footnotemark
+Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit{background} o cenário sendo criado terá. O hardware do DS suporta até cinco camadas de \textit{background}, no entanto, é possível o uso de menos camadas do que isso. Com as várias camadas, porém, o usuário pode criar uma ilusão de movimento em profundidades diferentes, um recurso conhecido como rolamento em paralaxe.\footnotemark
 
 \footnotetext{Rolamento em Paralaxe é uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.}
 
-Além disso, o usuário também especifica o tamanho do novo mapa. Esse novo mapa não tem limitação quanto ao seu tamanho, exceto ter suas dimensões múltiplas de oito, assim usamos tiles de tamanho 8x8, o mais simples de ser utilizado no DS.
+Por uma combinação do hardware do DS e das bibliotecas usadas, temos que uma camada de \textit{background} na verdade é um mapa de \textit{tiles}. Isto quer dizer que as imagens são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. E estas imagens menores são chamadas de \textit{tiles}, como mostramos anteriormente.
+
+Portanto, além do número de camadas, o usuário também especifica o tamanho dessas. A única limitação quanto ao seu tamanho é ter suas dimensões múltiplas de 8, isto quer dizer que usamos \textit{tiles} de tamanho 8x8, o mais simples de ser utilizado no DS.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{imgs/exemplo.png}
+\caption{A imagem antes de ser carregada} 
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{imgs/bgtool1.png}
+\caption{A imagem após a abertura na ferramenta} 
+\end{figure}
 
 Ao importar os tiles, o usuário pode usá-los para editar o mapa dos cenários. Uma paleta é gerada automaticamente pela ferramenta a partir dos tiles que o usuário carrega. A ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em tiles, dividindo a imagem em partes de 8x8 e eliminando as partes que são iguais. Como o DS suporta espelhamento na horizontal e na vertical de um tile, verificamos então se o tile em questão sendo avaliado é igual a um dos tiles existentes em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos.
 
-Como armazenamos os \textit{sprites} como uma imagem, não há um algoritmo de hash para essa imagem disponível no qt, por isso, fazemos uma busca pelo vetor de imagens comparando, manualmente, as imagens geradas com o espelhamento com as imagens que já existem. Embora esse seja um processo relativamente custoso, com O(n) para cada inserção, ignoramos por ora esse custo.
+Como armazenamos os \textit{tiles} como uma imagem, não há um algoritmo de hash para essa imagem disponível no QT, por isso, fazemos uma busca pelo vetor de imagens comparando, manualmente, as imagens geradas com as imagens que já existem. Embora esse seja um processo relativamente custoso, com O(n) para cada inserção, ignoramos por ora esse custo.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{imgs/tiles1.png}
+\caption{Alguns \textit{tiles} depois de separados} 
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{imgs/tiles2.png}
+\caption{Configurações possíveis para um \textit{tile}} 
+\end{figure}
 
 Com os tiles já importados, o usuário pode então construir os mapas que compõem a fase nas abas relativas as várias camadas, e ter uma idéia de como ficará a versão final a partir da aba que mostra a composição das abas existentes.
 
-O projeto pode ser salvo, nesse caso, guardamos o projeto num arquivo XML com um formato delimitado para que suporte todas as ferramentas. A BGTool guarda suas informações num nó BGTool abaixo do nó raiz do documento do projeto. Lá, ficam organizadas suas informações das diversas fases e camadas em cada fase.
+O projeto pode ser salvo, nesse caso, guardamos o projeto num arquivo XML com um formato delimitado para que suporte todas as ferramentas. A BGTool guarda suas informações num nó BGTool abaixo do nó raiz do documento do projeto. Lá, ficam organizadas suas informações das diversas fases e camadas em cada fase. Isso será explicado com mais detalhes na seção \ref{sec:xml}.
 
 A qualquer momento, o usuário pode exportar o que já está pronto para o DS, esse é um processo transparente em que criamos os arquivos necessários para a execução da fase criada pelo usuário. São criados três arquivos, um arquivo Pal, que contém a paleta, um arquivo Tile que contém os tiles, indexados pela paleta e um arquivo Map, que contém o mapa, indexado pelos tiles.
 
@@ -228,22 +258,22 @@ Uma breve explicação desses formatos é a seguinte:
 
 \begin{itemize}
  \item Arquivo Pal\\
- Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. Precisam haver 256 cores, mesmo que o arquivo seja inflado de cores falsas. O Formato usado no arquivo é A1B5G5R5, o que significa que há um bit para o caso da cor ser transparente, 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência. (O padrão sendo o Magenta)
+ Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. Precisam haver 256 cores, mesmo que o arquivo seja inflado de cores falsas. O Formato usado no arquivo é A1B5G5R5, o que significa que há um bit para o caso da cor ser transparente (alpha channel), 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência. (A cor padrão sendo o Magenta)
  \item Arquivo Tiles\\
  Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal. Neste arquivo, os tiles são escritos em blocos (vetores) de 64 bits. 
  \item Arquivo Map\\
- Neste arquivo, fica o mapa do \textit{background}, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na vertical. Os bits restantes indicam qual paleta está sendo usada para o mapa em questão, ele não é usado nos modos em que só há uma paleta, ou seja, 256 cores.
+ Neste arquivo, fica o mapa do \textit{background}, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na vertical. Os bits restantes indicam qual paleta está sendo usada para o mapa em questão, eles não são usados nos modos em que só há uma paleta, ou seja, modos de 256 cores.
  \item Arquivo .c\\
  Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
 \end{itemize}
 
-A conversão do arquivo de imagem é feita ao longo da BGTool, inicialmente, quando o usuário carrega uma nova imagem, essa imagem é convertida para uma imagem de 256 cores. Idealmente, devido as diferenças de cor, a sugestão é que o usuário já carregue tiles limitados em 256 cores, e no caso de carregar mais de um conjunto de tiles, que estes tenham a mesma paleta.
+A conversão do arquivo de imagem é feita quando o usuário carrega uma nova imagem. Essa imagem é convertida para uma imagem de 256 cores. Idealmente, devido as diferenças de cor, a sugestão é que o usuário já carregue imagens limitada a 256 cores para evitar perda e caso carregue mais uma imagem, isto é, mais um conjunto de \textit{tiles} que estas tenham a mesma paleta.
 
 Depois dessa conversão inicial, todas as ações no programa são feitas usando a paleta gerada na fase de carregamento. Na exportação, a paleta é exportada diretamente, simplesmente a colocamos para o arquivo binário.
 
 Os tiles, quando exportados, também não necessitam de preocupação adicional. Sua conversão para o formato binário apenas envolve obter o indice da cor de cada pixel de cada tile e escrevê-lo no arquivo binário.
 
-A geração do mapa é a tarefa mais complexa. Internamente na ferramenta, armazenamos o mapa como uma matriz de estruturas do tamanho do cenário, onde a estrutura armazena o indice do tile daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos. Então obtemos essa transformação e jogamos para o formato discutido acima e exportamos isso para o arquivo binário.
+A geração do mapa é a tarefa mais complexa. Internamente na ferramenta, armazenamos o mapa como uma matriz de estruturas do tamanho do cenário, onde a estrutura armazena o indice do tile daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos. Então obtemos essa transformação e jogamos para o formato discutido acima e exportamos para o arquivo binário.
 
 Por fim, depois de exportados, esses arquivos estarão prontos para serem usados num estágio posterior e inseridos no jogo final.
 
@@ -306,7 +336,7 @@ Com estes dois arquivos criados, a engine é capaz de reconhecer o \textit{sprit
 
 Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos enquanto estavam sendo construídos, além de auxiliar na eliminação dos eventuais bugs no processo. 
 
-\chapter{A Engine - DS}
+\chapter{A Engine}
 
 \section{Introdução}
 
@@ -320,7 +350,7 @@ Podemos estabelecer que a engine criada é, na verdade, uma espécie de template
 
 Podemos encontrar, em bibliotecas de jogos, um loop de jogo bastante comum, que é o mesmo que usaremos:
 
-\textsc{\textbf{-- Listagem contendo o loop de jogo padrão, com init, update e render}}
+\lstinputlisting[caption=Loop de jogo,label=list:loop]{codigos/loop.cpp}
 
 Nesse loop, a idéia é que o usuário possa trabalhar com a seguinte separação lógica de código:
 

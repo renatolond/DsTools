@@ -2,8 +2,8 @@ gfx/all_gfx.h
 gfx/bin/bg_1.c
 gfx/bin/teste.c
 source/main.cpp
-source/ScrollEngine.cpp
-source/ScrollEngine.h
+source/scroll-engine.cpp
+source/scroll-engine.h
 source/spritecontroller.h
 source/spritecontroller.cpp
 source/collisioncontroller.h
@@ -19,3 +19,13 @@ source/collidable.h
 source/aabb.h
 source/circle.h
 source/collidable.cpp
+source/global-data.h
+source/global-data.cpp
+source/level-data.h
+source/level-data.cpp
+
+source/resources.cpp
+source/enemy-data.h
+source/enemy-data.cpp
+source/item-data.h
+source/item-data.cpp

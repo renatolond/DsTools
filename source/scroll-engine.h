@@ -3,20 +3,26 @@
 
 #include <PA9.h>
 
+#include <vector>
+
 #include "collisioncontroller.h"
 #include "playercontroller.h"
-#include "level-data.h"
 
 struct sGlobalData;
 
+void load_resources(std::vector<sLevelData *>& level_data_vector);
+
 class cScrollEngine : public PA::Application
 {
-  cPlayerController<tDefinedType> m_player;
-  cCollisionController<tDefinedType> m_collision_controller;
+  cPlayerController<tDefinedType> *m_player;
+  cCollisionController<tDefinedType> *m_collision_controller;
 
   const sGlobalData *m_global_data;
 
-  sLevelData m_level_data;
+  std::vector<sLevelData *> m_level_data_vector;
+
+  int m_current_level;
+  int m_current_player;
 
   int m_timer;
   int m_old_timer;

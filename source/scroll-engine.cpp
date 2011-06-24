@@ -29,9 +29,17 @@ void cScrollEngine::load_graphics()
                    1, // Palette id
                    (void*) small_mario_Pal); // Pointer to load from
 
-  PA_LoadBackground(0, // Screen
-                    0, // Background id
-                    &bgtool0);
+  for(unsigned int i(0); i < m_level_data_vector[m_current_level]->m_backgrounds.size(); ++i)
+  {
+    PA_LoadBackground(0, // screen
+                      i, // background id
+                      m_level_data_vector[m_current_level]->m_backgrounds[i]);
+  }
+//  m_level_data_vector[m_current_level].m_backgrounds;
+//  (sLevelData).
+//  PA_LoadBackground(0, // Screen
+//                    0, // Background id
+//                    &bgtool0);
   PA_InitParallaxX(0, // Screen
                    screenSizeX, // Parallax speed for Background 0. 0 is no parallax
                    screenSizeX,
@@ -40,17 +48,17 @@ void cScrollEngine::load_graphics()
 
   int SMALL_MARIO_ANIM_SPEED = 10;
 
-  m_player.spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
-  m_player.spr.move(0, screenSizeY-tileSizeY*5);
-  m_player.spr.priority(0);
-  m_player.spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
-  m_player.spr.addAnimation(4,4,0); // Drag
-  m_player.spr.addAnimation(5,5,0); // Jumping
-  m_player.spr.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
-  m_player.spr.beginAnimation(0);
+  m_player->spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
+  m_player->spr.move(0, screenSizeY-tileSizeY*5);
+  m_player->spr.priority(0);
+  m_player->spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
+  m_player->spr.addAnimation(4,4,0); // Drag
+  m_player->spr.addAnimation(5,5,0); // Jumping
+  m_player->spr.addAnimation(6,9,SMALL_MARIO_ANIM_SPEED); // Swimming
+  m_player->spr.beginAnimation(0);
 
-  m_collision_controller.addCollideablePlayer(&m_player);
-  m_collision_controller.loadTileMap();
+  m_collision_controller->addCollideablePlayer(m_player);
+  m_collision_controller->loadTileMap();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -59,11 +67,26 @@ void cScrollEngine::init()
 {
   // Initialize the text system
   PA_InitText(1, 0);
-  m_level_data.m_world_min_height = 0;
-  m_level_data.m_world_min_width = 0;
-  m_level_data.m_world_max_height = bgtool0.height*multiplier;
-  m_level_data.m_world_max_width = bgtool0.width*multiplier;
-  m_level_data.m_scrolled = 0;
+
+  load_resources(m_level_data_vector);
+
+  m_current_level = 0;
+
+  //  :
+  //  m_player(Vector2<tDefinedType>(0, 0), // Initial position
+  //           tileSizeXmult, // width
+  //           tileSizeYmult, // height
+  //           0, // Sprite screen
+  //           1, // Sprite number
+  //           &m_level_data),
+  //  m_collision_controller(&m_level_data)
+  m_player = new cPlayerController<tDefinedType>(Vector2<tDefinedType>(0, 0),
+                                        tileSizeXmult,
+                                        tileSizeYmult,
+                                        0,
+                                        1,
+                                        m_level_data_vector[m_current_level]);
+  m_collision_controller = new cCollisionController<tDefinedType>(m_level_data_vector[m_current_level]);
 
   load_graphics();
 
@@ -100,10 +123,10 @@ void cScrollEngine::render()
   PA_OutputText(1,1,6, "%s       ", message);
 #endif
 
-  m_level_data.m_scrolled = m_player.getParallaxX();
+  m_level_data_vector[m_current_level]->m_scrolled = m_player->getParallaxX();
   PA_ParallaxScrollX(0, // Screen
-                     m_level_data.m_scrolled);
-  m_player.Draw();
+                     m_level_data_vector[m_current_level]->m_scrolled);
+  m_player->Draw();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -124,46 +147,42 @@ bool cScrollEngine::update()
       m_controller_timer = m_timer;
       if (Pad.Held.Right)
       {
-          m_player.accelerateRight();
+          m_player->accelerateRight();
       }
       else if (Pad.Held.Left)
       {
-          m_player.accelerateLeft();
+          m_player->accelerateLeft();
       }
 
       if(Pad.Held.Up)
       {
-          m_player.accelerateUp(m_timer);
+          m_player->accelerateUp(m_timer);
       }
   }
   if(m_timer - m_game_action_timer > m_global_data->miliseconds_between_game_cycles)
   {
       m_game_action_timer = m_timer;
   }
-  m_player.IntegrateVerlet();
-  m_collision_controller.check_for_collisions(m_level_data.m_scrolled,
+  m_player->IntegrateVerlet();
+  m_collision_controller->check_for_collisions(m_level_data_vector[m_current_level]->m_scrolled,
                                               0); // Not scrolling over y-axis
   return true;
 }
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-cScrollEngine::cScrollEngine() :
-  m_player(Vector2<tDefinedType>(0, 0), // Initial position
-           tileSizeXmult, // width
-           tileSizeYmult, // height
-           0, // Sprite screen
-           1, // Sprite number
-           &m_level_data),
-  m_collision_controller(&m_level_data)
-
+cScrollEngine::cScrollEngine()
 {
-
-
+  m_player = NULL;
+  m_collision_controller = NULL;
 }
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
 cScrollEngine::~cScrollEngine()
 {
+  if(m_player)
+    delete m_player;
+  if(m_collision_controller)
+    delete m_collision_controller;
 }

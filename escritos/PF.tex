@@ -145,29 +145,35 @@ Há poucos trabalhos desenvolvidos para plataformas diferentes do PC, seja pelo 
 
 \section{Especificações}
 
-Nesse trabalho, nos focamos nas duas primeiras iterações do Nintendo DS: o Nintendo DS original, lançado no final de 2004, que normalmente é chamado de ``DS Phat''; e a segunda iteração, o Nintendo DS Lite, lançado no meio de 2006.
+O foco deste trabalho se dá nas duas primeiras iterações do Nintendo DS: o Nintendo DS original, lançado no final de 2004, que normalmente é chamado de ``DS Phat''; e sua segunda iteração, o Nintendo DS Lite, lançado no meio de 2006.
 
-Ambos possuem hardware muito parecido, e as maiores diferenças são a estética e o contraste e iluminação da tela. Vamos às especificações:
+Ambos possuem um hardware muito parecido, sendo as suas maiores diferenças são a estética e o contraste e iluminação da tela. Nesta seção, são detalhadas as especificações de cada um:
 
 \noindent{\bf Nintendo DS:}\\
 {\bf Peso:} 275 gramas\\
 {\bf Dimensões:} 148.7mm x 84.7mm x 28.9mm\\
-{\bf Telas:} Duas telas, ambas com 3 polegadas, de LCD TFT (Thin-Film Transistor) com 18-bit de cor, resolução de 256x192. As duas telas tem um espaço entre elas de aproximadamente 21mm, e a tela de baixo possui touchscreen resistivo, que responde a um ponto de pressão por vez, fazendo a média no caso de vários pontos serem pressionados de uma vez.\\
-Possui iluminação traseira, que pode ser desligada por software.\\
-{\bf Entradas:} Possui duas entradas de cartucho, uma para o formato de cartucho do seu antecessor, o Gameboy Advance(GBA), na parte inferior,e uma para seu próprio formato de cartucho na parte superior.\\
-{\bf Processadores:} Possui dois processadores ARM, um ARM946E-S a 67MHz, que é o processador principal, responsável pelo loop de jogo e renderização de vídeo e um coprocessador ARM7TDMI a 33MHz, responsável pelo som, wi-fi, e, quando em modo GBA, diminui seu clock para 16MHz, e passa a ser responsável pelo processamento principal.\\
-{\bf Memória:} Possui 4MiB de RAM principal, expansíveis através da entrada de Gameboy Advance, no entanto, essa expansão só foi usada em jogos oficiais pelo Opera Browser.\\
-{\bf Wireless:} Possui uma conexão IEEE802.11b, compatível com encriptação por WEP. WPA e WPA2 não são suportadas. Essa conexão também pode ser usada para comunicação entre consoles.\\
+{\bf Telas:} Duas telas, ambas com 3 polegadas, de LCD TFT (Thin-Film Transistor) com 18-bit de cor, resolução de 256x192. As duas telas tem um espaço entre elas de aproximadamente 21mm. A tela inferior possui \textit{touchscreen} resistivo, que responde a um ponto de pressão por vez. No caso de vários pontos da tela serem pressionados simultaneamente, ela responde na posição média destes pontos.\\
+Além disso, a tela possui iluminação traseira, que pode ser desligada por software.\\
+{\bf Entradas:} Duas entradas de cartucho, uma para o formato de cartucho do seu antecessor, o Gameboy Advance(GBA), na parte inferior,e uma para seu próprio formato de cartucho na parte superior.\\
+{\bf Processadores:} Dois processadores ARM, um ARM946E-S a 67MHz, que é o processador principal, responsável pelo loop de jogo e renderização de vídeo e um coprocessador ARM7TDMI a 33MHz, responsável pelo som, wi-fi, e que quando em modo GBA, diminui seu clock para 16MHz, e passa a ser responsável pelo processamento principal.\\
+{\bf Memória:} 4MiB de RAM principal, expansíveis através da entrada de Gameboy Advance. No entanto, essa expansão só foi usada em jogos oficiais pelo Opera Browser.\\
+{\bf Wireless:} Conexão IEEE802.11b, compatível com encriptação por WEP. WPA e WPA2 não são suportadas. Essa conexão também pode ser usada para comunicação entre consoles.\\
 
 \noindent{\bf Nintendo DS Lite:}\\
 {\bf Peso:} 218 gramas\\
 {\bf Dimensões:} 133mm x 73.9mm x 21.87mm\\
 {\bf Telas:} Mesma especificação que o original, no entanto, possui quatro níveis de iluminação que podem ser reguladas por software. A tela também possui um contraste melhor que o original.\\
-Existem algumas diferenças em relação ao original, como a mudança do chip que controla o Wireless, o controlador do touch também é ligeiramente diferente, mas para fins práticos, o resto da configuração é igual ao original.
+Existem algumas outras menores diferenças, como a mudança do chip que controla o Wireless, o controlador da \textit{touchscreen} também é ligeiramente diferente, mas para fins práticos, o resto da configuração é igual ao original.
 
 \section{Desenvolvimento}
 
 O desenvolvimento oficial no DS segue os mesmos moldes do desenvolvimento em consoles diversos: a Nintendo possui um time interno chamado de Intelligent Systems Co. Ltd. responsável pelas ferramentas de desenvolvimento para os consoles da empresa, dentre eles, o Nintendo DS. O desenvolvedor interessado pode entrar em contato em busca das ferramentas para tal, que incluem uma unidade especial conectada ao computador por meio de uma porta USB. Dentre outras particularidades, esta unidade possui o dobro de memória de uma unidade normal, de forma a facilitar o Debug. No entanto, para adquiri-las, é necessário assinar um Acordo de Confidencialidade (do inglês, Non-Disclosure Agreement), que não permite que se comente ou escreva sobre esses kits de desenvolvimento. Por causa disto, é difícil encontrar mais detalhes acerca de seu funcionamento.
+
+\begin{figure}
+\centering
+\includegraphics{imgs/is_devkit1.jpg}
+\caption{Uma imagem do kit de desenvolvimento oficial do Nintendo DS original} 
+\end{figure}
 
 Em geral, pequenas empresas de desenvolvimento não têm acesso ao kit de desenvolvimento oficial, seja por causa dos altos custos para adquirir o hardware ou pela dificuldade de adquirir as licenças. Desta forma, a publicação de jogos para consoles do tipo ainda é rara no mercado atual de jogos.
 
@@ -212,7 +218,7 @@ Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit
 
 \footnotetext{Rolamento em Paralaxe é uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.}
 
-Por uma combinação do hardware do DS e das bibliotecas usadas, temos que uma camada de \textit{background} na verdade é um mapa de \textit{tiles}. Isto quer dizer que as imagens são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. E estas imagens menores são chamadas de \textit{tiles}, como mostramos anteriormente.
+Por uma combinação do hardware do DS e das bibliotecas usadas, uma camada de \textit{background} na verdade é um mapa de \textit{tiles}. Isto quer dizer que as imagens são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. E estas imagens menores são chamadas de \textit{tiles}, como mostramos anteriormente.
 
 Portanto, além do número de camadas, o usuário também especifica o tamanho dessas. A única limitação quanto ao seu tamanho é ter suas dimensões múltiplas de 8, isto quer dizer que usamos \textit{tiles} de tamanho 8x8, o mais simples de ser utilizado no DS.
 
@@ -279,24 +285,47 @@ Por fim, depois de exportados, esses arquivos estarão prontos para serem usados
 
 A SpriteTool foi criada com o objetivo de a partir de simples imagens, gerar \textit{sprites} para o desenvolvimento de um jogo completo executável no Nintendo DS. O objetivo da ferramenta é criar um ambiente para o usuário, no qual ele não tenha que lidar com particularidades do desenvolvimento que não sejam pertinentes a criação do \textit{sprite} em si.
 
-Além de permitir a portabilidade das imagens para o Nintendo DS, transformando-as em \textit{sprites} do jogo no formato reconhecido pelo console, a SpriteTool gera um arquivo de projeto no formato XML, que pode ser reconhecido pelas outras ferramentas desenvolvidas neste trabalho. A integração entre estas ferramentas é feita respeitando protocolos pré-estabelecidos de escrita e leitura nestes arquivos, de forma transparente para o usuário.
+Além de permitir a portabilidade das imagens para o Nintendo DS, transformando-as em \textit{sprites} do jogo no formato reconhecido pelo console, a SpriteTool gera um arquivo de projeto no formato XML, que pode ser reconhecido pelas outras ferramentas desenvolvidas neste trabalho. A integração entre estas ferramentas é feita respeitando protocolos pré-estabelecidos de escrita e leitura nestes arquivos, de forma transparente para o usuário. A seção \ref{sec:xml} aborda em detalhes a estrutura do formato escolhido e como cada uma das ferramentas faz uso dele para armazenar e resgatar as informações pertinentes ao desenvolvimento do jogo.
 
 Ao começar um novo projeto, uma instância de \textit{sprite} é criada, mesmo que ainda não tenha sido adicionada nenhuma imagem. É importante salientar que o termo “Sprite” neste escopo, engloba uma série de conceitos que vão além de um simples arquivo de imagem. São eles: informações relativas ao tamanho da imagem, uma paleta de cores, informações sobre transparência e enfim os frames do \textit{sprite} – que são as imagens em si.
 Algumas destas informações são requeridas para a criação do projeto de \textit{sprite}, como o nome do \textit{sprite} e as dimensões das imagens que servirão como frames da animação deste. O programa oferece uma gama de formatos de \textit{sprite} para o usuário escolher, respeitando as restrições das bibliotecas e do hardware do DS sobre as imagens que podem ser usadas como \textit{sprites}.
 
 \textsc{\textbf{Inserir screenshot mostrando a tela do \textit{Create New Sprite} com as opções de tamanho de imagens ou explicitar em forma de lista quais são elas?}}
 
-Criado um novo projeto de \textit{sprite}, o usuário tem a possibilidade de adicionar novas imagens a ele. Além de permitir que o usuário busque uma imagem compatível com o tamanho já definido, o programa cria uma pasta de projeto e mantém uma cópia de cada imagem adicionada lá de forma a permitir uma maior portabilidade de uso, eliminando o uso de caminhos específicos para os arquivos fontes das imagens selecionadas. De forma análoga, as imagens relativas aos frames deletados do projeto são removidas desta pasta que encapsula apenas os arquivos necessários para o funcionamento do SpriteTool.
+Criado um novo projeto de \textit{sprite}, o usuário tem a possibilidade de adicionar novas imagens a ele. Além de permitir que o usuário busque uma imagem compatível com o tamanho já definido, o programa cria uma pasta de projeto e mantém nesta pasta uma cópia de cada imagem adicionada a ele, eliminando o uso de caminhos específicos para os arquivos fontes das imagens selecionadas. Assim, o programa tem uma maior portabilidade de uso. De forma análoga, as imagens relativas aos frames deletados do projeto são removidas desta pasta que encapsula apenas os arquivos necessários para o funcionamento do SpriteTool.
 
 Com a ferramenta, ainda é possível pré-visualizar a animação do \textit{sprite}, provendo ao usuário uma ideia do comportamento do mesmo dentro do jogo. Ainda que esta  visualização não ofereça suporte aos eventos normalmente associados com cada parte da animação, como por exemplo o personagem pular ao ser apertado o botão de pulo, ela é um feedback importante para a definição da animação, permitindo verificar o quão fluídos os movimentos do personagem estão.
 
-Depois de adicionar as imagens que vão compor o \textit{sprite} e de validar o resultado da animação, o fluxo de trabalho para o usuário termina salvando o projeto e exportando para o formato compatível com as especificações de \textit{sprite} do Nintendo DS/PALib. Todo o processamento feito ao executar estas duas funções é transparente a ele. 
+Depois de adicionar as imagens que vão compor o \textit{sprite} e de validar o resultado da animação, o fluxo de trabalho para o usuário termina salvando o projeto e exportando para o formato compatível com as especificações de \textit{sprite} do Nintendo DS e da PALib. Todo o processamento feito ao executar estas duas funções é transparente a ele. 
 
-\textsc{\textbf{Fica melhor falar que as especificações são do ds ou da lib? Acaba que são um pouco dos dois... mas fiquei na duvida aqui. Fica pra mudar depois}}
+Ao exportar, o SpriteTool traduz as informações do \textit{sprite} para o formato que poderá ser usado no desenvolvimento do jogo dentro da engine. Para que isto aconteça, são necessários dois arquivos: nomedoprojeto\_Pal.bin e nomedoprojeto\_Sprite.bin
 
-\textsc{\textbf{-- falar especificamente de como a arvore do XML é montada na hora de salvar}}
+O primeiro arquivo contém as informações relativas à paleta de cores daquele \textit{sprite}. Isto deve ser feito para cada frame contido no projeto, da seguinte forma:
 
-Ao salvar o projeto, os dados relativos ao \textit{sprite} serão salvos em um arquivo XML. A estrutura deste arquivo pode ser entendida na forma de uma árvore, e desta forma, adicionar um novo projeto de \textit{sprite} a ele seria como criar um novo ramo, com as informações relativas ao projeto inteiro guardadas no primeiro nó deste ramo e os frames, cada um com suas particularidades, organizados como filhos dele.
+Como o formato de cor aceito pelo Nintendo DS é o formato R5G5B5A1, como citado em \ref{exp:R5G5B5A1}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash} tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. 
+
+Após o processamento de todos os frames do projeto, o arquivo nomedoprojeto\_Pal.bin está completo e pronto para uso na engine.
+
+O segundo arquivo que é gerado nesta etapa, contem as informações referentes aos frames. Nele é descrito como cada frame é organizado, baseando-se nos índices das cores referenciadas na paleta do projeto. O formato no qual isto deve ser feito, exige que o programa itere os frames em blocos de 64 pixels (8 de altura por 8 de largura). O fim do processamento se dá junto ao término dos frames do projeto de \textit{sprite}. 
+
+Com estes dois arquivos criados, a engine é capaz de reconhecer o \textit{sprite} e animá-lo conforme conveniente. 
+
+\lstinputlisting[caption=Exportando o \textit{sprite} para o Nintendo DS .c:,label=list:exportsprite]{codigos/listingexportsprite.c}
+
+Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos gerados pela ferramenta e verificar a resposta que eles tin
+ham na engine.
+
+\section{A integração entre as ferramentas}
+
+As ferramentas desenvolvidas nesse trabalho tem como destino possibilitar o desenvolvimento de jogos no Nintendo DS. No entanto, há a possibilidade de que o usuário queira guardar seu trabalho para terminar depois, ou mesmo queira guardá-lo para futura referência. Além disso, há também a possibilidade de que, no futuro, seja feita uma outra ferramenta que integre as ferramentas aqui apresentadas e automatize ainda mais o desenvolvimento. Para isso, é necessário que haja um formato intermediário, que possa ser utilizado para essas situações.
+
+Neste trabalho, o formato escolhido foi o XML, um formato amplamente usado hoje em dia e que tem como vantagem a facilidade de introduzir ramos diferentes no mesmo arquivo. Deste modo, é possível que as duas ferramentas tenham seus ramos completamente separados, mas ainda assim, que os dados de um mesmo projeto fiquem no mesmo arquivo.
+
+Ao escolhermos o formato definimos o que seria o nosso formato de XML, como ele seria.
+
+\lstinputlisting[caption=Formato de XML de integração entre as ferramentas,label=list:xml]{codigos/exemplo.xml}
+
+No caso da SpriteTool, ao salvar o projeto, os dados relativos ao \textit{sprite} serão salvos em um arquivo XML. A estrutura deste arquivo pode ser entendida na forma de uma árvore, e desta forma, adicionar um novo projeto de \textit{sprite} a ele seria como criar um novo ramo, com as informações relativas ao projeto inteiro guardadas no primeiro nó deste ramo e os frames, cada um com suas particularidades, organizados como filhos dele.
 
 Há ainda a possibilidade de sobrescrever um arquivo XML já existente e isso pode acontecer das diversas formas apresentadas a seguir. 
 
@@ -312,37 +341,16 @@ Da mesma forma que o SpriteTool suporta a possibilidade de armazenar várias inf
 
 \textsc{\textbf{Ver qual seção deve vir primeiro, a parte do spritetool ou a do bgtool... A segunda delas, deveria vir comentando que podem existir tags de arquivos de configuração de outras ferramentas lá e tudo mais.}}
 
-\textsc{\textbf{-- descrever o formato que o ds aceita}}
-\textsc{\textbf{-- falar especificamente de que forma a exportação é feita}}
-
-Por fim, o SpriteTool é o responsável por exportar o \textit{sprite} para o formato que poderá ser usado no desenvolvimento do jogo dentro da engine. Para que isto aconteça, são necessários dois arquivos: nomedoprojeto\_Pal.bin e nomedoprojeto\_Sprite.bin
-
-O primeiro arquivo contém as informações relativas à paleta de cores daquele \textit{sprite}. Isto deve ser feito para cada frame contido no projeto, da seguinte forma:
-
-Como o formato de cor aceito pelo Nintendo DS é o formato R5G5B5A1\footnotemark, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela hash tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. 
-\footnotetext{O formato R5G5B5A1 consiste em armazenar uma cor usando 5 bits para o canal vermelho, 5 bits para o canal verde, 5 bits para o canal azul e 1 bit para o canal alfa. Ou seja, 65536 cores.}
-
-Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. Após o processamento de todos os frames do projeto, o arquivo nomedoprojeto\_Pal.bin está completo e pronto para uso na engine.
-
-O segundo arquivo que é gerado nesta etapa, contem as informações referentes aos frames. Nele é descrito como cada frame é organizado, baseando-se nos índices das cores referenciadas na paleta do projeto. O formato no qual isto deve ser feito, exige que o programa itere os frames em blocos de 64 pixels (8 de altura por 8 de largura). O fim do processamento se dá junto ao término dos frames do projeto de \textit{sprite}. 
-
-Com estes dois arquivos criados, a engine é capaz de reconhecer o \textit{sprite} e animá-lo conforme conveniente. 
-
-\textsc{\textbf{Vale a pena um pseudo código aqui? Quer dizer, vai ter tudo no apêndice mesmo.}}
-
-\textsc{\textbf{Talvez essa frase aqui de baixo deva entrar numa seção sobre as dificuldades que tivemos durante o PF. ‘Desafios’ ou algo do tipo. Ficou meio solto aqui, mas achei que seria legal pelo menos mencionar esse tipo de coisa.}}
-
-Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos enquanto estavam sendo construídos, além de auxiliar na eliminação dos eventuais bugs no processo. 
 
 \chapter{A Engine}
 
 \section{Introdução}
 
-No capítulo anterior foi demonstrada como este trabalho resolve a primeira parte do processo de criação do jogo: a criação de seus personagens e \textit{backgrounds}. Ficam então com alguns desafios pela frente: a detecção de colisão, a constituição do mundo e a interligação das fases, isto é, o próprio jogo.
+No capítulo anterior foi demonstrado como este trabalho resolve a primeira parte do processo de criação do jogo: a criação de seus personagens e \textit{backgrounds}. Ficam então alguns desafios pela frente: a detecção de colisão, a constituição do mundo e a interligação das fases, isto é, o próprio desenrolar do jogo.
 
-Para resolver esses desafios, é preciso a criação de alguma ferramenta no DS. Não é a intenção deste trabalho apresentar uma engine completa, no entanto, é pretendido se criar uma espécie de engine que consiga usar-se dos personagens e \textit{backgrounds} criados com as ferramentas previamente apresentadas.
+Para resolver esses desafios, se faz necessária a criação de alguma ferramenta no Nintendo DS. Não é a intenção deste trabalho apresentar uma engine completa, no entanto, é pretendido se criar uma espécie de engine que consiga usar-se dos personagens e \textit{backgrounds} criados com as ferramentas previamente apresentadas.
 
-Podemos estabelecer que a engine criada é, na verdade, uma espécie de template, que pode (e deve) ser modificado pelo programador para torná-la adequada ao jogo em desenvolvimento.
+Podemos estabelecer que a engine criada é, na verdade, um template, que pode (e deve) ser modificado pelo programador para torná-la adequada ao jogo em desenvolvimento.
 
 \section{O Loop de jogo}
 
@@ -412,120 +420,9 @@ Para que serviu este trabalho na sua formação?
 
 \anexo
 
-\chapter{Figuras}
-
-\begin{figure}[h]
-\centering
-\includegraphics{imgs/diferenca_cor.png}
-\caption[Comparação de cores]{Comparação de cores: Em cima, a escala sem os três bits menos significativos. Embaixo, com eles. Note a gradação mais suave na parte com mais bits.}
-\label{img:comparacao} 
-\end{figure}
-
-\chapter{Listagens de código}
-
-\lstinputlisting[caption=Exemplo de arquivo de mapa de \textit{background} .c:,label=list:exemplobg]{codigos/exemplo_bg.c}
-
-\lstinputlisting[caption=Lendo os tiles e os identificando (v1),label=list:tilesv1]{codigos/tiles.cpp}
-
-\chapter{Achados e perdidos}
-
-\section{Engine: O formato de background}
-
-Investigamos o formato que é aceito pelo DS, em \cite{DSSpec}. Quando uma figura é colocada como plano de fundo, precisamos de quatro partes:
-
-\begin{itemize}
- \item Arquivo Pal\\
- Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. O padrão é de 256 cores. O Formato usado no arquivo é A1B5G5R5, o que significa que tem um bit para o caso da cor ser transparente, 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência.
- \item Arquivo Tiles\\
- Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal. Neste arquivo, os tiles são escritos em blocos (vetores) de 64 bits. 
- \item Arquivo Map\\
- Neste arquivo, fica o mapa do \textit{background}, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na vertical.
- \item Arquivo .c\\
- Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
-\end{itemize}
-
-Veja a listagem de código \ref{list:exemplobg}
-
-Temos alguns detalhes a discutir nesse ponto. Como visto em \cite{DSSpec}, o DS tem mais de um formato de \textit{background}, o que está descrito acima é o mais simples - e menos poderoso - dentre eles. Escolhemos ele como ponto de partida, para, se necessário, implementar os outros. Por exemplo, existem modos de usar mais de um arquivo de paleta, ou ainda usar mais tiles, mas sem o espelhamento. Ignoraremos esses outros formatos e modos, e nos focaremos no que está descrito acima.
-
-Portanto, precisaremos que a nossa ferramenta dê a saída nesse formato. Por enquanto, para os testes, pensamos em usar ferramenta que vem junto com o kit de desenvolvimento, ela só converte uma imagem já pronta (ou seja, um mapa que já tenha sido desenhado) para este formato. Mas assim poderíamos fazer testes com relação a movimentação do \textit{background}. No entanto, é muito difícil editar os arquivos de \textit{background} manualmente, de modo que teremos de dar início a ferramenta de edição antes do esperado. Vamos começar fazendo ela como uma simples ferramenta de edição de \textit{background}.
-
-\section{GFXTool: A ferramenta de edição gráfica}
-Começaremos então a criar a ferramenta. A idéia é que tenhamos uma área principal, onde será mostrado o que temos atualmente no mapa, uma área na lateral onde estarão os tiles que o usuário poderá usar para compor o \textit{background} e algum botão que faça possível que o usuário edite, no próprio programa, os tiles. Ou crie novos.
-
-Comecemos então por uma idéia básica, a de deixar o usuário importar uma imagem já pronta, e que o programa identifique os tiles contidos na imagem. Desta maneira, poderemos usar uma fase já pronta para fazer nossos testes, e o usuário poderia migrar um trabalho anterior para a nova engine. Numa grande empresa, poderia ser o caso de estar havendo uma adaptação de um jogo de uma plataforma antiga para o Nintendo DS.
-
-\begin{figure}[h]
-\includegraphics[width=\linewidth]{imgs/mockup.png}
-\caption{Uma idéia da nossa interface} 
-\end{figure}
-
-Precisamos então decidir como faremos a interface. Como a parte do código da engine para o DS deverá ser feito em C++, pensamos que o ideal seria que o resto do projeto também fosse feito em C++, assim mantemos um certo padrão de linguagem. Com isso, buscamos as alternativas para a interface.
-
-Como queremos que o projeto seja utilizável tanto em Windows, quanto em Linux, que será nossa principal plataforma de desenvolvimento, precisamos escolher uma biblioteca gráfica que suporte os dois sistemas operacionais e cujo custo de trocar de um pra outro seja muito baixo, ou seja, que não seja necessário reeescrever código para isso.
-
-A solução que encontramos é utilizar a biblioteca Qt. A IDE para criação de interfaces, o QtCreator, deixa que as interfaces sejam criadas somente arrastando componentes e em seguida associando cliques a funções. E usando as funções do Qt para fazer as tarefas, o custo de troca entre Windows e Linux é basicamente zero. Falaremos mais sobre o porque da decisão da biblioteca no Anexo \ref{ferramentas-qt}.
-
-Assim, fazemos a primeira janela do nosso programa, e o resultado é bem parecido com o que nós pensamos.
-
-\begin{figure}[h!]
-\centering
-\includegraphics{imgs/mainwindow_1.png}
-\caption{A nossa primeira interface} 
-\end{figure}
-
-Com a nossa interface definida, agora temos que nos preocupar em carregar o arquivo. Vamos considerar primeiro o problema de ler um arquivo já pronto e conversão desse arquivo para um formato do tipo ``mapa de tiles'', onde nós identificamos os tiles, e iremos compor o \textit{background} a partir desses tiles. Fazemos isso com o código \ref{list:tilesv1}.
-
-Vamos entender o que fazemos nesse código. A leitura da imagem fica por conta do Qt. Preenchemos o fundo do grid que vai conter nosso \textit{background} com preto, em seguida, iteramos por toda a imagem, dividindo-a em quadrados de 8x8, ou seja, nossos tiles. Em cada um desses quadrados, identificamos se esse tile já foi incluído no nosso vetor de tiles. Se já, pegamos o índice desse vetor caso contrário, incluímos no vetor de tiles. Depois dizemos que nessa posição do \textit{background} está o tile com esse índice. 
-
-Inicialmente, não deixamos que o usuário amplie o mapa, ou seja, a imagem que ele carregar inicialmente tem que ser composta por tiles e já do tamanho final do mapa. Nossa intenção para depois, no entanto, é que o usuário possa criar um mapa vazio e carregar somente o conjunto de tiles. Do contrário, nosso software se resumiria a ter a mesma função da ferramenta já existente, a PAGfx, somente com uma interface mais rebuscada.
-
-Como já comentamos, o hardware do DS suporta que pedaços de mapa sejam espelhados, tanto na vertical quanto na horizontal. No nosso código, não tratamos nenhum desses casos. Esse problema será visto mais adiante. No momento estamos mais preocupados em ter algo que permita que exportemos os \textit{backgrounds} para que possamos começar a trabalhar na engine.
-
-Agora que já lemos o \textit{background}, temos que implementar as seguintes funções: seleção de tiles, usar o tile selecionado para pintar no mapa e exportar o mapa para o formato do DS. Como já exibimos na pequena janela o tile, basta que associemos os eventos de clique à janela, para que possamos implementar a funcionalidade de seleção de tiles.
-
-Nós em primeiro lugar fizemos um código bem rudimentar, que simplesmente achava a posição do tile a partir da posição que o usuário havia clicado, e desenhava um quadrado ao redor dessa posição. No entanto, ele desenhava múltiplos quadrados, no caso do usuário sair clicando, e não funcionava no caso em que o usuário clicava duas vezes no mesmo quadrado.
-
-Mexemos no código até que o usuário pudesse selecionar um tile com um clique, e desfazer a seleção clicando novamente. E também passamos a guardar a informação sobre o índice do tile selecionado. Afinal, isso seria necessário para quando quiséssemos pintar usando o tile selecionado. Uma funcionalidade interessante seria selecionar grupos de tiles, mas nós decidimos não a implementar num primeiro momento.
-
-Com isso, implementar o uso do tile para pintar no mapa era o próximo passo lógico. Tratamos disso fazendo a janela um pouco mais complexa, adicionamos um botão ``pintar'' e quando este botão está selecionado, o \textit{sprite} selecionado é usado para pintar na janela principal. Agora, já pensando em como faremos para exportar o mapa, precisamos tomar algumas medidas e refatorar algumas partes do código. Em primeiro lugar, como vimos anteriormente, vamos precisar de três partes: uma paleta de cores, os \textit{sprites} presentes, e um mapa desses \textit{sprites}. No momento nosso código não guarda nenhuma dessas informações. Então o que vamos refatorar é o código de leitura da imagem inicial.
-
-Precisamos fazer com que ao ler a imagem, e processar os \textit{sprites}, sejam guardadas as cores que formos encontrando. Guardamos então essas cores num vetor, para que depois, quando formos processar a saída, possamos fazer os \textit{sprites} se relacionarem com essas cores. Os \textit{sprites} já estão guardados eles mesmos num vetor e o basta então que o fundo também seja armazenado numa matriz, relacionando-se com os \textit{sprites}.
-
-Ao menos a princípio, escolhemos, como é comum em aplicações gráficas, o magenta para ser o transparente, ou seja, a primeira cor da paleta. Do mesmo modo, enquanto processamos as cores, já faremos a passagem para A1R5G5B5, que tem somente 5 bits de cor, ao contrário dos 8 que temos. Guardaremos então os 5 bits mais significativos. Veja a figura \ref{img:comparacao} para ter uma idéia da diferença que tirar os três bits menos significativos faz.
-
-Ou seja, o procedimento passa a ser:
-
-\lstinputlisting[caption=Pseudo-código de carregamento de arquivo,label=list:ploadfile]{codigos/pseudocodigo.c}
-
-Com isso, chegamos basicamente onde queríamos chegar. Podemos agora usar o nosso programa para fazer o \textit{background} para ser testado no DS. Porém, falta ainda dar a saída para o formato da PALib. Mas agora isso é só uma questão de dar a saída do jeito certo, já que estamos com todos os dados preparados.
-
-Fazemos isso com o seguinte código:
-
-\lstinputlisting[caption=Pseudo-código de escrita de arquivo,label=list:pwritefile]
-{codigos/pseudoescritacodigo.c}
-
-Assim, agora podemos usar qualquer programa de edição de imagem para fazer os tiles, e em seguida, podemos usá-los para construir algum tipo de \textit{background} para a nossa engine. O DS suporta até cinco \textit{backgrounds} simultâneos, para que eles façam parallax ou simplesmente para dar ilusão de profundidade. Ainda não implementamos essa funcionalidade no nosso software, mas podemos circular essa limitação simplesmente editando os cinco \textit{backgrounds} em momentos diferentes.
-
-\section{Engine: Movimento e colisões}
-
-Agora, já tendo os meios para fazer o plano de fundo, é hora de voltar para a engine, começar a pensar no movimento básico do personagem principal, e nas colisões dele (e de outros personagens, como inimigos) com o ambiente. Nesse ponto, estamos observando as idéias mostradas em \cite[N Tutorial A]{NCollisionA} e \\\cite[N Tutorial B]{NCollisionB}.
-
-Assim, a nossa idéia para a colisão foi de implementarmos, no mapa de tiles, quais tiles são sólidos e quais não são. Do mesmo modo, podemos fazer tiles que só são sólidos a partir de determinadas direções. Assim, podemos implementar plataformas onde o personagem consegue subir, mas uma vez em cima, não cai. Ao mesmo tempo, escolhemos como padrão para o personagem uma caixa envolvente em formato de pílula, assim como é feito pela Unity 3D.\footnotemark
-
-Desse modo, nossa primeira preocupação é fazer a colisão entre o personagem e o mundo. Tentaremos fazer as rotinas o mais genéricas possíveis, para que possam ser aproveitadas para todos os nossos objetos dinâmicos. (Personagens, itens que andam e inimigos.)
-
-\footnote{http://unity3d.com/ - Engine para jogos em 3D.}
-
 \chapter{Ferramentas utilizadas}
 
-Foi feita uma análise de algumas ferramentas que são muito usadas
-por atacantes (hackers) para a confecção de ataques. Estas ferramentas
-são muito úteis em vários aspectos, tais como: (1) o levantamento
-de informações sobre o alvo, (2) que tipo de serviços estão disponíveis
-no alvo, (3) quais as possíveis vulnerabilidades do alvo, entre outras
-informações. As ferramentas analisadas foram o \emph{nmap}~,
-o \emph{nessus}~, o \emph{saint}~, além
-de alguns comandos de sistemas operacionais (UNIX-Like e Windows-Like)
-usados para rede, tais como o \emph{ping, nslookup e whois}. 
+\section{QT}
+
+
 \end{document}

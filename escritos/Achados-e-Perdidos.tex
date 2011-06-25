@@ -1,0 +1,104 @@
+\chapter{Figuras}
+
+\begin{figure}[h]
+\centering
+\includegraphics{imgs/diferenca_cor.png}
+\caption[Comparação de cores]{Comparação de cores: Em cima, a escala sem os três bits menos significativos. Embaixo, com eles. Note a gradação mais suave na parte com mais bits.}
+\label{img:comparacao} 
+\end{figure}
+
+\chapter{Listagens de código}
+
+\lstinputlisting[caption=Exemplo de arquivo de mapa de \textit{background} .c:,label=list:exemplobg]{codigos/exemplo_bg.c}
+
+\lstinputlisting[caption=Lendo os tiles e os identificando (v1),label=list:tilesv1]{codigos/tiles.cpp}
+
+\chapter{Achados e perdidos}
+
+\section{Engine: O formato de background}
+
+Investigamos o formato que é aceito pelo DS, em \cite{DSSpec}. Quando uma figura é colocada como plano de fundo, precisamos de quatro partes:
+
+\begin{itemize}
+ \item Arquivo Pal\\
+ Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. O padrão é de 256 cores. O Formato usado no arquivo é A1B5G5R5, o que significa que tem um bit para o caso da cor ser transparente, 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência.
+ \item Arquivo Tiles\\
+ Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal. Neste arquivo, os tiles são escritos em blocos (vetores) de 64 bits. 
+ \item Arquivo Map\\
+ Neste arquivo, fica o mapa do \textit{background}, ele referencia os tiles. Os bits 0-9 indicam o tile, o bit 10 indica se é espelhado na horizontal e o bit 11 indica se é espelhado na vertical.
+ \item Arquivo .c\\
+ Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
+\end{itemize}
+
+Veja a listagem de código \ref{list:exemplobg}
+
+Temos alguns detalhes a discutir nesse ponto. Como visto em \cite{DSSpec}, o DS tem mais de um formato de \textit{background}, o que está descrito acima é o mais simples - e menos poderoso - dentre eles. Escolhemos ele como ponto de partida, para, se necessário, implementar os outros. Por exemplo, existem modos de usar mais de um arquivo de paleta, ou ainda usar mais tiles, mas sem o espelhamento. Ignoraremos esses outros formatos e modos, e nos focaremos no que está descrito acima.
+
+Portanto, precisaremos que a nossa ferramenta dê a saída nesse formato. Por enquanto, para os testes, pensamos em usar ferramenta que vem junto com o kit de desenvolvimento, ela só converte uma imagem já pronta (ou seja, um mapa que já tenha sido desenhado) para este formato. Mas assim poderíamos fazer testes com relação a movimentação do \textit{background}. No entanto, é muito difícil editar os arquivos de \textit{background} manualmente, de modo que teremos de dar início a ferramenta de edição antes do esperado. Vamos começar fazendo ela como uma simples ferramenta de edição de \textit{background}.
+
+\section{GFXTool: A ferramenta de edição gráfica}
+Começaremos então a criar a ferramenta. A idéia é que tenhamos uma área principal, onde será mostrado o que temos atualmente no mapa, uma área na lateral onde estarão os tiles que o usuário poderá usar para compor o \textit{background} e algum botão que faça possível que o usuário edite, no próprio programa, os tiles. Ou crie novos.
+
+Comecemos então por uma idéia básica, a de deixar o usuário importar uma imagem já pronta, e que o programa identifique os tiles contidos na imagem. Desta maneira, poderemos usar uma fase já pronta para fazer nossos testes, e o usuário poderia migrar um trabalho anterior para a nova engine. Numa grande empresa, poderia ser o caso de estar havendo uma adaptação de um jogo de uma plataforma antiga para o Nintendo DS.
+
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{imgs/mockup.png}
+\caption{Uma idéia da nossa interface} 
+\end{figure}
+
+Precisamos então decidir como faremos a interface. Como a parte do código da engine para o DS deverá ser feito em C++, pensamos que o ideal seria que o resto do projeto também fosse feito em C++, assim mantemos um certo padrão de linguagem. Com isso, buscamos as alternativas para a interface.
+
+Como queremos que o projeto seja utilizável tanto em Windows, quanto em Linux, que será nossa principal plataforma de desenvolvimento, precisamos escolher uma biblioteca gráfica que suporte os dois sistemas operacionais e cujo custo de trocar de um pra outro seja muito baixo, ou seja, que não seja necessário reeescrever código para isso.
+
+A solução que encontramos é utilizar a biblioteca Qt. A IDE para criação de interfaces, o QtCreator, deixa que as interfaces sejam criadas somente arrastando componentes e em seguida associando cliques a funções. E usando as funções do Qt para fazer as tarefas, o custo de troca entre Windows e Linux é basicamente zero. Falaremos mais sobre o porque da decisão da biblioteca no Anexo \ref{ferramentas-qt}.
+
+Assim, fazemos a primeira janela do nosso programa, e o resultado é bem parecido com o que nós pensamos.
+
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/mainwindow_1.png}
+\caption{A nossa primeira interface} 
+\end{figure}
+
+Com a nossa interface definida, agora temos que nos preocupar em carregar o arquivo. Vamos considerar primeiro o problema de ler um arquivo já pronto e conversão desse arquivo para um formato do tipo ``mapa de tiles'', onde nós identificamos os tiles, e iremos compor o \textit{background} a partir desses tiles. Fazemos isso com o código \ref{list:tilesv1}.
+
+Vamos entender o que fazemos nesse código. A leitura da imagem fica por conta do Qt. Preenchemos o fundo do grid que vai conter nosso \textit{background} com preto, em seguida, iteramos por toda a imagem, dividindo-a em quadrados de 8x8, ou seja, nossos tiles. Em cada um desses quadrados, identificamos se esse tile já foi incluído no nosso vetor de tiles. Se já, pegamos o índice desse vetor caso contrário, incluímos no vetor de tiles. Depois dizemos que nessa posição do \textit{background} está o tile com esse índice. 
+
+Inicialmente, não deixamos que o usuário amplie o mapa, ou seja, a imagem que ele carregar inicialmente tem que ser composta por tiles e já do tamanho final do mapa. Nossa intenção para depois, no entanto, é que o usuário possa criar um mapa vazio e carregar somente o conjunto de tiles. Do contrário, nosso software se resumiria a ter a mesma função da ferramenta já existente, a PAGfx, somente com uma interface mais rebuscada.
+
+Como já comentamos, o hardware do DS suporta que pedaços de mapa sejam espelhados, tanto na vertical quanto na horizontal. No nosso código, não tratamos nenhum desses casos. Esse problema será visto mais adiante. No momento estamos mais preocupados em ter algo que permita que exportemos os \textit{backgrounds} para que possamos começar a trabalhar na engine.
+
+Agora que já lemos o \textit{background}, temos que implementar as seguintes funções: seleção de tiles, usar o tile selecionado para pintar no mapa e exportar o mapa para o formato do DS. Como já exibimos na pequena janela o tile, basta que associemos os eventos de clique à janela, para que possamos implementar a funcionalidade de seleção de tiles.
+
+Nós em primeiro lugar fizemos um código bem rudimentar, que simplesmente achava a posição do tile a partir da posição que o usuário havia clicado, e desenhava um quadrado ao redor dessa posição. No entanto, ele desenhava múltiplos quadrados, no caso do usuário sair clicando, e não funcionava no caso em que o usuário clicava duas vezes no mesmo quadrado.
+
+Mexemos no código até que o usuário pudesse selecionar um tile com um clique, e desfazer a seleção clicando novamente. E também passamos a guardar a informação sobre o índice do tile selecionado. Afinal, isso seria necessário para quando quiséssemos pintar usando o tile selecionado. Uma funcionalidade interessante seria selecionar grupos de tiles, mas nós decidimos não a implementar num primeiro momento.
+
+Com isso, implementar o uso do tile para pintar no mapa era o próximo passo lógico. Tratamos disso fazendo a janela um pouco mais complexa, adicionamos um botão ``pintar'' e quando este botão está selecionado, o \textit{sprite} selecionado é usado para pintar na janela principal. Agora, já pensando em como faremos para exportar o mapa, precisamos tomar algumas medidas e refatorar algumas partes do código. Em primeiro lugar, como vimos anteriormente, vamos precisar de três partes: uma paleta de cores, os \textit{sprites} presentes, e um mapa desses \textit{sprites}. No momento nosso código não guarda nenhuma dessas informações. Então o que vamos refatorar é o código de leitura da imagem inicial.
+
+Precisamos fazer com que ao ler a imagem, e processar os \textit{sprites}, sejam guardadas as cores que formos encontrando. Guardamos então essas cores num vetor, para que depois, quando formos processar a saída, possamos fazer os \textit{sprites} se relacionarem com essas cores. Os \textit{sprites} já estão guardados eles mesmos num vetor e o basta então que o fundo também seja armazenado numa matriz, relacionando-se com os \textit{sprites}.
+
+Ao menos a princípio, escolhemos, como é comum em aplicações gráficas, o magenta para ser o transparente, ou seja, a primeira cor da paleta. Do mesmo modo, enquanto processamos as cores, já faremos a passagem para A1R5G5B5, que tem somente 5 bits de cor, ao contrário dos 8 que temos. Guardaremos então os 5 bits mais significativos. Veja a figura \ref{img:comparacao} para ter uma idéia da diferença que tirar os três bits menos significativos faz.
+
+Ou seja, o procedimento passa a ser:
+
+\lstinputlisting[caption=Pseudo-código de carregamento de arquivo,label=list:ploadfile]{codigos/pseudocodigo.c}
+
+Com isso, chegamos basicamente onde queríamos chegar. Podemos agora usar o nosso programa para fazer o \textit{background} para ser testado no DS. Porém, falta ainda dar a saída para o formato da PALib. Mas agora isso é só uma questão de dar a saída do jeito certo, já que estamos com todos os dados preparados.
+
+Fazemos isso com o seguinte código:
+
+\lstinputlisting[caption=Pseudo-código de escrita de arquivo,label=list:pwritefile]
+{codigos/pseudoescritacodigo.c}
+
+Assim, agora podemos usar qualquer programa de edição de imagem para fazer os tiles, e em seguida, podemos usá-los para construir algum tipo de \textit{background} para a nossa engine. O DS suporta até cinco \textit{backgrounds} simultâneos, para que eles façam parallax ou simplesmente para dar ilusão de profundidade. Ainda não implementamos essa funcionalidade no nosso software, mas podemos circular essa limitação simplesmente editando os cinco \textit{backgrounds} em momentos diferentes.
+
+\section{Engine: Movimento e colisões}
+
+Agora, já tendo os meios para fazer o plano de fundo, é hora de voltar para a engine, começar a pensar no movimento básico do personagem principal, e nas colisões dele (e de outros personagens, como inimigos) com o ambiente. Nesse ponto, estamos observando as idéias mostradas em \cite[N Tutorial A]{NCollisionA} e \\\cite[N Tutorial B]{NCollisionB}.
+
+Assim, a nossa idéia para a colisão foi de implementarmos, no mapa de tiles, quais tiles são sólidos e quais não são. Do mesmo modo, podemos fazer tiles que só são sólidos a partir de determinadas direções. Assim, podemos implementar plataformas onde o personagem consegue subir, mas uma vez em cima, não cai. Ao mesmo tempo, escolhemos como padrão para o personagem uma caixa envolvente em formato de pílula, assim como é feito pela Unity 3D.\footnotemark
+
+Desse modo, nossa primeira preocupação é fazer a colisão entre o personagem e o mundo. Tentaremos fazer as rotinas o mais genéricas possíveis, para que possam ser aproveitadas para todos os nossos objetos dinâmicos. (Personagens, itens que andam e inimigos.)
+
+\footnote{http://unity3d.com/ - Engine para jogos em 3D.}

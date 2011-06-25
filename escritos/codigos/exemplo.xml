@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Projeto name="Projeto 00">
+  <BgTool>
+    <Levels>
+      <Level width="8" height="8" name="Projeto 00">
+        <Backgrounds>
+          <Background id="0" path="bg0"/>
+          <Background id="1" path="bg1"/>
+        </Backgrounds>
+      </Level>
+    </Levels>
+  </BgTool>
+   <SpriteTool>
+     <Sprite name="Mario" sizex="16" sizey="16">
+        <Frame id="1" path="frame01.png"/>
+        <Frame id="2" path="frame02.png"/>
+        <Frame id="3" path="frame03.png"/>
+        <Frame id="4" path="frame04.png"/>
+        <Frame id="5" path="frame05.png"/>
+     </Sprite>
+     <Sprite name="Luigi" sizex="16" sizey="16">
+        <Frame id="1" path="luigi01.png"/>
+     </Sprite>
+   </SpriteTool>
+</Projeto>

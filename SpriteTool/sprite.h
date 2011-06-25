@@ -3,36 +3,34 @@
 
 #include <QString>
 #include <QVector>
-#include <QImage>
 
-class Sprite
+class QImage;
+
+class cSprite
 {
-//private:
-public:
-    QString nome;
-    int width, height;
-    QVector<QImage *> frame;
-    QVector<QString> path;
+ private:
+  QString m_nome;
+  int m_width;
+  int m_height;
+  QVector<QImage *> m_frame;
+  QVector<QString> m_path;
 
-
-public:
-    Sprite();
-    Sprite(QString nome);
-    Sprite(QString nome, int width, int height);
-
-    QString getNome();
-    int getWidth();
-    int getHeight();
-    void setWidth(int w);
-    void setHeight(int h);
-    void setPath(int i, QString str);
-    void clear();
-    QImage* getFrame(int i);
-    QString getPath(int i);
-    void addFrame(QString path);
-    void delFrame(int pos);
-    int size();
-
+ public:
+  cSprite();
+  cSprite(QString nome);
+  cSprite(QString nome, int width, int height);
+  QString get_nome();
+  int get_width();
+  int get_height();
+  void set_width(int w);
+  void set_height(int h);
+  void set_path(int i, QString str);
+  QImage* get_frame(int i);
+  QString get_path(int i);
+  void clear(void);
+  int size(void);
+  void add_frame(QString path);
+  void del_frame(int pos);
 };
 
 #endif // SPRITE_H

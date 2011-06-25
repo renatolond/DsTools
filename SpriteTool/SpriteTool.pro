@@ -13,12 +13,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     newprojectwindow.cpp \
     sprite.cpp \
-    openprojectwindow.cpp
+    openprojectwindow.cpp \
+    maincontroller.cpp
 
 HEADERS  += mainwindow.h \
     newprojectwindow.h \
     sprite.h \
-    openprojectwindow.h
+    openprojectwindow.h \
+    maincontroller.h
 
 FORMS    += mainwindow.ui \
     newprojectwindow.ui \

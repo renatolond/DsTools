@@ -1,103 +1,97 @@
-#include "sprite.h"
+#include "sprite.h" // Class definition
 
-#include <QDebug>
+#include <QImage>
 
-Sprite::Sprite()
+cSprite::cSprite()
 {
 }
 
-Sprite::Sprite(QString nome, int width, int height)
+cSprite::cSprite(QString nome, int width, int height)
 {
-    this->nome = nome;
-    this->width = width;
-    this->height = height;
+  m_nome = nome;
+  m_width = width;
+  m_height = height;
 }
 
-Sprite::Sprite(QString nome)
+cSprite::cSprite(QString nome)
 {
-    this->nome = nome;
+  m_nome = nome;
 }
 
-QString Sprite::getNome(){
-
-    return this->nome;
-}
-
-int Sprite::getHeight(){
-
-    return this->height;
-}
-
-int Sprite::getWidth(){
-
-    return this->width;
-}
-
-void Sprite::setHeight(int h){
-
-    this->height = h;
-}
-
-void Sprite::setWidth(int w){
-
-    this->width = w;
-}
-
-void Sprite::setPath(int i, QString str)
+QString cSprite::get_nome()
 {
-    this->path[i] = str;
+  return m_nome;
 }
 
-QImage* Sprite::getFrame(int i){
-
-    return frame[i];
-}
-
-QString Sprite::getPath(int i){
-
-    return this->path[i];
-}
-
-int Sprite::size(){
-
-    return path.size();
-}
-
-void Sprite::addFrame(QString path)
+int cSprite::get_height()
 {
-
-    qDebug() << "Chegou no addframe com path " << path;
-
-    QImage* img = new QImage(path);
-
-    this->frame.push_back(img);
-    this->path.push_back(path);
+  return m_height;
 }
 
-void Sprite::delFrame(int pos)
+int cSprite::get_width()
 {
-    QImage *img = frame[pos];
-
-    frame.remove(pos);
-    path.remove(pos);
-
-    delete(img);
-
-  //  for (int i = 0; i < frame.size(); i++)
-  //      qDebug() << "Vetor pos " << i << ": " << path[i];
+  return m_width;
 }
 
-void Sprite::clear()
+void cSprite::set_height(int h)
 {
-   nome = "";
-   width = 0;
-   height = 0;
+  m_height = h;
+}
 
-   for (int i = 0; i < frame.size(); i++)
-   {
-       delete(frame[i]);
+void cSprite::set_width(int w)
+{
+  m_width = w;
+}
 
-       path[i] = "";
-   }
+void cSprite::set_path(int i, QString str)
+{
+  m_path[i] = str;
+}
+
+QImage* cSprite::get_frame(int i)
+{
+  return m_frame[i];
+}
+
+QString cSprite::get_path(int i)
+{
+  return m_path[i];
+}
+
+int cSprite::size()
+{
+  return m_path.size();
+}
+
+void cSprite::add_frame(QString path)
+{
+  QImage *img = new QImage(path);
+
+  m_frame.push_back(img);
+  m_path.push_back(path);
+}
+
+void cSprite::del_frame(int pos)
+{
+  QImage *img = m_frame[pos];
+
+  m_frame.remove(pos);
+  m_path.remove(pos);
+
+  delete(img);
+}
+
+void cSprite::clear()
+{
+  m_nome = "";
+  m_width = 0;
+  m_height = 0;
+
+  for(int i(0); i < m_frame.size(); ++i)
+  {
+    delete(m_frame[i]);
+
+    m_path[i] = "";
+  }
 }
 

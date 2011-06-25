@@ -3,41 +3,41 @@
 
 #include <QDebug>
 
-OpenProjectWindow::OpenProjectWindow(MainWindow *parent) :
-    QDialog(parent),
-    ui(new Ui::OpenProjectWindow)
+#include "maincontroller.h"
+
+cOpenProjectWindow::cOpenProjectWindow(cMainController *parent) :
+    QDialog(parent->get_main_window_ref()),
+    ui(new Ui::cOpenProjectWindow)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
 
-    pai = parent;
+  m_controller = parent;
 
-    this->setWindowTitle("Open Project");
-    this->setModal(true);
+  setWindowTitle("Open Project");
+  setModal(true);
 
-    connect(ui->btnOk,SIGNAL(clicked()),this,SLOT(okClicked()));
-    connect(ui->btnCancel,SIGNAL(clicked()),this,SLOT(cancelClicked()));
+  connect(ui->btn_ok,SIGNAL(clicked()),this,SLOT(ok_clicked()));
+  connect(ui->btn_cancel,SIGNAL(clicked()),this,SLOT(cancel_clicked()));
 }
 
-OpenProjectWindow::~OpenProjectWindow()
+cOpenProjectWindow::~cOpenProjectWindow()
 {
-    delete ui;
+  delete ui;
 }
 
-void OpenProjectWindow::addSpriteOption(QString s)
+void cOpenProjectWindow::add_sprite_option(QString s)
 {
-    ui->cbSprite->addItem(s);
+  ui->cb_sprite->addItem(s);
 }
 
-void OpenProjectWindow::okClicked()
+void cOpenProjectWindow::ok_clicked()
 {
-    qDebug() << ui->cbSprite->currentText();
+  m_controller->create_sprite(ui->cb_sprite->currentText());
 
-    pai->createSprite(ui->cbSprite->currentText());
-
-    this->close();
+  close();
 }
 
-void OpenProjectWindow::cancelClicked()
+void cOpenProjectWindow::cancel_clicked()
 {
-    this->close();
+  close();
 }

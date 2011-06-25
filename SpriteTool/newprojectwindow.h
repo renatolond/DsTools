@@ -3,30 +3,28 @@
 
 #include <QDialog>
 #include <QString>
-#include "sprite.h"
+
 #include "mainwindow.h"
 
 namespace Ui {
-    class NewProjectWindow;
+    class cNewProjectWindow;
 }
 
-class NewProjectWindow : public QDialog
+class cNewProjectWindow : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit NewProjectWindow(MainWindow *parent);
-    ~NewProjectWindow();
+ public:
+  explicit cNewProjectWindow(cMainController *parent = 0);
+  ~cNewProjectWindow(void);
 
-private:
-    Ui::NewProjectWindow *ui;
+ private:
+   Ui::cNewProjectWindow *ui;
+   cMainController *m_controller;
 
-    MainWindow *pai;
-
-private slots:
-    void okClicked();
-    void cancelClicked();
-
+ private slots:
+   void ok_clicked(void);
+   void cancel_clicked(void);
 };
 
 #endif // NEWPROJECTWINDOW_H

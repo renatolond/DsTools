@@ -7,27 +7,25 @@
 #include "mainwindow.h"
 
 namespace Ui {
-    class OpenProjectWindow;
+    class cOpenProjectWindow;
 }
 
-class OpenProjectWindow : public QDialog
+class cOpenProjectWindow : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit OpenProjectWindow(MainWindow *parent);
-    ~OpenProjectWindow();
+ public:
+  explicit cOpenProjectWindow(cMainController *parent);
+  ~cOpenProjectWindow(void);
+  void add_sprite_option(QString s);
 
-    void addSpriteOption(QString s);
+ private:
+  Ui::cOpenProjectWindow *ui;
+  cMainController *m_controller;
 
-private:
-    Ui::OpenProjectWindow *ui;
-
-    MainWindow *pai;
-
-private slots:
-    void okClicked();
-    void cancelClicked();
+ private slots:
+  void ok_clicked(void);
+  void cancel_clicked(void);
 };
 
 #endif // OPENPROJECTWINDOW_H

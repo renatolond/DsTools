@@ -4,56 +4,56 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include <QDebug>
+
 #include "sprite.h"
+#include "maincontroller.h"
 
-NewProjectWindow::NewProjectWindow(MainWindow *parent) :
-    QDialog(parent),
-    ui(new Ui::NewProjectWindow)
+cNewProjectWindow::cNewProjectWindow(cMainController *parent) :
+  QDialog(parent->get_main_window_ref()),
+  ui(new Ui::cNewProjectWindow)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
 
-    pai = parent;
+  m_controller = parent;
 
-    this->setWindowTitle("New Project");
-    this->setModal(true);
+  setWindowTitle("New Project");
+  setModal(true);
 
-    connect(ui->btnOk,SIGNAL(clicked()),this,SLOT(okClicked()));
-    connect(ui->btnCancel,SIGNAL(clicked()),this,SLOT(cancelClicked()));
+  connect(ui->btn_ok,SIGNAL(clicked()),this,SLOT(ok_clicked()));
+  connect(ui->btn_cancel,SIGNAL(clicked()),this,SLOT(cancel_clicked()));
 
 }
 
-NewProjectWindow::~NewProjectWindow()
+cNewProjectWindow::~cNewProjectWindow(void)
 {
-    delete ui;
+  delete ui;
 }
 
-void NewProjectWindow::okClicked()
+void cNewProjectWindow::ok_clicked(void)
 {
-   QString nome = ui->editNome->text();
+  QString nome = ui->edit_nome->text();
 
-   if (nome == "")
-   {
-       QMessageBox::information(this, tr("Erro!"),tr("É preciso entrar com um nome."));
-       return;
-   }
+  if(nome == "")
+  {
+    QMessageBox::information(this, tr("Erro!"), tr("É preciso entrar com um nome."));
+    return;
+  }
 
-   QString tam = ui->comboBox->currentText();
-   int w, h;
+  QString tam = ui->cb_sprite_size->currentText();
+  int w, h;
 
-   QTextStream s(&tam,QIODevice::ReadOnly);
+  QTextStream s(&tam,QIODevice::ReadOnly);
+  s >> w >> " x " >> h;
 
-   s >> w >> " x " >> h;
+  m_controller->create_sprite(nome,w,h);
 
-   pai->createSprite(nome,w,h);
-
-   this->close();
-
+  close();
 }
 
-void NewProjectWindow::cancelClicked()
+void cNewProjectWindow::cancel_clicked(void)
 {
-    ui->editNome->clear();
-    this->close();
+    ui->edit_nome->clear();
+    close();
 }
 
 

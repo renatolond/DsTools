@@ -5,54 +5,40 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 
-#include "sprite.h"
 
+class cMainController;
 
 namespace Ui {
-    class MainWindow;
+    class cMainWindow;
 }
 
-class MainWindow : public QMainWindow
+class cMainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+ public:
+  cMainWindow(QWidget *parent = 0);
+  ~cMainWindow(void);
 
-    void createSprite(QString nome, int w, int h);
-    void createSprite(QString nome);
-    void enable(void);
-    void disable(void);
-    void showFrame(int i);
-    void saveImages(void);
-    void deleteImages(void);
+  void enable(void);
+  void disable(void);
+  void show_frame(int i);
+  void reset(void);
+  int delete_procedure(int frame);
+  bool in_animation(void);
+  void set_animation_mode(void);
+  void set_edit_mode(void);
+  void call_manage_bounds(void);
 
-private:
-    Ui::MainWindow *ui;
+ private:
+  Ui::cMainWindow *ui;
 
-    Sprite sprite;
-    QStringList toDeleteFiles;
-    QGraphicsScene *scene;
-    int currentFrame;
+  cMainController *m_controller;
 
-    QTimer *timer;
-    bool inAnimation;
-
-private slots:
-    void newProject();
-    void saveProject();
-    void openProject();
-    void closeProject();
-    void showRight();
-    void showLeft();
-    void manageArrows();
-    void addFrame();
-    void delFrame();
-    void animate();
-    void timedAnimation();
-    void exportDS();
-
+ private slots:
+  void show_right();
+  void show_left();
+  void manage_bounds();
 };
 
 #endif // MAINWINDOW_H

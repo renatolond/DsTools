@@ -262,7 +262,7 @@ Uma breve explicação desses formatos é a seguinte:
 
 \begin{itemize}
  \item Arquivo Pal\\
- Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. Precisam haver 256 cores, mesmo que o arquivo seja inflado de cores falsas. O Formato usado no arquivo é A1B5G5R5, o que significa que há um bit para o caso da cor ser transparente (alpha channel), 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência. (A cor padrão sendo o Magenta)
+ Neste arquivo, temos informações sobre a paleta usada no arquivo. São descritas todas as cores contidas no arquivo. Precisam haver 256 cores, mesmo que o arquivo seja inflado de cores falsas. O Formato usado no arquivo é A1B5G5R5, o que significa que há um bit para o caso da cor ser transparente (alpha channel), 5 para o verde, 5 para o azul e 5 para o vermelho. A primeira cor no arquivo é a cor usada como transparência. (A cor padrão sendo o Magenta)\label{exp:A1B5G5R5}
  \item Arquivo Tiles\\
  Neste arquivo, ficam os tiles, cada um de 8x8 pixels. Cada pixel do tile referencia uma cor do arquivo Pal. Neste arquivo, os tiles são escritos em blocos (vetores) de 64 bits. 
  \item Arquivo Map\\
@@ -287,10 +287,14 @@ A SpriteTool foi criada com o objetivo de a partir de simples imagens, gerar \te
 
 Além de permitir a portabilidade das imagens para o Nintendo DS, transformando-as em \textit{sprites} do jogo no formato reconhecido pelo console, a SpriteTool gera um arquivo de projeto no formato XML, que pode ser reconhecido pelas outras ferramentas desenvolvidas neste trabalho. A integração entre estas ferramentas é feita respeitando protocolos pré-estabelecidos de escrita e leitura nestes arquivos, de forma transparente para o usuário. A seção \ref{sec:xml} aborda em detalhes a estrutura do formato escolhido e como cada uma das ferramentas faz uso dele para armazenar e resgatar as informações pertinentes ao desenvolvimento do jogo.
 
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/spritetool1.png}
+\caption{Janela de criação de novo \textit{sprite}} 
+\end{figure}
+
 Ao começar um novo projeto, uma instância de \textit{sprite} é criada, mesmo que ainda não tenha sido adicionada nenhuma imagem. É importante salientar que o termo “Sprite” neste escopo, engloba uma série de conceitos que vão além de um simples arquivo de imagem. São eles: informações relativas ao tamanho da imagem, uma paleta de cores, informações sobre transparência e enfim os frames do \textit{sprite} – que são as imagens em si.
 Algumas destas informações são requeridas para a criação do projeto de \textit{sprite}, como o nome do \textit{sprite} e as dimensões das imagens que servirão como frames da animação deste. O programa oferece uma gama de formatos de \textit{sprite} para o usuário escolher, respeitando as restrições das bibliotecas e do hardware do DS sobre as imagens que podem ser usadas como \textit{sprites}.
-
-\textsc{\textbf{Inserir screenshot mostrando a tela do \textit{Create New Sprite} com as opções de tamanho de imagens ou explicitar em forma de lista quais são elas?}}
 
 Criado um novo projeto de \textit{sprite}, o usuário tem a possibilidade de adicionar novas imagens a ele. Além de permitir que o usuário busque uma imagem compatível com o tamanho já definido, o programa cria uma pasta de projeto e mantém nesta pasta uma cópia de cada imagem adicionada a ele, eliminando o uso de caminhos específicos para os arquivos fontes das imagens selecionadas. Assim, o programa tem uma maior portabilidade de uso. De forma análoga, as imagens relativas aos frames deletados do projeto são removidas desta pasta que encapsula apenas os arquivos necessários para o funcionamento do SpriteTool.
 
@@ -302,7 +306,7 @@ Ao exportar, o SpriteTool traduz as informações do \textit{sprite} para o form
 
 O primeiro arquivo contém as informações relativas à paleta de cores daquele \textit{sprite}. Isto deve ser feito para cada frame contido no projeto, da seguinte forma:
 
-Como o formato de cor aceito pelo Nintendo DS é o formato R5G5B5A1, como citado em \ref{exp:R5G5B5A1}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash} tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. 
+Como o formato de cor aceito pelo Nintendo DS é o formato A1B5G5R5, como citado em \ref{exp:A1B5G5R5}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash} tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. 
 
 Após o processamento de todos os frames do projeto, o arquivo nomedoprojeto\_Pal.bin está completo e pronto para uso na engine.
 
@@ -315,7 +319,7 @@ Com estes dois arquivos criados, a engine é capaz de reconhecer o \textit{sprit
 Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos gerados pela ferramenta e verificar a resposta que eles tin
 ham na engine.
 
-\section{A integração entre as ferramentas}
+\section{A integração entre as ferramentas\label{sec:xml}}
 
 As ferramentas desenvolvidas nesse trabalho tem como destino possibilitar o desenvolvimento de jogos no Nintendo DS. No entanto, há a possibilidade de que o usuário queira guardar seu trabalho para terminar depois, ou mesmo queira guardá-lo para futura referência. Além disso, há também a possibilidade de que, no futuro, seja feita uma outra ferramenta que integre as ferramentas aqui apresentadas e automatize ainda mais o desenvolvimento. Para isso, é necessário que haja um formato intermediário, que possa ser utilizado para essas situações.
 

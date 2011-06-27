@@ -44,7 +44,7 @@
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
 
-\hyphenation{feed-back en-gine east-er egg sprite hard-ware tile thin film tran-sis-tor}
+\hyphenation{feed-back en-gine east-er egg sprite hard-ware tile thin film tran-sis-tor Nintendo PALib DS}
 
 \makeatletter
 \usepackage{babel}
@@ -425,6 +425,11 @@ Desse modo, fica a cargo do programador chamar, dentro da função \textit{load\
 
 %\textsc{\textbf{-- Listagem contendo a estrutura, que contém uma fase, seus \textit{backgrounds}, posicionamento de \textit{sprites}, dentre outras informações relevantes.}}
 
+\section{Conexão entre fases}
+
+%revisar e extender
+As fases são interligadas a partir das estruturas que foram preenchidas na função \textit{load\_resources()}. A \textit{engine} liga as fases sequencialmente, e uma vez que o jogador passou de uma fase, não há meio para retornar para ela.
+
 \chapter{O Jogo}
 
 \vfill{}
@@ -447,7 +452,15 @@ Depois de desenvolvidas as ferramentas e a \textit{engine}, é preciso testá-la
 
 Começamos importando uma imagem da primeira fase do jogo original na BGTool, criando um mapa da primeira fase, e editamos o mapa para retirar objetos que não são do \textit{background}, como as caixas de interrogação. E usamos a ferramenta para exportar para o DS. Repetimos esse processo para as fases que incluímos neste nosso jogo de demonstração.
 
+O segundo passo é recriar os sprites originais, e converter para o formato aceito pelo DS, dentre eles sprites de inimigos, da caixa de ítens, da bandeira, dentre outros.
 
+%\begin{figure}[h!]
+%\centering
+%\includegraphics{imgs/spritetool2.png}
+%\caption{Adicionando o \textit{sprite} do bloco de interrogação à SpriteTool.} 
+%\end{figure}
+
+Em seguida, criamos os arquivos de código fonte que informam para a \textit{engine} sobre os \textit{backgrounds}, personagens, inimigos e tudo que criamos nos passos anteriores.
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
@@ -484,7 +497,7 @@ A interface da BGTool ainda pode ser melhorada, para facilitar o seu uso. Com op
 
 Mais ferramentas poderiam ser criadas, cada uma orientada a partes da cadeia de desenvolvimento que não foram abordadas. Um módulo para tratar da inteligência artificial dos inimigos é um exemplo, possibilitando o usuário a definir para cada \textit{sprite} de inimigo um padrão de movimentação já previamente estabelecido. 
 
-Uma outra funcionalidade do Nintendo DS, que é a conexão \textit{wireless}, não foi aproveitada da forma que poderia. Um módulo para estabelecer a comunicação entre dois consoles distintos poderia ser criado aproveitando a facilidade de comunicação que o aparelho oferece. 
+Uma outra funcionalidade do Nintendo DS, que é a conexão \textit{wireless}, não foi aproveitada da form	a que poderia. Um módulo para estabelecer a comunicação entre dois consoles distintos poderia ser criado aproveitando a facilidade de comunicação que o aparelho oferece. 
 
 Parte do objetivo deste trabalho é justamente fomentar o desenvolvimento desse tipo de ferramenta, e assim aquecer o desenvolvimento de jogos apesar de todas as dificuldades que ainda são encontradas na área. As possibilidades de trabalhos futuros são inúmeras e além de nos inspirarem, fazem de nós pessoas mais realizadas por atingir esta meta. Este trabalho foi desenvolvido para a obtenção de grau em Bacharel em Ciências da Computação, entretanto, nossas aspirações como autores vão além: impactar o cenário atual de desenvolvimento de jogos e servir de referência para tantos outros interessados nesta área que ainda carece muito de incentivo.
 

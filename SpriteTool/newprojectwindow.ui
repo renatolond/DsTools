@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="labelNome">
+  <widget class="QLabel" name="lbl_nome">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -132,7 +132,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="labelTamanho">
+  <widget class="QLabel" name="lbl_size">
    <property name="geometry">
     <rect>
      <x>50</x>

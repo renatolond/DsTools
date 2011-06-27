@@ -27,8 +27,8 @@
          %[Visual]Basic
          %Pascal
          %C
-         C++
-         %XML
+         C++,
+         XML
          %HTML
          %Java
  }
@@ -51,13 +51,13 @@
 
 \autor{Renato dos Santos Cerqueira}
 \coautor{Felipe Pedrosa Martinez}
-\titulo{Title Placeholder}
+\titulo{Ferramentas e métodos para o desenvolvimento de um jogo de plataforma 2D para o Nintendo DS}
 \orientador{Adriano Joaquim de Oliveira Cruz}
 \comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade 
 Federal do Rio de Janeiro.}
 \instituicao{Departamento de Ciência da Computação \par Instituto de Matemática \par Universidade Federal do Rio de Janeiro}
 \local{Rio de Janeiro - RJ, Brasil}
-\data{21/12/2012}
+\data{13/07/2011}
 
 \Ncapa
 \NFolhaDeRosto
@@ -107,15 +107,13 @@ da mesma.
 
 A área de jogos eletrônicos é uma área relativamente nova, se comparada a outros ramos da ciência da computação. No entanto, por mais que compreenda conceitos importantes de computação, engloba outros que fogem ao seu escopo. Para o desenvolvimento de um jogo eletrônico, além de conhecimentos de linguagens de programação, algoritmos e estruturas de dados, interface humano-computador, inteligência artifical, etc; é preciso considerar aspectos mais subjetivos que dizem respeito a um jogo de forma geral, seja ele eletrônico ou não. O gameplay, ou a mecânica do jogo, ou seja, a forma com que o jogo vai se desenrolar e o seu funcionamento, é um exemplo claro de que o seu desenvolvimento e sua concepção vão muito além do que pode ser programado, compilado e executado em um computador.
 
-É possível observar o crescimento da área se notarmos que o primeiro exemplo conhecido de jogo eletrônico aparece em 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \\\cite{2455992}. Jogos produzidos na época do Atari 2600 e Magnavox Odyssey, por exemplo, eram criações de um único desenvolvedor e em geral, desenvolvidos em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs}, recursos que os desenvolvedores usavam para identificar a sua criação, mesmo que de uma forma não convencional \cite{PrimeiroDevName}.
+É possível observar o crescimento da área se notarmos que o primeiro exemplo conhecido de jogo eletrônico aparece em 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \cite{2455992}. Com a tecnologia cada vez mais aprimorada, conceitos básicos que definiam os jogos daquela época vêm sido substituídos por formas cada vez mais rebuscadas. Novos elementos de jogabilidade vêm sido incorporados à mecânicas clássicas, e estas evoluem por si só, dadas as cada vez menores limitações e as constantes inovações de hardware e interação com o jogador. Isso tudo se reflete no desenvolvimento de novas áreas de jogos: onde antes havia poucos estilos bem definidos, como corrida, luta e aventura, encontramos novos nichos como por exemplo jogos casuais, sociais e de multiplay massivo.
 
-Com a tecnologia cada vez mais aprimorada, conceitos básicos que definiam os jogos daquela época vêm sido substituídos por formas cada vez mais rebuscadas. Novos elementos de jogabilidade vêm sido incorporados à mecânicas clássicas, e estas evoluem por si só, dadas as cada vez menores limitações e as constantes inovações de hardware e interação com o jogador. Isso tudo se reflete no desenvolvimento de novas áreas de jogos: onde antes haviam poucos estilos bem definidos, como corrida, luta e aventura, encontramos novos nichos como por exemplo jogos casuais, sociais e de multiplay massivo.
-
-Hoje em dia, a indústria de jogos conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
+Jogos produzidos na época do Atari 2600 e Magnavox Odyssey, por exemplo, eram criações de um único desenvolvedor e em geral, desenvolvidos em períodos curtos de tempo, sem nem ao menos identificar o time de desenvolvimento. Era comum a aparição de \textit{Easter Eggs}, recursos que os desenvolvedores usavam para identificar a sua criação, mesmo que de uma forma não convencional \cite{PrimeiroDevName}. Hoje em dia, a indústria de jogos conta com super~produções com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
 
 Neste trabalho, o que nos propomos a fazer é nos inserir no contexto desses times de criação modernos, vendo apenas uma pequena parte dessa grande cadeia de desenvolvimento: a criação de ferramentas para facilitar a interação entre equipes de ramos diferentes. Mais especificamente, criando um jogo em duas dimensões, do tipo plataforma para o videogame portátil Nintendo DS. Para isso, desenvolvemos uma engine, responsável por controlar todas as partes envolvidas no funcionamento do jogo como áudio, vídeo, estruturas de dados, controle de personagens, fases, itens etc. Parte do nosso objetivo foi tornar esta engine  simples e de fácil reutilização. Isto foi feito através de ferramentas de criação e configuração dos componentes pertinentes ao mundo do jogo.
 
-Nos propomos a fazer o papel do desenvolvedor: Criar as ferramentas, imaginando como os outros times as usariam e aprimorando-as ao máximo para esse fim.
+%Faremos o papel do desenvolvedor: Criar as ferramentas, imaginando como os outros times as usariam e aprimorando-as ao máximo para esse fim.
 
 \section{Contextualização}
 
@@ -191,11 +189,15 @@ O conjunto de ferramentas desenvolvidos neste trabalho tem como objetivo tornar 
 
 Para desenvolver as ferramentas foi usado o QT, um \textit{Framework} multi-plataforma que permite o uso de interfaces gráficas em C++, além de ter classes que facilitam o acesso a tecnologias como XML, acesso a diversos formatos de arquivos de imagem, dentre outras possibilidades. A escolha foi feita para que as ferramentas funcionem em diversos sistemas operacionais sem precisar de mudanças no código.
 
-\chapter{As ferramentas\label{cap:ferramentas}}
+\chapter{As Ferramentas\label{cap:ferramentas}}
 
 \vfill{}
-\begin{flushright}{}``\emph{Quote 3}''\\
-{\small Author 3}\end{flushright}{\small \par}
+\begin{flushright}{}
+\begin{figure}[h!]
+\hfill\includegraphics{imgs/oldman.jpg}
+\end{figure}
+``\emph{It's dangerous to go alone! Take this.}''\\
+{\small Old Man (Zelda)}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo são apresentadas as ferramentas e o seu método de uso.
@@ -207,18 +209,16 @@ Um jogo necessita de algumas partes constituintes, como por exemplo, suas fases 
 
 Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases no produto final aparecerão encadeadas.
 
-Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito a partir da SpriteTool. 
+Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito usando a SpriteTool. 
 %\footnote{Precisamos pensar em como juntar as duas coisas. Como o usuário posiciona inimigos e itens no cenário? Há uma terceira ferramenta? Fazemos uma das duas ferramentas fazerem isso, adicionalmente?}
 
 \section{BGTool: A ferramenta de criação de cenários}
 
-A BGTool foi criada com o objetivo de permitir que o usuário importe seus tiles pré-existentes e a partir deles, desenvolva um novo cenário e consiga exportar esse cenário para o formato do Nintendo DS. 
+A BGTool foi criada com o objetivo de permitir que o usuário importe seus tiles pré-existentes e a partir deles, desenvolva um novo cenário. Além disso, a ferramenta também é responsável por exportar esse cenário para o formato do Nintendo DS. 
 
-Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit{background} o cenário sendo criado terá. O hardware do DS suporta até cinco camadas de \textit{background}, no entanto, é possível o uso de menos camadas do que isso. Com as várias camadas, porém, o usuário pode criar uma ilusão de movimento em profundidades diferentes, um recurso conhecido como rolamento em paralaxe.\footnotemark
+Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit{background} o cenário sendo criado terá. O hardware do DS suporta até cinco camadas de \textit{background}, no entanto, usar todas elas não é compulsório e o número de camadas a serem usadas fica a critério do desenvolvedor. Com as várias camadas, porém, a gama de recursos para o desenvolvimento do jogo aumenta significantemente. O desenvolvedor pode, por exemplo, fazer uso de Paralaxe, uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.
 
-\footnotetext{Rolamento em Paralaxe é uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.}
-
-Por uma combinação do hardware do DS e das bibliotecas usadas, uma camada de \textit{background} na verdade é um mapa de \textit{tiles}. Isto quer dizer que as imagens são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. E estas imagens menores são chamadas de \textit{tiles}, como mostramos anteriormente.
+Por uma combinação de exigências do hardware do DS e das bibliotecas usadas, uma camada de \textit{background} na verdade é implementada como um mapa de \textit{tiles}. Isto quer dizer que as imagens que compõem o \textit{background} são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. Estas imagens menores são chamadas de \textit{tiles}, como mostrado anteriormente.
 
 Portanto, além do número de camadas, o usuário também especifica o tamanho dessas. A única limitação quanto ao seu tamanho é ter suas dimensões múltiplas de 8, isto quer dizer que usamos \textit{tiles} de tamanho 8x8, o mais simples de ser utilizado no DS.
 
@@ -234,9 +234,9 @@ Portanto, além do número de camadas, o usuário também especifica o tamanho d
 \caption{A imagem após a abertura na ferramenta} 
 \end{figure}
 
-Ao importar os tiles, o usuário pode usá-los para editar o mapa dos cenários. Uma paleta é gerada automaticamente pela ferramenta a partir dos tiles que o usuário carrega. A ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em tiles, dividindo a imagem em partes de 8x8 e eliminando as partes que são iguais. Como o DS suporta espelhamento na horizontal e na vertical de um tile, verificamos então se o tile em questão sendo avaliado é igual a um dos tiles existentes em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos.
+Ao importar os tiles, o usuário pode usá-los para editar o \textit{background} da fase que está construindo. Uma paleta é gerada automaticamente pela ferramenta a partir dos tiles que ele carrega. Em seguida, a ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em \textit{tiles}, dividindo a imagem em partes de 8x8 e eliminando as possiveis repetições. Como o DS suporta espelhamento na horizontal e na vertical de um \textit{tile}, então é feita uma verificação se o \textit{tile} em questão é igual a um dos \textit{tiles} existentes, em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos.
 
-Como armazenamos os \textit{tiles} como uma imagem, não há um algoritmo de hash para essa imagem disponível no QT, por isso, fazemos uma busca pelo vetor de imagens comparando, manualmente, as imagens geradas com as imagens que já existem. Embora esse seja um processo relativamente custoso, com O(n) para cada inserção, ignoramos por ora esse custo.
+Os \textit{tiles} são armazenados como imagens, sendo assim não há um algoritmo de hash disponível no QT que pudesse ser utilizado para organizá-los. A implementação de tal algoritmo foge ao escopo deste trabalho e por isso, é feita uma busca exaustiva pelo vetor de imagens comparando as imagens geradas com as que já existem. Embora esse seja um processo relativamente custoso, com complexidade O(N) para cada inserção, dado o tamanho da entrada de dados, este custo pode ser ignorado.
 
 \begin{figure}[h!]
 \centering
@@ -250,13 +250,13 @@ Como armazenamos os \textit{tiles} como uma imagem, não há um algoritmo de has
 \caption{Configurações possíveis para um \textit{tile}} 
 \end{figure}
 
-Com os tiles já importados, o usuário pode então construir os mapas que compõem a fase nas abas relativas as várias camadas, e ter uma idéia de como ficará a versão final a partir da aba que mostra a composição das abas existentes.
+Com os \textit{tiles} já importados, o usuário pode construir os mapas que compõem a fase. A ferramente separa as diversas camadas de fundo em abas, para a edição separada de cada uma. Porém, ao construir uma fase, é possível ver uma composição destas camadas em uma imagem de \textit{background} de forma a prover um \textit{feedback} do ao usuário de como ficaria a versão final da fase.
 
-O projeto pode ser salvo, nesse caso, guardamos o projeto num arquivo XML com um formato delimitado para que suporte todas as ferramentas. A BGTool guarda suas informações num nó BGTool abaixo do nó raiz do documento do projeto. Lá, ficam organizadas suas informações das diversas fases e camadas em cada fase. Isso será explicado com mais detalhes na seção \ref{sec:xml}.
+Ao salvar o projeto, guardamos suas informações num arquivo XML com um formato bem definido, numa área delimitada destinada à BGTool. Lá, ficam organizadas informações relativas às diversas fases tais como suas camadas. Isto será explicado com mais detalhes na seção \ref{sec:xml}.
 
-A qualquer momento, o usuário pode exportar o que já está pronto para o DS, esse é um processo transparente em que criamos os arquivos necessários para a execução da fase criada pelo usuário. São criados três arquivos, um arquivo Pal, que contém a paleta, um arquivo Tile que contém os tiles, indexados pela paleta e um arquivo Map, que contém o mapa, indexado pelos tiles.
-
-Todos os três arquivos são binários e obedecem a um formato delimitado pela PALib e suas funções que coordenam o carregamento de cenários.
+A qualquer momento, o usuário pode exportar o que já está pronto para o DS, esse é um processo transparente em que criamos os arquivos necessários para a execução da fase criada pelo usuário. São criados três arquivos, um arquivo Pal, que contém a paleta, um arquivo Tile que contém os \textit{tiles}, indexados pela paleta e um arquivo Map, que contém o mapa, ou \textit{background}, indexado pelos \textit{tiles}.
+ 
+Os três arquivos são binários e obedecem a um formato delimitado pela PALib e suas funções que coordenam o carregamento de cenários.
 
 Uma breve explicação desses formatos é a seguinte:
 
@@ -271,15 +271,21 @@ Uma breve explicação desses formatos é a seguinte:
  Este arquivo constrói a struct que será usada no programa, informa algumas coisas como o tipo do mapa, o seu tamanho, os ponteiros para as regiões onde ficaram os três arquivos acima depois de linkados, tamanho do tiles em bytes e tamanho do map em bytes. 
 \end{itemize}
 
-A conversão do arquivo de imagem é feita quando o usuário carrega uma nova imagem. Essa imagem é convertida para uma imagem de 256 cores. Idealmente, devido as diferenças de cor, a sugestão é que o usuário já carregue imagens limitada a 256 cores para evitar perda e caso carregue mais uma imagem, isto é, mais um conjunto de \textit{tiles} que estas tenham a mesma paleta.
+No momento em que o usuário carrega uma imagem, ela é convertida para um formato de 256 cores. Devido as limitações de cor, o ideal seria que o usuário já carregasse imagens com apenas 256 cores, desta forma não há perda ou alteração de cores da imagem original, ou no caso dessa perda ser necessária, ela acontece com o controle do usuário.
 
-Depois dessa conversão inicial, todas as ações no programa são feitas usando a paleta gerada na fase de carregamento. Na exportação, a paleta é exportada diretamente, simplesmente a colocamos para o arquivo binário.
+Pelo mesmo motivo, caso mais de uma imagem seja utilizada na composição de um mapa, o usuário deve fazer com que as imagens compartilhem uma mesma paleta.
 
-Os tiles, quando exportados, também não necessitam de preocupação adicional. Sua conversão para o formato binário apenas envolve obter o indice da cor de cada pixel de cada tile e escrevê-lo no arquivo binário.
+Depois dessa conversão inicial, todas as ações no programa são feitas usando a paleta gerada na fase de carregamento. Na exportação, a paleta é exportada diretamente, sendo simplesmente colocada no arquivo binário.
 
-A geração do mapa é a tarefa mais complexa. Internamente na ferramenta, armazenamos o mapa como uma matriz de estruturas do tamanho do cenário, onde a estrutura armazena o indice do tile daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos. Então obtemos essa transformação e jogamos para o formato discutido acima e exportamos para o arquivo binário.
+Os \textit{tiles}, quando exportados, também não necessitam de preocupação adicional. Sua conversão para o formato binário envolve apenas obter o indice da cor de cada pixel de cada \textit{tile} e escrevê-lo no arquivo binário.
 
-Por fim, depois de exportados, esses arquivos estarão prontos para serem usados num estágio posterior e inseridos no jogo final.
+A geração do mapa, ou \textit{background}, é a tarefa mais complexa. Internamente na ferramenta, o mapa é armazenado como uma matriz de estruturas do tamanho do cenário, onde cada estrutura armazena o índice do \textit{tile} daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos. 
+
+Obtidas essas informações, fazemos uma conversão para o formato discutido acima e exportamos para o arquivo binário.
+
+\lstinputlisting[caption=Função que exporta o mapa,label=list:exportmap]{codigos/exportmap.cpp}
+
+Por fim, depois de exportados, esses arquivos estarão prontos para serem usados em um estágio posterior da cadeia de desenvolvimento e inseridos no jogo final.
 
 \section{SpriteTool: A ferramenta de criação de sprites}
 
@@ -306,7 +312,7 @@ Ao exportar, o SpriteTool traduz as informações do \textit{sprite} para o form
 
 O primeiro arquivo contém as informações relativas à paleta de cores daquele \textit{sprite}. Isto deve ser feito para cada frame contido no projeto, da seguinte forma:
 
-Como o formato de cor aceito pelo Nintendo DS é o formato A1B5G5R5, como citado em \ref{exp:A1B5G5R5}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash} tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. 
+Como o formato de cor aceito pelo Nintendo DS é o formato A1B5G5R5, citado em \ref{exp:A1B5G5R5}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash} tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. 
 
 Após o processamento de todos os frames do projeto, o arquivo nomedoprojeto\_Pal.bin está completo e pronto para uso na engine.
 
@@ -314,37 +320,23 @@ O segundo arquivo que é gerado nesta etapa, contem as informações referentes 
 
 Com estes dois arquivos criados, a engine é capaz de reconhecer o \textit{sprite} e animá-lo conforme conveniente. 
 
-\lstinputlisting[caption=Exportando o \textit{sprite} para o Nintendo DS .c:,label=list:exportsprite]{codigos/listingexportsprite.c}
+\lstinputlisting[caption=Exportando o \textit{sprite} para o Nintendo DS:,label=list:exportsprite]{codigos/listingexportsprite.c}
 
-Para o desenvolvimento desta etapa foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos gerados pela ferramenta e verificar a resposta que eles tin
-ham na engine.
+Para o desenvolvimento desta etapa, foi usado um editor hexadecimal de forma a facilitar a visualização dos arquivos gerados pela ferramenta e verificar a resposta que eles tinham na engine.
 
 \section{A integração entre as ferramentas\label{sec:xml}}
 
-As ferramentas desenvolvidas nesse trabalho tem como destino possibilitar o desenvolvimento de jogos no Nintendo DS. No entanto, há a possibilidade de que o usuário queira guardar seu trabalho para terminar depois, ou mesmo queira guardá-lo para futura referência. Além disso, há também a possibilidade de que, no futuro, seja feita uma outra ferramenta que integre as ferramentas aqui apresentadas e automatize ainda mais o desenvolvimento. Para isso, é necessário que haja um formato intermediário, que possa ser utilizado para essas situações.
+As ferramentas desenvolvidas neste trabalho têm como objetivo conjunto possibilitar o desenvolvimento de jogos no Nintendo DS. Estas ferramentas foram desenvolvidas de forma separada, cada uma sendo responsável por uma parte específica da cadeia de desenvolvimento. Desta forma, se faz a necessário estabelecer um meio de comunicação entre elas. É importante ressaltar que esta forma de comunicação deve ser robusta, para que permita, por exemplo, uma integração futura entre as ferramentas apresentadas neste trabalho, construindo assim um único ambiente de desenvolvimento. 
 
-Neste trabalho, o formato escolhido foi o XML, um formato amplamente usado hoje em dia e que tem como vantagem a facilidade de introduzir ramos diferentes no mesmo arquivo. Deste modo, é possível que as duas ferramentas tenham seus ramos completamente separados, mas ainda assim, que os dados de um mesmo projeto fiquem no mesmo arquivo.
+Além disso, seja para fins de interromper momentaneamente o fluxo de trabalho em uma determinada etapa do desenvolvimento, ou guardá-lo para referência futura, fez-se necessário, também, estabelecer um meio de armazenamento da informação usada por cada uma das ferramentas.
 
-Ao escolhermos o formato definimos o que seria o nosso formato de XML, como ele seria.
+Para resolver estas questões, foi escolhido o formato de arquivo XML como um meio intermediário entre as ferramentas, sendo responsável tanto para armazenar informações de configuração de cada uma delas, quanto para estabelecer uma possível comunicação entre elas. Este formato é amplamente usado hoje em dia e foi escolhido pela facilidade de uso e legibilidade que traz consigo. 
+
+Os arquivos XML são compostos por diversas \textit{tags}, responsáveis por delimitar um determinado espaço no arquivo onde se encontra a informação referente a ela. Dentro da área delimitada por uma \textit{tag}, existe a possibilidade de criarmos mais um nível de profundidade no arquivo, estabelecendo assim um sistema hierárquico dentro dele. Dessa forma, este tipo de arquivo pode ser entendido como uma árvore, onde cada \textit{tag} representa um nó, e cada nível hierárquico abaixo dele representa um filho. Isto traz a vantagem de introduzir diferentes ramos, cada um contendo um tipo específico de informação, todos no mesmo arquivo. Assim, ferramentas distintas têm suas informações completamente separadas, mas todos os dados relativos a um mesmo projeto se encontram no mesmo arquivo. 
+
+Depois de escolhido o formato XML, foi criado um protocolo de escrita e leitura a ser respeitado por todas as ferramentas.
 
 \lstinputlisting[caption=Formato de XML de integração entre as ferramentas,label=list:xml]{codigos/exemplo.xml}
-
-No caso da SpriteTool, ao salvar o projeto, os dados relativos ao \textit{sprite} serão salvos em um arquivo XML. A estrutura deste arquivo pode ser entendida na forma de uma árvore, e desta forma, adicionar um novo projeto de \textit{sprite} a ele seria como criar um novo ramo, com as informações relativas ao projeto inteiro guardadas no primeiro nó deste ramo e os frames, cada um com suas particularidades, organizados como filhos dele.
-
-Há ainda a possibilidade de sobrescrever um arquivo XML já existente e isso pode acontecer das diversas formas apresentadas a seguir. 
-
-No primeiro caso, seja um arquivo que nunca tenha sido aberto pelo SpriteTool. O procedimento, então, é criar um novo ramo na raiz do arquivo delimitado pelas tag \textless SpriteTool\textgreater~e \textless /SpriteTool\textgreater. Assim, delimitamos a área onde serão armazenadas as informações que dizem respeito aos projetos de \textit{sprites}. Cada um destes projetos será armazenado de forma análoga, com o delimitador \textless Sprite\textgreater~contendo as informações referentes a cada projeto que o usuário deseja armazenar naquele mesmo arquivo. 
-
-No segundo caso, o SpriteTool verifica que já existe tags pertinentes ao seu funcionamento no arquivo, e é feita uma busca usando o nome do projeto atual como chave para verificar se este se trata de um \textit{sprite} que está sendo alterado ou um novo \textit{sprite} a ser adicionado naquele arquivo de configuração. Dependendo do resultado da busca, duas ações podem ser executadas: alterar as configurações do projeto de \textit{sprite} que está sendo modificado, e logo existe no arquivo, ou inserir um novo dentro da área delimitada para uso do SpriteTool.
-
-\textsc{\textbf{inserir imagem com exemplo do arquivo XML}}
-
-\textsc{\textbf{-- falar que é análogo na hora de abrir e discursar um pouco}}
-
-Da mesma forma que o SpriteTool suporta a possibilidade de armazenar várias informações de projeto em um mesmo arquivo XML, ao abri-lo, uma busca é feita no mesmo e uma lista de projetos de \textit{sprite} compatíveis é mostrada ao usuário para que ele escolha em qual gostaria de trabalhar. Vale lembrar que como o arquivo é estruturado em forma de uma árvore, não se faz necessária uma busca exaustiva, bastando seguir os ramos pertinentes à busca. 
-
-\textsc{\textbf{Ver qual seção deve vir primeiro, a parte do spritetool ou a do bgtool... A segunda delas, deveria vir comentando que podem existir tags de arquivos de configuração de outras ferramentas lá e tudo mais.}}
-
 
 \chapter{A Engine}
 
@@ -364,23 +356,23 @@ Podemos encontrar, em bibliotecas de jogos, um loop de jogo bastante comum, que 
 
 Nesse loop, a idéia é que o usuário possa trabalhar com a seguinte separação lógica de código:
 
-Em init ficam as tarefas a serem realizadas antes do início do jogo. Estão aí o carregamento e organização das imagens e sons a serem usados no jogo. 
+Em \textit{init} ficam as tarefas a serem realizadas antes do início do jogo. Lá se encontram o carregamento e organização das imagens e sons a serem usados no jogo. 
 
-Em update ficam as tarefas a serem realizadas ao fim de cada iteração do loop. Normalmente, acelerações advindas da gravidade e de outras forças existentes no ambiente, detecções e tratamento de colisões, avaliação da inteligência artificial, dentre outras.
+Em \textit{update} ficam as tarefas a serem realizadas ao fim de cada iteração do loop. Normalmente, acelerações advindas da gravidade e de outras forças existentes no ambiente, detecções e tratamento de colisões, avaliação da inteligência artificial, dentre outras.
 
-Em render ficariam simplesmente as rotinas de desenho na tela.
+Em \textit{render} se encontram as rotinas de desenho na tela.
 
-Essa separação, como dito anteriormente, é lógica. Não há restrição a colocar o código de avaliação de inteligência artificial na função de render, exceto de organização.
+Essa separação, como dito anteriormente, é lógica. Não há restrição a colocar o código de avaliação de inteligência artificial na função de renderização, porém, no formato sugerido o código ganha em organização e legibilidade.
 
 \section{Colisões}
 
-Colisões são um grande desafio para qualquer simulação. No caso de jogos, há adicionalmente a necessidade de manter a taxa de atualização que o jogador está acostumado. É preciso que, apesar das várias tarefas que precisam ser processadas, que o tempo entre elas seja dividido de um modo que nenhuma delas sofra consideravelmente.
+O tratamento de colisões é um grande desafio para qualquer simulação. No caso de jogos, há adicionalmente a necessidade de manter a taxa de atualização que o jogador está acostumado. É preciso que, apesar das várias tarefas que precisam ser processadas, o tempo entre elas seja dividido de um modo que nenhuma delas sofra consideravelmente com a perda de tempo. Como o usuário espera por uma taxa de atualização constante, se uma das tarefas consome todo o tempo entre atualizações, as outras ficam prejudicadas.
 
-A escolha foi pelo uso de um método de colisão \textit{a posteriori}, isto é, após calcularmos todas as atualizações dos personagens, cenário e itens, usamos essas novas posições para verificar a existência de uma colisão entre esses. No caso da existência de uma colisão, fazemos um passo adicional, o de tomar alguma ação para consertar essa colisão.
+Foi feito uso de um método de colisão \textit{a posteriori}, isto é, após calculadas todas as atualizações dos personagens, cenário e itens, suas novas posições são usadas para verificar a existência de uma colisão. Caso ela tenha acontecido, um passo adicional é executado, o de tomar alguma ação para tratar essa colisão.
 
-No caso da colisão contra um objeto sólido, como uma parede, recolocamos o objeto na sua posição válida anterior. No caso da colisão entre o personagem e um inimigo, descobrimos qual dos dois foi afetado, e o damos como morto.
+No caso de uma colisão com um objeto sólido, como uma parede,  o objeto é recolocado em sua última posição válida. No caso da colisão entre o personagem e um inimigo, é feita uma verificação para averiguar qual dos dois foi afetado, e algum tipo de dano pode ser associado a ele.
 
-Para o algoritmo que detecta a colisão usamos uma implementação do teorema dos eixos separados, que dita que dadas duas formas convexas, existe uma linha em que suas projeções vão ser separadas se e somente se eles não estão interceptando. Se uma das formas não for convexa, o teorema não é válido, mas não estamos preocupados com esse caso.
+Para o algoritmo que detecta a colisão, usamos uma implementação do teorema dos eixos separados, como pode ser visto em \ref{SeparatingAxis}, que dita que dadas duas formas convexas, existe uma linha em que suas projeções vão ser separadas se e somente se eles não estão interceptando. Se uma das formas não for convexa, o teorema não é válido. Entretanto, este caso não e pertinente ao desenvolvimento do jogo e o teorema é aplicável.
 
 \section{Uso e configurações}
 
@@ -388,7 +380,25 @@ O desenvolvedor precisa informar para a engine quais compõem as fases, quais ar
 
 Desse modo, fica a cargo do programador chamar, dentro da função \textit{load\_resources()}, funções próprias como por exemplo \textit{load\_stage1()} e \textit{load\_stage2()}. O controle da engine é feito através de estruturas existentes, e é nessas funções que o programador precisa preenchê-las.
 
-\textsc{\textbf{-- Listagem contendo a estrutura, que contém uma fase, seus \textit{backgrounds}, posicionamento de \textit{sprites}, dentre outras informações relevantes.}}
+\lstinputlisting[caption=Estrutura que deve ser povoada para cada fase,label=list:leveldata]{codigos/leveldata.cpp}
+
+%\textsc{\textbf{-- Listagem contendo a estrutura, que contém uma fase, seus \textit{backgrounds}, posicionamento de \textit{sprites}, dentre outras informações relevantes.}}
+
+\chapter{O Jogo}
+
+\section{Aplicando as ferramentas}
+
+Depois de desenvolvidas as ferramentas e a \textit{engine}, é preciso testá-las. Para tanto, escolhemos desenvolver um clone do jogo Super Mario Bros. original, de modo que possamos testar nossas ferramentas, sem no entanto, termos que nos preocupar em gerar novos gráficos, coisa que não está no escopo deste trabalho.
+
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/bgtool2.png}
+\caption{Apagando os objetos depois de importar a imagem.} 
+\end{figure}
+
+Começamos importando uma imagem da primeira fase do jogo original na BGTool, criando um mapa da primeira fase, e editamos o mapa para retirar objetos que não são do background, como as caixas de interrogação. E usamos a ferramenta para exportar para o DS. Repetimos esse processo para as fases que incluímos neste nosso jogo de demonstração.
+
+
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
@@ -405,18 +415,23 @@ Neste capítulo é apresentado as conclusões e alguns trabalhos futuros
 
 \section{Conclusões}
 
-{\bf Alguns itens interessantes para a conclusão de um projeto de graduação}
+O mercado de jogos está finalmente chegando em sua maturidade. Jogos feitos por pequenos grupos de desenvolvedores estão alcançando sucesso tão grande quanto grandes franquias. Jogos como Minecraft, que foi desenvolvido por boa parte do tempo por apenas um desenvolvedor, que há pouco tempo alcançou a marca de mais de 2 milhões de cópias vendidas. \cite{MinecraftSales}
 
-Qual foi o resultado do seu trabalho? melhora na área, testes positivos ou negativos?
-Você acha que o mecanismo gerado produziu resultados interessantes?
-Quais os problemas que você encontrou na elaboração do projeto?
-E na implementação do protótipo?
-Que conclusão você tirou das ferramentas utilizadas? (heurísticas, prolog, ALE, banco de dados).
-Em que outras áreas você julga que este trabalho seria interessante de ser aplicado?
-Que tipo de continuidade você daria a este trabalho?
-Que tipo de conhecimento foi necessário para este projeto de graduação?
-Para que serviu este trabalho na sua formação?
+Com esse cenário, podemos notar que é importante tentar reduzir o tempo gasto mexendo em código fonte, para que os desenvolvedores possam se focar naquilo que realmente faz diferença num jogo: a originalidade e o seu \textit{gameplay}.
 
+A maior dificuldade nesse tipo de projeto, como citado anteriormente, é a dificuldade no acesso as funções de hardware dos consoles; embora haja um movimento das grandes empresas em direção a consoles com desenvolvimento mais aberto, como por exemplo o Xbox Live Indie Games, onde o desenvolvedor usa o XNA Game Studio para desenvolver e recebe 70\% do lucro do lançamento do seu jogo, depois de alguns passos que conferem ao jogo a possibilidade de ser lançado. Ainda assim, há um custo anual de \$99 USD. \cite{XNAAppHub} 
+
+As ferramentas desenvolvidas nesse trabalho tem como objetivo ser apenas uma idéia do que os autores pensam ser um caminho para reduzir esse gasto, fazendo com que seja possível desenvolver jogos bem diferentes com pequenas alterações de código. Embora com essas ferramentas não seja possível publicar um jogo, há a possibilidade de um desenvolvedor individual as utilizar para desenvolver um protótipo de jogo, ou para um jogo que não tenha intenção de ser vendido na plataforma.
+
+Podemos dizer que ainda há muito a ser feito para essas ferramentas. Poderíamos, por exemplo, escrever mais funções que exportem para diferentes cadeias de ferramentas, de diferentes sistemas. Não nos limitando, então, somente ao Nintendo DS. Deste modo, poderia ser desenvolvido um jogo de diversas plataformas com um mínimo de trabalho.
+
+Além disso, certas tarefas podem ser mais automatizadas, como a geração do arquivo que carrega os \textit{backgrounds} e personagens na engine do DS. Como tem um formato bem definido, ele poderia ser gerado automaticamente por uma terceira ferramenta que conseguisse ler o formato XML definido neste trabalho.
+
+%Caso a gente termine a interface da colisão, tirar isso daqui
+
+A colisão precisa ser definida manualmente na engine, mas isso poderia ser feito diretamente na BGTool, ao importar os \textit{tiles}. Assim, o artista que estivesse criando os \textit{backgrounds} poderia já escolher o tipo de colisão dos seus trabalhos.
+
+A interface da BGTool ainda pode ser melhorada, para facilitar o seu uso. Com operações de pintura em grupo, preenchimento de regiões por difusão (flood-fill), e outras operações comuns em ferramentas de desenho.
 
 \bibliographystyle{abnt-alf}
 \bibliography{PF}

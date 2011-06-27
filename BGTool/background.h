@@ -62,6 +62,7 @@ class cBackground
   cBackground(QString name, int size_x, int size_y, sGlobalData *global_data);
   sGlobalData *m_global_data;
   void import_image(QString path);
+  void export_map_to_ds();
   void export_to_ds();
   const QVector<QRgb>& get_palette(void);
   const QVector<sTileInfo>& get_tiles(void);

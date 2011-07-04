@@ -52,13 +52,6 @@ void cDrawingTab::on_btConvert_clicked()
 
   m_background->import_image(filename);
 
-  m_view_controller = new cViewController();
-  m_view_controller->set_background(m_background);
-  m_view_controller->set_editor_view(ui->visualizationView);
-  m_view_controller->set_palette_view(ui->paletteView);
-  m_view_controller->set_selected_tile_view(ui->selectedView);
-  m_view_controller->set_tiles_view(ui->tilesView);
-
   m_view_controller->update_views();
 }
 
@@ -88,6 +81,15 @@ void cDrawingTab::on_btHighlight_toggled(bool checked)
 void cDrawingTab::set_background(cBackground *background)
 {
   m_background = background;
+
+  m_view_controller = new cViewController();
+  m_view_controller->set_background(m_background);
+  m_view_controller->set_editor_view(ui->visualizationView);
+  m_view_controller->set_palette_view(ui->paletteView);
+  m_view_controller->set_selected_tile_view(ui->selectedView);
+  m_view_controller->set_tiles_view(ui->tilesView);
+
+  m_view_controller->update_views();
 }
 
 void cDrawingTab::on_bt_hflip_toggled(bool checked)

@@ -11,6 +11,26 @@
 #include "globaldata.h"
 
 
+cBackground::cBackground(QDomElement &background_node, sGlobalData *global_data, QString path)
+{
+  m_global_data = global_data;
+
+  QString name = background_node.attribute("Name");
+  m_name = name;
+
+  QString tiles_path = background_node.attribute("Tile_Set");
+
+  QImage image(path + tiles_path);
+  find_palette(image);
+  find_tile(image);
+
+  clear_map();
+
+  QString map_path = background_node.attribute("Path");
+  QImage map_image(path + map_path);
+  find_tile(map_image);
+}
+
 cBackground::cBackground(QString name, int size_x, int size_y, sGlobalData *global_data):
                         m_name(name),
                         m_global_data(global_data)
@@ -85,7 +105,6 @@ void cBackground::find_palette(QImage &image)
 
 void cBackground::find_tile(QImage &image)
 {
-
   QImage *empty_tile = new QImage(m_global_data->tile_width, m_global_data->tile_height,
                       QImage::Format_Indexed8);
   empty_tile->setColorTable(m_palette);
@@ -174,6 +193,16 @@ void cBackground::push_back_map_matrix(int y, int tile_index, eTileFlipping tile
   m_map_matrix[y].push_back(map_info);
 }
 
+void cBackground::clear_map(void)
+{
+  int size = m_map_matrix.size();
+  for(int i(0); i < size; ++i)
+  {
+    m_map_matrix[i].clear();
+  }
+  m_map_matrix.clear();
+}
+
 void cBackground::clear_background(void)
 {
   int size = m_tile_collision.size();
@@ -187,12 +216,7 @@ void cBackground::clear_background(void)
   m_palette.clear();
   m_color_hash.clear();
 
-  size = m_map_matrix.size();
-  for(int i(0); i < size; ++i)
-  {
-    m_map_matrix[i].clear();
-  }
-  m_map_matrix.clear();
+  clear_map();
 }
 
 void cBackground::import_image(QString path)
@@ -360,9 +384,89 @@ void cBackground::set_map_matrix(int x, int y, int tile_index, eTileFlipping til
   m_map_matrix[y][x] = map_info;
 }
 
-void cBackground::export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node)
+void cBackground::export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node,
+                                QString path)
 {
   QDomElement background_node = xml_document->createElement("Background");
   backgrounds_node->appendChild(background_node);
   background_node.setAttribute("Name", m_name);
+  background_node.setAttribute("Path", m_name + ".png");
+  background_node.setAttribute("Tile_Set", m_name + "_tiles.png");
+  export_to_png(path + m_name + ".png");
+  export_tiles_to_png(path + m_name + "_tiles.png");
+}
+
+void cBackground::export_to_png(QString path)
+{
+  QImage map(m_global_data->tile_width * m_map_matrix[0].size(),
+             m_global_data->tile_height * m_map_matrix.size(),
+             m_tile_collision[0].m_tile->format());
+  map.setColorTable(m_palette);
+
+  for(int i(0); i < m_map_matrix.size(); ++i)
+  {
+    for(int j(0); j < m_map_matrix[i].size(); ++j)
+    {
+      QImage tile;
+      if(m_map_matrix[i][j].m_tile_flipping == NO_FLIPPING)
+      {
+        tile = m_tile_collision[m_map_matrix[i][j].m_tile_index].m_tile->transformed(
+              QTransform().scale(1,  1));
+      }
+      else if(m_map_matrix[i][j].m_tile_flipping == HORIZONTAL_FLIPPING)
+      {
+        tile = m_tile_collision[m_map_matrix[i][j].m_tile_index].m_tile->transformed(
+              QTransform().scale(-1,  1));
+      }
+      else if(m_map_matrix[i][j].m_tile_flipping == VERTICAL_FLIPPING)
+      {
+        tile = m_tile_collision[m_map_matrix[i][j].m_tile_index].m_tile->transformed(
+              QTransform().scale(1,  -1));
+      }
+      else if(m_map_matrix[i][j].m_tile_flipping == VERTICAL_AND_HORIZONTAL_FLIPPING)
+      {
+        tile = m_tile_collision[m_map_matrix[i][j].m_tile_index].m_tile->transformed(
+              QTransform().scale(-1,  -1));
+      }
+      for(int k(0); k < m_global_data->tile_width; ++k)
+      {
+        for(int l(0); l < m_global_data->tile_height; ++l)
+        {
+          map.setPixel(j*m_global_data->tile_width + k, i*m_global_data->tile_height + l,
+                       tile.pixelIndex(k, l));
+        }
+      }
+    }
+  }
+
+  if(!map.save(path))
+  {
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << "Erro ao salvar imagem " << path << endl;
+  }
+}
+
+void cBackground::export_tiles_to_png(QString path)
+{
+  QImage tileset(m_global_data->tile_width * m_tile_collision.size(), m_global_data->tile_height,
+                 m_tile_collision[0].m_tile->format());
+  tileset.setColorTable(m_palette);
+
+  for(int i(0); i < m_tile_collision.size(); ++i)
+  {
+    for(int j(0); j < m_global_data->tile_width; ++j)
+    {
+      for(int k(0); k < m_global_data->tile_height; ++k)
+      {
+        tileset.setPixel(i*m_global_data->tile_width + j, k,
+                         m_tile_collision[i].m_tile->pixelIndex(j, k));
+      }
+    }
+  }
+
+  if(!tileset.save(path))
+  {
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << "Erro ao salvar imagem " << path << endl;
+  }
 }

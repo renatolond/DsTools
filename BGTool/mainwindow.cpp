@@ -107,8 +107,36 @@ void MainWindow::on_actionClose_Project_triggered()
 
 void MainWindow::on_actionSave_Project_triggered()
 {
+  if(!m_project)
+    return;
+
   QString filename = QFileDialog::getSaveFileName(this, tr("Save Project", "saveprojectfilename"),
                                                   "../"+m_project->get_project_name(),
                                                   tr("XML Files(*.xml);;All Files(*.*)"));
   m_project->export_to_xml(filename);
+}
+
+void MainWindow::on_actionOpen_Project_triggered()
+{
+  QString filename = QFileDialog::getOpenFileName(this, tr("Open Project", "openprojectfilename"),
+                                                  "", tr("XML Files(*.xml);;All Files(*.*)"));
+
+  clear_active();
+
+  m_project = new cProject(filename,
+                           m_global_data);
+
+  cLevel *level = m_project->active_level();
+  int num_layers = level->num_layers();
+
+  ui->tabWidget->setUpdatesEnabled(false);
+  for(int i(0); i < num_layers ; ++i)
+  {
+    m_tabs[i] = new QWidget();
+    m_tabbg_widgets[i] = new cDrawingTab(m_tabs[i]);
+    m_tabbg_widgets[i]->set_background(level->get_background(i));
+    ui->tabWidget->addTab(m_tabs[i], "BG"+QString::number(i));
+  }
+  ui->tabWidget->setUpdatesEnabled(true);
+
 }

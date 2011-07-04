@@ -58,8 +58,10 @@ class cBackground
   void insert_into_palette(QColor c);
   int insert_into_tiles(QImage *tile, eTileFlipping &tile_flipping);
   void clear_background(void);
+  void clear_map(void);
  public:
   cBackground(QString name, int size_x, int size_y, sGlobalData *global_data);
+  cBackground(QDomElement &background_node, sGlobalData *global_data, QString path);
   sGlobalData *m_global_data;
   void import_image(QString path);
   void export_map_to_ds();
@@ -68,7 +70,9 @@ class cBackground
   const QVector<sTileInfo>& get_tiles(void);
   const QVector< QVector<sMapInfo> >& get_map_matrix(void);
   void set_map_matrix(int x, int y, int tile_index, eTileFlipping tile_flipping);
-  void export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node);
+  void export_to_xml(QDomDocument *xml_document, QDomElement *backgrounds_node, QString path);
+  void export_to_png(QString path);
+  void export_tiles_to_png(QString path);
 };
 
 #endif // BACKGROUND_H

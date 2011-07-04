@@ -37,6 +37,7 @@ void cViewController::set_background(cBackground *background)
 {
   m_background = background;
   set_global_data(m_background->m_global_data);
+  update_views();
 }
 
 void cViewController::set_editor_view(VisualizationGraphicsView *editor_view)

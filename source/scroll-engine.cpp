@@ -27,7 +27,7 @@ void cScrollEngine::load_graphics()
 {
   PA_LoadSpritePal(0, // Screen
                    1, // Palette id
-                   (void*) small_mario_Pal); // Pointer to load from
+                   (void*) SuperMarioClone_Pal); // Pointer to load from
 
   for(unsigned int i(0); i < m_level_data_vector[m_current_level]->m_backgrounds.size(); ++i)
   {
@@ -35,6 +35,7 @@ void cScrollEngine::load_graphics()
                       i, // background id
                       m_level_data_vector[m_current_level]->m_backgrounds[i]);
   }
+  //m_collision_controller->load_collision_map(m_level_data_vector[m_current_level]->m_collision);
 //  m_level_data_vector[m_current_level].m_backgrounds;
 //  (sLevelData).
 //  PA_LoadBackground(0, // Screen
@@ -48,7 +49,7 @@ void cScrollEngine::load_graphics()
 
   int SMALL_MARIO_ANIM_SPEED = 10;
 
-  m_player->spr.create((void *)(small_mario_Sprite), OBJ_SIZE_16X16, 1);
+  m_player->spr.create((void *)(SuperMarioClone_Sprite), OBJ_SIZE_16X16, 1);
   m_player->spr.move(0, screenSizeY-tileSizeY*5);
   m_player->spr.priority(0);
   m_player->spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
@@ -58,7 +59,6 @@ void cScrollEngine::load_graphics()
   m_player->spr.beginAnimation(0);
 
   m_collision_controller->addCollideablePlayer(m_player);
-  m_collision_controller->loadTileMap();
 }
 
 //--------------------------------------------------------------------------------------------------

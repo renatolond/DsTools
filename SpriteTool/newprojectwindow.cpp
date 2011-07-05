@@ -35,15 +35,17 @@ void cNewProjectWindow::ok_clicked(void)
 
   if(nome == "")
   {
-    QMessageBox::information(this, tr("Erro!"), tr("É preciso entrar com um nome."));
+    QMessageBox::information(this, tr("Erro!"), tr("E preciso entrar com um nome."));
     return;
   }
 
   QString tam = ui->cb_sprite_size->currentText();
   int w, h;
 
-  QTextStream s(&tam,QIODevice::ReadOnly);
-  s >> w >> " x " >> h;
+  //QTextStream s(&tam,QIODevice::ReadOnly);
+  //s >> w >> " x " >> h;
+
+  sscanf(tam.toAscii(), "%d x %d", &w, &h);
 
   m_controller->create_sprite(nome,w,h);
 

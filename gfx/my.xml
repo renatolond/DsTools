@@ -1,24 +1,12 @@
 <!DOCTYPE xml>
-<Project Resources_Dir="my_xml_resources" Name="TT">
+<Project Resources_Dir="my_xml_resources" Name="SuperMarioClone">
   <BgTool>
     <Levels>
-      <Level Width="8" Height="8" Name="TT">
+      <Level Width="8" Height="8" Name="SuperMarioClone">
         <Backgrounds>
-          <Background Name="TT0" Path="TT0.png" Tile_Set="TT0_tiles.png"/>
+          <Background Tile_Set="SuperMarioClone0_tiles.png" Path="SuperMarioClone0.png" Name="SuperMarioClone0"/>
         </Backgrounds>
       </Level>
     </Levels>
   </BgTool>
-   <SpriteTool>
-     <Sprite name="Mario" sizex="16" sizey="16">
-        <Frame id="1" path="frame01.png"/>
-        <Frame id="2" path="frame02.png"/>
-        <Frame id="3" path="frame03.png"/>
-        <Frame id="4" path="frame04.png"/>
-        <Frame id="5" path="frame05.png"/>
-     </Sprite>
-     <Sprite name="Luigi" sizex="16" sizey="16">
-        <Frame id="1" path="luigi01.png"/>
-     </Sprite>
-   </SpriteTool>
 </Project>

@@ -21,7 +21,7 @@ public:
     void check_for_collisions(const int &x_scroll, const int &y_scroll);
     void addCollideableSprite(SpriteController *s);
     void addCollideablePlayer(cPlayerController<T> *p);
-    void loadTileMap();
+//    void loadTileMap();
     void collideVsTile(TileMapCell<T> **map, cPlayerController<T> *player, int j, int i) const;
 };
 
@@ -42,28 +42,28 @@ template <class T>
     player = p;
 }
 
-template <class T>
-        void cCollisionController<T>::loadTileMap()
-{
-    s16 *bgMap = (s16 *)bgtool0.BgMap;
-    map = new TileMapCell<T>*[bgtool0.height/tileSizeY];
-    for ( int i = 0 ; i < bgtool0.height/tileSizeY ; i++ )
-    {
-        map[i] = new TileMapCell<T>[bgtool0.width/tileSizeX];
-        for ( int j = 0 ; j < bgtool0.width/tileSizeX ; j++ )
-        {
-            map[i][j] = TileMapCell<T>(j*tileSizeXmult+(T)(tileSizeXmult/2), i*tileSizeYmult+(T)(tileSizeYmult/2), (T)(tileSizeXmult/2), (T)(tileSizeYmult/2));
-            int index = j+i*(bgtool0.width/tileSizeX);
-            if (bgMap[index] == 60 || bgMap[index] == 61 || bgMap[index] == 62 || bgMap[index] == 63 ||
-                bgMap[index] == 19 || bgMap[index] == 20 || bgMap[index] == 25 || bgMap[index] == 26) // PLACEHOLDER!
-            {
-                map[i][j].SetState(TileEnum::full);
-            }
-            else
-                map[i][j].SetState(TileEnum::empty);
-        }
-    }
-}
+//template <class T>
+//        void cCollisionController<T>::loadTileMap()
+//{
+//    s16 *bgMap = (s16 *)bgtool0.BgMap;
+//    map = new TileMapCell<T>*[bgtool0.height/tileSizeY];
+//    for ( int i = 0 ; i < bgtool0.height/tileSizeY ; i++ )
+//    {
+//        map[i] = new TileMapCell<T>[bgtool0.width/tileSizeX];
+//        for ( int j = 0 ; j < bgtool0.width/tileSizeX ; j++ )
+//        {
+//            map[i][j] = TileMapCell<T>(j*tileSizeXmult+(T)(tileSizeXmult/2), i*tileSizeYmult+(T)(tileSizeYmult/2), (T)(tileSizeXmult/2), (T)(tileSizeYmult/2));
+//            int index = j+i*(bgtool0.width/tileSizeX);
+//            if (bgMap[index] == 60 || bgMap[index] == 61 || bgMap[index] == 62 || bgMap[index] == 63 ||
+//                bgMap[index] == 19 || bgMap[index] == 20 || bgMap[index] == 25 || bgMap[index] == 26) // PLACEHOLDER!
+//            {
+//                map[i][j].SetState(TileEnum::full);
+//            }
+//            else
+//                map[i][j].SetState(TileEnum::empty);
+//        }
+//    }
+//}
 
 template <class T>
         inline void cCollisionController<T>::collideVsTile(TileMapCell<T> **map,

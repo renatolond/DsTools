@@ -12,10 +12,11 @@ void load_level1(std::vector<sLevelData *>& level_data_vector)
   sLevelData *level1_data = new sLevelData();
   level1_data->m_world_min_height = 0;
   level1_data->m_world_min_width = 0;
-  level1_data->m_world_max_height = bgtool0.height*multiplier;
-  level1_data->m_world_max_width = bgtool0.width*multiplier;
+  level1_data->m_world_max_height = SuperMarioClone0.height*multiplier;
+  level1_data->m_world_max_width = SuperMarioClone0.width*multiplier;
   level1_data->m_scrolled = 0;
-  level1_data->m_backgrounds.push_back(&bgtool0);
+  level1_data->m_backgrounds.push_back(&SuperMarioClone0);
+
   level_data_vector.push_back(level1_data);
 }
 

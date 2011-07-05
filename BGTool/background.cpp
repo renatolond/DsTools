@@ -328,7 +328,7 @@ void cBackground::export_to_ds()
   }
   file_tiles.close();
 
-
+  export_map_to_ds();
 
   QFile file_cfile(cfile);
   if(file_cfile.open(QIODevice::WriteOnly | QFile::Truncate))

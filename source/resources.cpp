@@ -28,15 +28,15 @@ void load_level1(std::vector<sLevelData *>& level_data_vector)
   level1_data->m_scrolled = 0;
   level1_data->m_backgrounds.push_back(&SuperMarioClone0);
 
-//  sItemData *itembox1 = new sItemData();
-//  itembox1->m_x = 30;
-//  itembox1->m_y = 9;
-//  itembox1->m_sprite_pointer = itembox_Sprite;
-//  itembox1->m_palette_pointer = itembox_Pal;
-//  itembox1->set_size(OBJ_SIZE_16X16);
-//  itembox1->m_item_type = ITEMBOX;
+  sItemData *itembox1 = new sItemData();
+  itembox1->m_x = 30;
+  itembox1->m_y = 9;
+  itembox1->m_sprite_pointer = ItemBox_Sprite;
+  itembox1->m_palette_pointer = ItemBox_Pal;
+  itembox1->set_size(OBJ_SIZE_16X16);
+  itembox1->m_item_type = ITEMBOX;
 
-//  level1_data->m_items.push_back(itembox1);
+  level1_data->m_items.push_back(itembox1);
 
 //  sEnemyData *goomba1 = new sEnemyData();
 //  goomba1->m_x = 30;

@@ -4,6 +4,7 @@
 
 #include "global-data.h"
 #include "level-data.h"
+#include "item-data.h"
 
 int timer = 0;
 
@@ -25,10 +26,6 @@ void cScrollEngine::set_global_data(const sGlobalData *global_data)
 //--------------------------------------------------------------------------------------------------
 void cScrollEngine::load_graphics()
 {
-  PA_LoadSpritePal(0, // Screen
-                   1, // Palette id
-                   (void*) SuperMarioClone_Pal); // Pointer to load from
-
   for(unsigned int i(0); i < m_level_data_vector[m_current_level]->m_backgrounds.size(); ++i)
   {
     PA_LoadBackground(0, // screen
@@ -49,6 +46,25 @@ void cScrollEngine::load_graphics()
 
   int SMALL_MARIO_ANIM_SPEED = 10;
 
+  m_item_controller = new cItemController<tDefinedType>();
+  {
+    sItemData *item = m_level_data_vector[m_current_level]->m_items[0];
+    PA_LoadSpritePal(0,
+                     2, // Mudar pra uma variavel que mantenha a quantidade de paletas instanciadas
+                     (void *)item->m_palette_pointer);
+    m_item_controller->spr.pos.x = 0;
+    m_item_controller->spr.pos.y = 0;
+    m_item_controller->spr.create((void *)item->m_sprite_pointer, item->m_h, item->m_w, 2);
+    m_item_controller->spr.move(item->m_x, item->m_y);
+    m_item_controller->spr.priority(1);
+    m_item_controller->spr.beginAnimation(0);
+  }
+
+  PA_LoadSpritePal(0, // Screen
+                   1, // Palette id
+                   (void*) SuperMarioClone_Pal); // Pointer to load from
+
+  m_player->spr.sprid = 1;
   m_player->spr.create((void *)(SuperMarioClone_Sprite), OBJ_SIZE_16X16, 1);
   m_player->spr.move(0, screenSizeY-tileSizeY*5);
   m_player->spr.priority(0);
@@ -127,6 +143,7 @@ void cScrollEngine::render()
   PA_ParallaxScrollX(0, // Screen
                      m_level_data_vector[m_current_level]->m_scrolled);
   m_player->Draw();
+  m_item_controller->Draw();
 }
 
 //--------------------------------------------------------------------------------------------------

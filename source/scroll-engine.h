@@ -7,6 +7,7 @@
 
 #include "collisioncontroller.h"
 #include "playercontroller.h"
+#include "item-controller.h"
 
 struct sGlobalData;
 
@@ -16,6 +17,7 @@ class cScrollEngine : public PA::Application
 {
   cPlayerController<tDefinedType> *m_player;
   cCollisionController<tDefinedType> *m_collision_controller;
+  cItemController<tDefinedType> *m_item_controller;
 
   const sGlobalData *m_global_data;
 

@@ -29,3 +29,4 @@ source/enemy-data.h
 source/enemy-data.cpp
 source/item-data.h
 source/item-data.cpp
+source/item-controller.h

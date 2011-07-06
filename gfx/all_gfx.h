@@ -9,17 +9,22 @@ extern "C"{
 #endif
 
 // Sprites:
-extern const unsigned char small_box_Sprite[3328] _GFX_ALIGN; // Palette: small_box_Pal
-extern const unsigned char small_mario_Sprite[3328] _GFX_ALIGN; // Palette: small_mario_Pal
+//extern const unsigned char small_box_Sprite[3328] _GFX_ALIGN; // Palette: small_box_Pal
+//extern const unsigned char small_mario_Sprite[3328] _GFX_ALIGN; // Palette: small_mario_Pal
+extern const unsigned char SuperMarioClone_Sprite[3328] _GFX_ALIGN; // Palette: small_mario_Pal
+extern const unsigned char ItemBox_Sprite[3328] _GFX_ALIGN; // Palette: small_mario_Pal
 
 // Backgrounds:
-extern const PA_BgStruct bg_1;
-extern const PA_BgStruct bgtool0;
-extern const PA_BgStruct bgtool1;
+//extern const PA_BgStruct bg_1;
+//extern const PA_BgStruct bgtool0;
+//extern const PA_BgStruct bgtool1;
+extern const PA_BgStruct SuperMarioClone0;
 
 // Palettes:
-extern const unsigned short small_box_Pal[256] _GFX_ALIGN;
-extern const unsigned short small_mario_Pal[256] _GFX_ALIGN;
+//extern const unsigned short small_box_Pal[256] _GFX_ALIGN;
+//extern const unsigned short small_mario_Pal[256] _GFX_ALIGN;
+extern const unsigned short SuperMarioClone_Pal[256] _GFX_ALIGN;
+extern const unsigned short ItemBox_Pal[256] _GFX_ALIGN;
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,7 @@
 #include "item-data.h"
 
-sItemData::sItemData()
+void sItemData::set_size(int h, int w)
 {
+  m_h = h;
+  m_w = w;
 }

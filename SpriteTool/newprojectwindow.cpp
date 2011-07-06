@@ -41,11 +41,10 @@ void cNewProjectWindow::ok_clicked(void)
 
   QString tam = ui->cb_sprite_size->currentText();
   int w, h;
+  sscanf(tam.toAscii(), "%d %*c %d", &w, &h);
 
   //QTextStream s(&tam,QIODevice::ReadOnly);
   //s >> w >> " x " >> h;
-
-  sscanf(tam.toAscii(), "%d x %d", &w, &h);
 
   m_controller->create_sprite(nome,w,h);
 

@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>BgTool - SuperMarioClone</string>
+   <string>BgTool</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>

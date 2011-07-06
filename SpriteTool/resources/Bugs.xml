@@ -2,7 +2,7 @@
 <SpriteTool>
 <Sprite name="Bugs" sizex="64" sizey="64">
 <Frame path="010.png" id="0"/>
-<Frame path="011.png" id="1"/>
-<Frame path="014.png" id="2"/>
+<Frame path="014.png" id="1"/>
+<Frame path="046.png" id="2"/>
 </Sprite>
 </SpriteTool>

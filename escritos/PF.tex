@@ -454,13 +454,24 @@ Começamos importando uma imagem da primeira fase do jogo original na BGTool, cr
 
 O segundo passo é recriar os sprites originais, e converter para o formato aceito pelo DS, dentre eles sprites de inimigos, da caixa de ítens, da bandeira, dentre outros.
 
-%\begin{figure}[h!]
-%\centering
-%\includegraphics{imgs/spritetool2.png}
-%\caption{Adicionando o \textit{sprite} do bloco de interrogação à SpriteTool.} 
-%\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/spritetool3.png}
+\caption{Adicionando o \textit{sprite} do bloco de interrogação à SpriteTool.} 
+\end{figure}
 
 Em seguida, criamos os arquivos de código fonte que informam para a \textit{engine} sobre os \textit{backgrounds}, personagens, inimigos e tudo que criamos nos passos anteriores.
+
+\lstinputlisting[caption=Função que carrega a primeira fase,label=list:load_level1]{codigos/load_level1.cpp}
+
+Por fim, ficamos com algo assim:
+
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/nocash1.png}
+\caption{O jogo rodando na engine, após ter suas imagens importadas para o DS.} 
+\end{figure}
+
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 

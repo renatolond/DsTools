@@ -83,7 +83,7 @@ The objective of this paper is to create a game engine to the Nintendo DS\texttr
 
 \chapter*{Dedicatória}
 
-\textit{Dedico este trabalho aos meus pais, Manolo e Geísa, que me me ensinaram a nunca desistir dos meus sonhos, me apoiaram em todas as minhas decisões, e sempre confiaram no meu julgamento. Dedico também aos meus avós, Ary e Ivonne, pessoas com quem eu estou sempre aprendendo a ser uma pessoa melhor; ao meu irmão Vitor, que me orgulha de estar seguindo o mesmo caminho que eu, apesar das dificuldades que me viu enfrentar; e por fim, aos meus amigos sinceros que me inspiraram a dar dois passos a frente sempre que eu pensava em recuar um.}
+\textit{Dedico este trabalho aos meus pais, Manolo e Geisa, que me me ensinaram a nunca desistir dos meus sonhos, me apoiaram em todas as minhas decisões, e sempre confiaram no meu julgamento. Dedico também aos meus avós, Ary e Ivonne, com quem eu estou sempre aprendendo a ser uma pessoa melhor; ao meu irmão Vitor, que me orgulha de estar seguindo o mesmo caminho que eu, apesar das dificuldades que me viu enfrentar; e por fim, aos meus amigos sinceros que me inspiraram a dar dois passos a frente sempre que eu pensava em recuar um.}
 
 \hfill -- Felipe Pedrosa Martinez
 
@@ -95,7 +95,7 @@ The objective of this paper is to create a game engine to the Nintendo DS\texttr
 
 Agradecemos ao professor Adriano Cruz, que além de nos introduzir à programação, nos deu liberdade para levarmos este projeto à nossa maneira;
 
-aos amigos que tiveram de nos aguentar contar inúmeras vezes sobre o projeto;
+aos amigos que viram este projeto nascer e nos apoiaram quando ele ainda não passava de uma ideia;
 
 a toda comunidade de \textit{Homebrew} do Nintendo DS, por tornar esse projeto possível;
 
@@ -181,7 +181,7 @@ Por fim, concluímos este trabalho comentando alguns pontos importantes, metas a
 \vfill{}
 \begin{flushright}{}
 \begin{figure}[h!]
-\hfill\includegraphics{imgs/zork.jpg}
+\hfill\includegraphics{imgs/zork_inverted.jpg}
 \end{figure}
 ``\emph{You are in a maze of twisty passages, all alike.}''\\
 {\small Zork}\end{flushright}{\small \par}
@@ -278,15 +278,17 @@ Portanto, além do número de camadas, o usuário também especifica o tamanho d
 \centering
 \includegraphics[scale=1]{imgs/exemplo.png}
 \caption{A imagem antes de ser carregada}
+\label{fig:exemplo}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/bgtool1.png}
 \caption{A imagem após a abertura na ferramenta}
+\label{fig:bgtool1}
 \end{figure}
 
-Ao importar os \textit{tiles}, o usuário pode usá-los para editar o \textit{background} da fase que está construindo. Uma paleta é gerada automaticamente pela ferramenta a partir dos \textit{tiles} que o usuário carrega. Em seguida, a ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em \textit{tiles}, dividindo-a em partes de 8x8 \textit{pixels} e eliminando as possíveis repetições. Como o DS suporta espelhamento na horizontal e na vertical de um \textit{tile}, então é feita uma verificação se o \textit{tile} em questão é igual a um dos \textit{tiles} existentes, em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos.
+Ao importar os \textit{tiles}, o usuário pode usá-los para editar o \textit{background} da fase que está construindo. Podemos ver como uma imagem antes e depois da conversão olhando as imagens \ref{fig:exemplo} e \ref{fig:bgtool1}, respectivamente. Uma paleta é gerada automaticamente pela ferramenta a partir dos \textit{tiles} que o usuário carrega. Podemos ver exemplos de tiles na figura \ref{fig:tiles1}. Em seguida, a ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em \textit{tiles}, dividindo-a em partes de 8x8 \textit{pixels} e eliminando as possíveis repetições. Como o DS suporta espelhamento na horizontal e na vertical de um \textit{tile}, então é feita uma verificação se o \textit{tile} em questão é igual a um dos \textit{tiles} existentes, em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos. As configurações de espelhamento podem ser vistas na imagem \ref{fig:tiles2}
 
 Os \textit{tiles} são armazenados como imagens, sendo assim não há um algoritmo de \textit{hash} disponível no QT que pudesse ser utilizado para organizá-los. A implementação de tal algoritmo foge ao escopo deste trabalho e por isso, é feita uma busca exaustiva pelo vetor de imagens comparando as imagens geradas com as que já existem. Embora esse seja um processo relativamente custoso, com complexidade O(n) para cada inserção, dado o tamanho da entrada de dados, este custo pode ser ignorado.
 
@@ -294,12 +296,14 @@ Os \textit{tiles} são armazenados como imagens, sendo assim não há um algorit
 \centering
 \includegraphics[scale=1]{imgs/tiles1.png}
 \caption{Alguns \textit{tiles} depois de separados}
+\label{fig:tiles1}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/tiles2.png}
 \caption{Configurações possíveis para um \textit{tile}}
+\label{fig:tiles2}
 \end{figure}
 
 Com os \textit{tiles} já importados, o usuário pode construir os mapas que compõem a fase. A ferramenta separa as diversas camadas de fundo em abas, para a edição separada de cada uma. Porém, ao construir uma fase, é possível ver uma composição destas camadas em uma imagem de \textit{background} de forma a prover um \textit{feedback} do ao usuário de como ficaria a versão final dela.
@@ -349,9 +353,10 @@ Além de permitir a portabilidade das imagens para o Nintendo DS, transformando-
 \centering
 \includegraphics{imgs/spritetool1.png}
 \caption{Janela de criação de novo \textit{sprite}}
+\label{fig:spritetool1}
 \end{figure}
 
-Ao começar um novo projeto, uma instância de \textit{sprite} é criada, mesmo que ainda não tenha sido adicionada nenhuma imagem. É importante salientar que o termo ``sprite'' neste escopo, engloba uma série de conceitos que vão além de um simples arquivo de imagem. São eles: informações relativas ao tamanho da imagem, uma paleta de cores, informações sobre transparência e, por fim, os \textit{frames} do \textit{sprite} – que são as imagens em si.
+Ao começar um novo projeto, uma instância de \textit{sprite} é criada, mesmo que ainda não tenha sido adicionada nenhuma imagem. A janela de criação de sprite pode ser vista na figura \ref{fig:spritetool1}. É importante salientar que o termo ``sprite'' neste escopo, engloba uma série de conceitos que vão além de um simples arquivo de imagem. São eles: informações relativas ao tamanho da imagem, uma paleta de cores, informações sobre transparência e, por fim, os \textit{frames} do \textit{sprite} – que são as imagens em si.
 Algumas destas informações são requeridas para a criação do projeto de \textit{sprite}, como o nome do \textit{sprite} e as dimensões das imagens que servirão como \textit{frames} da animação deste. O programa oferece uma gama de formatos de \textit{sprite} para o usuário escolher, respeitando as restrições das bibliotecas e do hardware do DS sobre as imagens que podem ser usadas como \textit{sprites}.
 
 Criado um novo projeto de \textit{sprite}, o usuário tem a possibilidade de adicionar novas imagens a ele. Além de permitir que o usuário busque uma imagem compatível com o tamanho já definido, o programa cria uma pasta de projeto e mantém nesta pasta uma cópia de cada imagem adicionada a ele, eliminando o uso de caminhos específicos para os arquivos fontes das imagens selecionadas. Assim, o programa tem uma maior portabilidade de uso. De forma análoga, as imagens relativas aos \textit{frames} deletados do projeto são removidas desta pasta, que encapsula apenas os arquivos necessários para o funcionamento do SpriteTool.
@@ -394,11 +399,11 @@ Depois de escolhido o formato XML, foi criado um protocolo de escrita e leitura 
 
 \vfill{}
 \begin{flushright}{}
-%\begin{figure}[h!]
-%\hfill\includegraphics{imgs/engine.jpg}
-%\end{figure}
-``\emph{Quote 4}''\\
-{\small Author4}\end{flushright}{\small \par}
+\begin{figure}[h!]
+\hfill\includegraphics{imgs/carmack.jpg}
+\end{figure}
+``\emph{The cost of adding a feature isn't just the time it takes to code it. The cost also includes the addition of an obstacle to future expansion. The trick is to pick the features that don't fight each other. }''\\
+{\small John Carmack}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo é apresentada a \textit{engine} feita para o Nintendo DS e as decisões tomadas sobre ela.
@@ -452,6 +457,17 @@ Desse modo, fica a cargo do programador chamar, dentro da função \textit{load\
 
 %revisar e extender
 As fases são interligadas a partir das estruturas que foram preenchidas na função \textit{load\_resources()}. A \textit{engine} liga as fases sequencialmente, e uma vez que o jogador passou de uma fase, não há meio para retornar para ela.
+
+Ao preencher a estrutura com dados sobre fases, também é necessário que se informe a posição onde cada uma delas termina. Esta informação é usada durante o \textit{loop} de jogo para verificar se a fase chegou ao seu fim.
+
+Formas mais elaboradas de conexão entre fases, como o mapa visto em Super Mario Bros. 3, que pode ser vista na imagem \ref{fig:smb3}, podem ser implementadas contanto que sejam mudadas as mecânicas de armazenamento de fases. O desenvolvedor tem a liberdade de criar uma fase que sirva de ponto de partida para todas as outras, normalmente referido como \textit{overworld}. Esse recurso é muito usado em jogos, e permite o jogador a visitar cada uma das fases já conhecidas por ele quantas vezes quiser. Além de aumentar o replay feature do jogo, este modelo permite que passagens secretas e bônus sejam escondidos pelas fases, pela possibilidade que o jogador tem de revisitá-las.
+
+\begin{figure}[h!]
+\centering
+\includegraphics{imgs/smb3.png}
+\caption{Mapa do jogo Super Mario Bros. 3}
+\label{fig:smb3}
+\end{figure}
 
 \chapter{O Jogo}
 
@@ -528,9 +544,11 @@ A maior dificuldade nesse tipo de projeto, como citado anteriormente, é o acess
 
 As ferramentas desenvolvidas nesse trabalho têm como objetivo apresentar uma ideia do que os autores pensam ser um possível caminho para reduzir esse gasto, fazendo com que seja possível desenvolver jogos bem diferentes com pequenas alterações de código. Embora com essas ferramentas não seja possível publicar um jogo, devido tão somente a restrições do fabricante do console, há a possibilidade de um desenvolvedor individual utilizá-las para desenvolver seu protótipo de jogo, ou para um jogo que não tenha intenção de ser vendido na plataforma.
 
+Como notado anteriormente, podemos ver que algumas empresas estão se encaminhando para uma maior facilidade na publicação de seus jogos, como é o caso da Microsoft. No entanto, ainda vemos uma grande resistência por parte da Nintendo nesse sentido; como fonte de comparação, enquanto o custo anual para o desenvolvedor para Xbox Live Indie Games é de \$99 USD ao ano, a Nintendo cobra \$2000 USD para que um desenvolvedor possa publicar jogos no WiiWare, uma plataforma de jogos que são obtidos por download no seu console doméstico, o Nintendo Wii. \cite{WiiWare}
+
 Tínhamos como objetivo criar ferramentas, nos colocar no lugar de desenvolvedores em um time com várias especialidades, e acreditamos que esse objetivo tenha sido cumprido. Nossas ferramentas facilitam a conversão dos formatos para o Nintendo DS tal como agilizam e automatizam parte do fluxo de trabalho deste time. A engine criada por nós serve como um exemplo de funcionamento de um programa para o Nintendo DS, além de nos ter feito aprimorar conceitos como detecção de colisão e aprender novas técnicas acerca da interação entre os diferentes elementos de um jogo.
 
-Podemos dizer que ainda há muito a ser feito para essas ferramentas. Poderíamos, por exemplo, escrever mais funções que exportem para diferentes cadeias de ferramentas, de diferentes sistemas. Não nos limitando, então, somente ao Nintendo DS. Deste modo, poderia ser desenvolvido um jogo de diversas plataformas com um mínimo de trabalho.
+Podemos dizer que ainda há muito a ser feito para essas ferramentas. Poderíamos, por exemplo, escrever mais funções que exportem para diferentes cadeias de ferramentas, de diferentes sistemas. Não nos limitando, então, somente ao Nintendo DS. Deste modo, poderia ser desenvolvido um jogo de diversas plataformas com o mínimo de trabalho.
 
 Além disso, certas tarefas podem ser mais automatizadas, como a geração do arquivo que carrega os \textit{backgrounds} e personagens na \textit{engine} do DS. Como este arquivo tem um formato bem definido, ele poderia ser gerado automaticamente por uma terceira ferramenta, desde que conseguisse ler o formato XML utilizado neste trabalho.
 

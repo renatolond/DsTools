@@ -2,36 +2,37 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
 \usepackage{listings}
+\renewcommand{\lstlistingname}{Listagem}
 
 \usepackage{courier}
- \lstset{
-         basicstyle=\footnotesize\ttfamily, 
-         numberstyle=\tiny,          
-         numbersep=5pt,              
-         tabsize=2,                  
-         extendedchars=true,         
-         breaklines=true,            
-         keywordstyle=\color{red},
-                frame=b,         
-         stringstyle=\color{white}\ttfamily, 
-         showspaces=false,           
-         showtabs=false,             
-         %xleftmargin=17pt,
-         %framexleftmargin=17pt,
-         %framexrightmargin=5pt,
-         %framexbottommargin=4pt,
-         %backgroundcolor=\color{lightgray},
-         showstringspaces=false      
- }
- \lstloadlanguages{
-         %[Visual]Basic
-         %Pascal
-         %C
-         C++,
-         XML
-         %HTML
-         %Java
- }
+\lstset{
+        basicstyle=\footnotesize\ttfamily,
+        numberstyle=\tiny,          
+        numbersep=5pt,              
+        tabsize=2,                  
+        extendedchars=true,         
+        breaklines=true,            
+        keywordstyle=\color{red},
+               frame=b,         
+        stringstyle=\color{white}\ttfamily,
+        showspaces=false,           
+        showtabs=false,             
+        %xleftmargin=17pt,
+        %framexleftmargin=17pt,
+        %framexrightmargin=5pt,
+        %framexbottommargin=4pt,
+        %backgroundcolor=\color{lightgray},
+        showstringspaces=false      
+}
+\lstloadlanguages{
+        %[Visual]Basic
+        %Pascal
+        %C
+        C++,
+        XML
+        %HTML
+        %Java
+}
 
 \usepackage{color}
 \usepackage{xcolor}
@@ -55,11 +56,10 @@
 \coautor{Felipe Pedrosa Martinez}
 \titulo{Ferramentas e métodos para o desenvolvimento de um jogo de plataforma 2D para o Nintendo DS}
 \orientador{Adriano Joaquim de Oliveira Cruz}
-\comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade 
-Federal do Rio de Janeiro.}
+\comentario{Monografia apresentada para obtenção do Grau de Bacharel em Ciência da Computação pela Universidade Federal do Rio de Janeiro.}
 \instituicao{Departamento de Ciência da Computação \par Instituto de Matemática \par Universidade Federal do Rio de Janeiro}
 \local{Rio de Janeiro - RJ, Brasil}
-\data{13/07/2011}
+\data{15/07/2011}
 
 \Ncapa
 \NFolhaDeRosto
@@ -74,20 +74,32 @@ Federal do Rio de Janeiro.}
 %\end{folhadeaprovacao}
 
 \begin{resumo}
-O objetivo deste trabalho é fazer um \textit{engine} de jogo para o \textit{videogame Nintendo DS\texttrademark} e também um editor de fases 
-e configurações, como seria feito numa equipe de desenvolvimento de um jogo comercial, dando a possibilidade aos \textit{designers} 
-de fazerem seus \textit{sprites} e criarem as fases com eles, sem que fosse necessário mexer com códigos.
+O objetivo deste trabalho é apresentar um \textit{engine} de jogo para o \textit{Nintendo DS\texttrademark} e também um editor de fases e configurações. Isto será feito da mesma forma que numa equipe de desenvolvimento de um jogo comercial. Possibilitando os \textit{designers} a fazerem seus \textit{sprites} e a partir deles, criarem as fases, sem que seja necessário lidar com programação.
 \end{resumo}
 
 \begin{abstract}
-The objective of this paper is to make a game engine to the Nintendo DS\texttrademark system and a level and configurations editor, as it
-would be done in a development team in a comercial game, giving designers the possibility to make their sprites and create their levels 
-without touching actual source code.
+The objective of this paper is to create a game engine to the Nintendo DS\texttrademark system and a level and configuration editor, as it would be done in a development team of a comercial game, giving designers the possibility to make their sprites and build their levels without touching actual source code.
 \end{abstract}
 
 \chapter*{Dedicatória}
 
+\textit{Dedico este trabalho aos meus pais, Manolo e Geísa, que me me ensinaram a nunca desistir dos meus sonhos, me apoiaram em todas as minhas decisões, e sempre confiaram no meu julgamento. Dedico também aos meus avós, Ary e Ivonne, pessoas com quem eu estou sempre aprendendo a ser uma pessoa melhor; ao meu irmão Vitor, que me orgulha de estar seguindo o mesmo caminho que eu, apesar das dificuldades que me viu enfrentar; e por fim, aos meus amigos sinceros que me inspiraram a dar dois passos a frente sempre que eu pensava em recuar um.}
+
+\hfill -- Felipe Pedrosa Martinez
+
+\textit{Este trabalho é dedicado à minha mãe, Fatima, que sempre foi um apoio quando necessário; a meu pai, Reginaldo, e meus avós, Arlindo e Eremita; aos meus irmãos, Juliana, Gustavo e Luciana; ao meu padrastro Heitor; e a minha namorada, Natalia, que esteve sempre lá quando eu precisava de conforto e uma palavra amiga.}
+
+\hfill -- Renato dos Santos Cerqueira
+
 \chapter*{Agradecimentos}
+
+Agradecemos ao professor Adriano Cruz, que além de nos introduzir à programação, nos deu liberdade para levarmos este projeto à nossa maneira;
+
+aos amigos que tiveram de nos aguentar contar inúmeras vezes sobre o projeto;
+
+a toda comunidade de \textit{Homebrew} do Nintendo DS, por tornar esse projeto possível;
+
+a Shigeru Miyamoto, Keiji Inafune e Amy Hennig.
 
 \tableofcontents{}
 \listoffigures
@@ -96,8 +108,12 @@ without touching actual source code.
 \chapter{Introdução\label{cap:introducao}}
 
 \vfill{}
-\begin{flushright}{}``\emph{Quote 1}''\\
-{\small Author1}\end{flushright}{\small \par}
+\begin{flushright}{}
+\begin{figure}[h!]
+\hfill\includegraphics{imgs/shigeru.jpg}
+\end{figure}
+``\emph{Video games are bad for you? That's what they said about rock and roll.}''\\
+{\small Shigeru Miyamoto}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo são apresentados o objetivo desta monografia e a estrutura da mesma.
@@ -106,15 +122,15 @@ Neste capítulo são apresentados o objetivo desta monografia e a estrutura da m
 
 \section{Objetivo deste trabalho}
 
-A área de jogos eletrônicos é uma área relativamente nova, se comparada a outros ramos da ciência da computação. No entanto, por mais que a área de jogos compreenda conceitos importantes de computação, ela engloba outros que fogem ao seu escopo. Nesse sentido, para o desenvolvimento de um jogo eletrônico, além de conhecimentos de linguagens de programação, algoritmos e estruturas de dados, interface humano-computador e inteligência artificial, é preciso considerar também os aspectos subjetivos que dizem respeito a um jogo de forma geral, seja ele eletrônico ou não. O \textit{gameplay}, ou a mecânica do jogo, ou seja, a forma com que o jogo vai se desenrolar e o seu funcionamento, é um exemplo claro de que o seu desenvolvimento e sua concepção vão muito além do que pode ser programado, compilado e executado em um computador.
+A área de jogos eletrônicos é uma área relativamente nova, se comparada a determinados ramos da ciência da computação. No entanto, por mais que a área de jogos compreenda conceitos importantes de computação, ela engloba outros que fogem ao seu escopo. Nesse sentido, para o desenvolvimento de um jogo eletrônico, além de conhecimentos de linguagens de programação, algoritmos e estruturas de dados, interface humano-computador e inteligência artificial, é preciso considerar também os aspectos subjetivos que dizem respeito a um jogo de forma geral, seja ele eletrônico ou não. O \textit{gameplay}, ou a mecânica do jogo, ou seja, a forma com que o jogo vai se desenrolar e o seu funcionamento, é um exemplo claro de que o seu desenvolvimento e sua concepção vão muito além do que pode ser programado, compilado e executado em um computador.
 
-É possível observar o crescimento da área de jogos eletrônicos se notarmos que o primeiro exemplo conhecido aparece em 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \cite{2455992}. 
+É possível observar o crescimento da área de jogos eletrônicos se notarmos que o primeiro exemplo conhecido aparece em 1947, quando Thomas T. Goldsmith Jr. e Estle Ray Mann introduziram sua patente para um Dispositivo de Entretenimento usando Tubo de Raios Catódicos em \cite{2455992}.
 
-Com a tecnologia cada vez mais aprimorada, conceitos básicos que definiam os jogos daquela época vêm sido substituídos por formas cada vez mais rebuscadas. Novos elementos de jogabilidade vêm sido incorporados à mecânicas clássicas, e estas evoluem por si só, dadas as cada vez menores limitações e as constantes inovações de hardware e interação com o jogador. Isso tudo se reflete no desenvolvimento de novas áreas de jogos: onde antes havia poucos estilos bem definidos, como corrida, luta e aventura, encontramos novos nichos como por exemplo jogos casuais, sociais e de \textit{multiplay} massivo.
+Com a tecnologia cada vez mais aprimorada, conceitos básicos que definiam os jogos daquela época vêm sido substituídos por formas cada vez mais rebuscadas. Novos elementos de jogabilidade vêm sido incorporados às mecânicas clássicas, e estas evoluem por si só, dadas as cada vez menores limitações e as constantes inovações de hardware e interação com o jogador. Isso tudo se reflete no desenvolvimento de novas áreas de jogos: onde antes havia poucos estilos bem definidos, como corrida, luta e aventura, encontramos novos nichos como por exemplo jogos casuais, sociais e de \textit{multiplay} massivo.
 
-Jogos produzidos na época do Atari 2600 e Magnavox Odyssey, por exemplo, eram criações de um único desenvolvedor e em geral, concluídos em períodos curtos de tempo, sem nem ao menos identificá-lo. Em razão disso, era comum a aparição de \textit{Easter Eggs}, recursos que os desenvolvedores utilizavam para assinar a sua criação, mesmo que de uma forma não convencional \cite{PrimeiroDevName}.
+Jogos produzidos na época do Atari 2600 e Magnavox Odyssey, por exemplo, eram criações de um único desenvolvedor e em geral, concluídos em períodos curtos de tempo, sem nem ao menos trazer a identificação do seu criador. Em razão disso, era comum a aparição de \textit{Easter Eggs}, recursos que os desenvolvedores utilizavam para assinar a sua criação, mesmo que de uma forma não convencional \cite{PrimeiroDevName}.
 
-Hoje em dia, a indústria de jogos conta com super-produções que com uma quantidade quase infindável de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
+Hoje em dia, a indústria de jogos conta com super-produções com uma quantidade enorme de desenvolvedores, designers, criadores de fases, dentre outros tantos profissionais trabalhando cada um com sua especialidade.
 
 Neste trabalho, pretendemos nos inserir no contexto desses times de criação, sob a ótica do desenvolvedor, que, através da criação de ferramentas, facilita a interação entre as demais equipes do time de desenvolvimento.
 
@@ -126,11 +142,11 @@ Parte do nosso objetivo foi tornar esta \textit{engine} simples e de fácil reut
 
 \section{Contextualização}
 
-Conforme dito anteriormente, criaremos ferramentas para desenvolver jogos em duas dimensões do tipo de plataforma. O questionamento imediato a partir desta proposta é: o que é exatamente um jogo de plataforma em duas dimensões?
+Conforme dito anteriormente, criaremos ferramentas para desenvolver jogos de duas dimensões do tipo de plataforma. O questionamento imediato a partir desta proposta é: o que é exatamente um jogo de plataforma de duas dimensões?
 
-Basicamente, estes são jogos onde a movimentação do personagem principal se dá verticalmente ou horizontalmente, sem considerar a aproximação ou o distanciamento deste ao jogador. Conforme o personagem se desloca pelo mundo, este vai se revelando a ele, e é comum que apresente inimigos e obstáculos, como uma fileira de espinhos ou buracos sem fundo. Em geral, o personagem principal tem um objetivo que o motiva a atravessar o mundo que o é apresentado, podendo ou não saltar ou possuir alguma habilidade especial, ter ou não acesso a alguma arma ou item, e enfrentar algum grande inimigo no final de tudo. Esta é uma definição bastante aberta, e é nela que nos inspiramos para escrever o \textit{engine} que será executado no Nintendo DS. Para ilustrar, podemos pensar em exemplos clássicos, como Super Mario World para o Super Nintendo, ou Sonic The Hedgehog para o Sega Mega Drive. É certo que nem todos os jogos plataforma são em duas dimensões. Entretanto, neste trabalho, o foco será exclusivamente nos jogos de plataforma em duas dimensões, para facilitar o entendimento e o desenvolvimento de soluções.
+Basicamente, estes são jogos onde a movimentação do personagem principal se dá verticalmente ou horizontalmente, sem considerar a aproximação ou o distanciamento deste ao jogador. Conforme o personagem se desloca pelo mundo, este vai se revelando a ele, e é comum que apresente inimigos e obstáculos, como uma fileira de espinhos ou buracos sem fundo. Em geral, o personagem principal tem um objetivo que o motiva a atravessar o mundo virtual, seja este objetivo salvar uma princesa em apuros ou impedir a dominação do mundo. O personagem pode saltar ou não, possuir alguma habilidade especial, ter ou não acesso a alguma arma ou item. Ao final de tudo, pode ou não haver um confronto com um grande inimigo, ou um último desafio, criando o clímax para o desfecho do jogo. Esta é uma definição bastante aberta, e é nela que nos inspiramos para escrever o \textit{engine} que será executado no Nintendo DS. Para ilustrar, podemos pensar em exemplos clássicos, como Super Mario World para o Super Nintendo, ou Sonic The Hedgehog para o Sega Mega Drive. É certo que nem todos os jogos plataforma são em duas dimensões. Entretanto, neste trabalho, o foco será exclusivamente nos jogos de plataforma em duas dimensões, para facilitar o entendimento e o desenvolvimento de soluções.
 
-Nessa modalidade de jogos, um recurso muito utilizado pelos desenvolvedores são \textit{tiles} - ladrilho, em inglês - figuras de tamanho pré-definido, que compõem todo o mundo. Além disso, nesse tipo de jogo, todos os objetos costumam ser feitos a partir da combinações de \textit{sprites}, usados mais de uma vez e em diferentes posições. Os \textit{sprites} são responsáveis por representar possíveis inimigos, por exemplo. De forma mais simples, é possível dizer que enquanto os \textit{tiles} compõem o mundo, os \textit{sprites} o habitam.
+Nessa modalidade de jogos, um recurso muito utilizado pelos desenvolvedores são \textit{tiles} - ladrilho, em português - figuras de tamanho pré-definido, que compõem todo o mundo. Além disso, nesse tipo de jogo, todos os objetos costumam ser feitos a partir da combinações de \textit{sprites}, usados mais de uma vez e em diferentes posições. Os \textit{sprites} são responsáveis por representar possíveis inimigos que o personagem principal deve enfrentar em sua jornada. Além deles, os sprites também são responsáveis por representar possíveis NPCs (\textit{Non-Player Characters}), personagens que em jogos eletrônicos são controlados pelo computador e têm como objetivo auxiliar o jogador de alguma maneira ou simplesmente popular o mundo virtual. Os NPCs são importantes para que a experiência ao jogar seja mais real e imersiva. De forma mais simples, é possível dizer que enquanto os \textit{tiles} compõem o mundo, os \textit{sprites} o habitam.
 
 Dentro desse contexto, o objetivo é criar uma \textit{engine} que leia um arquivo de configuração, onde estarão detalhadas informações sobre quais são as imagens que compõem o personagem principal (ou personagens, no caso de haver uma escolha); informações sobre os inimigos (como por exemplo a qual tipo de movimento que cada um obedece); descrição dos itens (como qual efeito ele causa no personagem principal ou nos inimigos) e informações sobre as fases (dentre elas o posicionamento dos elementos que as compõem).
 
@@ -140,23 +156,21 @@ No primeiro capítulo, introduzimos o nosso trabalho, discursando sobre o nosso 
 
 Na seção \textit{Contextualização}, explicamos o foco do trabalho, restringindo e deixando bem definido o seu escopo. A partir disso, fica claro o que nos foi pertinente durante o desenvolvimento dele.
 
-A seção seguinte é esta, na qual apresentamos um breve resumo sobre o que é abordado em cada parte desta monografia.
-
-O segundo capítulo aborda os aspectos relativos ao desenvolvimento para o console que escolhemos. Primeiramente, comentamos o motivo desta escolha: o porquê resolvemos desenvolver nossas ferramentas para um console portátil, com as limitações e as particularidades do Nintendo DS.
+O segundo capítulo aborda os aspectos relativos ao desenvolvimento de jogos para o console que escolhemos. Primeiramente, comentamos o motivo desta escolha: resolvemos desenvolver nossas ferramentas para um console portátil, com as limitações e as particularidades do Nintendo DS.
 
 Logo em seguida, damos ao leitor uma breve descrição sobre as especificações do console. É importante comentar as limitações que esta escolha nos ofereceu e as possibilidades que ela nos permite. Para isso, detalhamos o hardware e assim o leitor pode ter uma ideia do que ele é capaz.
 
-No fim  deste capítulo, explicamos como o desenvolvimento de jogos é dado para o Nintendo DS e condições normais. Nesta seção, descrevemos como os grandes desenvolvedores produzem seus jogos e os desafios que os pequenos desenvolvedores enfrentam, além dos artifícios que utilizamos para realizar este trabalho sob tais circunstâncias.
+No fim deste segundo capítulo, explicamos como é a cadeia de desenvolvimento de jogos para o Nintendo DS em condições normais. Nesta seção, descrevemos como os grandes desenvolvedores produzem seus jogos e os desafios que os desenvolvedores de pequeno porte enfrentam, além dos artifícios que utilizamos para realizar este trabalho sob tais circunstâncias.
 
-No terceiro capítulo, escrevemos sobre as ferramentas desenvolvidas: como cada uma se encaixa no fluxo de trabalho para a criação de um jogo completo, do início ao fim. 
+No terceiro capítulo, escrevemos também sobre as ferramentas desenvolvidas: como cada uma se encaixa no fluxo de trabalho para a criação de um jogo completo, do início ao fim.
 
-Neste capítulo, comentamos sobre como o usuário utilizaria a BGTool, e como a ferramenta executa cada uma das funções que são de sua responsabilidade. Em seguida, é feito o mesmo tendo como foco a segunda ferramenta desenvolvida: a SpriteTool. 
+Neste capítulo, comentamos sobre como o usuário utilizaria a BGTool, nossa ferramenta de criação de cenários e como ela executa cada uma das funções que são de sua responsabilidade. Em seguida, é feito o mesmo tendo como foco a segunda ferramenta desenvolvida: a SpriteTool, responsável por importar imagens e a partir delas criar \textit{sprites} para o Nintendo DS, no formato que ele aceita.
 
 Finalizamos o terceiro capítulo com uma explicação sobre como a interação entre as ferramentas acontece, e quais foram as nossas preocupações ao escolher como este tipo de comunicação é dada.
 
-O quarto capítulo, intitulado``\textit{A Engine}", aborda alguns desafios que temos ao desenvolver um jogo. Estes desafios até então não tinham sido abordados, porém achamos importante pontuá-los: detectar colisões, construir o mundo do jogo e encapsular os \textit{outputs} das nossas ferramentas em um jogo completo.
+O quarto capítulo aborda alguns desafios que enfrentamos ao desenvolver um jogo. Estes desafios até então não tinham sido abordados, porém achamos importante pontuá-los: detectar colisões, construir o mundo do jogo e encapsular as saídas das nossas ferramentas em um jogo completo.
 
-Na seção 4.2, descrevemos brevemente um \textit{loop} genérico de jogo, de forma a ambientar o leitor que não está acostumado a programar jogos eletrônicos, comentando algumas particularidades genéricas que envolvem este nicho de programação. Em seguida, comentamos como são tratadas as colisões e por fim, como é dado o uso da \textit{engine} e  algumas configurações associadas. Explicitamos também, algumas estruturas importantes encontradas no desenvolvimento de um jogo com o uso dela.
+Na seção 4.2, descrevemos brevemente um \textit{loop} genérico de jogo, de forma a ambientar o leitor que não está acostumado a programar jogos eletrônicos, comentando algumas particularidades genéricas que envolvem este nicho de programação. Em seguida, comentamos como são tratadas as colisões e por fim, como é feito o uso da \textit{engine} e algumas configurações associadas. Explicitamos também, algumas estruturas importantes encontradas no desenvolvimento de um jogo ao usarmos esta \textit{engine}.
 
 Depois de desenvolver as ferramentas, criamos um jogo completo para ilustrar tanto a sua utilização quanto a participação num fluxo de trabalho de um jogo completo. No capítulo 5, descrevemos como as ferramentas foram aplicadas para a construção deste e comentamos o resultado final.
 
@@ -165,8 +179,12 @@ Por fim, concluímos este trabalho comentando alguns pontos importantes, metas a
 \chapter{Desenvolvendo para o Nintendo DS\label{cap:hardds}}
 
 \vfill{}
-\begin{flushright}{}``\emph{Quote 2}''\\
-{\small Author 2}\end{flushright}{\small \par}
+\begin{flushright}{}
+\begin{figure}[h!]
+\hfill\includegraphics{imgs/zork.jpg}
+\end{figure}
+``\emph{You are in a maze of twisty passages, all alike.}''\\
+{\small Zork}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo são apresentados a motivação para desenvolver para a plataforma, as suas especificações e como desenvolver.
@@ -174,7 +192,7 @@ Neste capítulo são apresentados a motivação para desenvolver para a platafor
 
 \section{Motivação}
 
-Há poucos trabalhos desenvolvidos para plataformas diferentes do PC, seja pelo mais restrito número de usuários, menor versatilidade de ferramentas e recursos associados ou mesmo pela maior dificuldade de encontrar documentação relativa ao desenvolvimento. A motivação para este trabalho é, dadas essas circunstâncias, criar um facilitador para o desenvolvimento de jogos para um console real, desenvolvendo ferramentas para fomentar uma maior quantidade de trabalhos para a plataforma, apesar das dificuldades.
+Há poucos trabalhos desenvolvidos de forma independente para plataformas diferentes do PC, seja pelo mais restrito número de usuários, menor versatilidade de ferramentas e recursos associados ou mesmo pela maior dificuldade de encontrar documentação relativa ao desenvolvimento. A motivação para este trabalho é, dadas essas circunstâncias, criar um facilitador para o desenvolvimento de jogos para um console real, desenvolvendo ferramentas para fomentar uma maior quantidade de trabalhos para a plataforma, apesar das dificuldades.
 
 \section{Especificações}
 
@@ -185,12 +203,12 @@ Ambos possuem um hardware muito parecido, sendo as suas maiores diferenças a es
 \noindent{\bf Nintendo DS:}\\
 {\bf Peso:} 275 gramas\\
 {\bf Dimensões:} 148.7mm x 84.7mm x 28.9mm\\
-{\bf Telas:} Duas telas, ambas com 3 polegadas, de LCD TFT (\textit{Thin-Film Transistor}) com 18-bit de cor, resolução de 256x192. As duas telas tem um espaço entre elas de aproximadamente 21mm. A tela inferior possui \textit{touchscreen} resistivo, que responde a um ponto de pressão por vez. No caso de vários pontos da tela serem pressionados simultaneamente, ela responde na posição média destes pontos.\\
+{\bf Telas:} Duas telas, ambas com 3 polegadas, de LCD TFT (\textit{Thin-Film Transistor}) com 18 bits de cor, resolução de 256x192. As duas telas tem um espaço entre elas de aproximadamente 21mm. A tela inferior possui \textit{touchscreen} resistivo, que responde a um ponto de pressão por vez. No caso de vários pontos da tela serem pressionados simultaneamente, ela responde na posição média destes pontos.\\
 Além disso, a tela possui iluminação traseira, que pode ser desligada por software.\\
 {\bf Entradas:} Duas entradas de cartucho, uma para o formato de cartucho do seu antecessor, o Gameboy Advance(GBA), na parte inferior,e uma para seu próprio formato de cartucho na parte superior.\\
 {\bf Processadores:} Dois processadores ARM, um ARM946E-S a 67MHz, que é o processador principal, responsável pelo \textit{loop} de jogo e renderização de vídeo e um coprocessador ARM7TDMI a 33MHz, responsável pelo som, \textit{wi-fi}, e que quando em modo GBA, diminui seu \textit{clock} para 16MHz, e passa a ser responsável pelo processamento principal.\\
 {\bf Memória:} 4MiB de RAM principal, expansíveis através da entrada de Gameboy Advance. No entanto, essa expansão só foi usada em jogos oficiais pelo Opera Browser.\\
-{\bf Wireless:} Conexão IEEE802.11b, compatível com encriptação por WEP. WPA e WPA2 não são suportadas. Essa conexão também pode ser usada para comunicação entre consoles.\\
+{\bf Wireless:} Conexão IEEE802.11b, compatível com encriptação por WEP. As encriptações WPA e WPA2 não são suportadas. Essa conexão também pode ser usada para comunicação entre consoles.\\
 
 \noindent{\bf Nintendo DS Lite:}\\
 {\bf Peso:} 218 gramas\\
@@ -200,27 +218,28 @@ Existem algumas outras menores diferenças, como a mudança do chip que controla
 
 \section{Desenvolvimento}
 
-O desenvolvimento oficial no DS segue os mesmos moldes do desenvolvimento em consoles diversos: a Nintendo possui um time interno chamado de Intelligent Systems Co. Ltd. responsável pelas ferramentas de desenvolvimento para os consoles da empresa, dentre eles, o Nintendo DS. De outro lado, desenvolvedores independentes ou empresas de desenvolvimento, interessados em criar jogos para o console, pode entrar em contato com a empresa em busca das ferramentas necessárias, que incluem uma unidade especial de desenvolvimento, que se conecta ao computador por meio de uma porta USB. Justamente por ser voltada para desenvolvimento, dentre outras particularidades, esta unidade possui o dobro de memória de uma unidade normal, de forma a facilitar o \textit{debug}. No entanto, para adquiri-las, é necessário assinar um Acordo de Confidencialidade (do inglês, \textit{Non-Disclosure Agreement}), que não permite que se comente ou escreva sobre esses \textit{kits} de desenvolvimento. Por causa disto, é difícil encontrar mais detalhes acerca de seu funcionamento.
+O desenvolvimento oficial no DS segue os mesmos moldes do desenvolvimento em consoles diversos: a Nintendo possui um time interno chamado de Intelligent Systems Co. Ltd. \cite{IntelligentSystems} responsável pelas ferramentas de desenvolvimento para os consoles da empresa, dentre eles, o Nintendo DS. De outro lado, desenvolvedores independentes ou empresas de desenvolvimento, interessados em criar jogos para o console, podem entrar em contato com a Intelligent Systems em busca das ferramentas necessárias, incluindo um console especial de desenvolvimento que se conecta ao computador por meio de uma porta USB. Justamente por ser voltada para desenvolvimento, dentre outras particularidades, esta unidade possui o dobro de memória de uma unidade normal, de forma a facilitar a depuração. No entanto, para adquiri-las, é necessário assinar um Acordo de Confidencialidade (\textit{Non-Disclosure Agreement}), que não permite que se comente ou escreva sobre esses \textit{kits} de desenvolvimento. Por causa disto, é difícil encontrar mais detalhes acerca de seu funcionamento. O kit pode ser visto na figura \ref{fig:kitdev}.
 
 \begin{figure}
 \centering
 \includegraphics{imgs/is_devkit1.jpg}
-\caption{Uma imagem do kit de desenvolvimento oficial do Nintendo DS original} 
+\caption{Uma imagem do kit de desenvolvimento oficial do Nintendo DS original}
+\label{fig:kitdev}
 \end{figure}
 
-Em geral, pequenas empresas de desenvolvimento não têm acesso ao \textit{kit} de desenvolvimento oficial, seja por causa dos altos custos para obter o hardware ou pela dificuldade de adquirir as licenças. Desta forma, a publicação de jogos para consoles do tipo ainda é rara no mercado atual de jogos.
+Em geral, pequenas empresas de desenvolvimento não têm acesso ao \textit{kit} de desenvolvimento oficial, seja por causa dos altos custos para obter o hardware ou pela dificuldade de adquirir as licenças. Desta forma, a publicação de jogos para consoles por empresas pequenas ainda é rara no mercado atual e só acontece quando esses jogos são desenvolvidos por empresas pequenas a partir de contratos de publicação de empresas maiores. \cite{Nplus}
 
-Para os fins do presente trabalho, cabe recorrer ao desenvolvimento não oficial, apelidado de \textit{Homebrew}. A cadeia de ferramentas usada é chamada devkitArm, que serve para compilar programas em C e C++ para consoles com processadores ARM. Ao contrário do desenvolvimento oficial, não é possível produzir cartuchos de jogos \textit{Homebrew}. Para testarmos, no entanto, podemos fazer uso de emuladores ou de um Nintendo DS com uso de um \textit{flash cartridge}, um cartucho que possui uma memória \textit{flash}, como um \textit{pendrive}, e que pode ser apagada e reescrita várias vezes. Este cartucho não é suportado pela Nintendo.
+Para os fins do presente trabalho, cabe recorrer ao desenvolvimento não oficial, apelidado de \textit{Homebrew}. A cadeia de ferramentas usada é chamada devkitARM \cite{devkitARM}, que serve para compilar programas em C e C++ para consoles com processadores ARM. Ao contrário do desenvolvimento oficial, não é possível produzir cartuchos de jogos \textit{Homebrew}. Para testarmos, no entanto, podemos fazer uso de emuladores ou de um Nintendo DS com uso de um \textit{flash cartridge}, um cartucho que possui uma memória \textit{flash}, como um \textit{pendrive}, e que pode ser apagada e reescrita várias vezes. Este cartucho não é suportado pela Nintendo.
 
-A partir do devkitArm, foi desenvolvida a biblioteca libnds, feita especificamente para o hardware do DS. Essa biblioteca inclui funções de baixo nível que acessam todo o hardware: som, video, \textit{wireless}, controle, dentre outros. O desenvolvimento nela apresenta dificuldades dado o baixo nível de suas instruções. Muitas vezes é necessário o uso de endereços de memória, cópias diretas da memória principal para a memória de vídeo, dentre outros artifícios não usuais na programação atual. Dado este cenário, baseadas na libnds, surgiram algumas bibliotecas em um nível mais alto. Para o desenvolvimento deste trabalho, foi escolhida a PALib, uma biblioteca que visa facilitar o desenvolvimento de jogos em duas dimensões que usem \textit{sprites} e mapas de fundo.
+A partir do devkitArm, foi desenvolvida a biblioteca libnds \cite{libnds}, feita especificamente para o hardware do DS. Essa biblioteca inclui funções de baixo nível que acessam todo o hardware: som, video, \textit{wireless}, controle, dentre outros. O desenvolvimento nela apresenta dificuldades dado o baixo nível de suas instruções. Muitas vezes é necessário o uso de endereços de memória, cópias diretas da memória principal para a memória de vídeo, dentre outros artifícios não usuais na programação atual. Dado este cenário, baseadas na libnds, surgiram algumas bibliotecas em um nível mais alto. Para o desenvolvimento deste trabalho, foi escolhida a PALib, uma biblioteca que visa facilitar o desenvolvimento de jogos em duas dimensões que usem \textit{sprites} e mapas de fundo.
 
-Ainda assim, o uso dessas ferramentas não é trivial. Diferente de um programa convencional para \textit{desktop}, as suas funcionalidades se apresentam em formas menos claras para o desenvolvedor: incluir ou gerar imagens, por exemplo, implica em um fluxo de trabalho diferente do esperado por um time de desenvolvimento convencional. 
+Ainda assim, o uso dessas ferramentas não é trivial. Diferente de um programa convencional para \textit{desktop}, as suas funcionalidades se apresentam em formas menos claras para o desenvolvedor: incluir ou gerar imagens, por exemplo, implica em um fluxo de trabalho diferente do esperado por um time de desenvolvimento convencional. Ao desenvolver um jogo para PC, o desenvolvedor tem a opção de deixar suas imagens organizadas na estrutura de pastas do sistema operacional que está sendo usado. Deste modo, ele pode carregar as imagens durante o início da execução e alterá-las não implica em recompilar os arquivos de jogo. No Nintendo DS, no entanto, não há essa opção. Tudo que é utilizado no jogo, sons e imagens, precisa ser compilado junto ao programa principal.
 
-O conjunto de ferramentas desenvolvidos neste trabalho tem como objetivo tornar mais transparente e intuitivo o desenvolvimento no cenário apresentado. As ferramentas desenvolvidas são, em sua maioria, visuais pa1ra que o seu uso se dê de uma forma simplificada.
+O conjunto de ferramentas desenvolvidos neste trabalho tem como objetivo tornar mais transparente e intuitivo o desenvolvimento no cenário apresentado. As ferramentas desenvolvidas são, em sua maioria, visuais para que o seu uso se dê de uma forma simplificada.
 
 % escrevi esse parágrafo sobre QT, mas ele provavelmente precisa de uma revisada.
 
-Para desenvolver as ferramentas foi usado o QT, um \textit{Framework} multi-plataforma que permite o uso de interfaces gráficas em C++, além de possuir classes que facilitam o acesso a tecnologias como XML, acesso a diversos formatos de arquivos de imagem, dentre outras possibilidades. A escolha foi feita para que as ferramentas funcionem em diversos sistemas operacionais sem precisar de mudanças no código.
+Para desenvolver as ferramentas, foi usado o QT, um \textit{framework} multi-plataforma que permite o uso de interfaces gráficas em C++. Ele também possui classes que facilitam o acesso a tecnologias como XML e facilita o uso de diversos formatos de arquivos de imagem. Esta escolha foi feita para que as ferramentas funcionem em diversos sistemas operacionais sem precisar de mudanças no código, além de permitir que sejam carregadas imagens de diversos formatos, sem restrições.
 
 \chapter{As Ferramentas\label{cap:ferramentas}}
 
@@ -238,33 +257,33 @@ Neste capítulo são apresentadas as ferramentas e o seu método de uso.
 
 \section{A criação do jogo\label{sec:workflow}}
 
-Um jogo necessita de algumas partes constituintes, como por exemplo, suas fases e cenários, seus itens, inimigos e personagem principal. Com o uso das ferramentas apresentadas neste trabalho, o usuário executa os seguintes passos:
+Um jogo é composto de alguns itens, como por exemplo, suas fases e cenários, inimigos,  o personagem principal e objetos com o qual ele pode interagir durante o jogo. Com o uso das ferramentas apresentadas neste trabalho, o usuário executa os passos descritos a seguir.
 
-Em primeiro lugar, o usuário cria os cenários usando a BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases, no produto final, aparecerão encadeadas.
+Em primeiro lugar, o usuário cria os cenários usando a ferramenta BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases, no produto final, aparecerão encadeadas.
 
-Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito a partir da SpriteTool. 
+Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito a partir da SpriteTool.
 %\footnote{Precisamos pensar em como juntar as duas coisas. Como o usuário posiciona inimigos e itens no cenário? Há uma terceira ferramenta? Fazemos uma das duas ferramentas fazerem isso, adicionalmente?}
 
 \section{BGTool: A ferramenta de criação de cenários}
 
-A BGTool foi criada com o objetivo de permitir que o usuário importe seus \textit{tiles} pré-existentes e a partir deles, desenvolva um novo cenário. Além disso, a ferramenta também é responsável por exportar esse cenário para o formato do Nintendo DS. 
+A BGTool foi criada com o objetivo de permitir que o usuário, o artista que desenvolveu os tiles, importe seus \textit{tiles} pré-existentes e a partir deles, desenvolva um novo cenário. Além disso, a ferramenta também é responsável por exportar esse cenário para o formato do Nintendo DS.
 
 Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit{background} o cenário que está sendo criado terá. O hardware do DS suporta até cinco camadas de \textit{background}, no entanto, usar todas elas não é compulsório e o número de camadas a serem usadas fica a critério do desenvolvedor. Com as várias camadas, porém, a gama de recursos para o desenvolvimento do jogo aumenta significantemente. O desenvolvedor pode, por exemplo, fazer uso de Paralaxe, uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.
 
-Por uma combinação de exigências do hardware do DS e das bibliotecas usadas, uma camada de \textit{background}, na verdade, é implementada como um mapa de \textit{tiles}. Isto significa dizer que as imagens que compõem o \textit{background} são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. E estas imagens menores são chamadas de \textit{tiles}, conforme mostrado anteriormente.
+Por uma combinação de exigências do hardware do DS e das bibliotecas usadas, cada camada de \textit{background}, na verdade, é implementada como um mapa de \textit{tiles}. Isto significa dizer que as imagens que compõem o \textit{background} são compostas de imagens menores, de tamanho fixo, que podem ou não ser rotacionadas ou espelhadas na vertical ou horizontal. E estas imagens menores são chamadas de \textit{tiles}, conforme mostrado anteriormente.
 
 Portanto, além do número de camadas, o usuário também especifica o tamanho dessas. A única limitação quanto ao seu tamanho é ter suas dimensões múltiplas de 8. Assim, neste trabalho, utilizamos \textit{tiles} de tamanho 8x8 \textit{pixels}, o mais simples de ser utilizado no DS.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/exemplo.png}
-\caption{A imagem antes de ser carregada} 
+\caption{A imagem antes de ser carregada}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/bgtool1.png}
-\caption{A imagem após a abertura na ferramenta} 
+\caption{A imagem após a abertura na ferramenta}
 \end{figure}
 
 Ao importar os \textit{tiles}, o usuário pode usá-los para editar o \textit{background} da fase que está construindo. Uma paleta é gerada automaticamente pela ferramenta a partir dos \textit{tiles} que o usuário carrega. Em seguida, a ferramenta se encarrega de fazer a importação de uma imagem e transformá-la em \textit{tiles}, dividindo-a em partes de 8x8 \textit{pixels} e eliminando as possíveis repetições. Como o DS suporta espelhamento na horizontal e na vertical de um \textit{tile}, então é feita uma verificação se o \textit{tile} em questão é igual a um dos \textit{tiles} existentes, em quaisquer das configurações: sem espelhamento, com espelhamento vertical, horizontal ou ambos.
@@ -274,13 +293,13 @@ Os \textit{tiles} são armazenados como imagens, sendo assim não há um algorit
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/tiles1.png}
-\caption{Alguns \textit{tiles} depois de separados} 
+\caption{Alguns \textit{tiles} depois de separados}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/tiles2.png}
-\caption{Configurações possíveis para um \textit{tile}} 
+\caption{Configurações possíveis para um \textit{tile}}
 \end{figure}
 
 Com os \textit{tiles} já importados, o usuário pode construir os mapas que compõem a fase. A ferramenta separa as diversas camadas de fundo em abas, para a edição separada de cada uma. Porém, ao construir uma fase, é possível ver uma composição destas camadas em uma imagem de \textit{background} de forma a prover um \textit{feedback} do ao usuário de como ficaria a versão final dela.
@@ -288,7 +307,7 @@ Com os \textit{tiles} já importados, o usuário pode construir os mapas que com
 Ao salvar o projeto, suas informações são armazenadas em um arquivo XML com um formato bem definido, numa área delimitada destinada à BGTool. Lá, ficam organizadas informações relativas às diversas fases tais como suas camadas. Isto será explicado com mais detalhes na seção \ref{sec:xml}.
 
 A qualquer momento, o usuário pode exportar o que já está pronto para o DS, esse é um processo transparente no qual são gerados os arquivos necessários para a execução da fase criada por ele. São criados três arquivos, um arquivo Pal, que contém a paleta, um arquivo Tile que contém os \textit{tiles}, indexados pela paleta e um arquivo Map, que contém o mapa, ou \textit{background}, indexado pelos \textit{tiles}.
- 
+
 Os três arquivos são binários e obedecem a um formato delimitado pela PALib e suas funções, que coordenam o carregamento de cenários.
 
 Uma breve explicação desses formatos é a seguinte:
@@ -312,7 +331,7 @@ Depois dessa conversão inicial, todas as ações no programa são feitas usando
 
 Os \textit{tiles}, quando exportados, também não necessitam de preocupação adicional. Sua conversão para o formato binário envolve apenas obter o índice da cor de cada pixel de cada \textit{tile} e escrevê-lo no arquivo binário.
 
-A geração do mapa, ou \textit{background}, é a tarefa mais complexa. Internamente na ferramenta, o mapa é armazenado como uma matriz de estruturas do tamanho do cenário, onde cada estrutura armazena o índice do \textit{tile} daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos. 
+A geração do mapa, ou \textit{background}, é a tarefa mais complexa. Internamente na ferramenta, o mapa é armazenado como uma matriz de estruturas do tamanho do cenário, onde cada estrutura armazena o índice do \textit{tile} daquela posição e também se naquela posição este tile está espelhado na vertical, na horizontal ou ambos.
 
 Obtidas essas informações, o arquivo é convertido para o formato discutido acima e exportado para o arquivo binário.
 
@@ -329,7 +348,7 @@ Além de permitir a portabilidade das imagens para o Nintendo DS, transformando-
 \begin{figure}[h!]
 \centering
 \includegraphics{imgs/spritetool1.png}
-\caption{Janela de criação de novo \textit{sprite}} 
+\caption{Janela de criação de novo \textit{sprite}}
 \end{figure}
 
 Ao começar um novo projeto, uma instância de \textit{sprite} é criada, mesmo que ainda não tenha sido adicionada nenhuma imagem. É importante salientar que o termo ``sprite'' neste escopo, engloba uma série de conceitos que vão além de um simples arquivo de imagem. São eles: informações relativas ao tamanho da imagem, uma paleta de cores, informações sobre transparência e, por fim, os \textit{frames} do \textit{sprite} – que são as imagens em si.
@@ -339,19 +358,19 @@ Criado um novo projeto de \textit{sprite}, o usuário tem a possibilidade de adi
 
 Com a ferramenta, ainda é possível pré-visualizar a animação do \textit{sprite}, provendo ao usuário uma ideia do seu comportamento dentro do jogo. Ainda que esta visualização não ofereça suporte aos eventos normalmente associados com cada parte da animação, como por exemplo o personagem pular ao ser apertado o botão de pulo, ela é um \textit{feedback} importante para a definição da animação. Os frames são mostrados de forma contínua, na sequencia em que foram adicionados ao projeto, e isto permite o usuário verificar o quão fluídos os movimentos do personagem estão.
 
-Depois de adicionar as imagens que vão compor o \textit{sprite} e de validar o resultado da animação, o fluxo de trabalho para o usuário termina salvando o projeto e exportando para o formato compatível com as especificações de \textit{sprite} do Nintendo DS e da PALib. Todo o processamento feito ao executar estas duas funções é transparente a ele. 
+Depois de adicionar as imagens que vão compor o \textit{sprite} e de validar o resultado da animação, o fluxo de trabalho para o usuário termina salvando o projeto e exportando para o formato compatível com as especificações de \textit{sprite} do Nintendo DS e da PALib. Todo o processamento feito ao executar estas duas funções é transparente a ele.
 
 Ao exportar, o SpriteTool traduz as informações do \textit{sprite} para o formato que poderá ser usado no desenvolvimento do jogo dentro da \textit{engine}. Para que isto aconteça, são necessários dois arquivos: nomedoprojeto\_Pal.bin e nomedoprojeto\_Sprite.bin
 
 O primeiro arquivo contém as informações relativas à paleta de cores daquele \textit{sprite}. Isto deve ser feito para cada \textit{frame} contido no projeto, e acontece da seguinte forma:
 
-Como o formato de cor aceito pelo Nintendo DS é o formato A1B5G5R5, citado em \ref{exp:A1B5G5R5}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash}, tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta, ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta. 
+Como o formato de cor aceito pelo Nintendo DS é o formato A1B5G5R5, citado em \ref{exp:A1B5G5R5}, a cor de cada pixel da imagem é pré-processada de forma a se adequar ao padrão. Depois disso, é preciso verificar se a cor já existe na paleta que está sendo criada. Para tal, é feito o uso de uma tabela \textit{hash}, tanto pela sua praticidade quanto pelo seu desempenho. Se a cor ainda não existe na paleta, ela é adicionada. Vale ressaltar que por convenção, a cor magenta representa a transparência e é a primeira cor a ser adicionada na paleta.
 
 Após o processamento de todos os \textit{frames} do projeto, o arquivo nomedoprojeto\_Pal.bin está completo e pronto para uso na \textit{engine}.
 
-O segundo arquivo que é gerado nesta etapa, contem as informações referentes aos \textit{frames}. Nele é descrito como cada \textit{frame} é organizado, baseando-se nos índices das cores referenciadas na paleta do projeto. O formato no qual isto deve ser feito, exige que o programa itere os \textit{frames} em blocos de 64 pixels (8 de altura por 8 de largura). O fim do processamento se dá junto ao término dos \textit{frames} do projeto de \textit{sprite}. 
+O segundo arquivo que é gerado nesta etapa, contem as informações referentes aos \textit{frames}. Nele é descrito como cada \textit{frame} é organizado, baseando-se nos índices das cores referenciadas na paleta do projeto. O formato no qual isto deve ser feito, exige que o programa itere os \textit{frames} em blocos de 64 pixels (8 de altura por 8 de largura). O fim do processamento se dá junto ao término dos \textit{frames} do projeto de \textit{sprite}.
 
-Com estes dois arquivos criados, a \textit{engine} é capaz de reconhecer o \textit{sprite} e animá-lo conforme conveniente. 
+Com estes dois arquivos criados, a \textit{engine} é capaz de reconhecer o \textit{sprite} e animá-lo conforme conveniente.
 
 \lstinputlisting[caption=Exportando o \textit{sprite} para o Nintendo DS:,label=list:exportsprite]{codigos/listingexportsprite.c}
 
@@ -359,13 +378,13 @@ Para o desenvolvimento desta etapa, foi usado um editor hexadecimal de forma a f
 
 \section{A integração entre as ferramentas\label{sec:xml}}
 
-As ferramentas desenvolvidas neste trabalho têm como objetivo conjunto possibilitar o desenvolvimento de jogos no Nintendo DS. Estas ferramentas foram desenvolvidas de forma separada, cada uma sendo responsável por uma parte específica da cadeia de desenvolvimento. Desta forma, se faz a necessário estabelecer um meio de comunicação entre elas. É importante ressaltar que esta forma de comunicação deve ser robusta, para que permita, por exemplo, uma integração futura entre as ferramentas apresentadas neste trabalho, construindo assim um único ambiente de desenvolvimento. 
+As ferramentas desenvolvidas neste trabalho têm como objetivo conjunto possibilitar o desenvolvimento de jogos no Nintendo DS. Estas ferramentas foram desenvolvidas de forma separada, cada uma sendo responsável por uma parte específica da cadeia de desenvolvimento. Desta forma, se faz a necessário estabelecer um meio de comunicação entre elas. É importante ressaltar que esta forma de comunicação deve ser robusta, para que permita, por exemplo, uma integração futura entre as ferramentas apresentadas neste trabalho, construindo assim um único ambiente de desenvolvimento.
 
 Além disso, seja para fins de interromper momentaneamente o fluxo de trabalho em uma determinada etapa do desenvolvimento, ou guardá-lo para referência futura, fez-se necessário, também, estabelecer um meio de armazenamento da informação usada por cada uma das ferramentas.
 
-Para resolver estas questões, foi escolhido o formato de arquivo XML como um meio intermediário entre as ferramentas, sendo responsável tanto para armazenar informações de configuração de cada uma delas, quanto para estabelecer uma possível comunicação entre elas. Este formato é amplamente usado hoje em dia e foi escolhido pela facilidade de uso e legibilidade que traz consigo. 
+Para resolver estas questões, foi escolhido o formato de arquivo XML como um meio intermediário entre as ferramentas, sendo responsável tanto para armazenar informações de configuração de cada uma delas, quanto para estabelecer uma possível comunicação entre elas. Este formato é amplamente usado hoje em dia e foi escolhido pela facilidade de uso e legibilidade que traz consigo.
 
-Os arquivos XML são compostos por diversas \textit{tags}, responsáveis por delimitar um determinado espaço no arquivo onde se encontra a informação referente a elas. Dentro da área delimitada por uma \textit{tag}, existe a possibilidade de criarmos mais um nível de profundidade no arquivo, estabelecendo assim um sistema hierárquico dentro dele. Dessa forma, este tipo de arquivo pode ser entendido como uma árvore, onde cada \textit{tag} representa um nó, e cada nível hierárquico abaixo dele representa um filho. Isto traz a vantagem de introduzir diferentes ramos, cada um contendo um tipo específico de informação, todos no mesmo arquivo. Assim, ferramentas distintas têm suas informações completamente separadas, mas todos os dados relativos a um mesmo projeto se encontram no mesmo arquivo. 
+Os arquivos XML são compostos por diversas \textit{tags}, responsáveis por delimitar um determinado espaço no arquivo onde se encontra a informação referente a elas. Dentro da área delimitada por uma \textit{tag}, existe a possibilidade de criarmos mais um nível de profundidade no arquivo, estabelecendo assim um sistema hierárquico dentro dele. Dessa forma, este tipo de arquivo pode ser entendido como uma árvore, onde cada \textit{tag} representa um nó, e cada nível hierárquico abaixo dele representa um filho. Isto traz a vantagem de introduzir diferentes ramos, cada um contendo um tipo específico de informação, todos no mesmo arquivo. Assim, ferramentas distintas têm suas informações completamente separadas, mas todos os dados relativos a um mesmo projeto se encontram no mesmo arquivo.
 
 Depois de escolhido o formato XML, foi criado um protocolo de escrita e leitura a ser respeitado por todas as ferramentas.
 
@@ -374,7 +393,11 @@ Depois de escolhido o formato XML, foi criado um protocolo de escrita e leitura 
 \chapter{A Engine}
 
 \vfill{}
-\begin{flushright}{}``\emph{Quote 4}''\\
+\begin{flushright}{}
+%\begin{figure}[h!]
+%\hfill\includegraphics{imgs/engine.jpg}
+%\end{figure}
+``\emph{Quote 4}''\\
 {\small Author4}\end{flushright}{\small \par}
 \vfill{}
 
@@ -397,7 +420,7 @@ Podemos encontrar, em bibliotecas de jogos, um \textit{loop} de jogo bastante co
 
 Nesse \textit{loop}, a ideia é que o usuário possa trabalhar com a seguinte separação lógica de código:
 
-Em \textit{init} ficam as tarefas a serem realizadas antes do início do jogo. Lá se encontram o carregamento e organização das imagens e sons a serem usados no jogo. 
+Em \textit{init} ficam as tarefas a serem realizadas antes do início do jogo. Lá se encontram o carregamento e organização das imagens e sons a serem usados no jogo.
 
 Em \textit{update} ficam as tarefas a serem realizadas ao fim de cada iteração do \textit{loop}. Normalmente, acelerações advindas da gravidade e de outras forças existentes no ambiente, detecções e tratamento de colisões, avaliação da inteligência artificial, dentre outras.
 
@@ -433,8 +456,12 @@ As fases são interligadas a partir das estruturas que foram preenchidas na fun�
 \chapter{O Jogo}
 
 \vfill{}
-\begin{flushright}{}``\emph{Quote 5}''\\
-{\small Author5}\end{flushright}{\small \par}
+\begin{flushright}{}
+\begin{figure}[h!]
+\hfill\includegraphics{imgs/mario.jpg}
+\end{figure}
+``\emph{It’s-a me, Mario!}''\\
+{\small Mario}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo é apresentado um jogo criado usando as ferramentas.
@@ -447,20 +474,22 @@ Depois de desenvolvidas as ferramentas e a \textit{engine}, é preciso testá-la
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{imgs/bgtool2.png}
-\caption{Apagando os objetos depois de importar a imagem.} 
+\caption{Apagando os objetos depois de importar a imagem.}
+\label{fig:objetos}
 \end{figure}
 
-Começamos importando uma imagem da primeira fase do jogo original na BGTool, criando um mapa da primeira fase, e editamos o mapa para retirar objetos que não são do \textit{background}, como as caixas de interrogação. E usamos a ferramenta para exportar para o DS. Repetimos esse processo para as fases que incluímos neste nosso jogo de demonstração.
+Começamos importando uma imagem da primeira fase do jogo original na BGTool, criando um mapa da primeira fase. Essa imagem foi adquirida da internet e tinha incorporada nela objetos que não deveriam fazer parte do cenário, como caixas de item, por isso, editamos o mapa para retirar objetos que não são do \textit{background}, como podemos ver na figura \ref{fig:objetos}. Depois usamos a ferramenta para exportar para o DS. Repetimos esse processo para as fases que incluímos neste nosso jogo de demonstração.
 
-O segundo passo é recriar os sprites originais, e converter para o formato aceito pelo DS, dentre eles sprites de inimigos, da caixa de ítens, da bandeira, dentre outros.
+O segundo passo é recriar e converter para o formato do DS os sprites originais, são eles os sprites de inimigos, das caixas de ítens, da bandeira que marca o final da fase, dentre outros. A caixa de item, que retiramos da BGTool, precisa ser recolocada, desta vez como um objeto que possa interagir com o jogador. Importamos então imagens da caixa de item no SpriteTool, e a exportamos para o DS, como podemos ver na figura \ref{fig:itembox}.
 
 \begin{figure}[h!]
 \centering
 \includegraphics{imgs/spritetool3.png}
-\caption{Adicionando o \textit{sprite} do bloco de interrogação à SpriteTool.} 
+\caption{Adicionando o \textit{sprite} do bloco de interrogação à SpriteTool.}
+\label{fig:itembox}
 \end{figure}
 
-Em seguida, criamos os arquivos de código fonte que informam para a \textit{engine} sobre os \textit{backgrounds}, personagens, inimigos e tudo que criamos nos passos anteriores.
+Em seguida, criamos os arquivos de código fonte que informam para a \textit{engine} sobre os \textit{backgrounds}, personagens, inimigos e tudo o que foi criado nos passos anteriores.
 
 \lstinputlisting[caption=Função que carrega a primeira fase,label=list:load_level1]{codigos/load_level1.cpp}
 
@@ -469,16 +498,19 @@ Por fim, ficamos com algo assim:
 \begin{figure}[h!]
 \centering
 \includegraphics{imgs/nocash1.png}
-\caption{O jogo rodando na engine, após ter suas imagens importadas para o DS.} 
+\caption{O jogo rodando na engine, após ter suas imagens importadas para o DS.}
 \end{figure}
 
 
 \chapter{Conclusões e trabalhos futuros\label{cap:conclusao}}
 
 \vfill{}
-\begin{flushright}{}``\emph{Nada se cria, nada se perde, tudo se
-transforma.}''\\
-{\small Lavousier}\end{flushright}{\small \par}
+\begin{flushright}{}
+\begin{figure}[h!]
+\hfill\includegraphics{imgs/streetfighter.jpg}
+\end{figure}
+``\emph{Here comes a new challenger!}''\\
+{\small Narrador (Street Fighter 2)}\end{flushright}{\small \par}
 \vfill{}
 
 Neste capítulo, são apresentadas as conclusões e alguns trabalhos futuros
@@ -490,15 +522,17 @@ Neste capítulo, são apresentadas as conclusões e alguns trabalhos futuros
 
 O mercado de jogos está finalmente chegando em sua maturidade. Jogos feitos por pequenos grupos de desenvolvedores estão alcançando sucesso tão grande quanto grandes franquias, criadas por grandes empresas. Como exemplo disso, podem-se citar jogos como Minecraft, cuja maior parte foi criada por apenas um desenvolvedor, que há pouco tempo alcançou a marca de mais de 2 milhões de cópias vendidas. \cite{MinecraftSales}
 
-Com esse cenário, podemos notar que é importante tentar reduzir o tempo gasto mexendo em código fonte, para que os desenvolvedores possam se focar naquilo que realmente faz diferença em um jogo: a originalidade e o seu \textit{gameplay}.
+Com esse cenário, podemos notar que é importante tentar reduzir o tempo gasto na codificação, para que os desenvolvedores possam se focar naquilo que realmente faz diferença em um jogo: a originalidade e o seu \textit{gameplay}.
 
-A maior dificuldade nesse tipo de projeto, como citado anteriormente, é o acesso às funções de hardware dos consoles. Entretanto, é possível perceber um movimento das grandes empresas em direção a consoles com desenvolvimento mais aberto, como por exemplo o Xbox Live Indie Games, onde o desenvolvedor usa o XNA Game Studio para desenvolver e recebe 70\% do lucro do lançamento do seu jogo, depois de alguns passos que conferem ao jogo a possibilidade de ser lançado. Ainda assim, há um custo anual para o desenvolvedor de \$99 USD. \cite{XNAAppHub} 
+A maior dificuldade nesse tipo de projeto, como citado anteriormente, é o acesso às funções de hardware dos consoles. Entretanto, é possível perceber um movimento das grandes empresas em direção a consoles com desenvolvimento mais aberto, como por exemplo o Xbox Live Indie Games, onde o desenvolvedor usa o XNA Game Studio para desenvolver e recebe 70\% do lucro do lançamento do seu jogo, depois de alguns passos que conferem ao jogo a possibilidade de ser lançado. Ainda assim, há um custo anual para o desenvolvedor de \$99 USD. \cite{XNAAppHub}
 
-As ferramentas desenvolvidas nesse trabalho têm como objetivo ser apenas uma ideia do que os autores pensam ser um caminho para reduzir esse gasto, fazendo com que seja possível desenvolver jogos bem diferentes com pequenas alterações de código. Embora com essas ferramentas não seja possível publicar um jogo, há a possibilidade de um desenvolvedor individual utilizá-las para desenvolver seu protótipo de jogo, ou para um jogo que não tenha intenção de ser vendido na plataforma.
+As ferramentas desenvolvidas nesse trabalho têm como objetivo apresentar uma ideia do que os autores pensam ser um possível caminho para reduzir esse gasto, fazendo com que seja possível desenvolver jogos bem diferentes com pequenas alterações de código. Embora com essas ferramentas não seja possível publicar um jogo, devido tão somente a restrições do fabricante do console, há a possibilidade de um desenvolvedor individual utilizá-las para desenvolver seu protótipo de jogo, ou para um jogo que não tenha intenção de ser vendido na plataforma.
+
+Tínhamos como objetivo criar ferramentas, nos colocar no lugar de desenvolvedores em um time com várias especialidades, e acreditamos que esse objetivo tenha sido cumprido. Nossas ferramentas facilitam a conversão dos formatos para o Nintendo DS tal como agilizam e automatizam parte do fluxo de trabalho deste time. A engine criada por nós serve como um exemplo de funcionamento de um programa para o Nintendo DS, além de nos ter feito aprimorar conceitos como detecção de colisão e aprender novas técnicas acerca da interação entre os diferentes elementos de um jogo.
 
 Podemos dizer que ainda há muito a ser feito para essas ferramentas. Poderíamos, por exemplo, escrever mais funções que exportem para diferentes cadeias de ferramentas, de diferentes sistemas. Não nos limitando, então, somente ao Nintendo DS. Deste modo, poderia ser desenvolvido um jogo de diversas plataformas com um mínimo de trabalho.
 
-Além disso, certas tarefas podem ser mais automatizadas, como a geração do arquivo que carrega os \textit{backgrounds} e personagens na \textit{engine} do DS. Como tem um formato bem definido, ele poderia ser gerado automaticamente por uma terceira ferramenta, desde que conseguisse ler o formato XML definido neste trabalho.
+Além disso, certas tarefas podem ser mais automatizadas, como a geração do arquivo que carrega os \textit{backgrounds} e personagens na \textit{engine} do DS. Como este arquivo tem um formato bem definido, ele poderia ser gerado automaticamente por uma terceira ferramenta, desde que conseguisse ler o formato XML utilizado neste trabalho.
 
 %Caso a gente termine a interface da colisão, tirar isso daqui
 
@@ -506,9 +540,9 @@ A colisão precisa ser definida manualmente na \textit{engine}, mas isso poderia
 
 A interface da BGTool ainda pode ser melhorada, para facilitar o seu uso. Com operações de pintura em grupo, preenchimento de regiões por difusão (\textit{flood-fill}), e outras operações comuns em ferramentas de desenho.
 
-Mais ferramentas poderiam ser criadas, cada uma orientada a partes da cadeia de desenvolvimento que não foram abordadas. Um módulo para tratar da inteligência artificial dos inimigos é um exemplo, possibilitando o usuário a definir para cada \textit{sprite} de inimigo um padrão de movimentação já previamente estabelecido. 
+Mais ferramentas poderiam ser criadas, cada uma orientada a partes da cadeia de desenvolvimento que não foram abordadas. Um módulo para tratar da inteligência artificial dos inimigos é um exemplo, possibilitando o usuário a definir para cada \textit{sprite} de inimigo um padrão de movimentação já previamente estabelecido.
 
-Uma outra funcionalidade do Nintendo DS, que é a conexão \textit{wireless}, não foi aproveitada da form	a que poderia. Um módulo para estabelecer a comunicação entre dois consoles distintos poderia ser criado aproveitando a facilidade de comunicação que o aparelho oferece. 
+Uma outra funcionalidade do Nintendo DS, que é a conexão \textit{wireless}, não foi aproveitada da forma que poderia. Um módulo para estabelecer a comunicação entre dois consoles distintos poderia ser criado aproveitando a facilidade de comunicação que o aparelho oferece.
 
 Parte do objetivo deste trabalho é justamente fomentar o desenvolvimento desse tipo de ferramenta, e assim aquecer o desenvolvimento de jogos apesar de todas as dificuldades que ainda são encontradas na área. As possibilidades de trabalhos futuros são inúmeras e além de nos inspirarem, fazem de nós pessoas mais realizadas por atingir esta meta. Este trabalho foi desenvolvido para a obtenção de grau em Bacharel em Ciências da Computação, entretanto, nossas aspirações como autores vão além: impactar o cenário atual de desenvolvimento de jogos e servir de referência para tantos outros interessados nesta área que ainda carece muito de incentivo.
 

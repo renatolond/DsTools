@@ -40,6 +40,7 @@
 \usepackage{wrapfig}
 \usepackage{xunxos-utp}
 \usepackage{caption}
+\usepackage{float}
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.98\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
@@ -86,6 +87,8 @@ The objective of this paper is to create a game engine to the Nintendo DS\texttr
 \textit{Dedico este trabalho aos meus pais, Manolo e Geisa, que me me ensinaram a nunca desistir dos meus sonhos, me apoiaram em todas as minhas decisões, e sempre confiaram no meu julgamento. Dedico também aos meus avós, Ary e Ivonne, com quem eu estou sempre aprendendo a ser uma pessoa melhor; ao meu irmão Vitor, que me orgulha de estar seguindo o mesmo caminho que eu, apesar das dificuldades que me viu enfrentar; e por fim, aos meus amigos sinceros que me inspiraram a dar dois passos a frente sempre que eu pensava em recuar um.}
 
 \hfill -- Felipe Pedrosa Martinez
+
+\vspace{30mm}
 
 \textit{Este trabalho é dedicado à minha mãe, Fatima, que sempre foi um apoio quando necessário; a meu pai, Reginaldo, e meus avós, Arlindo e Eremita; aos meus irmãos, Juliana, Gustavo e Luciana; ao meu padrastro Heitor; e a minha namorada, Natalia, que esteve sempre lá quando eu precisava de conforto e uma palavra amiga.}
 
@@ -156,7 +159,7 @@ No primeiro capítulo, introduzimos o nosso trabalho, discursando sobre o nosso 
 
 Na seção \textit{Contextualização}, explicamos o foco do trabalho, restringindo e deixando bem definido o seu escopo. A partir disso, fica claro o que nos foi pertinente durante o desenvolvimento dele.
 
-O segundo capítulo aborda os aspectos relativos ao desenvolvimento de jogos para o console que escolhemos. Primeiramente, comentamos o motivo desta escolha: resolvemos desenvolver nossas ferramentas para um console portátil, com as limitações e as particularidades do Nintendo DS.
+O segundo capítulo aborda os aspectos relativos ao desenvolvimento de jogos para o console que escolhemos. Primeiramente, comentamos o motivo desta escolha: o porquê resolvemos desenvolver nossas ferramentas para um console portátil, com as limitações e as particularidades do Nintendo DS.
 
 Logo em seguida, damos ao leitor uma breve descrição sobre as especificações do console. É importante comentar as limitações que esta escolha nos ofereceu e as possibilidades que ela nos permite. Para isso, detalhamos o hardware e assim o leitor pode ter uma ideia do que ele é capaz.
 
@@ -164,7 +167,7 @@ No fim deste segundo capítulo, explicamos como é a cadeia de desenvolvimento d
 
 No terceiro capítulo, escrevemos também sobre as ferramentas desenvolvidas: como cada uma se encaixa no fluxo de trabalho para a criação de um jogo completo, do início ao fim.
 
-Neste capítulo, comentamos sobre como o usuário utilizaria a BGTool, nossa ferramenta de criação de cenários e como ela executa cada uma das funções que são de sua responsabilidade. Em seguida, é feito o mesmo tendo como foco a segunda ferramenta desenvolvida: a SpriteTool, responsável por importar imagens e a partir delas criar \textit{sprites} para o Nintendo DS, no formato que ele aceita.
+Neste capítulo, comentamos sobre como o usuário utilizaria a BgTool, nossa ferramenta de criação de cenários e como ela executa cada uma das funções que são de sua responsabilidade. Em seguida, é feito o mesmo tendo como foco a segunda ferramenta desenvolvida: a SpriteTool, responsável por importar imagens e a partir delas criar \textit{sprites} para o Nintendo DS, no formato que ele aceita.
 
 Finalizamos o terceiro capítulo com uma explicação sobre como a interação entre as ferramentas acontece, e quais foram as nossas preocupações ao escolher como este tipo de comunicação é dada.
 
@@ -259,14 +262,14 @@ Neste capítulo são apresentadas as ferramentas e o seu método de uso.
 
 Um jogo é composto de alguns itens, como por exemplo, suas fases e cenários, inimigos,  o personagem principal e objetos com o qual ele pode interagir durante o jogo. Com o uso das ferramentas apresentadas neste trabalho, o usuário executa os passos descritos a seguir.
 
-Em primeiro lugar, o usuário cria os cenários usando a ferramenta BGTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases, no produto final, aparecerão encadeadas.
+Em primeiro lugar, o usuário cria os cenários usando a ferramenta BgTool, onde ele desenha os cenários em que o jogo vai se passar. Esses cenários ficam organizados logicamente em fases, e essas fases, no produto final, aparecerão encadeadas.
 
 Em seguida, é necessário importar as figuras dos personagens, inimigos e itens. Isso é feito a partir da SpriteTool.
 %\footnote{Precisamos pensar em como juntar as duas coisas. Como o usuário posiciona inimigos e itens no cenário? Há uma terceira ferramenta? Fazemos uma das duas ferramentas fazerem isso, adicionalmente?}
 
-\section{BGTool: A ferramenta de criação de cenários}
+\section{BgTool: A ferramenta de criação de cenários}
 
-A BGTool foi criada com o objetivo de permitir que o usuário, o artista que desenvolveu os tiles, importe seus \textit{tiles} pré-existentes e a partir deles, desenvolva um novo cenário. Além disso, a ferramenta também é responsável por exportar esse cenário para o formato do Nintendo DS.
+A BgTool foi criada com o objetivo de permitir que o usuário, o artista que desenvolveu os tiles, importe seus \textit{tiles} pré-existentes e a partir deles, desenvolva um novo cenário. Além disso, a ferramenta também é responsável por exportar esse cenário para o formato do Nintendo DS.
 
 Ao começar um novo projeto, o usuário pode escolher quantas camadas de \textit{background} o cenário que está sendo criado terá. O hardware do DS suporta até cinco camadas de \textit{background}, no entanto, usar todas elas não é compulsório e o número de camadas a serem usadas fica a critério do desenvolvedor. Com as várias camadas, porém, a gama de recursos para o desenvolvimento do jogo aumenta significantemente. O desenvolvedor pode, por exemplo, fazer uso de Paralaxe, uma técnica em que as camadas mais distantes da câmera se movem mais devagar, dando uma ilusão de profundidade e imersão.
 
@@ -283,7 +286,7 @@ Portanto, além do número de camadas, o usuário também especifica o tamanho d
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=1]{imgs/bgtool1.png}
+\includegraphics[scale=.5]{imgs/bgtool1.png}
 \caption{A imagem após a abertura na ferramenta}
 \label{fig:bgtool1}
 \end{figure}
@@ -308,7 +311,7 @@ Os \textit{tiles} são armazenados como imagens, sendo assim não há um algorit
 
 Com os \textit{tiles} já importados, o usuário pode construir os mapas que compõem a fase. A ferramenta separa as diversas camadas de fundo em abas, para a edição separada de cada uma. Porém, ao construir uma fase, é possível ver uma composição destas camadas em uma imagem de \textit{background} de forma a prover um \textit{feedback} do ao usuário de como ficaria a versão final dela.
 
-Ao salvar o projeto, suas informações são armazenadas em um arquivo XML com um formato bem definido, numa área delimitada destinada à BGTool. Lá, ficam organizadas informações relativas às diversas fases tais como suas camadas. Isto será explicado com mais detalhes na seção \ref{sec:xml}.
+Ao salvar o projeto, suas informações são armazenadas em um arquivo XML com um formato bem definido, numa área delimitada destinada à BgTool. Lá, ficam organizadas informações relativas às diversas fases tais como suas camadas. Isto será explicado com mais detalhes na seção \ref{sec:xml}.
 
 A qualquer momento, o usuário pode exportar o que já está pronto para o DS, esse é um processo transparente no qual são gerados os arquivos necessários para a execução da fase criada por ele. São criados três arquivos, um arquivo Pal, que contém a paleta, um arquivo Tile que contém os \textit{tiles}, indexados pela paleta e um arquivo Map, que contém o mapa, ou \textit{background}, indexado pelos \textit{tiles}.
 
@@ -460,7 +463,7 @@ As fases são interligadas a partir das estruturas que foram preenchidas na fun�
 
 Ao preencher a estrutura com dados sobre fases, também é necessário que se informe a posição onde cada uma delas termina. Esta informação é usada durante o \textit{loop} de jogo para verificar se a fase chegou ao seu fim.
 
-Formas mais elaboradas de conexão entre fases, como o mapa visto em Super Mario Bros. 3, que pode ser vista na imagem \ref{fig:smb3}, podem ser implementadas contanto que sejam mudadas as mecânicas de armazenamento de fases. O desenvolvedor tem a liberdade de criar uma fase que sirva de ponto de partida para todas as outras, normalmente referido como \textit{overworld}. Esse recurso é muito usado em jogos, e permite o jogador a visitar cada uma das fases já conhecidas por ele quantas vezes quiser. Além de aumentar o replay feature do jogo, este modelo permite que passagens secretas e bônus sejam escondidos pelas fases, pela possibilidade que o jogador tem de revisitá-las.
+Formas mais elaboradas de conexão entre fases, como o mapa dos mundos em Super Mario Bros. 3, que pode ser visto na imagem \ref{fig:smb3}, podem ser implementadas contanto que sejam mudadas as mecânicas de armazenamento de fases. O desenvolvedor tem a liberdade de criar uma fase que sirva de ponto de partida para todas as outras, normalmente referido como \textit{overworld}. Esse recurso é muito usado em jogos, e permite o jogador a visitar cada uma das fases já conhecidas por ele quantas vezes quiser. Além de aumentar o \textit{replay feature} do jogo, ou seja, o quanto o jogador vai jogá-lo repetidamente até cansar, este modelo permite que passagens secretas e bônus sejam escondidos pelas fases, tal como atalhos pelo mapa. Desta forma, os desenvolvedores criam um metajogo, separando o objetivo principal do jogo original de um novo objetivo que pode ser alcançado: conhecer 100\% do jogo, achando todas as suas passagens secretas e itens escondidos.
 
 \begin{figure}[h!]
 \centering
@@ -489,14 +492,14 @@ Depois de desenvolvidas as ferramentas e a \textit{engine}, é preciso testá-la
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=1]{imgs/bgtool2.png}
+\includegraphics[scale=.5]{imgs/bgtool2.png}
 \caption{Apagando os objetos depois de importar a imagem.}
 \label{fig:objetos}
 \end{figure}
 
-Começamos importando uma imagem da primeira fase do jogo original na BGTool, criando um mapa da primeira fase. Essa imagem foi adquirida da internet e tinha incorporada nela objetos que não deveriam fazer parte do cenário, como caixas de item, por isso, editamos o mapa para retirar objetos que não são do \textit{background}, como podemos ver na figura \ref{fig:objetos}. Depois usamos a ferramenta para exportar para o DS. Repetimos esse processo para as fases que incluímos neste nosso jogo de demonstração.
+Começamos importando uma imagem da primeira fase do jogo original na BgTool, criando um mapa da primeira fase. Essa imagem foi adquirida da internet e tinha incorporada nela objetos que não deveriam fazer parte do cenário, como caixas de item, por isso, editamos o mapa para retirar objetos que não são do \textit{background}, como podemos ver na figura \ref{fig:objetos}. Depois usamos a ferramenta para exportar para o DS. Repetimos esse processo para as fases que incluímos neste nosso jogo de demonstração.
 
-O segundo passo é recriar e converter para o formato do DS os sprites originais, são eles os sprites de inimigos, das caixas de ítens, da bandeira que marca o final da fase, dentre outros. A caixa de item, que retiramos da BGTool, precisa ser recolocada, desta vez como um objeto que possa interagir com o jogador. Importamos então imagens da caixa de item no SpriteTool, e a exportamos para o DS, como podemos ver na figura \ref{fig:itembox}.
+O segundo passo é recriar e converter para o formato do DS os sprites originais, são eles os sprites de inimigos, das caixas de ítens, da bandeira que marca o final da fase, dentre outros. A caixa de item, que retiramos da BgTool, precisa ser recolocada, desta vez como um objeto que possa interagir com o jogador. Importamos então imagens da caixa de item no SpriteTool, e a exportamos para o DS, como podemos ver na figura \ref{fig:itembox}.
 
 \begin{figure}[h!]
 \centering
@@ -554,9 +557,9 @@ Além disso, certas tarefas podem ser mais automatizadas, como a geração do ar
 
 %Caso a gente termine a interface da colisão, tirar isso daqui
 
-A colisão precisa ser definida manualmente na \textit{engine}, mas isso poderia ser feito diretamente na BGTool, ao importar os \textit{tiles}. Assim, o artista que estivesse criando os \textit{backgrounds} poderia já escolher o tipo de colisão dos seus trabalhos.
+A colisão precisa ser definida manualmente na \textit{engine}, mas isso poderia ser feito diretamente na BgTool, ao importar os \textit{tiles}. Assim, o artista que estivesse criando os \textit{backgrounds} poderia já escolher o tipo de colisão dos seus trabalhos.
 
-A interface da BGTool ainda pode ser melhorada, para facilitar o seu uso. Com operações de pintura em grupo, preenchimento de regiões por difusão (\textit{flood-fill}), e outras operações comuns em ferramentas de desenho.
+A interface da BgTool ainda pode ser melhorada, para facilitar o seu uso. Com operações de pintura em grupo, preenchimento de regiões por difusão (\textit{flood-fill}), e outras operações comuns em ferramentas de desenho.
 
 Mais ferramentas poderiam ser criadas, cada uma orientada a partes da cadeia de desenvolvimento que não foram abordadas. Um módulo para tratar da inteligência artificial dos inimigos é um exemplo, possibilitando o usuário a definir para cada \textit{sprite} de inimigo um padrão de movimentação já previamente estabelecido.
 
@@ -570,9 +573,144 @@ Parte do objetivo deste trabalho é justamente fomentar o desenvolvimento desse 
 
 \anexo
 
-\chapter{Ferramentas utilizadas}
+\chapter{Manual das Ferramentas}
 
-\section{QT}
+\section{BgTool}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=.5]{imgs/bgtool3.png}
+\caption{Tela inicial da BgTool}
+\label{fig:bgtool3}
+\end{figure}
+
+Quando a BgTool aberta a tela representada na figura \ref{fig:bgtool3} é apresentada ao usuário. A partir dela, o usuário pode usar os menus para criar um novo projeto, ou abrir um já existente. Ao acessar o menu File, e em seguida a opção ``New Project’’, o usuário é direcionado para a tela representada na figura \ref{fig:bgtool4}
+
+Na tela ``New Project’’ o usuário dá um nome ao projeto que está sendo criado, uma largura e altura para o cenário e escolhe o número de camadas que ele terá. A largura e a altura precisam ser múltiplas de 8, pelo fato de estarmos usando tiles com 8x8 pixels.
+
+Não há como adicionar ou apagar camadas depois do projeto estar criado.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{imgs/bgtool4.png}
+\caption{Tela de criação de novo projeto}
+\label{fig:bgtool4}
+\end{figure}
+
+Na aba de edição de camadas, temos os botões descritos a seguir.
+
+  \textbf{\textit{Import}}\\
+           Importa uma imagem já existente, convertendo a paleta para o formato de 256 cores aceito pela ferramenta, importando os tiles e preenchendo o cenário.
+
+  \textbf{\textit{Paint}}\\
+           Com esse botão marcado, ao clicar sobre um quadrado da Área de Desenho ele o transforma no tile selecionado.
+
+  \textbf{\textit{Highlight}}\\
+           Ao clicar nesse botão, todos os lugares na área de desenho que possuem um tile do tipo selecionado ficam destacados por um quadrado amarelo.
+
+  \textbf{H}\\
+           Esse botão espelha o tile selecionado na horizontal
+
+  \textbf{V}\\
+           Esse botão espelha o tile selecionado na vertical
+
+Além disso, temos os seguintes componentes:
+
+\begin{enumerate}
+  \item Tile selecionado
+  \item Tiles da camada\\
+           Aqui ficam os tiles que foram carregados no projeto. Ao clicar sobre um deles, ele será selecionado e será exibido na área de tile selecionado, estando disponível para ser utilizado.
+  \item Área de desenho
+           Aqui está o cenário propriamente dito. Para pintar, basta ativar o botão ``Paint’’. Com isso, ao clicar em algum dos quadrados ele será pintado pelo tile selecionado.
+  \item Paleta da camada
+           Aqui ficam as cores relativas da paleta dos tiles carregados.
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=.5]{imgs/bgtool5.png}
+\caption{Aba de edição de camada}
+\label{fig:bgtool5}
+\end{figure}
+
+Durante a edição é possível salvar o projeto atual indo em File e em seguida em Save Project. Se o projeto ainda não tiver sido salvo, uma janela indicando o caminho onde ele deve ser salvo se abrirá. O projeto será salvo num arquivo xml e na mesma pasta será salvo uma pasta com o mesmo nome onde ficam guardadas as imagens do projeto, isto é, os tiles que existem neles e o mapa de tiles.
+É possível editar esse mapa externamente e reimportar, a ferramenta fará então uma nova conversão ignorando os tiles existentes.
+
+\section{SpriteTool}
+
+\begin{figure}[H]
+\centering
+\includegraphics{imgs/spritetool4.png}
+\caption{Tela inicial da SpriteTool}
+\end{figure}
+
+Ao executar a SpriteTool, as seguintes opções são apresentadas ao usuário:
+
+\textbf{\textit{New Project}}\\
+Abre um formulário requerindo os dados necessários para se começar um novo projeto de \textit{sprite}.
+
+\textbf{\textit{Open Project}}\\
+Permite que o usuário busque um arquivo XML no sistema de diretórios do seu sistema operacional e abre um formulário a parte com opções de projetos de sprites válidos contidos neste arquivo.
+
+\textbf{\textit{Save Project}}\\
+Salva o projeto de sprite atual em um arquivo XML existente ou não, escolhido pelo usuário. Esta opção se encontra inativa quando não há projetos abertos na ferramenta.
+
+\textbf{\textit{Close Project}}\\
+Fecha o projeto atual descartando as modificações não salvas. Tal como a anterior, esta opção se encontra inativa quando não há projetos abertos na ferramenta.
+
+\begin{figure}[H]
+\centering
+\includegraphics{imgs/spritetool2.png}
+\caption{Fomulário para criar um novo projeto de \textit{sprite}.}
+\end{figure}
+
+Neste formulário é requerido o nome do projeto e o tamanho dos frames que vão ser inseridos um a um para criar a animação. Recomenda-se que o nome do projeto de \textit{sprite} seja único, porém não há impedimento para usar o mesmo nome em projetos diferentes, desde que estes sejam salvos em arquivos XML a parte.
+
+Os tamanhos, em pixels, de imagens suportados para frames são os seguintes:
+\begin{itemize}
+\item 8 x 8
+\item 8 x 16
+\item 8 x 32
+\item 16 x 8
+\item 16 x 16
+\item 16 x 32
+\item 32 x 8
+\item 32 x 16
+\item 32 x 32
+\item 32 x 64
+\item 64 x 32
+\item 64 x 64
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics{imgs/spritetool5.png}
+\caption{Fomulário para abrir um projeto de \textit{sprite} a partir de um arquivo XML existente.}
+\end{figure}
+
+Neste formulário, são dadas as opções de sprites válidos que foram encontrados no arquivo XML aberto pelo usuário. Para prosseguir com o fluxo de trabalho, basta escolher um deles e clicar em ``Ok’’.
+
+\begin{figure}[H]
+\centering
+\includegraphics{imgs/spritetool3.png}
+\caption{Tela principal da SpriteTool, com um projeto aberto e um frame adicionado.}
+\end{figure}
+
+Nesta etapa do fluxo de trabalho, com um projeto válido aberto, novas opções estão disponíveis. São elas:
+
+\textbf{\textit{Add Frame}}\\
+Adiciona uma imagem ao projeto de \textit{sprite}. Uma cópia desta imagem vai ser adicionada na pasta de recursos para o projeto que o SpriteTool mantém para referência futura.
+
+\textbf{\textit{Delete Frame}}\\
+Deleta a imagem atual do projeto de \textit{sprite}. Ao terminar o fluxo de trabalho, as imagens deletadas do projeto são excluídas da pasta de recursos do SpriteTool.
+
+\textbf{\textit{Animate}}\\
+Exibe uma prévia de animação do \textit{sprite}, iterando os frames na ordem adicionada. Esta animação não é sensível ao controle do usuário, ou seja, animando um personagem para pular por exemplo, ele não responderá a nenhum comando externo, apenas pulará de forma independente. Esta opção é útil para verificar se os movimentos da animação estão fluídos como desejado.
+
+\textbf{\textit{Export}}\\
+Encapsula o projeto de \textit{sprite} em um formato que o Nintendo DS aceite.
+
+\textbf{Setas Direcionais}\\
+Servem para navegar entre os frames adicionados ao projeto. A seta para a esquerda fica inativa quando o primeiro frame está sendo mostrado, tal como a seta para a direita quando o programa mostra o último frame adicionado.
 
 \end{document}

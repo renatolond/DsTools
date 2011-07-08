@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Choose sprite to open</string>
   </property>
   <widget class="QLabel" name="lbl_sprite">
    <property name="geometry">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Escolha o Sprite :</string>
+    <string>Choose Sprite :</string>
    </property>
   </widget>
   <widget class="QComboBox" name="cb_sprite">

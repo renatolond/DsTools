@@ -64,9 +64,9 @@
      <height>18</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_Edit">
+   <widget class="QMenu" name="menu_Export">
     <property name="title">
-     <string>&amp;Edit</string>
+     <string>&amp;Export</string>
     </property>
    </widget>
    <widget class="QMenu" name="menu_File">
@@ -80,7 +80,7 @@
     <addaction name="actionClose_Project"/>
    </widget>
    <addaction name="menu_File"/>
-   <addaction name="menu_Edit"/>
+   <addaction name="menu_Export"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_Project">

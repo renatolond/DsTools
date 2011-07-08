@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>New Project</string>
   </property>
   <widget class="QLineEdit" name="edit_nome">
    <property name="geometry">
@@ -33,7 +33,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Nome do Projeto:</string>
+    <string>Project name:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_ok">
@@ -142,7 +142,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Tamanho do Sprite:</string>
+    <string>Sprite size:</string>
    </property>
   </widget>
  </widget>

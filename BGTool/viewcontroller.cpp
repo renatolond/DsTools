@@ -139,7 +139,7 @@ void cViewController::update_palette_view(void)
   const int color_width = 8;
   const int color_height = 8;
 
-  int colors_per_column = 8;
+  int colors_per_column = 10;
   int colors_per_row = palette.size() / colors_per_column;
   if(palette.size() % colors_per_column)
     ++colors_per_row;

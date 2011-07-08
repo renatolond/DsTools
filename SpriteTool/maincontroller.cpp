@@ -104,8 +104,8 @@ void cMainController::close_project()
 void cMainController::save_project()
 {
   QString filename = QFileDialog::getSaveFileName(m_window,
-                       tr("Salvar Projeto"),PATH,
-                       tr("Arquivos XML (*.xml);;All Files (*)"));
+                       tr("Save Project"),PATH,
+                       tr("XML Files (*.xml);;All Files (*.*)"));
 
   if(filename.isEmpty())
     return;
@@ -237,7 +237,7 @@ void cMainController::save_project()
 void cMainController::open_project()
 {
   QString filename = QFileDialog::getOpenFileName(m_window,
-                      tr("Abrir Projeto"), "..\\SpriteTool/resources",
+                      tr("Open Project"), "..\\SpriteTool/resources",
                       tr("XML Files (*xml);;All Files (*)"));
 
   if(filename.isEmpty())
@@ -377,7 +377,7 @@ void cMainController::create_sprite(QString nome)
 void cMainController::add_frame()
 { 
   QString filename = QFileDialog::getOpenFileName(m_window,
-                        tr("Abrir Projeto"), PATH,
+                        tr("Open Project"), PATH,
                         tr("PNG Files (*png);;All Files (*)"));
 
   if(filename.isEmpty())

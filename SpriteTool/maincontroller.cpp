@@ -535,7 +535,7 @@ void cMainController::export_to_DS(void)
   {
     QDataStream out(&file_spr);
 
-    int paletteBias = 0;
+    int paletteBias = 1;
 
     for(int it(0); it < m_sprite.size(); ++it)
     {
@@ -551,9 +551,9 @@ void cMainController::export_to_DS(void)
             {
               unsigned char color_index;
 
-              if(img.pixelIndex(8*j+jj,8*i+ii) == 0)
-                color_index = 0;
-              else
+           //   if(img.pixelIndex(8*j+jj,8*i+ii) == 0)
+//                color_index = 0;
+//              else
                 color_index = img.pixelIndex(8*j+jj,8*i+ii) + paletteBias;
 
               out.writeRawData((const char *)&color_index,1);

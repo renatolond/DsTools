@@ -4,12 +4,14 @@
 #include <PA9.h>
 
 #include <vector>
+#include <list>
 
 #include "collisioncontroller.h"
 #include "playercontroller.h"
 #include "item-controller.h"
 
 struct sGlobalData;
+struct cObjectController;
 
 void load_resources(std::vector<sLevelData *>& level_data_vector);
 
@@ -17,11 +19,14 @@ class cScrollEngine : public PA::Application
 {
   cPlayerController<tDefinedType> *m_player;
   cCollisionController<tDefinedType> *m_collision_controller;
-  cItemController<tDefinedType> *m_item_controller;
 
   const sGlobalData *m_global_data;
 
   std::vector<sLevelData *> m_level_data_vector;
+
+  std::list<cObjectController *>::iterator m_alpha, m_beta;
+  int m_sprite_index;
+  int m_palette_index;
 
   int m_current_level;
   int m_current_player;

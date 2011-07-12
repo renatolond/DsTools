@@ -2,17 +2,23 @@
 #define LEVELDATA_H
 
 #include <vector>
+#include <list>
 
 #include "PA_BgStruct.h" // No way to do forward declaration, apparently
 
-struct sEnemyData;
-struct sItemData;
+class cObjectController;
 
 struct sLevelData
 {
+protected:
+  std::list<cObjectController *> m_objects;
+public:
   std::vector<const PA_BgStruct *> m_backgrounds;
-  std::vector<sEnemyData *> m_enemies;
-  std::vector<sItemData *> m_items;
+  //std::vector<cObjectController *> m_objects;
+
+  void insert_into_list(cObjectController *object);
+  std::list<cObjectController *>& get_objects(void);
+
   int m_scrolled;
   int m_world_min_height;
   int m_world_min_width;

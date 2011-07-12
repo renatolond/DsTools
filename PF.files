@@ -30,3 +30,7 @@ source/enemy-data.cpp
 source/item-data.h
 source/item-data.cpp
 source/item-controller.h
+source/item-box.h
+source/item-box.cpp
+source/object-controller.h
+source/object-controller.cpp

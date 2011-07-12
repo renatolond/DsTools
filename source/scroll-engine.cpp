@@ -5,6 +5,7 @@
 #include "global-data.h"
 #include "level-data.h"
 #include "item-data.h"
+#include "object-controller.h"
 
 int timer = 0;
 
@@ -32,12 +33,54 @@ void cScrollEngine::load_graphics()
                       i, // background id
                       m_level_data_vector[m_current_level]->m_backgrounds[i]);
   }
+  m_sprite_index = m_palette_index = 0;
+
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
+
+  m_alpha = m_objects.end();
+  m_beta = m_objects.end();
+
+  {
+    std::list<cObjectController *>::iterator it;
+    for(it = m_objects.end(); ; --it)
+    {
+      cObjectController *object = *it;
+      if(object->get_right() > 0 && object->get_left() < 255) // object is on screen
+      {
+        m_beta = it;
+        break;
+      }
+      if(it == m_objects.begin())
+        break;
+    }
+
+    for(it = m_objects.begin(); it != m_objects.end(); ++it)
+    {
+      cObjectController *object = *it;
+      if(object->get_right() > 0 && object->get_left() < 255) // object is on screen
+      {
+        m_alpha = it;
+        break;
+      }
+    }
+  }
+
+  {
+    std::list<cObjectController *>::iterator it, iend;
+    iend = m_beta;
+    iend++;
+    for(it = m_alpha; it != iend; ++it)
+    {
+      cObjectController *object = *it;
+      object->on_screen(0, m_sprite_index++, m_palette_index++);
+    }
+  }
+
   //m_collision_controller->load_collision_map(m_level_data_vector[m_current_level]->m_collision);
 //  m_level_data_vector[m_current_level].m_backgrounds;
 //  (sLevelData).
-//  PA_LoadBackground(0, // Screen
-//                    0, // Background id
-//                    &bgtool0);
+
   PA_InitParallaxX(0, // Screen
                    screenSizeX, // Parallax speed for Background 0. 0 is no parallax
                    screenSizeX,
@@ -46,26 +89,31 @@ void cScrollEngine::load_graphics()
 
   int SMALL_MARIO_ANIM_SPEED = 10;
 
-  m_item_controller = new cItemController<tDefinedType>();
-  {
-    sItemData *item = m_level_data_vector[m_current_level]->m_items[0];
-    PA_LoadSpritePal(0,
-                     2, // Mudar pra uma variavel que mantenha a quantidade de paletas instanciadas
-                     (void *)item->m_palette_pointer);
-    m_item_controller->spr.pos.x = 0;
-    m_item_controller->spr.pos.y = 0;
-    m_item_controller->spr.create((void *)item->m_sprite_pointer, item->m_h, item->m_w, 2);
-    m_item_controller->spr.move(item->m_x, item->m_y);
-    m_item_controller->spr.priority(1);
-    m_item_controller->spr.beginAnimation(0);
-  }
+//  m_item_controller = new cItemController<tDefinedType>();
+//  {
+//    sItemData *item = m_level_data_vector[m_current_level]->m_items[0];
+//    PA_LoadSpritePal(0,
+//                     2, // Mudar pra uma variavel que mantenha a quantidade de paletas instanciadas
+//                     (void *)item->m_palette_pointer);
+//    m_item_controller->spr.sprid = 2;
+//    m_item_controller->spr.pos.x = 0;
+//    m_item_controller->spr.pos.y = 0;
+//    m_item_controller->spr.create((void *)item->m_sprite_pointer, item->m_h, item->m_w, 2);
+//    int x = item->m_x*8;
+//    if(x >= 255)
+//      x = 254;
+//    m_item_controller->spr.move(x, item->m_y*8);
+//    m_item_controller->spr.addAnimation(0,0,0); // Drag
+//    m_item_controller->spr.priority(0);
+//    m_item_controller->spr.beginAnimation(0);
+//  }
 
   PA_LoadSpritePal(0, // Screen
-                   1, // Palette id
+                   m_palette_index, // Palette id
                    (void*) SuperMarioClone_Pal); // Pointer to load from
 
-  m_player->spr.sprid = 1;
-  m_player->spr.create((void *)(SuperMarioClone_Sprite), OBJ_SIZE_16X16, 1);
+  m_player->spr.sprid = m_sprite_index++;
+  m_player->spr.create((void *)(SuperMarioClone_Sprite), OBJ_SIZE_16X16, m_palette_index++);
   m_player->spr.move(0, screenSizeY-tileSizeY*5);
   m_player->spr.priority(0);
   m_player->spr.addAnimation(0,3,SMALL_MARIO_ANIM_SPEED); // Walking
@@ -88,14 +136,6 @@ void cScrollEngine::init()
 
   m_current_level = 0;
 
-  //  :
-  //  m_player(Vector2<tDefinedType>(0, 0), // Initial position
-  //           tileSizeXmult, // width
-  //           tileSizeYmult, // height
-  //           0, // Sprite screen
-  //           1, // Sprite number
-  //           &m_level_data),
-  //  m_collision_controller(&m_level_data)
   m_player = new cPlayerController<tDefinedType>(Vector2<tDefinedType>(0, 0),
                                         tileSizeXmult,
                                         tileSizeYmult,
@@ -143,7 +183,17 @@ void cScrollEngine::render()
   PA_ParallaxScrollX(0, // Screen
                      m_level_data_vector[m_current_level]->m_scrolled);
   m_player->Draw();
-  m_item_controller->Draw();
+  {
+    //sLevelData *current_level = m_level_data_vector[m_current_level];
+    //std::list<cObjectController *> &m_objects = current_level->get_objects();
+    std::list<cObjectController *>::iterator it, iend;
+    iend = m_beta; iend++;
+    for(it = m_alpha; it != iend; ++it)
+    {
+      cObjectController *object = *it;
+      object->draw();
+    }
+  }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -183,6 +233,16 @@ bool cScrollEngine::update()
   m_player->IntegrateVerlet();
   m_collision_controller->check_for_collisions(m_level_data_vector[m_current_level]->m_scrolled,
                                               0); // Not scrolling over y-axis
+  {
+    std::list<cObjectController *>::iterator it, iend;
+    iend = m_beta; iend++;
+    for(it = m_alpha; it != iend; ++it)
+    {
+      cObjectController *object = *it;
+      object->update(m_level_data_vector[m_current_level]->m_scrolled);
+    }
+  }
+
   return true;
 }
 

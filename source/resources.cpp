@@ -27,32 +27,34 @@ void load_level1(std::vector<sLevelData *>& level_data_vector)
   level1_data->m_scrolled = 0;
   level1_data->m_backgrounds.push_back(&SuperMarioClone0);
 
-  cItemBox *itembox1 = new cItemBox(10*8, 9*8);
+  level1_data->m_palettes.push_back(ItemBox_Pal);
+
+  cItemBox *itembox1 = new cItemBox(14*8, 9*8);
   itembox1->m_sprite_pointer = ItemBox_Sprite;
-  itembox1->m_palette_pointer = ItemBox_Pal;
+  itembox1->m_palette_index = 0;
   itembox1->set_size(OBJ_SIZE_16X16);
 
 
   cItemBox *itembox2 = new cItemBox(20*8, 12*8);
   itembox2->m_sprite_pointer = ItemBox_Sprite;
-  itembox2->m_palette_pointer = ItemBox_Pal;
+  itembox2->m_palette_index = 0;
   itembox2->set_size(OBJ_SIZE_16X16);
 
 
   cItemBox *itembox3 = new cItemBox(40*8, 9*8);
   itembox3->m_sprite_pointer = ItemBox_Sprite;
-  itembox3->m_palette_pointer = ItemBox_Pal;
+  itembox3->m_palette_index = 0;
   itembox3->set_size(OBJ_SIZE_16X16);
 
 
   cItemBox *itembox4 = new cItemBox(9*8, 1*8);
   itembox4->m_sprite_pointer = ItemBox_Sprite;
-  itembox4->m_palette_pointer = ItemBox_Pal;
+  itembox4->m_palette_index = 0;
   itembox4->set_size(OBJ_SIZE_16X16);
 
   level1_data->insert_into_list(itembox1);
-  level1_data->insert_into_list(itembox2);
-  level1_data->insert_into_list(itembox3);
+//  level1_data->insert_into_list(itembox2);
+//  level1_data->insert_into_list(itembox3);
   level1_data->insert_into_list(itembox4);
 
   //level1_data->m_items.push_back(itembox1);

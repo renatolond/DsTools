@@ -41,6 +41,13 @@ void cScrollEngine::load_graphics()
   m_alpha = m_objects.end();
   m_beta = m_objects.end();
 
+  for(std::vector<const void *>::iterator it = current_level->m_palettes.begin();
+      it != current_level->m_palettes.end(); ++it)
+  {
+    PA_LoadSpritePal(0,
+                     m_palette_index++,
+                     (void*)(*it));
+  }
   {
     std::list<cObjectController *>::iterator it;
     for(it = m_objects.end(); ; --it)
@@ -73,7 +80,9 @@ void cScrollEngine::load_graphics()
     for(it = m_alpha; it != iend; ++it)
     {
       cObjectController *object = *it;
-      object->on_screen(0, m_sprite_index++, m_palette_index++);
+      object->create(0, m_sprite_index++);
+
+      //object->destroy();
     }
   }
 
@@ -183,17 +192,7 @@ void cScrollEngine::render()
   PA_ParallaxScrollX(0, // Screen
                      m_level_data_vector[m_current_level]->m_scrolled);
   m_player->Draw();
-  {
-    //sLevelData *current_level = m_level_data_vector[m_current_level];
-    //std::list<cObjectController *> &m_objects = current_level->get_objects();
-    std::list<cObjectController *>::iterator it, iend;
-    iend = m_beta; iend++;
-    for(it = m_alpha; it != iend; ++it)
-    {
-      cObjectController *object = *it;
-      object->draw();
-    }
-  }
+  draw_visible_objects();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -233,17 +232,167 @@ bool cScrollEngine::update()
   m_player->IntegrateVerlet();
   m_collision_controller->check_for_collisions(m_level_data_vector[m_current_level]->m_scrolled,
                                               0); // Not scrolling over y-axis
+
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
   {
-    std::list<cObjectController *>::iterator it, iend;
-    iend = m_beta; iend++;
-    for(it = m_alpha; it != iend; ++it)
-    {
-      cObjectController *object = *it;
-      object->update(m_level_data_vector[m_current_level]->m_scrolled);
-    }
+    char message[1024];
+    sprintf(message,"                         ");
+    PA_OutputText(1,1,6, "%s", message);
+    PA_OutputText(1,1,7, "%s", message);
+    PA_OutputText(1,1,8, "%s", message);
+    PA_OutputText(1,1,9, "%s", message);
+  }
+
+  if(m_alpha == m_objects.end())
+  {
+    m_alpha = m_beta = m_objects.end();
+    if(!search_new_alpha())
+      return true;
+  }
+
+
+  if((*m_alpha)->on_screen(m_level_data_vector[m_current_level]->m_scrolled))
+  {
+    char message[1024];
+    sprintf(message,"search_previous_alpha");
+    nocashMessage(message);
+    PA_OutputText(1,1,9, "%s", message);
+
+    search_previous_alpha();
+    // Alpha still on screen, let's see if we can find someone who is too.
+  }
+  else
+  {
+    char message[1024];
+    sprintf(message,"search_next_alpha");
+    nocashMessage(message);
+    PA_OutputText(1,1,8, "%s", message);
+
+    search_next_alpha();
+    // Alpha got off screen, take it and find new one.
+  }
+
+  if((*m_beta)->on_screen(m_level_data_vector[m_current_level]->m_scrolled))
+  {
+    char message[1024];
+    sprintf(message,"search_next_beta");
+    nocashMessage(message);
+    PA_OutputText(1,1,6, "%s", message);
+
+    search_next_beta();
+  }
+  else
+  {
+    char message[1024];
+    sprintf(message,"search_previous_beta");
+    nocashMessage(message);
+    PA_OutputText(1,1,7, "%s", message);
+
+    search_previous_beta();
   }
 
   return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::search_next_alpha()
+{
+  std::list<cObjectController *>::iterator it;
+  it = m_alpha;
+  (*it)->destroy();
+  ++it;
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
+
+  while(!(*it)->on_screen(m_level_data_vector[m_current_level]->m_scrolled) && it != m_objects.end())
+  {
+    (*it)->destroy();
+    ++it;
+  }
+  m_alpha = it;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::search_next_beta()
+{
+  std::list<cObjectController *>::iterator it;
+  it = m_beta;
+  ++it;
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
+
+  while(!(*it)->on_screen(m_level_data_vector[m_current_level]->m_scrolled) && it != m_objects.end())
+  {
+    (*it)->create(m_level_data_vector[m_current_level]->m_scrolled, m_sprite_index++);
+    ++it;
+  }
+
+  if(it == m_objects.end())
+    return;
+
+  (*it)->create(m_level_data_vector[m_current_level]->m_scrolled, m_sprite_index++);
+  m_beta = it;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::search_previous_alpha()
+{
+  std::list<cObjectController *>::iterator it;
+  it = m_alpha;
+  --it;
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
+
+  while(!(*it)->on_screen(m_level_data_vector[m_current_level]->m_scrolled) && it != m_objects.end())
+  {
+    (*it)->create(m_level_data_vector[m_current_level]->m_scrolled, m_sprite_index++);
+    --it;
+  }
+
+  if(it == m_objects.end())
+    return;
+
+  (*it)->create(m_level_data_vector[m_current_level]->m_scrolled, m_sprite_index++);
+  m_alpha = it;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::search_previous_beta()
+{
+  std::list<cObjectController *>::iterator it;
+  it = m_beta;
+  (*it)->destroy();
+  --it;
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
+
+  while(!(*it)->on_screen(m_level_data_vector[m_current_level]->m_scrolled) && it != m_objects.end())
+  {
+    (*it)->destroy();
+    --it;
+  }
+  m_beta = it;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::draw_visible_objects()
+{
+  PA_OutputText(1,1,12, "          ");
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  if(m_alpha == current_level->get_objects().end())
+    return;
+  std::list<cObjectController *>::iterator it, iend;
+  iend = m_beta; ++iend;
+  for(it = m_alpha; it != iend; ++it)
+  {
+    (*it)->draw(m_level_data_vector[m_current_level]->m_scrolled);
+  }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -262,4 +411,27 @@ cScrollEngine::~cScrollEngine()
     delete m_player;
   if(m_collision_controller)
     delete m_collision_controller;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+bool cScrollEngine::search_new_alpha()
+{
+  std::list<cObjectController *>::iterator it;
+  sLevelData *current_level = m_level_data_vector[m_current_level];
+  std::list<cObjectController *> &m_objects = current_level->get_objects();
+
+  for(it = m_objects.begin(); it != m_objects.end(); ++it)
+  {
+    if((*it)->on_screen(m_level_data_vector[m_current_level]->m_scrolled))
+    {
+      m_alpha = it;
+      (*m_alpha)->create(m_level_data_vector[m_current_level]->m_scrolled, m_sprite_index++);
+      return true;
+    }
+    if((*it)->get_right() > m_level_data_vector[m_current_level]->m_scrolled + 256)
+      break;
+  }
+
+  return false;
 }

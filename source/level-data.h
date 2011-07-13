@@ -14,7 +14,7 @@ protected:
   std::list<cObjectController *> m_objects;
 public:
   std::vector<const PA_BgStruct *> m_backgrounds;
-  //std::vector<cObjectController *> m_objects;
+  std::vector<const void *> m_palettes;
 
   void insert_into_list(cObjectController *object);
   std::list<cObjectController *>& get_objects(void);

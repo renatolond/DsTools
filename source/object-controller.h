@@ -26,12 +26,12 @@ class cObjectController
   /** TODO */
   SpriteController *m_sprite;
 
-  /** TODO */
-  int m_sprite_index;
-
  public:
   /** TODO */
   const void *m_sprite_pointer;
+
+  /** TODO */
+  int m_sprite_index;
 
   /** TODO */
   int m_palette_index;

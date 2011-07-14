@@ -116,14 +116,14 @@ int cObjectController::get_right()
 //--------------------------------------------------------------------------------------------------
 void cObjectController::create(int offset, int sprite_index)
 {
-  m_sprite_index = sprite_index;
+  //m_sprite_index = sprite_index;
 //  m_palette_index = palette_index;
   if(!m_sprite)
   {
-    m_sprite = new SpriteController(0, sprite_index);
-    m_sprite->sprid = sprite_index;
+    m_sprite = new SpriteController(0, m_sprite_index);
+    m_sprite->sprid = m_sprite_index;
+    m_sprite->move(get_left()-offset, m_y);
     m_sprite->create((void *)m_sprite_pointer, m_param1, m_param2, m_palette_index);
-    m_sprite->move(m_x, m_y);
     m_sprite->addAnimation(0,0,0);
     m_sprite->priority(0);
     m_sprite->beginAnimation(0);
@@ -134,6 +134,14 @@ void cObjectController::create(int offset, int sprite_index)
 //--------------------------------------------------------------------------------------------------
 void cObjectController::draw(int offset)
 {
+  if(on_screen(offset))
+    create(offset, 0);
+  else
+    destroy();
+  char message[1024];
+  sprintf(message,"scrolled: %d ",offset);
+  nocashMessage(message);
+  PA_OutputText(1,1,m_sprite_index+5, "%s", message);
   m_sprite->move(get_left()-offset, m_y);
   m_sprite->render();
 }
@@ -144,11 +152,6 @@ bool cObjectController::on_screen(int offset)
 {
   if(get_right() > offset && get_left() < (offset+256))
   {
-    char message[1024];
-    sprintf(message,"offset, right, left: %d %d %d     ",offset, get_right(), get_left());
-    nocashMessage(message);
-    PA_OutputText(1,1,m_sprite_index, "%s", message);
-
     return true;
   }
   return false;
@@ -158,11 +161,6 @@ void cObjectController::destroy()
 {
   if(m_sprite)
   {
-    char message[1024];
-    sprintf(message,"destroyed!!");
-    nocashMessage(message);
-    PA_OutputText(1,1,10, "%s", message);
-
     m_sprite->destroy();
     delete m_sprite;
     m_sprite = NULL;

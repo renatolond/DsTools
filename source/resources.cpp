@@ -29,33 +29,39 @@ void load_level1(std::vector<sLevelData *>& level_data_vector)
 
   level1_data->m_palettes.push_back(ItemBox_Pal);
 
-  cItemBox *itembox1 = new cItemBox(14*8, 9*8);
+  cItemBox *itembox1 = new cItemBox(33*8, 13*8);
   itembox1->m_sprite_pointer = ItemBox_Sprite;
   itembox1->m_palette_index = 0;
   itembox1->set_size(OBJ_SIZE_16X16);
 
 
-  cItemBox *itembox2 = new cItemBox(20*8, 12*8);
+  cItemBox *itembox2 = new cItemBox(43*8, 13*8);
   itembox2->m_sprite_pointer = ItemBox_Sprite;
   itembox2->m_palette_index = 0;
   itembox2->set_size(OBJ_SIZE_16X16);
 
 
-  cItemBox *itembox3 = new cItemBox(40*8, 9*8);
+  cItemBox *itembox3 = new cItemBox(47*8, 13*8);
   itembox3->m_sprite_pointer = ItemBox_Sprite;
   itembox3->m_palette_index = 0;
   itembox3->set_size(OBJ_SIZE_16X16);
 
 
-  cItemBox *itembox4 = new cItemBox(9*8, 1*8);
+  cItemBox *itembox4 = new cItemBox(45*8, 5*8);
   itembox4->m_sprite_pointer = ItemBox_Sprite;
   itembox4->m_palette_index = 0;
   itembox4->set_size(OBJ_SIZE_16X16);
 
+  cItemBox *itembox5 = new cItemBox(33*8, 0);
+  itembox5->m_sprite_pointer = ItemBox_Sprite;
+  itembox5->m_palette_index = 0;
+  itembox5->set_size(OBJ_SIZE_16X16);
+
   level1_data->insert_into_list(itembox1);
-//  level1_data->insert_into_list(itembox2);
-//  level1_data->insert_into_list(itembox3);
+  level1_data->insert_into_list(itembox2);
+  level1_data->insert_into_list(itembox3);
   level1_data->insert_into_list(itembox4);
+  level1_data->insert_into_list(itembox5);
 
   //level1_data->m_items.push_back(itembox1);
 

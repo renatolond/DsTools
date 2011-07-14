@@ -66,33 +66,6 @@ class cScrollEngine : public PA::Application
   void load_graphics();
 
   /**
-   * @brief Encontra o alpha anterior (aumenta os objetos na tela)
-   */
-  void search_previous_alpha(void);
-
-  /**
-   * @brief Encontra o beta anterior (diminui os objetos na tela)
-   */
-  void search_previous_beta(void);
-
-  /**
-   * @brief Encontra o alpha posterior (diminui os objetos na tela)
-   */
-  void search_next_alpha(void);
-
-  /**
-   * @brief Encontra o beta posterior (diminui os objetos na tela)
-   */
-  void search_next_beta(void);
-
-  /**
-   * @brief Faz uma busca completa no vetor procurando um novo alpha
-   *
-   * @return
-   */
-  bool search_new_alpha(void);
-
-  /**
    * @brief Avisa aos objetos visiveis para atualizar suas posicoes e se desenhar
    */
   void draw_visible_objects();

@@ -5,6 +5,7 @@
 
 #include <vector>
 
+class cCollisionController;
 class cPlayerController;
 
 class sLevelData;
@@ -12,6 +13,7 @@ class sLevelData;
 class cScrollEngine : public PA::Application
 {
   cPlayerController *m_player;
+  cCollisionController *m_current_level_collision;
   std::vector<sLevelData *> m_level_data_vector;
   int m_current_level;
   int m_screen_scrolled;

@@ -1,12 +1,15 @@
 #include "scroll_engine.h"
 
+#include "collision_controller.h"
 #include "level_data.h"
-#include "player_controller.h"
 #include "object.h"
+#include "player_controller.h"
 #include "resources.h"
 
 cScrollEngine::cScrollEngine()
 {
+  m_player = NULL;
+  m_current_level_collision = NULL;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -108,11 +111,17 @@ void cScrollEngine::load_current_level()
 
   m_screen_scrolled = 0;
 
+  m_player = new cPlayerController();
   m_player->create_sprite(get_unoccupied_sprite_id(),
                           m_level_data_vector[m_current_level]->m_player_sprite,
                           m_level_data_vector[m_current_level]->m_player_palette_index,
                           m_level_data_vector[m_current_level]->m_player_start_x,
                           m_level_data_vector[m_current_level]->m_player_start_y);
+
+  m_current_level_collision = new cCollisionController();
+  m_current_level_collision->set_player(m_player);
+  // TODO(renatolond, 2011-07-14) Do not leave 0 hardcoded!
+  m_current_level_collision->load_tile_map(*m_level_data_vector[m_current_level]->m_backgrounds[0]);
 
   std::vector<void *> &m_palettes = m_level_data_vector[m_current_level]->m_palettes;
   int i = 0;
@@ -195,10 +204,12 @@ void cScrollEngine::check_for_screen_scrolling()
 //--------------------------------------------------------------------------------------------------
 void cScrollEngine::check_for_collisions()
 {
-  if(m_player->touching_ground())
-  {
-    m_player->m_vel_y = 0;
-    //m_player->m_y += 2;
-    m_player->m_jumping = 0;
-  }
+  m_current_level_collision->check_for_collisions(m_screen_scrolled, 0);
+//  m_player->collide_vs_world_bounds();
+//  if(m_player->touching_ground())
+//  {
+//    m_player->m_vel_y = 0;
+//    //m_player->m_y += 2;
+//    m_player->m_jumping = 0;
+//  }
 }

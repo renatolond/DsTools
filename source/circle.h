@@ -29,7 +29,7 @@ public:
     void setPos(Vector2<T> p);
     void setOldPos(Vector2<T> op);
     void IntegrateVerlet();
-    void CollideVsTile(TileMapCell<T> tile);
+    void CollideVsTile(cTileMapCell<T> tile);
     void CollideVsWorldBounds();
     void ReportCollisionVsWorld(T px, T py, T dx, T dy);
     void Draw();
@@ -150,7 +150,7 @@ void Circle<T>::CollideVsWorldBounds()
 }
 
 template<class T>
-void Circle<T>::CollideVsTile(TileMapCell<T> tile)
+void Circle<T>::CollideVsTile(cTileMapCell<T> tile)
 {
     T px, py;
     T cx, cy;

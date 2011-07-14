@@ -4,7 +4,12 @@
 //#include "tilemapcell.h"
 //#include "aabb.h"
 #include "vector2.h"
-#include "constants.h"
+//#include "constants.h"
+typedef int tDefinedType;
+double friction = 0.0;
+double bounce = 0.0;
+double drag = 0.0;
+double gravity = 0.0;
 
 #include <PA9.h>
 

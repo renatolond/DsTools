@@ -5,7 +5,8 @@
 #include <sstream>
 #include <cmath>
 
-#include "constants.h"
+//#include "constants.h"
+double eps = 0.0001;
 
 template <class T>
 class Vector2

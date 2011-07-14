@@ -11,9 +11,7 @@ object.h
 object.cpp
 tilemapcell.h
 vector2.h
-collidable.h
 circle.h
-collidable.cpp
 collision_controller.h
 collision_controller.cpp
 tilemapcell.cpp

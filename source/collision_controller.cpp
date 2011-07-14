@@ -20,6 +20,11 @@ void cCollisionController::load_tile_map(const PA_BgStruct &bg)
   int tileSizeXmult = 8;
   int tileSizeYmult = 8;
 
+  m_min_world_height = 0;
+  m_min_world_width = 0;
+  m_max_world_height = bg.height;
+  m_max_world_width = bg.width;
+
   s16 *bgMap = (s16 *)bg.BgMap;
   m_map = new cTileMapCell*[bg.height/tileSizeY];
   for ( int i = 0 ; i < bg.height/tileSizeY ; i++ )
@@ -51,11 +56,11 @@ inline void cCollisionController::collide_vs_tile(cTileMapCell **m_map,
 {
   int tileSizeXmult = 8;
   int tileSizeYmult = 8;
-  int m_world_max_width = 2000;
-  int m_world_max_height = 192;
+  //int m_world_max_width = 2000;
+  //int m_world_max_height = 192;
 
-  if ( i >= 0 && i < m_world_max_width/tileSizeXmult && j >= 0 &&
-       j < m_world_max_height/tileSizeYmult )
+  if ( i >= 0 && i < m_max_world_width/tileSizeXmult && j >= 0 &&
+       j < m_max_world_height/tileSizeYmult )
     player->collide_vs_tile(m_map[j][i]);
 }
 
@@ -77,6 +82,8 @@ void cCollisionController::check_for_collisions(const int &x_scroll, const int &
   if(!m_map)
     return;
 
+  m_player->m_touching_ground = false;
+
   playerTileX = m_player->m_x / tileSizeXmult;
 #ifdef _DEBUG
   asm("mov r11,r11");
@@ -93,7 +100,8 @@ void cCollisionController::check_for_collisions(const int &x_scroll, const int &
   collide_vs_tile(m_map, m_player, playerTileY-1, playerTileX);
   collide_vs_tile(m_map, m_player, playerTileY-1, playerTileX+1);
 
-  m_player->collide_vs_world_bounds();
+  m_player->collide_vs_world_bounds(m_min_world_width, m_max_world_width, m_min_world_height,
+                                    m_max_world_height);
 
 #ifdef _DEBUG
   PA_OutputText(1, 1, 9,"Tile: %d      ", bgMap[(int)playerTileX+playerTileY*bgtool0.width/tileSizeX]);

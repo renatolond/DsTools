@@ -9,7 +9,7 @@
 cPlayerController::cPlayerController()
 {
   m_x = m_y = 0;
-  m_vel_x = m_vel_x = 0;
+  m_vel_x = m_vel_y = 0;
   m_jumping = false;
 }
 
@@ -17,10 +17,7 @@ cPlayerController::cPlayerController()
 //--------------------------------------------------------------------------------------------------
 bool cPlayerController::touching_ground()
 {
-  if(m_y >= 160.0)
-    return true;
-  else
-    return false;
+  return m_touching_ground;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -42,16 +39,17 @@ void cPlayerController::move(int screen_scrolled)
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-void cPlayerController::collide_vs_world_bounds()
+void cPlayerController::collide_vs_world_bounds(int world_min_width, int world_max_width,
+                                                int world_min_height, int world_max_height)
 {
   int x, y;
   int m_w = 8;
   int m_h = 8;
 
-  int world_min_width = 0;
-  int world_max_width = 256;
-  int world_min_height = 0;
-  int world_max_height = 192;
+//  int world_min_width = 0;
+//  int world_max_width = 256;
+//  int world_min_height = 0;
+//  int world_max_height = 192;
 
   x = world_min_width - m_x;
   // collision against left side
@@ -88,6 +86,8 @@ void cPlayerController::report_collision_vs_world(int x, int y, double dx, doubl
 {
   m_x += x;
   m_y += y;
+  if(y < 0)
+    m_touching_ground = true;
 //  m_vel_x *= dx;
 //  m_vel_y *= dy;
 }

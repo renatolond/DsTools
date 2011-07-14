@@ -10,6 +10,10 @@ class cCollisionController
 {
   cTileMapCell **m_map;
   cPlayerController *m_player;
+  int m_max_world_height;
+  int m_min_world_height;
+  int m_max_world_width;
+  int m_min_world_width;
 public:
   /**
    * @brief TODO

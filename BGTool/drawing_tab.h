@@ -17,6 +17,7 @@ public:
     ~cDrawingTab();
     void setIndex(int i);
     void set_background(cBackground *bg);
+    void export_background(void);
 
 protected:
     void changeEvent(QEvent *e);

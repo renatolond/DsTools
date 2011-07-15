@@ -101,3 +101,8 @@ void cDrawingTab::on_bt_vflip_toggled(bool checked)
 {
   m_view_controller->set_selected_tile_vflip(checked);
 }
+
+void cDrawingTab::export_background()
+{
+  m_view_controller->export_background();
+}

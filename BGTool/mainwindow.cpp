@@ -140,3 +140,11 @@ void MainWindow::on_actionOpen_Project_triggered()
   ui->tabWidget->setUpdatesEnabled(true);
 
 }
+
+void MainWindow::on_actionExport_All_triggered()
+{
+  for(int i(0); i < m_project->active_level()->num_layers(); ++i)
+  {
+    m_tabbg_widgets[i]->export_background();
+  }
+}

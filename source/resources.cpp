@@ -52,6 +52,14 @@ void load_level1(std::vector<sLevelData *>& level_data_vector)
 
   level1_data->m_objects.push_back(itembox);
 
+  itembox = new sObject();
+  itembox->m_sprite = (void*)ItemBox_Sprite;
+  itembox->m_palette_index = 1;
+  itembox->m_x = 0;
+  itembox->m_y = 0;
+
+  level1_data->m_objects.push_back(itembox);
+
   level_data_vector.push_back(level1_data);
 }
 

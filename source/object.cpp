@@ -4,6 +4,7 @@
 
 sObject::sObject()
 {
+  m_w = m_h = 8;
   m_sprite_id = -1;
 }
 
@@ -11,7 +12,7 @@ sObject::sObject()
 //--------------------------------------------------------------------------------------------------
 void sObject::move(int screen_scrolled)
 {
-  PA_SetSpriteXY(0, m_sprite_id, m_x-screen_scrolled, m_y);
+  PA_SetSpriteXY(0, m_sprite_id, (m_x-m_w)-screen_scrolled, (m_y-m_h));
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -28,7 +29,7 @@ bool sObject::exists(void)
 void sObject::create(int sprite_id)
 {
   m_sprite_id = sprite_id;
-  PA_CreateSprite(0, m_sprite_id, m_sprite, OBJ_SIZE_16X16, 1, m_palette_index, m_x, m_y);
+  PA_CreateSprite(0, m_sprite_id, m_sprite, OBJ_SIZE_16X16, 1, m_palette_index, m_x-m_w, m_y-m_h);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -37,8 +38,10 @@ void sObject::destroy(void)
 {
   if(m_sprite_id != -1)
   {
+    int gfx = PA_GetSpriteGfx(0, m_sprite_id);
     PA_StopSpriteAnim(0, m_sprite_id);
     PA_DeleteSprite(0, m_sprite_id);
+//    PA_DeleteGfx(0, gfx);
     m_sprite_id = -1;
   }
 }

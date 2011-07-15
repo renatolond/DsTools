@@ -104,16 +104,16 @@ void cPlayerController::collide_vs_tile(cTileMapCell &tile)
   dx = m_x - tile.pos.x;
   x = tile.xw + m_w*2 - fabs(dx);
 
-  if (x > 0)
+  if(x > 0)
   {
     dy = m_y - tile.pos.y;
     y = tile.yw + m_h*2 - fabs(dy);
 
-    if (y > 0)
+    if(y > 0)
     {
-      if (x < y)
+      if(x < y)
       {
-        if (dx < 0)
+        if(dx < 0)
         {
           x *= -1;
           y = 0;
@@ -123,7 +123,7 @@ void cPlayerController::collide_vs_tile(cTileMapCell &tile)
       }
       else
       {
-        if (dy < 0)
+        if(dy < 0)
         {
           x = 0;
           y *= -1;
@@ -135,6 +135,54 @@ void cPlayerController::collide_vs_tile(cTileMapCell &tile)
       tile.projAABB(x, y, *this);
 
       //ResolveBoxTile(x, y, *this, tile);
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cPlayerController::collide_vs_aabb(cAABB &aabb)
+{
+  int m_w = 8;
+  int m_h = 8;
+
+  int dx, dy;
+  int x, y;
+
+  dx = m_x - aabb.m_x;
+  x = m_w*2 - fabs(dx);
+
+  if(x > 0)
+  {
+    dy = m_y - aabb.m_y;
+    y = m_h*2 - fabs(dy);
+
+    if(y > 0)
+    {
+      if(x < y)
+      {
+        if(dx < 0)
+        {
+          x *= -1;
+          y = 0;
+        }
+        else
+          y = 0;
+      }
+      else
+      {
+        if(dy < 0)
+        {
+          x = 0;
+          y *= -1;
+        }
+        else
+          x = 0;
+      }
+
+      double temp;
+      temp = sqrt(x*x + y*y);
+      report_collision_vs_world(x, y, x/temp, y/temp);
     }
   }
 }

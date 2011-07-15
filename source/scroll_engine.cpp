@@ -118,7 +118,8 @@ void cScrollEngine::load_current_level()
                           m_level_data_vector[m_current_level]->m_player_start_x,
                           m_level_data_vector[m_current_level]->m_player_start_y);
 
-  m_current_level_collision = new cCollisionController();
+  m_current_level_collision =
+      new cCollisionController(m_level_data_vector[m_current_level]->m_objects);
   m_current_level_collision->set_player(m_player);
   // TODO(renatolond, 2011-07-14) Do not leave 0 hardcoded!
   m_current_level_collision->load_tile_map(*m_level_data_vector[m_current_level]->m_backgrounds[0]);

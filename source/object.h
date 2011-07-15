@@ -1,15 +1,15 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-class sObject
+#include "aabb.h" // Base class
+
+class sObject : public cAABB
 {
   int m_sprite_id;
 public:
   sObject();
   void *m_sprite;
   int m_palette_index;
-  int m_x;
-  int m_y;
 
   /**
    * @brief TODO
@@ -43,6 +43,16 @@ public:
    * @return
    */
   int get_sprite_id();
+
+  /**
+   * @brief TODO
+   *
+   * @param x TODO
+   * @param y TODO
+   * @param dx TODO
+   * @param dy TODO
+   */
+  void report_collision_vs_world(int x, int y, double dx, double dy);
 };
 
 #endif // OBJECT_H

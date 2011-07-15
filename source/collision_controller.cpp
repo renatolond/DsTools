@@ -3,9 +3,11 @@
 #include <PA9.h>
 
 #include "player_controller.h"
+#include "object.h"
 #include "tilemapcell.h"
 
-cCollisionController::cCollisionController()
+cCollisionController::cCollisionController(std::vector<sObject *> &obj_vector) :
+  m_objects(obj_vector)
 {
   m_player = NULL;
   m_map = NULL;
@@ -49,9 +51,7 @@ void cCollisionController::load_tile_map(const PA_BgStruct &bg)
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-inline void cCollisionController::collide_vs_tile(cTileMapCell **m_map,
-                                                cPlayerController *player,
-                                                int j,
+inline void cCollisionController::collide_vs_tile(int j,
                                                 int i) const
 {
   int tileSizeXmult = 8;
@@ -61,7 +61,7 @@ inline void cCollisionController::collide_vs_tile(cTileMapCell **m_map,
 
   if ( i >= 0 && i < m_max_world_width/tileSizeXmult && j >= 0 &&
        j < m_max_world_height/tileSizeYmult )
-    player->collide_vs_tile(m_map[j][i]);
+    m_player->collide_vs_tile(m_map[j][i]);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -92,13 +92,18 @@ void cCollisionController::check_for_collisions(const int &x_scroll, const int &
 #ifdef _DEBUG
   asm("mov r11,r11");
 #endif
-  collide_vs_tile(m_map, m_player, playerTileY+1, playerTileX);
-  collide_vs_tile(m_map, m_player, playerTileY, playerTileX-1);
-  collide_vs_tile(m_map, m_player, playerTileY, playerTileX);
-  collide_vs_tile(m_map, m_player, playerTileY, playerTileX+1);
-  collide_vs_tile(m_map, m_player, playerTileY-1, playerTileX-1);
-  collide_vs_tile(m_map, m_player, playerTileY-1, playerTileX);
-  collide_vs_tile(m_map, m_player, playerTileY-1, playerTileX+1);
+  collide_vs_tile(playerTileY+1, playerTileX);
+  collide_vs_tile(playerTileY, playerTileX-1);
+  collide_vs_tile(playerTileY, playerTileX);
+  collide_vs_tile(playerTileY, playerTileX+1);
+  collide_vs_tile(playerTileY-1, playerTileX-1);
+  collide_vs_tile(playerTileY-1, playerTileX);
+  collide_vs_tile(playerTileY-1, playerTileX+1);
+
+  for(unsigned int i(0); i < m_objects.size(); ++i)
+  {
+    collide_vs_object(i);
+  }
 
   m_player->collide_vs_world_bounds(m_min_world_width, m_max_world_width, m_min_world_height,
                                     m_max_world_height);
@@ -118,5 +123,12 @@ void cCollisionController::check_for_collisions(const int &x_scroll, const int &
 void cCollisionController::set_player(cPlayerController *player)
 {
   m_player = player;
+}
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cCollisionController::collide_vs_object(int object_index)
+{
+  m_player->collide_vs_aabb(*(m_objects[object_index]));
 }
 

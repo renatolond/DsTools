@@ -11,8 +11,6 @@ class cPlayerController : public cAABB
 public:
   double m_vel_x;
   double m_vel_y;
-  double m_x;
-  double m_y;
   bool m_jumping;
   bool m_touching_ground;
 
@@ -71,6 +69,13 @@ public:
    * @param tile TODO
    */
   void collide_vs_tile(cTileMapCell& tile);
+
+  /**
+   * @brief TODO
+   *
+   * @param aabb TODO
+   */
+  void collide_vs_aabb(cAABB &aabb);
 };
 
 #endif // PLAYER_CONTROLLER_H

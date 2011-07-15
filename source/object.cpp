@@ -49,3 +49,7 @@ int sObject::get_sprite_id()
 {
   return m_sprite_id;
 }
+
+void sObject::report_collision_vs_world(int x, int y, double dx, double dy)
+{
+}

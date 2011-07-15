@@ -47,6 +47,6 @@ RELEASEPATH :=
 # If you need to change other parts of the make process, see the PA_Makefile:
 #---------------------------------------------------------------------------------
 
-MAKEFILE_VER := ver1
+MAKEFILE_VER := ver2
 
 include $(DEVKITPRO)/PAlib/lib/PA_Makefile

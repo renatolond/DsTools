@@ -5,7 +5,7 @@
 
 class sObject : public cAABB
 {
-  int m_sprite_id;
+  bool m_dead;
 public:
   sObject();
   void *m_sprite;
@@ -53,6 +53,16 @@ public:
    * @param dy TODO
    */
   void report_collision_vs_world(int x, int y, double dx, double dy);
+
+  /**
+   * @brief TODO
+   */
+  void die();
+
+  /**
+   * @brief TODO
+   */
+  bool dead();
 };
 
 #endif // OBJECT_H

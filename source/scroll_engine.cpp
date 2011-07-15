@@ -26,8 +26,6 @@ void cScrollEngine::init()
   PA_InitText(1, 0);
   PA_InitText(0, 0);
 
-  PA_SetTextTileCol(0, 3);
-
   memset(m_occupied_sprites, 0, sizeof(m_occupied_sprites));
 
   load_resources(m_level_data_vector);
@@ -55,6 +53,7 @@ void cScrollEngine::render()
   PA_ParallaxScrollXY(0, m_screen_scrolled, 0);
   m_player->move(m_screen_scrolled);
 
+  m_player->check_animation();
   update_display_hud();
 }
 
@@ -63,6 +62,18 @@ void cScrollEngine::render()
 void cScrollEngine::update_display_hud()
 {
     int display_timer = DEFAULT_PLAYTIME - m_game_action_timer/1000;
+
+    PA_SetTextTileCol(1, TEXT_WHITE);
+
+    PA_OutputText(1, 0, 0, "          Projeto Final         ");
+    PA_OutputText(1, 0, 1, "  Ferramentas e metodos para o  ");
+    PA_OutputText(1, 0, 2, " desenvolvimento  de um jogo de ");
+    PA_OutputText(1, 0, 3, " plataforma para  o Nintendo DS ");
+
+    PA_OutputText(1, 0, 5, "     Felipe Pedrosa Martinez    ");
+    PA_OutputText(1, 0, 6, "  Renato dos  Santos Cerqueira  ");
+
+    PA_SetTextTileCol(0, TEXT_BLACK);
 
     PA_OutputText(0,1,1,"Time %d\nScore %d",display_timer,m_score);
 }
@@ -93,19 +104,11 @@ bool cScrollEngine::update()
 //--------------------------------------------------------------------------------------------------
 void cScrollEngine::check_for_player_movement()
 {
-  double speed = 1; // debug only
+  double debug_factor = 1; // debug only
   double max_speed = 2;
   double gravity = (60.0/256);
   double jump_vel = -(1500.0/256);
   double jump_low_limit_vel = -(400.0/256);
-  if(Pad.Newpress.Right)
-  {
-    // mario.info.hitbox.flipped = 0;
-  }
-  else if(Pad.Newpress.Left)
-  {
-    // mario.info.hitbox.flipped = 1;
-  }
 
   if((Pad.Newpress.A) && m_player->touching_ground())
   {
@@ -119,14 +122,15 @@ void cScrollEngine::check_for_player_movement()
   }
 
   int side_mario_speeds = Pad.Held.Right - Pad.Held.Left;
+  m_player->m_vel_x = side_mario_speeds*(max_speed*debug_factor);
 
-  m_player->m_x += side_mario_speeds*(max_speed*speed); // Look into it
+  m_player->m_x += m_player->m_vel_x;
 
   if(!m_player->touching_ground())
   {
-    m_player->m_vel_y += (gravity*speed);
+    m_player->m_vel_y += (gravity*debug_factor);
   }
-  m_player->m_y += m_player->m_vel_y * speed;
+  m_player->m_y += m_player->m_vel_y * debug_factor;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -155,12 +159,19 @@ void cScrollEngine::load_current_level()
 
   m_screen_scrolled = 0;
 
-  m_player = new cPlayerController();
+  m_player = new cPlayerController(new cScore(&m_score));
   m_player->create_sprite(get_unoccupied_sprite_id(),
                           m_level_data_vector[m_current_level]->m_player_sprite,
                           m_level_data_vector[m_current_level]->m_player_palette_index,
                           m_level_data_vector[m_current_level]->m_player_start_x,
                           m_level_data_vector[m_current_level]->m_player_start_y);
+
+  // TODO(renatolond, 2011-07-15) Should be somewhere else, like in load_resources.
+  int default_speed = 10;
+  m_player->add_animation(0,3,default_speed); // Walking
+  m_player->add_animation(4,4,0); // Drag
+  m_player->add_animation(5,5,0); // Jumping
+  m_player->add_animation(6,9,default_speed); // Swimming
 
   m_current_level_collision =
       new cCollisionController(m_level_data_vector[m_current_level]->m_objects);

@@ -23,40 +23,55 @@ void load_level1(std::vector<sLevelData *>& level_data_vector)
   sObject *itembox = new sObject();
   itembox->m_sprite = (void*)ItemBox_Sprite;
   itembox->m_palette_index = 1;
-  itembox->m_x = 32*8;
+  itembox->m_x = 32*8 +8;
   itembox->m_y = 13*8;
+  itembox->m_danger = false;
+  itembox->add_animation(0, 2, 10);
+  itembox->add_animation(3, 3, 0);
 
   level1_data->m_objects.push_back(itembox);
 
   itembox = new sObject();
   itembox->m_sprite = (void*)ItemBox_Sprite;
   itembox->m_palette_index = 1;
-  itembox->m_x = 42*8;
+  itembox->m_x = 42*8 +8;
   itembox->m_y = 13*8;
+  itembox->m_danger = false;
+  itembox->add_animation(0, 2, 10);
+  itembox->add_animation(3, 3, 0);
 
   level1_data->m_objects.push_back(itembox);
 
   itembox = new sObject();
   itembox->m_sprite = (void*)ItemBox_Sprite;
   itembox->m_palette_index = 1;
-  itembox->m_x = 46*8;
+  itembox->m_x = 46*8 +8;
   itembox->m_y = 13*8;
+  itembox->m_danger = false;
+  itembox->add_animation(0, 2, 10);
+  itembox->add_animation(3, 3, 0);
 
   level1_data->m_objects.push_back(itembox);
 
   itembox = new sObject();
   itembox->m_sprite = (void*)ItemBox_Sprite;
   itembox->m_palette_index = 1;
-  itembox->m_x = 44*8;
+  itembox->m_x = 44*8 +8;
   itembox->m_y = 5*8;
+  itembox->m_danger = false;
+  itembox->add_animation(0, 2, 10);
+  itembox->add_animation(3, 3, 0);
 
   level1_data->m_objects.push_back(itembox);
 
   itembox = new sObject();
   itembox->m_sprite = (void*)ItemBox_Sprite;
   itembox->m_palette_index = 1;
-  itembox->m_x = 0;
-  itembox->m_y = 0;
+  itembox->m_x = 57*8;
+  itembox->m_y = 5*8;
+  itembox->m_danger = false;
+  itembox->add_animation(0, 2, 10);
+  itembox->add_animation(3, 3, 0);
 
   level1_data->m_objects.push_back(itembox);
 

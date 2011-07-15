@@ -6,6 +6,8 @@ sObject::sObject()
 {
   m_w = m_h = 8;
   m_sprite_id = -1;
+  m_current_animation = -1;
+  m_dead = false;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -30,6 +32,10 @@ void sObject::create(int sprite_id)
 {
   m_sprite_id = sprite_id;
   PA_CreateSprite(0, m_sprite_id, m_sprite, OBJ_SIZE_16X16, 1, m_palette_index, m_x-m_w, m_y-m_h);
+  if(m_dead)
+    begin_animation(1);
+  else
+    begin_animation(0);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -38,10 +44,8 @@ void sObject::destroy(void)
 {
   if(m_sprite_id != -1)
   {
-    int gfx = PA_GetSpriteGfx(0, m_sprite_id);
-    PA_StopSpriteAnim(0, m_sprite_id);
+    stop_animation();
     PA_DeleteSprite(0, m_sprite_id);
-//    PA_DeleteGfx(0, gfx);
     m_sprite_id = -1;
   }
 }
@@ -53,6 +57,20 @@ int sObject::get_sprite_id()
   return m_sprite_id;
 }
 
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 void sObject::report_collision_vs_world(int x, int y, double dx, double dy)
 {
 }
+
+void sObject::die()
+{
+  m_dead = true;
+  begin_animation(1);
+}
+
+bool sObject::dead()
+{
+  return m_dead;
+}
+

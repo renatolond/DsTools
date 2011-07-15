@@ -13,6 +13,18 @@ class cPlayerController;
 
 class sLevelData;
 
+class cScore
+{
+  int *m_score;
+public:
+  cScore(int *score) :
+    m_score(score)
+  {
+  }
+
+  void plus100() { (*m_score) += 100; }
+};
+
 class cScrollEngine : public PA::Application
 {
   cPlayerController *m_player;

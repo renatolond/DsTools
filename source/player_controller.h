@@ -5,19 +5,21 @@
 
 class cTileMapCell;
 
+class cScore;
+
 class cPlayerController : public cAABB
 {
-  int m_sprite_id;
 public:
   double m_vel_x;
   double m_vel_y;
   bool m_jumping;
   bool m_touching_ground;
+  cScore *m_score;
 
   /**
    * @brief TODO
    */
-  cPlayerController();
+  cPlayerController(cScore *score);
 
   /**
    * @brief TODO
@@ -76,6 +78,21 @@ public:
    * @param aabb TODO
    */
   void collide_vs_aabb(cAABB &aabb);
+
+  /**
+   * @brief TODO
+   */
+  void check_animation();
+
+  /**
+   * @brief TODO
+   */
+  void die();
+
+  /**
+   * @brief TODO
+   */
+  bool dead();
 };
 
 #endif // PLAYER_CONTROLLER_H

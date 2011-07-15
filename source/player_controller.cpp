@@ -4,15 +4,19 @@
 
 #include "tilemapcell.h"
 
+#include "scroll_engine.h"
+
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-cPlayerController::cPlayerController()
+cPlayerController::cPlayerController(cScore *score)
 {
   // TODO(renatolond, 2011-07-15) get this from the sprite.
   m_w = m_h = 8;
   m_x = m_y = 0;
   m_vel_x = m_vel_y = 0;
   m_jumping = false;
+  m_score = score;
+  m_current_animation = -1;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -69,6 +73,7 @@ void cPlayerController::collide_vs_world_bounds(int world_min_width, int world_m
   }
   else
   {
+    // death?
     y = (m_y + m_h) - world_max_height;
     if(y > 0)
       report_collision_vs_world(0, -y, 0, -1);
@@ -171,7 +176,40 @@ void cPlayerController::collide_vs_aabb(cAABB &aabb)
 
       double temp;
       temp = sqrt(x*x + y*y);
+      if(m_danger == false)
+      {
+        if(y > 0 && !aabb.dead())
+        {
+          aabb.die();
+          m_score->plus100();
+        }
+      }
       report_collision_vs_world(x, y, x/temp, y/temp);
     }
   }
+}
+
+void cPlayerController::check_animation()
+{
+  if(m_vel_x > 0)
+    PA_SetSpriteHflip(0, m_sprite_id, false);
+  else if(m_vel_x < 0)
+    PA_SetSpriteHflip(0, m_sprite_id, true);
+
+  if(m_vel_x*m_vel_x > 0.0)
+    begin_animation(0);
+  else if(!touching_ground())
+    begin_animation(2);
+  else
+    stop_animation();
+}
+
+void cPlayerController::die()
+{
+
+}
+
+bool cPlayerController::dead()
+{
+  return false;
 }

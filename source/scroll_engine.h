@@ -5,6 +5,9 @@
 
 #include <vector>
 
+#define DEFAULT_PLAYTIME 300
+#define MILISEC_BETWEEN_GAME_CICLES 33
+
 class cCollisionController;
 class cPlayerController;
 
@@ -17,6 +20,13 @@ class cScrollEngine : public PA::Application
   std::vector<sLevelData *> m_level_data_vector;
   int m_current_level;
   int m_screen_scrolled;
+
+  int m_game_action_timer;
+  int m_timer;
+  int m_old_timer;
+  int m_controller_timer;
+
+  int m_score;
 
   int m_occupied_sprites[128];
 
@@ -35,6 +45,11 @@ class cScrollEngine : public PA::Application
    * @brief TODO
    */
   void render(void);
+
+  /**
+   * @brief TODO
+   */
+  void update_display_hud(void);
 
   /**
    * @brief TODO

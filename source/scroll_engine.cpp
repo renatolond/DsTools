@@ -14,16 +14,36 @@ cScrollEngine::cScrollEngine()
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
+int timer = 0;
+void millisecond_timer_function()
+{
+  timer++;
+}
+
 void cScrollEngine::init()
 {
   // Initialize the text system
   PA_InitText(1, 0);
+  PA_InitText(0, 0);
+
+  PA_SetTextTileCol(0, 3);
 
   memset(m_occupied_sprites, 0, sizeof(m_occupied_sprites));
 
   load_resources(m_level_data_vector);
 
+  m_score = 0;
   m_current_level = 0;
+
+  TIMER_CR(1) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
+  TIMER_DATA(1) = TIMER_FREQ_1024(1000);
+  irqSet(IRQ_TIMER1, millisecond_timer_function);
+  irqEnable(IRQ_TIMER1);
+
+  m_timer = 0;
+  m_old_timer = 0;
+  m_controller_timer = 0;
+  m_game_action_timer = 0;
 
   load_current_level();
 }
@@ -34,7 +54,19 @@ void cScrollEngine::render()
 {
   PA_ParallaxScrollXY(0, m_screen_scrolled, 0);
   m_player->move(m_screen_scrolled);
+
+  update_display_hud();
 }
+
+//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+void cScrollEngine::update_display_hud()
+{
+    int display_timer = DEFAULT_PLAYTIME - m_game_action_timer/1000;
+
+    PA_OutputText(0,1,1,"Time %d\nScore %d",display_timer,m_score);
+}
+
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
@@ -43,6 +75,16 @@ bool cScrollEngine::update()
   check_for_player_movement();
   check_for_collisions();
   check_for_screen_scrolling();
+
+  m_timer = timer;
+  double fTime;
+  fTime = (m_timer - m_old_timer) / 1000.0;
+  m_old_timer = m_timer;
+
+  if(m_timer - m_game_action_timer > MILISEC_BETWEEN_GAME_CICLES)
+  {
+    m_game_action_timer = m_timer;
+  }
 
   return true;
 }
@@ -91,20 +133,22 @@ void cScrollEngine::check_for_player_movement()
 //--------------------------------------------------------------------------------------------------
 void cScrollEngine::load_current_level()
 {
+  m_game_action_timer = 0;
+
   for(unsigned int i(0); i < m_level_data_vector[m_current_level]->m_backgrounds.size(); ++i)
   {
     PA_LoadBackground(0, // screen
-                      i, // background id
+                      i+1, // background id
                       m_level_data_vector[m_current_level]->m_backgrounds[i]);
   }
 
   PA_InitParallaxX(0, // Screen
-                   256, // Parallax speed for Background 0. 0 is no parallax
+                   0, // Parallax speed for Background 0. 0 is no parallax
                    256,
                    256,
                    256);
   PA_InitParallaxY(0, // Screen
-                   256, // Parallax speed for Background 0. 0 is no parallax
+                   0, // Parallax speed for Background 0. 0 is no parallax
                    256,
                    256,
                    256);
